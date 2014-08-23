@@ -1,0 +1,145 @@
+<?php
+
+/**
+ * This is the model class for table "chd_transfer".
+ *
+ * The followings are the available columns in table 'chd_transfer':
+ * @property string $id
+ * @property string $account_id
+ * @property string $server
+ * @property string $realmlist
+ * @property string $realm
+ * @property string $username_old
+ * @property string $username_new
+ * @property string $char_guid
+ * @property string $create_char_date
+ * @property string $create_transfer_date
+ * @property integer $status
+ * @property string $account
+ * @property string $pass
+ * @property integer $file_lua_crypt
+ * @property string $file_lua
+ * @property string $options
+ * @property string $comment
+ */
+class ChdTransfer extends CActiveRecord
+{
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'chd_transfer';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('create_transfer_date, file_lua', 'required'),
+			array('status, file_lua_crypt', 'numerical', 'integerOnly'=>true),
+			array('account_id, char_guid', 'length', 'max'=>10),
+			array('server', 'length', 'max'=>100),
+			array('realmlist, realm, account, pass', 'length', 'max'=>40),
+			array('username_old, username_new', 'length', 'max'=>20),
+			array('options, comment', 'length', 'max'=>255),
+			array('create_char_date', 'safe'),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, account_id, server, realmlist, realm, username_old, username_new, char_guid, create_char_date, create_transfer_date, status, account, pass, file_lua_crypt, file_lua, options, comment', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'Transfer Identifier',
+			'account_id' => 'Account Identifier',
+			'server' => 'Server',
+			'realmlist' => 'Realmlist',
+			'realm' => 'Realm',
+			'username_old' => 'Name on remote server',
+			'username_new' => 'Name on current server',
+			'char_guid' => 'Character GUID',
+			'create_char_date' => 'Character creating date',
+			'create_transfer_date' => 'Transfer creating date',
+			'status' => 'Status',
+			'account' => 'User acoount name',
+			'pass' => 'User password',
+			'file_lua_crypt' => 'Crypted/Uncrypted the lua file',
+			'file_lua' => 'dump *.lua file',
+			'options' => 'Transfer options',
+			'comment' => 'Comment',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id,true);
+		$criteria->compare('account_id',$this->account_id,true);
+		$criteria->compare('server',$this->server,true);
+		$criteria->compare('realmlist',$this->realmlist,true);
+		$criteria->compare('realm',$this->realm,true);
+		$criteria->compare('username_old',$this->username_old,true);
+		$criteria->compare('username_new',$this->username_new,true);
+		$criteria->compare('char_guid',$this->char_guid,true);
+		$criteria->compare('create_char_date',$this->create_char_date,true);
+		$criteria->compare('create_transfer_date',$this->create_transfer_date,true);
+		$criteria->compare('status',$this->status);
+		$criteria->compare('account',$this->account,true);
+		$criteria->compare('pass',$this->pass,true);
+		$criteria->compare('file_lua_crypt',$this->file_lua_crypt);
+		$criteria->compare('file_lua',$this->file_lua,true);
+		$criteria->compare('options',$this->options,true);
+		$criteria->compare('comment',$this->comment,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return ChdTransfer the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+}
