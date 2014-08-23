@@ -7,6 +7,10 @@
  */
 class UserIdentity extends CUserIdentity
 {
+	const ERROR_ACCOUNT_ONLINE = 8;
+
+	private $_id;
+
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -17,17 +21,37 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$users=array(
-			// username => password
-			'demo'=>'demo',
-			'admin'=>'admin',
-		);
-		if(!isset($users[$this->username]))
-			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		elseif($users[$this->username]!==$this->password)
-			$this->errorCode=self::ERROR_PASSWORD_INVALID;
+		switch (Yii::app()->params['core']) // TODO: use pattern
+		{
+			case 'trinity':
+				$account = new AccountTrinity();
+				break;
+			case 'cmangos':
+				$account = new AccountCMangos();
+				break;
+			default:
+				throw new Exception('Unknown core. See `params` section in main.php file.');
+		}
+
+		if (!$account->authenticate($this->username, $this->password))
+		{
+			$this->errorCode = self::ERROR_PASSWORD_INVALID;
+		}
+		elseif ($account->online)
+		{
+			$this->errorCode = self::ERROR_ACCOUNT_ONLINE;
+		}
 		else
-			$this->errorCode=self::ERROR_NONE;
-		return !$this->errorCode;
+		{
+			$this->_id = $account->id;
+			$this->errorCode = self::ERROR_NONE;
+		}
+
+		return $this->errorCode == self::ERROR_NONE;
+	}
+
+	public function getId()
+	{
+		return $this->_id;
 	}
 }
