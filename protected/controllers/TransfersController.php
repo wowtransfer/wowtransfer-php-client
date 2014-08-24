@@ -133,7 +133,12 @@ class TransfersController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('ChdTransfer');
+		$dataProvider = new CActiveDataProvider('ChdTransfer', array(
+			'criteria' => array(
+				'condition' => 'account_id=' . Yii::app()->user->id,
+			),
+		));
+
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -149,8 +154,10 @@ class TransfersController extends Controller
 	public function loadModel($id)
 	{
 		$model = ChdTransfer::model()->findByPk($id);
-		if($model===null)
+		if ($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
+		if ($model->account_id != Yii::app()->user->id)
+			throw new CHttpException(403,'Error. Unknown transfer id.');
 		if (!empty($model->options))
 			$model->transferOptions = explode(';', $model->options);
 
