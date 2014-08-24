@@ -184,6 +184,8 @@ class ChdTransfer extends CActiveRecord
 			//$this->create_transfer_date = date('Y-m-d h:i:s'); // fills by MySQL
 			if (is_object($this->fileLua) && $this->fileLua instanceof CUploadedFile)
 				$this->file_lua = $this->luaDumpToDb(file_get_contents($this->fileLua->tempName));
+			// check *.lua files by hash
+			// ...
 		}
 
 		if (is_array($this->transferOptions))

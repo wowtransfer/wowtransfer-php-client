@@ -9,6 +9,12 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Перенос персонажей WoW',
 
+	'behaviors'=>array(
+		'runEnd'=>array(
+			'class'=>'application.behaviors.WebApplicationEndBehavior',
+		),
+	),
+
 	// preloading 'log' component
 	'preload'=>array('log'),
 

@@ -1,6 +1,6 @@
 <?php
 
-class TransfersController extends Controller
+class TransfersController extends FrontendController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
