@@ -24,6 +24,10 @@
  */
 class ChdTransfer extends CActiveRecord
 {
+	// virtual attributes
+	public $transferOptions = array();
+	public $fileLua;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,14 +44,26 @@ class ChdTransfer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('create_transfer_date, file_lua', 'required'),
-			array('status, file_lua_crypt', 'numerical', 'integerOnly'=>true),
-			array('account_id, char_guid', 'length', 'max'=>10),
+			array('account_id, char_guid, status, file_lua_crypt', 'numerical', 'integerOnly'=>true),
+			//array('account_id, char_guid', 'length', 'max'=>10),
+			array('account_id', 'compare', 'allowEmpty'=>false, 'compareValue'=>0, 'operator'=>'>', 'strict'=>true),
 			array('server', 'length', 'max'=>100),
-			array('realmlist, realm, account, pass', 'length', 'max'=>40),
-			array('username_old, username_new', 'length', 'max'=>20),
+			array('account', 'length', 'max'=>32),
+			array('file_lua', 'length', 'allowEmpty'=>false),
+			array('realmlist, realm, pass', 'length', 'max'=>40),
+			array('username_old, username_new', 'length', 'max'=>12),
 			array('options, comment', 'length', 'max'=>255),
 			array('create_char_date', 'safe'),
+
+			array('server, realmlist, realm, account, pass, username_old, transferOptions', 'required'),
+			array('transferOptions', 'type', 'type' => 'array', 'allowEmpty' => false),
+
+			// create
+			array('file_lua, fileLua', 'required', 'on' => 'create'),
+			array('fileLua', 'file', 'types' => 'lua', 'allowEmpty' => false, 'maxFiles' => 1, 'maxSize' => 1024 * 600, 'on' => 'create'),
+
+			// update
+
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, account_id, server, realmlist, realm, username_old, username_new, char_guid, create_char_date, create_transfer_date, status, account, pass, file_lua_crypt, file_lua, options, comment', 'safe', 'on'=>'search'),
@@ -71,23 +87,26 @@ class ChdTransfer extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'Transfer Identifier',
-			'account_id' => 'Account Identifier',
-			'server' => 'Server',
-			'realmlist' => 'Realmlist',
-			'realm' => 'Realm',
-			'username_old' => 'Name on remote server',
-			'username_new' => 'Name on current server',
-			'char_guid' => 'Character GUID',
-			'create_char_date' => 'Character creating date',
-			'create_transfer_date' => 'Transfer creating date',
-			'status' => 'Status',
-			'account' => 'User acoount name',
-			'pass' => 'User password',
-			'file_lua_crypt' => 'Crypted/Uncrypted the lua file',
-			'file_lua' => 'dump *.lua file',
-			'options' => 'Transfer options',
-			'comment' => 'Comment',
+			'id' => 'ID заявки',
+			'account_id' => 'ID аккаунта',
+			'server' => 'Название',
+			'realmlist' => 'Реалмлист',
+			'realm' => 'Реалм',
+			'account' => 'Аккаунта',
+			'pass' => 'Пароль',
+			'username_old' => 'Имя персонажа',
+			'username_new' => 'Имя персонажа на текущем сервере',
+			'char_guid' => 'GUID персонажа',
+			'create_char_date' => 'Дата создания персонажа',
+			'create_transfer_date' => 'Дата создания заявки',
+			'status' => 'Статус',
+			'file_lua_crypt' => 'Lua-дамп зашифрован?',
+			'file_lua' => 'Содержимое lua-дампа',
+			'options' => 'Опции переноса',
+			'comment' => 'Комментарий',
+			// virtual
+			'transferOptions' => 'Опции переноса',
+			'fileLua' => 'Lua-дамп',
 		);
 	}
 
@@ -132,6 +151,17 @@ class ChdTransfer extends CActiveRecord
 		));
 	}
 
+	public function __get($name)
+	{
+		if ($name == 'statusName')
+		{
+			if ($this->status == 0)
+				return 'В процессе';
+			return $this->status;
+		}
+		return parent::__get($name);
+	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -141,5 +171,58 @@ class ChdTransfer extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function beforeValidate()
+	{
+		if (!parent::beforeValidate())
+			return false;
+
+		if ($this->isNewRecord)
+		{
+			$this->account_id = Yii::app()->user->id;
+			//$this->create_transfer_date = date('Y-m-d h:i:s'); // fills by MySQL
+			if (is_object($this->fileLua) && $this->fileLua instanceof CUploadedFile)
+				$this->file_lua = $this->luaDumpToDb(file_get_contents($this->fileLua->tempName));
+		}
+
+		if (is_array($this->transferOptions))
+			$this->options = implode(';', $this->transferOptions);
+
+		return true;
+	}
+
+	/**
+	 * Compress lua dump content
+	 *
+	 * @return string Compressed string
+	 */
+	public function luaDumpToDb($luaDumpContent)
+	{
+		return gzcompress($luaDumpContent);
+	}
+
+	/**
+	 * Decompress lua dump content
+	 *
+	 * @return string Lua-dump content
+	 */
+	public function luaDumpFromDb($luaDumpContentCompressed)
+	{
+		return gzuncompress($luaDumpContentCompressed);
+	}
+
+	/**
+	 * @return array Key - option's name, Value - option's title
+	 */
+	public function getTransferOptionsToUser()
+	{
+		$trasnferOptions = array();
+		$options = Wowtransfer::getTransferOptions();
+
+		foreach ($options as $name => $option)
+			$trasnferOptions[$name] = $option['title'];
+
+		return $trasnferOptions;
 	}
 }

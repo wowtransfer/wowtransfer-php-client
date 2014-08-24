@@ -20,14 +20,13 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
+		'create_transfer_date',
+		'status',
 		'server',
 		'realmlist',
 		'realm',
 		'username_old',
-		'username_new',
 		'account',
-		'pass',
-		'file_lua',
 		'options',
 		'comment',
 	),

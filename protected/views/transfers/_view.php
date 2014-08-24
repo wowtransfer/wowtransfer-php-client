@@ -9,8 +9,12 @@
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('account_id')); ?>:</b>
-	<?php echo CHtml::encode($data->account_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
+	<?php echo CHtml::encode($data->statusName); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('create_transfer_date')); ?>:</b>
+	<?php echo CHtml::encode($data->create_transfer_date); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('server')); ?>:</b>
@@ -40,14 +44,6 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('create_char_date')); ?>:</b>
 	<?php echo CHtml::encode($data->create_char_date); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('create_transfer_date')); ?>:</b>
-	<?php echo CHtml::encode($data->create_transfer_date); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<?php echo CHtml::encode($data->status); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('account')); ?>:</b>

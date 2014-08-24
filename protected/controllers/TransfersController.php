@@ -27,17 +27,9 @@ class TransfersController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('index','view','create','update','delete'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -62,18 +54,31 @@ class TransfersController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new ChdTransfer;
+		$model = new ChdTransfer;
+		$model->setScenario('create');
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		//$this->performAjaxValidation($model);
 
-		if(isset($_POST['ChdTransfer']))
+		if (isset($_POST['ChdTransfer']))
 		{
-			$model->attributes=$_POST['ChdTransfer'];
-			if($model->save())
+			$model->attributes = $_POST['ChdTransfer'];
+			$model->fileLua = CUploadedFile::getInstance($model, 'fileLua');
+			if ($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
+		if (defined('YII_DEBUG'))
+		{
+			$model->server = 'server';
+			$model->realmlist = 'realmlist';
+			$model->realm = 'realm';
+			$model->account = 'account';
+			$model->pass = '12345';
+		}
+
+		if (empty($model->transferOptions))
+			$model->transferOptions = array_keys(Wowtransfer::getTransferOptions());
 		$this->render('create',array(
 			'model'=>$model,
 		));
@@ -86,7 +91,8 @@ class TransfersController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model = $this->loadModel($id);
+		$model->setScenario('update');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -94,8 +100,13 @@ class TransfersController extends Controller
 		if(isset($_POST['ChdTransfer']))
 		{
 			$model->attributes=$_POST['ChdTransfer'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->validate())
+			{
+				if ($model->save())
+					$this->redirect(array('view','id'=>$model->id));
+				//CVarDumper::dump($model->attributes, 10, true);
+				//return;
+			}
 		}
 
 		$this->render('update',array(
@@ -114,7 +125,7 @@ class TransfersController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 	}
 
 	/**
@@ -137,9 +148,12 @@ class TransfersController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=ChdTransfer::model()->findByPk($id);
+		$model = ChdTransfer::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
+		if (!empty($model->options))
+			$model->transferOptions = explode(';', $model->options);
+
 		return $model;
 	}
 
