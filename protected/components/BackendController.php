@@ -1,6 +1,6 @@
 <?php
 
-class BackEndController extends BaseController
+class BackendController extends BaseController
 {
 	public $layout = 'main';
 
@@ -52,12 +52,10 @@ class BackEndController extends BaseController
 				echo $error['message'];
 			else
 			{
-				if (!Yii::app()->user->isAdmin())
-				{
-					echo 'hi';
-				}
-				else
+				if (Yii::app()->user->isAdmin())
 					$this->render('error', $error);
+				else
+					echo 'hi';
 			}
 		}
 	}

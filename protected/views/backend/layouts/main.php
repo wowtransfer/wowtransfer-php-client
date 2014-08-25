@@ -23,7 +23,7 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo">Админка</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -32,7 +32,6 @@
 				array('label'=>'Сайт','url'=>Yii::app()->params['siteUrl']),
 				array('label'=>'Главная', 'url'=>array('/site/index')),
 				array('label'=>'Заявки', 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest),
-				array('label'=>'Помощь', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Войти', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Выйти (' . Yii::app()->user->name . ', ' . Yii::app()->user->getRole() . ')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'admin', 'url' => Yii::app()->request->baseUrl . '/admin.php', 'visible'=>Yii::app()->user->isAdmin())

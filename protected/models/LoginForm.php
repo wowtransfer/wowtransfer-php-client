@@ -64,17 +64,23 @@ class LoginForm extends CFormModel
 	 */
 	public function login()
 	{
-		if($this->_identity===null)
+		if ($this->_identity === null)
 		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
+			$this->_identity = new UserIdentity($this->username, $this->password);
 			$this->_identity->authenticate();
 		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
+		if ($this->_identity->errorCode === UserIdentity::ERROR_NONE)
 		{
-			Yii::app()->user->login($this->_identity,0);
+			Yii::app()->user->login($this->_identity, 0);
+			if (in_array($this->username, Yii::app()->params['admins']))
+				Yii::app()->user->setState('role', 'admin');
+			elseif (in_array($this->username, Yii::app()->params['moderators']))
+				Yii::app()->user->setState('role', 'moderator');
+			else
+				Yii::app()->user->setState('role', 'user');
 			return true;
 		}
-		else
-			return false;
+
+		return false;
 	}
 }

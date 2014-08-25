@@ -41,6 +41,7 @@ return array(
 	// application components
 	'components'=>array(
 		'user'=>array(
+			'class' => 'WebUser',
 			// enable cookie-based authentication
 			'allowAutoLogin'=>false,
 		),
@@ -56,6 +57,10 @@ return array(
 			//'showScriptName'=>false,
 		),
 
+		'authManager'=>array(
+			'class'=>'PhpAuthManager',
+			'defaultRoles'=>array('guest'),
+		),
 		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),*/
@@ -93,8 +98,12 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
-		// this is used in contact page
+		'siteUrl'=>'/',
 		'adminEmail'=>'webmaster@example.com',
 		'core'=>'trinity',
+		// array of usernames,
+		'admins'=>array('player'),
+		// usernames
+		'moderators'=>array(),
 	),
 );
