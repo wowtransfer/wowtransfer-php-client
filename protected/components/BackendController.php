@@ -2,7 +2,7 @@
 
 class BackendController extends BaseController
 {
-	public $layout = 'main';
+	public $layout = '//layouts/column1';
 
 	/**
 	 * FIlters
