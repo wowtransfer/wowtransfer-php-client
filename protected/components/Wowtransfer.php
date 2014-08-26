@@ -13,29 +13,49 @@ class Wowtransfer
 	public static function getTransferOptions()
 	{
 		return array(
-			'achievement' => array('enable' => 1, 'title' => 'Достижения'),
-			'action'      => array('enable' => 1, 'title' => 'Кнопки на панелях'),
-			'bind'        => array('enable' => 1, 'title' => 'Бинды'),
-			'bag'         => array('enable' => 1, 'title' => 'Вещи в сумках'),
-			'bank'        => array('enable' => 1, 'title' => 'Вещи в банке'),
-			'criterias'   => array('enable' => 1, 'title' => 'Критерии к достижениям'),
-			'critter'     => array('enable' => 1, 'title' => 'Спутники'),
-			'currency'    => array('enable' => 1, 'title' => 'Валюта'),
-			'equipment'   => array('enable' => 0, 'title' => 'Наборы экипировки'),
-			'glyph'       => array('enable' => 1, 'title' => 'Символы'),
-			'inventory'   => array('enable' => 1, 'title' => 'Инвентарь'),
-			'mount'       => array('enable' => 1, 'title' => 'Транспорт'),
-			'pmacro'      => array('enable' => 0, 'title' => 'Макросы'),
-			'quest'       => array('enable' => 1, 'title' => 'Задания'),
-			'questlog'    => array('enable' => 1, 'title' => 'Журнал заданий'),
-			'reputation'  => array('enable' => 1, 'title' => 'Репутация', ),
-			'skill'       => array('enable' => 1, 'title' => 'Навыки (профессии)'),
-			'skillspell'  => array('enable' => 1, 'title' => 'Рецепты'),
-			'spell'       => array('enable' => 1, 'title' => 'Заклинания'),
-			'statistic'   => array('enable' => 1, 'title' => 'Статистика'),
-			'talent'      => array('enable' => 1, 'title' => 'Таланты'),
-			'taxi'        => array('enable' => 1, 'title' => 'Перелеты'),
-			'title'       => array('enable' => 1, 'title' => 'Звания'),
+			'achievement' => array('label' => 'Достижения'),
+			'action'      => array('label' => 'Кнопки на панелях'),
+			'bind'        => array('label' => 'Бинды'),
+			'bag'         => array('label' => 'Вещи в сумках'),
+			'bank'        => array('label' => 'Вещи в банке'),
+			'criterias'   => array('label' => 'Критерии к достижениям'),
+			'critter'     => array('label' => 'Спутники'),
+			'currency'    => array('label' => 'Валюта'),
+			'equipment'   => array('disabled' => 1, 'label' => 'Наборы экипировки'),
+			'glyph'       => array('label' => 'Символы'),
+			'inventory'   => array('label' => 'Инвентарь'),
+			'mount'       => array('label' => 'Транспорт'),
+			'pmacro'      => array('disabled' => 1, 'label' => 'Макросы'),
+			'quest'       => array('label' => 'Задания'),
+			'questlog'    => array('label' => 'Журнал заданий'),
+			'reputation'  => array('label' => 'Репутация', ),
+			'skill'       => array('label' => 'Навыки (профессии)'),
+			'skillspell'  => array('label' => 'Рецепты'),
+			'spell'       => array('label' => 'Заклинания'),
+			'statistic'   => array('label' => 'Статистика'),
+			'talent'      => array('label' => 'Таланты'),
+			'taxi'        => array('label' => 'Перелеты'),
+			'title'       => array('label' => 'Звания'),
 		);
+	}
+
+	public function getApiVersion()
+	{
+		return '1.0';
+	}
+
+	public function getAddonVersion()
+	{
+		return '1.11';
+	}
+
+	public function getChdphpVersion()
+	{
+		return '1.0';
+	}
+
+	public function dumjpToSql()
+	{
+		return 'TODO: in process...';
 	}
 }

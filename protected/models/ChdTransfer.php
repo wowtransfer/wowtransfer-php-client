@@ -223,8 +223,16 @@ class ChdTransfer extends CActiveRecord
 		$options = Wowtransfer::getTransferOptions();
 
 		foreach ($options as $name => $option)
-			$trasnferOptions[$name] = $option['title'];
+			$trasnferOptions[$name] = $option['label'];
 
 		return $trasnferOptions;
+	}
+
+	public function getTransferOptionsFromDb()
+	{
+		if (empty($this->options))
+			return array();
+
+		return explode(';', $this->options);
 	}
 }

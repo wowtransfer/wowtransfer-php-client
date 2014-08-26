@@ -7,6 +7,16 @@ class SiteController extends BackendController
 		$this->render('index');
 	}
 
+	public function actionLogin()
+	{
+		$this->redirect(Yii::app()->request->baseUrl . '/');
+	}
+
+	public function actionLogout()
+	{
+		$this->redirect(Yii::app()->request->baseUrl . '/site/logout');
+	}
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

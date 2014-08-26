@@ -35,7 +35,7 @@
 				array('label'=>'Помощь', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Войти', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Выйти (' . Yii::app()->user->name . ', ' . Yii::app()->user->getRole() . ')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'admin', 'url' => Yii::app()->request->baseUrl . '/admin.php', 'visible'=>Yii::app()->user->isAdmin())
+				array('label'=>'Administration', 'url' => Yii::app()->request->baseUrl . '/admin.php', 'visible'=>Yii::app()->user->isAdmin())
 			),
 		)); ?>
 	</div><!-- mainmenu -->

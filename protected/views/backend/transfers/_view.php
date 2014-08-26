@@ -5,6 +5,18 @@
 
 <div class="view">
 
+	<div style="float: right;">
+		<a href="<?php echo $this->createUrl('char', array('id' => $data->id)); ?>">
+			<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/chd_create_char_16.png" alt="character">
+			Character
+		</a><br>
+
+		<a href="<?php echo $this->createUrl('deletechar', array('id' => $data->id)); ?>">
+			<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/chd_drop_char_16.png" alt="character">
+			Delete character
+		</a>
+	</div>
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />

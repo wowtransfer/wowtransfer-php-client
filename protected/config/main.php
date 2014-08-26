@@ -19,7 +19,7 @@ return array(
 	'preload'=>array('log'),
 
 	'sourceLanguage'=>'en',
-	'language'=>'ru',
+	'language'=>'ru', // to app.php
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -66,6 +66,7 @@ return array(
 		),*/
 		// uncomment the following to use a MySQL database
 
+		// to app.php
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=characters',
 			'emulatePrepare' => true,
@@ -97,13 +98,5 @@ return array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-	'params'=>array(
-		'siteUrl'=>'/',
-		'adminEmail'=>'webmaster@example.com',
-		'core'=>'trinity',
-		// array of usernames,
-		'admins'=>array('player'),
-		// usernames
-		'moderators'=>array(),
-	),
+	'params'=>require_once(dirname(__FILE__).'/app.php'),
 );

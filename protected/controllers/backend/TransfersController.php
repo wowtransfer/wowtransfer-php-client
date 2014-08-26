@@ -28,7 +28,7 @@ class TransfersController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','index','view','update','delete'),
+				'actions'=>array('admin','index','view','update','delete','char','createchar','deletechar'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -112,6 +112,43 @@ class TransfersController extends Controller
 		));
 	}
 
+	public function actionChar($id)
+	{
+		$model = $this->loadModel($id);
+
+		// performAjaxValidation($model);
+		if (Yii::app()->request->isAjaxRequest && isset($_POST['ChdTransfer']))
+		{
+			$service = new Wowtransfer();
+			echo "Hello\n";
+			echo $service->getChdphpVersion() . "\n";
+			echo $service->dumjpToSql();
+			Yii::app()->end();
+		}
+
+		$this->render('char', array(
+			'model' => $model,
+		));
+	}
+
+	public function actionCreatechar($id)
+	{
+		$model = $this->loadModel($id);
+
+		$this->render('createchar', array(
+			'model' => $model,
+		));
+	}
+
+	public function actionDeletechar($id)
+	{
+		$model = $this->loadModel($id);
+
+		$this->render('deletechar', array(
+			'model' => $model,
+		));
+	}
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -121,9 +158,10 @@ class TransfersController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=ChdTransfer::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+		$model = ChdTransfer::model()->findByPk($id);
+		if ($model === null)
+			throw new CHttpException(404, 'The requested page does not exist.');
+		$model->transferOptions = explode(';', $model->options);
 		return $model;
 	}
 
