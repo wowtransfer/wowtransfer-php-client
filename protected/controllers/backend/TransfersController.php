@@ -112,22 +112,38 @@ class TransfersController extends Controller
 		));
 	}
 
+	public function actionCharinfo($id)
+	{
+		$model = null;
+
+		$this->render('charinfo', array(
+			'model' => $model,
+		));
+	}
+
 	public function actionChar($id)
 	{
 		$model = $this->loadModel($id);
 
 		// performAjaxValidation($model);
-		if (Yii::app()->request->isAjaxRequest && isset($_POST['ChdTransfer']))
+		if (isset($_POST['ChdTransfer']))
 		{
-			$service = new Wowtransfer();
-			echo "Hello\n";
-			echo $service->getChdphpVersion() . "\n";
-			echo $service->dumjpToSql();
-			Yii::app()->end();
+			$createCharForm = new CreateCharForm($model);
+			$result = $createCharForm->createChar();
+
+			if (Yii::app()->request->isAjaxRequest)
+			{
+				echo json_encode($result);
+				Yii::app()->end();
+			}
 		}
 
 		$this->render('char', array(
 			'model' => $model,
+			'retrieveSqlError' => '',
+			'runSqlError' => '',
+			'sql' => '',
+			'queries' => array(),
 		));
 	}
 

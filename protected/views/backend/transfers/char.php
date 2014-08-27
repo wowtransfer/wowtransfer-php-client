@@ -1,6 +1,10 @@
 <?php
 /* @var $this TransfersController frontend */
 /* @var $model ChdTransfer model */
+/* @var $retrieveSqlError */
+/* @var $runSqlError */
+/* @var $queries */
+/* @var $sql */
 ?>
 
 <?php if ($model->char_guid > 0): ?>
@@ -65,21 +69,21 @@
 <fieldset>
 	<legend><?php echo $form->labelEx($model,'transferOptions'); ?></legend>
 
-		<div class="row">
-			<div>
-				<?php echo $form->error($model,'transferOptions'); ?>
-			</div>
-			<?php echo $form->checkBoxList($model, 'transferOptions', $model->getTransferOptionsToUser(),
-				array(
-					'checkAll' => 'Выбрать все',
-					'checkAllLast' => true,
-					'template' => '<span class="toptions">{input} {label}</span>',
-					'separator' => '',
-					'class' => 'inline-chb',
-				)
-			); ?>
+	<div class="row">
+		<div>
+			<?php echo $form->error($model,'transferOptions'); ?>
 		</div>
-	</fieldset>
+		<?php echo $form->checkBoxList($model, 'transferOptions', $model->getTransferOptionsToUser(),
+			array(
+				'checkAll' => 'Выбрать все',
+				'checkAllLast' => true,
+				'template' => '<span class="toptions">{input} {label}</span>',
+				'separator' => '',
+				'class' => 'inline-chb',
+			)
+		); ?>
+	</div>
+</fieldset>
 
 <div style="height: 1em;">
 <div style="float: right;">
@@ -89,37 +93,64 @@
 
 
 <div class="row submit">
+	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
     <?php echo CHtml::ajaxSubmitButton('Создать', Yii::app()->request->requestUri, array(
-		'success' => 'js:function(data){ $("#sql-content").text(data); }',
+		'beforeSend' => 'function() { $("#create-char-wait").css("visibility", "visible"); $("#sql-content").text(""); }',
+		'success' => 'js: function(data) { OnCreateCharClick(data); }',
 	)); ?> Create character by AJAX
+	<?php echo CHtml::button('Delete'); ?> Delete transfered character by AJAX...
 </div>
 
 <?php $this->endWidget(); ?>
 </div>
 
-<p>
-Retrieve SQL... errors
-</p>
+<!-- TODO: may be make one container for errors -->
 
-<p>
-Run SQL... first error
-</p>
+<?php if (empty($retrieveSqlError)): ?>
+	<div id="retrieve-sql-error" class="flash-error" style="display: none;"></div>
+<?php else: ?>
+	<div class="flash-error"><?php echo $retrieveSqlError; ?></div>
+<?php endif; ?>
 
-<pre id="sql-content" style="border: 1px solid blue; width: 400px; height: 100px;"></pre>
 
-<div id="sql-run-result" style="border: 1px solid blue; width: 400px; height: 100px;">
-Result table
+<?php if (empty($runSqlError)): ?>
+	<div id="run-sql-error" class="flash-error" style="display: none;"></div>
+<?php else: ?>
+	<div class="flash-error"><?php echo $runSqlError; ?></div>
+<?php endif; ?>
+
+
+<pre id="sql-content" style="border: 1px solid blue; height: 100px;">
+<?php if (!empty($sql)): ?>
+	<?php echo $sql; ?>
+<?php endif; ?>
+</pre>
+
+
+<div id="run-queries-table" style="border: 1px solid blue; height: 100px;">
+<?php //$this->widget('RunCharactersSql', array('queries' => $queries)); ?>
 </div>
 
 
-results:
-<div id="dump-lua" style="border: 1px solid blue; width: 400px; height: 100px;">
+<div id="run-queries" style="border: 1px solid blue; height: 100px;">
+<?php if (!empty($queries)): ?>
+<?php foreach ($queries as $i => $query): ?>
+	<div>
+	<div>
+		<?php echo $i; ?>
+	</div>
+	<?php if (empty($query['error'])): ?>
+	<div class="flash-success">
+		<?php echo $query['query']; ?>
+	</div>
+	<?php else: ?>
+	<div class="flash-error">
+		<?php echo $query['error']; ?>
+	</div>
+	<?php endif; ?>
 
-<div>
-<span style="float: left;">index (1, 2, ...)</span><br>
-query (maximum 255 characters)<br>
-status
-</div>
-
+	</div>
+<?php endforeach; ?>
+<?php endif; ?>
 
 </div>
