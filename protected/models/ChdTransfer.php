@@ -209,9 +209,9 @@ class ChdTransfer extends CActiveRecord
 	 *
 	 * @return string Lua-dump content
 	 */
-	public function luaDumpFromDb($luaDumpContentCompressed)
+	public function luaDumpFromDb()
 	{
-		return gzuncompress($luaDumpContentCompressed);
+		return gzuncompress($this->file_lua);
 	}
 
 	/**

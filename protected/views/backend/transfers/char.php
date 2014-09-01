@@ -5,6 +5,7 @@
 /* @var $runSqlError */
 /* @var $queries */
 /* @var $sql */
+
 ?>
 
 <?php if ($model->char_guid > 0): ?>
@@ -57,7 +58,7 @@
 
 </div>
 
-<div class="clear">lua-dump properties</div>
+<div class="clear">lua-dump properties...</div>
 
 </div>
 
@@ -94,7 +95,8 @@
 
 <div class="row submit">
 	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
-    <?php echo CHtml::ajaxSubmitButton('Создать', Yii::app()->request->requestUri, array(
+    <?php //echo CHtml::submitButton('Создать', Yii::app()->request->requestUri, array(
+		echo CHtml::submitButton('Create', array(
 		'beforeSend' => 'function() { $("#create-char-wait").css("visibility", "visible"); $("#sql-content").text(""); }',
 		'success' => 'js: function(data) { OnCreateCharClick(data); }',
 	)); ?> Create character by AJAX
@@ -120,11 +122,7 @@
 <?php endif; ?>
 
 
-<pre id="sql-content" style="border: 1px solid blue; height: 100px;">
-<?php if (!empty($sql)): ?>
-	<?php echo $sql; ?>
-<?php endif; ?>
-</pre>
+<pre id="sql-content" style="border: 1px solid blue; height: 100px; overflow: auto;"><?php if (!empty($sql)) echo $sql; ?></pre>
 
 
 <div id="run-queries-table" style="border: 1px solid blue; height: 100px;">

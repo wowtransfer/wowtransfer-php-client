@@ -54,8 +54,38 @@ class Wowtransfer
 		return '1.0';
 	}
 
-	public function dumjpToSql()
+	public function dumpToSql($dumpLua, $accountId, $configuration)
 	{
-		return 'TODO: in process...';
+		$filePath = sys_get_temp_dir() . '/' . uniqid('lua') . '.lua';
+		$file = fopen($filePath, 'w');
+		if (!$file)
+			return 'fopen failed... todo!';
+		fwrite($file, $dumpLua);
+		fclose($file);
+
+		$ch = curl_init('http://wowtransfer2/api.php/api/v1/dumps/sql');
+		// dump_lua =
+		// account_id =
+		// transferConf =
+		//curl_setopt($ch, CURLOPT_HEADER, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		$postfields = array(
+			'dump_lua' => '@' . $filePath,
+			'transferConf' => $configuration,
+			'account_id' => $accountId
+		);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+		//curl_setopt($ch, CURLOPT_NOBODY, 1);
+
+		$result = curl_exec($ch);
+		curl_close($ch);//*/
+
+		unlink($filePath);
+
+		//$result = json_decode($result, true);
+
+		return print_r($result, true);
 	}
 }

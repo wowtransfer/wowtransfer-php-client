@@ -2,6 +2,7 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
+//Yii::setPathOfAlias('booster', dirname(__FILE__) . '/../extensions/yiibooster');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -16,7 +17,7 @@ return array(
 	),
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array('log','booster'),
 
 	'sourceLanguage'=>'en',
 	'language'=>'ru', // to app.php
@@ -25,6 +26,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		//'booster.*',
 	),
 
 	'modules'=>array(
@@ -47,6 +49,10 @@ return array(
 		),
 		// uncomment the following to enable URLs in path-format
 
+		/*'booster' => array(
+			'class' => 'application.extensions.yiibooster.components.Booster',
+		),*/
+
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -61,6 +67,7 @@ return array(
 			'class'=>'PhpAuthManager',
 			'defaultRoles'=>array('guest'),
 		),
+
 		/*'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),*/
@@ -80,6 +87,7 @@ return array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
 		),
+
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

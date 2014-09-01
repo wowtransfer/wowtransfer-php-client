@@ -1,23 +1,12 @@
 <?php
 
-class TransfersController extends Controller
+class TransfersController extends BackendController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
-
-	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
 
 	/**
 	 * Specifies the access control rules.
@@ -91,9 +80,15 @@ class TransfersController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('ChdTransfer');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+		/*$command = Yii::app()->db->createCommand();
+		$command = $command->select('id, account_id, server, realmlist, realm, username_old, username_new, char_guid, create_char_date, create_transfer_date, status, account, pass, options, comment')
+			->from('chd_transfer t')
+			->leftJoin('account a', 't.account_id=a.id');
+			//->where('');*/
+		$dataProvider = new CActiveDataProvider('ChdTransfer');
+
+		$this->render('index', array(
+			'dataProvider' => $dataProvider,
 		));
 	}
 
@@ -126,23 +121,24 @@ class TransfersController extends Controller
 		$model = $this->loadModel($id);
 
 		// performAjaxValidation($model);
+		$result = '';
 		if (isset($_POST['ChdTransfer']))
 		{
 			$createCharForm = new CreateCharForm($model);
 			$result = $createCharForm->createChar();
 
-			if (Yii::app()->request->isAjaxRequest)
+			/*if (Yii::app()->request->isAjaxRequest)
 			{
 				echo json_encode($result);
 				Yii::app()->end();
-			}
+			}*/
 		}
 
 		$this->render('char', array(
 			'model' => $model,
 			'retrieveSqlError' => '',
 			'runSqlError' => '',
-			'sql' => '',
+			'sql' => isset($result['sql']) ? $result['sql'] : '',
 			'queries' => array(),
 		));
 	}

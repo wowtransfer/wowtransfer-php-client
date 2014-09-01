@@ -5,7 +5,8 @@
  */
 class CreateCharForm
 {
-	private $_transfer;
+	private $_transfer; // ChdTransfer model
+
 	/**
 	 *
 	 */
@@ -48,7 +49,13 @@ class CreateCharForm
 		if ($this->_transfer->char_guid > 0)
 		{
 			$result['retrieve_sql_error'] = "Character exists! GUID = " . $_transfer->char_guid . '.';
+			return $result;
 		}
+
+		$dumpLua = $this->_transfer->luaDumpFromDb();
+
+		$service = new Wowtransfer;
+		$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, 'global_335a');
 
 		return $result;
 	}
