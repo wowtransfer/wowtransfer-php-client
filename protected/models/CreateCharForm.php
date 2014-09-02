@@ -55,7 +55,15 @@ class CreateCharForm
 		$dumpLua = $this->_transfer->luaDumpFromDb();
 
 		$service = new Wowtransfer;
-		$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, 'global_335a');
+		try
+		{
+			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, 'global_335a');
+		}
+		catch (exception $ex)
+		{
+			$result['retrieve_sql_error'] = $ex->message;
+			$result['sql'] = '';
+		}
 
 		return $result;
 	}

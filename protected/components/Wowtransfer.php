@@ -5,6 +5,8 @@
  */
 class Wowtransfer
 {
+	private $serviceBaseUrl = 'http://wowtransfer2/api.php/api/v1/';
+
 	/**
 	 * @return array Transfer's options
 	 * @todo Make loading from wowtransfer.com
@@ -39,21 +41,39 @@ class Wowtransfer
 		);
 	}
 
+	/**
+	 * @return string Actual version of API
+	 */
 	public function getApiVersion()
 	{
 		return '1.0';
 	}
 
+	/**
+	 * @return string Addon's version
+	 */
 	public function getAddonVersion()
 	{
 		return '1.11';
 	}
 
+	/**
+	 * @return string PHP client version
+	 */
 	public function getChdphpVersion()
 	{
 		return '1.0';
 	}
 
+	/**
+	 * Convert lua-dump to sql script
+	 *
+	 * @param string  $dumpLua        Lua dump
+	 * @param integer $accountId      Accounts' identifier
+	 * @param strign  $configuration  Name of configuration
+	 *
+	 * @return string Sql script (200) or error message (501)
+	 */
 	public function dumpToSql($dumpLua, $accountId, $configuration)
 	{
 		$filePath = sys_get_temp_dir() . '/' . uniqid('lua') . '.lua';
@@ -63,11 +83,9 @@ class Wowtransfer
 		fwrite($file, $dumpLua);
 		fclose($file);
 
-		$ch = curl_init('http://wowtransfer2/api.php/api/v1/dumps/sql');
-		// dump_lua =
-		// account_id =
-		// transferConf =
+		$ch = curl_init($this->serviceBaseUrl . 'dumps/sql');
 		//curl_setopt($ch, CURLOPT_HEADER, 1);
+		//curl_setopt($ch, CURLOPT_NOBODY, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -77,15 +95,18 @@ class Wowtransfer
 			'account_id' => $accountId
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
-		//curl_setopt($ch, CURLOPT_NOBODY, 1);
 
 		$result = curl_exec($ch);
-		curl_close($ch);//*/
+		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch); //*/
 
 		unlink($filePath);
 
-		//$result = json_decode($result, true);
+		if ($status != 200)
+		{
+			throw new CHttpException(501, print_r($result, true));
+		}
 
-		return print_r($result, true);
+		return $result;
 	}
 }

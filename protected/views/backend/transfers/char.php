@@ -121,6 +121,7 @@
 	<div class="flash-error"><?php echo $runSqlError; ?></div>
 <?php endif; ?>
 
+<?php $queriesContent = ''; ?>
 
 <pre id="sql-content" style="border: 1px solid blue; height: 100px; overflow: auto;"><?php if (!empty($sql)) echo $sql; ?></pre>
 
