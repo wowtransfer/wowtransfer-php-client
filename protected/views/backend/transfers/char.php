@@ -108,48 +108,36 @@
 
 <!-- TODO: may be make one container for errors -->
 
-<?php if (empty($retrieveSqlError)): ?>
-	<div id="retrieve-sql-error" class="flash-error" style="display: none;"></div>
+<?php if (empty($createCharError)): ?>
+	<div id="create-char-error" class="flash-error" style="display: none;"></div>
 <?php else: ?>
-	<div class="flash-error"><?php echo $retrieveSqlError; ?></div>
-<?php endif; ?>
-
-
-<?php if (empty($runSqlError)): ?>
-	<div id="run-sql-error" class="flash-error" style="display: none;"></div>
-<?php else: ?>
-	<div class="flash-error"><?php echo $runSqlError; ?></div>
+	<div class="flash-error"><?php echo $createCharError; ?></div>
 <?php endif; ?>
 
 <?php $queriesContent = ''; ?>
 
-<pre id="sql-content" style="border: 1px solid blue; height: 100px; overflow: auto;"><?php if (!empty($sql)) echo $sql; ?></pre>
+<pre id="sql-content" style="border: 1px solid blue; height: 400px; overflow: auto;"><?php echo $sql; ?></pre>
 
 
-<div id="run-queries-table" style="border: 1px solid blue; height: 100px;">
+<div id="run-queries-table" style="border: 1px solid blue; height: 150px;">
 <?php //$this->widget('RunCharactersSql', array('queries' => $queries)); ?>
 </div>
 
 
-<div id="run-queries" style="border: 1px solid blue; height: 100px;">
-<?php if (!empty($queries)): ?>
+<!--<div id="run-queries" style="border: 1px solid blue; height: 100px;">-->
 <?php foreach ($queries as $i => $query): ?>
 	<div>
-	<div>
-		<?php echo $i; ?>
-	</div>
-	<?php if (empty($query['error'])): ?>
-	<div class="flash-success">
-		<?php echo $query['query']; ?>
-	</div>
-	<?php else: ?>
-	<div class="flash-error">
-		<?php echo $query['error']; ?>
-	</div>
-	<?php endif; ?>
-
+		<div>
+			<?php echo $i; ?>
+		</div>
+		<div class="flash-success">
+			<?php echo print_r($query, true); ?>
+		</div>
 	</div>
 <?php endforeach; ?>
-<?php endif; ?>
 
-</div>
+<!--</div>-->
+
+<script><!--
+prettyPrint();
+--></script>

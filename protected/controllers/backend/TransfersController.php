@@ -135,11 +135,11 @@ class TransfersController extends BackendController
 		}
 
 		$this->render('char', array(
-			'model' => $model,
-			'retrieveSqlError' => '',
-			'runSqlError' => '',
-			'sql' => isset($result['sql']) ? $result['sql'] : '',
-			'queries' => array(),
+			'model'           => $model,
+			'createCharError' => isset($result['error'])   ? $result['error']     : '',
+			'sql'             => isset($result['sql'])     ? $result['sql']       : '',
+			'queries'         => isset($result['queries']) ? $result['queries']   : array(),
+			'queriesCount'    => isset($result['count'])   ? $result['count']     : 0,
 		));
 	}
 

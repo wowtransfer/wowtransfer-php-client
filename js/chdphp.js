@@ -3,16 +3,14 @@
  */
 function OnCreateCharClick(data, textStatus, jqXHR)
 {
-	var retrieveSqlErrorContainer = $("#retrieve-sql-error");
-	var runSqlErrorContainer = $("#run-sql-error");
+	var createCharErrorContainer = $("#create-char-error");
 	var sqlContainer = $("#sql-content");
 	var runQueriesContainer = $("#run-queries");
 
 	$("#create-char-wait").css("visibility", "hidden");
 	sqlContainer.text("");
 	runQueriesContainer.text("");
-	retrieveSqlErrorContainer.hide();
-	runSqlErrorContainer.hide();
+	createCharErrorContainer.hide();
 
 	if (data == "")
 		return;
@@ -22,15 +20,10 @@ function OnCreateCharClick(data, textStatus, jqXHR)
 
 	var queries = result.queries;
 
-	if (result.retrieve_sql_error != "")
+	if (result.error != "")
 	{
-		retrieveSqlErrorContainer.show();
-		retrieveSqlErrorContainer.text(result.retrieve_sql_error);
-	}
-	if (result.run_sql_error != "")
-	{
-		runSqlErrorContainer.show();
-		runSqlErrorContainer.text(result.run_sql_error);
+		createCharErrorContainer.show();
+		createCharErrorContainer.text(result.error);
 	}
 	sqlContainer.text(result.sql);
 
