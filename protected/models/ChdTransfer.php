@@ -235,4 +235,32 @@ class ChdTransfer extends CActiveRecord
 
 		return explode(';', $this->options);
 	}
+
+	/**
+	 * @return integer
+	 *   1 -- delete successful
+	 *   0 -- error
+	 */
+	public function deleteChar()
+	{
+		if (!$this->char_guid)
+			throw new CHttpException(404, 'Character not created');
+
+		$connection = Yii::app()->db;
+
+		$result = 0;
+
+		$command = $connection->createCommand('CALL chd_char_del(:id, :table_name)');
+		$command->bindValue(':id', $this->id);
+		$command->bindValue(':table_name', 'chd_transfer');
+		$command->execute();
+
+		$command = $connection->createCommand('SELECT @CHD_RES');
+		$result = $command->queryScalar();
+
+		if ($result)
+			Yii::app()->user->setFlash('success', 'Character GUID = ' . $this->char_guid . ' was deleted success');
+
+		return $result;
+	}
 }

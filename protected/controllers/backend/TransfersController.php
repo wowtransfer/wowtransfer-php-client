@@ -119,6 +119,8 @@ class TransfersController extends BackendController
 	public function actionChar($id)
 	{
 		$model = $this->loadModel($id);
+		if ($model->char_guid > 0)
+			throw new CHttpException(403, 'Character created! GUID = ' . $model->char_guid);
 
 		// performAjaxValidation($model);
 		$result = '';
@@ -155,6 +157,16 @@ class TransfersController extends BackendController
 	public function actionDeletechar($id)
 	{
 		$model = $this->loadModel($id);
+		$result = $model->deleteChar();
+
+		if (Yii::app()->request->isAjaxRequest)
+		{
+			echo $result;
+			Yii::app()->exit();
+		}
+
+		if ($result)
+			$this->redirect(Yii::app()->request->ScriptUrl . '/transfers');
 
 		$this->render('deletechar', array(
 			'model' => $model,

@@ -4,15 +4,9 @@
 /* @var $retrieveSqlError */
 /* @var $runSqlError */
 /* @var $queries */
+/* @var $queriesCount */
 /* @var $sql */
-
 ?>
-
-<?php if ($model->char_guid > 0): ?>
-	<div class="alert alert-info">
-		Персонаж уде создан, GUID = <b><?php echo $model->char_guid; ?></b>.
-	</div>
-<?php return; endif; ?>
 
 <div style="float: right; width: 100px; border: 1px solid blue;">
 Конфигурация...
@@ -100,44 +94,48 @@
 		'beforeSend' => 'function() { $("#create-char-wait").css("visibility", "visible"); $("#sql-content").text(""); }',
 		'success' => 'js: function(data) { OnCreateCharClick(data); }',
 	)); ?> Create character by AJAX
-	<?php echo CHtml::button('Delete'); ?> Delete transfered character by AJAX...
+	<?php echo CHtml::button('Delete'); ?> Delete transfered character by AJAX...<br>
+	<?php echo CHtml::link('Cancel', Yii::app()->request->ScriptUrl . '/transfers'); ?>
 </div>
 
 <?php $this->endWidget(); ?>
 </div>
 
-<!-- TODO: may be make one container for errors -->
-
 <?php if (empty($createCharError)): ?>
 	<div id="create-char-error" class="flash-error" style="display: none;"></div>
 <?php else: ?>
-	<div class="flash-error"><?php echo $createCharError; ?></div>
+	<div id="create-char-error" class="flash-error"><?php echo $createCharError; ?></div>
 <?php endif; ?>
 
 <?php $queriesContent = ''; ?>
 
-<pre id="sql-content" style="border: 1px solid blue; height: 400px; overflow: auto;"><?php echo $sql; ?></pre>
-
-
-<div id="run-queries-table" style="border: 1px solid blue; height: 150px;">
-<?php //$this->widget('RunCharactersSql', array('queries' => $queries)); ?>
+<div id="run-queries-table" style="border: 1px solid blue; margin: 0; padding: 0 2px 2px 0;">
+<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
+	<?php
+		if (isset($queries[$i])):
+			$query = $queries[$i];
+			$classStatus = 'query-res-success';
+		else:
+			$query = array('query'=>'', 'status'=>'&nbsp;');
+			$classStatus = '';
+		endif;
+	?>
+	<span class="query-res <?php echo $classStatus?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
+<?php endfor; ?>
 </div>
 
+<pre id="sql-content" style="border: 1px solid blue; height: 400px; overflow: auto;"><?php echo $sql; ?></pre>
 
 <!--<div id="run-queries" style="border: 1px solid blue; height: 100px;">-->
-<?php foreach ($queries as $i => $query): ?>
+<?php /*foreach ($queries as $i => $query): ?>
 	<div>
 		<div>
-			<?php echo $i; ?>
+			<?php echo $i + 1, ': ', $query['status']; ?>
 		</div>
 		<div class="flash-success">
-			<?php echo print_r($query, true); ?>
+			<?php echo $query['query']; ?>
 		</div>
 	</div>
-<?php endforeach; ?>
+<?php endforeach; */ ?>
 
 <!--</div>-->
-
-<script><!--
-prettyPrint();
---></script>

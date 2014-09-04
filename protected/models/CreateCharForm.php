@@ -38,7 +38,7 @@ class CreateCharForm
 	{
 		$result = array();
 		$result['count'] = 0;
-		$result['queries'] = array();
+		$result = array();
 
 		if (empty($sql))
 		{
@@ -63,6 +63,12 @@ class CreateCharForm
 			$command = $connection->createCommand();
 			foreach ($queries as $query)
 			{
+				$query = trim($query);
+				if (empty($query))
+				{
+					--$result['count'];
+					continue;
+				}
 				$query1['query'] = substr($query, 0, 255);
 				$command->text = $query;
 				$query1['status'] = $command->execute();
@@ -92,8 +98,8 @@ class CreateCharForm
 
 		$connection = Yii::app()->db;
 
-		$connection->createCommand('SELECT @CHAR_GUID FROM dual');
-		$result = $connection->queryScalar();
+		$command = $connection->createCommand('SELECT @CHAR_GUID FROM dual');
+		$result = $command->queryScalar();
 		if ($result)
 			$guid = intval($result);
 
@@ -154,6 +160,12 @@ class CreateCharForm
 		unset($queries['count']);
 
 		$result['queries'] = $queries;
+
+		$this->_transfer->char_guid = $guid;
+		$this->_transfer->create_char_date = date('Y-m-d h:i:s');
+		$this->_transfer->save(false, array('char_guid', 'create_char_date'));
+
+		Yii::app()->user->setFlash('success', 'Character was created success! GUID = ' . $guid);
 
 		return $result;
 	}
