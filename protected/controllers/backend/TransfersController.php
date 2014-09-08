@@ -129,11 +129,11 @@ class TransfersController extends BackendController
 			$createCharForm = new CreateCharForm($model);
 			$result = $createCharForm->createChar();
 
-			/*if (Yii::app()->request->isAjaxRequest)
+			if (Yii::app()->request->isAjaxRequest)
 			{
 				echo json_encode($result);
 				Yii::app()->end();
-			}*/
+			}
 		}
 
 		$this->render('char', array(

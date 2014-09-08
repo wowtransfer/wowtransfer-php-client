@@ -29,11 +29,13 @@
 
 <div class="container" id="page">
 
+	<!-- TODO: make widget -->
 	<div id="header">
 		<div id="login">
 			<?php if (Yii::app()->user->isGuest): ?>
 				<a href="<?php echo $this->createUrl('/site/login') ?>" title="Login">Войти</a>
 			<?php else: ?>
+				<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
 				<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Logout">Выйти</a>
 			<?php endif; ?>
 		</div>

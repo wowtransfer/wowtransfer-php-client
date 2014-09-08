@@ -80,19 +80,17 @@
 	</div>
 </fieldset>
 
-<div style="height: 1em;">
-<div style="float: right;">
+<div style="height: 1em; float: right;">
 Если опция недоступна значит она отключена в глобальных настройках.
 </div>
-</div>
-
 
 <div class="row submit">
 	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
     <?php //echo CHtml::submitButton('Создать', Yii::app()->request->requestUri, array(
-		echo CHtml::submitButton('Create', array(
+		echo CHtml::ajaxButton('Create', $this->createUrl('char', array('id' => $model->id)), array(
+		'type' => 'POST',
 		'beforeSend' => 'function() { $("#create-char-wait").css("visibility", "visible"); $("#sql-content").text(""); }',
-		'success' => 'js: function(data) { OnCreateCharClick(data); }',
+		'success' => 'js: function(data) { OnCreateCharClick(this, data); }',
 		'title' => 'Create character',
 	)); ?>
 	<?php echo CHtml::link('Cancel', Yii::app()->request->ScriptUrl . '/transfers'); ?>

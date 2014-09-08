@@ -23,14 +23,14 @@ class UserIdentity extends CUserIdentity
 	{
 		switch (Yii::app()->params['core']) // TODO: use pattern
 		{
-			case 'trinity':
+			case 'trinity_335a':
 				$account = new AccountTrinity();
 				break;
-			case 'cmangos':
+			case 'cmangos_335a':
 				$account = new AccountCMangos();
 				break;
 			default:
-				throw new Exception('Unknown core. See `params` section in main.php file.');
+				throw new Exception('Unknown core. See config/app.php file.');
 		}
 
 		if (!$account->authenticate($this->username, $this->password))
