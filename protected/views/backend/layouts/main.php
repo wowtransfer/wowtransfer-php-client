@@ -14,8 +14,10 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/backend.css" />
 
-	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/chdphp.js"></script>
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/backend.js"></script>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -25,6 +27,13 @@
 <div class="container" id="page">
 
 	<div id="header">
+		<div id="login">
+			<?php if (Yii::app()->user->isGuest): ?>
+				<a href="<?php echo $this->createUrl('/site/login') ?>" title="Login">Войти</a>
+			<?php else: ?>
+				<a href="<?php echo $this->createUrl('/site/logout') ?>" title="Logout">Выйти</a>
+			<?php endif; ?>
+		</div>
 		<div id="logo">Админка</div>
 	</div><!-- header -->
 
@@ -32,13 +41,10 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Сайт','url'=>Yii::app()->params['siteUrl']),
-				array('label'=>'Главная', 'url'=>array('/site/index')),
-				array('label'=>'Заявки', 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest),
+				array('label'=>'Заявки', 'url'=>array('/transfers/index'), 'visible' => !Yii::app()->user->isGuest),
 				array('label'=>'Конфигурации', 'url'=>array('/tconfigs')),
-				array('label'=>'Войти', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Выйти (' . Yii::app()->user->name . ', ' . Yii::app()->user->getRole() . ')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Administration', 'url' => Yii::app()->request->baseUrl . '/admin.php', 'visible'=>Yii::app()->user->isAdmin()),
-				array('label'=>'Приложение', 'url' => Yii::app()->request->baseUrl, 'visible'=>Yii::app()->user->isAdmin())
+				array('label'=>'Настройка', 'url'=>array('/configs')),
+				array('label'=>'Приложение', 'url' => Yii::app()->request->baseUrl, 'visible'=>Yii::app()->user->isAdmin()),
 			),
 		)); ?>
 	</div><!-- mainmenu -->

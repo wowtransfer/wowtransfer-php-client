@@ -2,10 +2,11 @@
 
 return array(
 	'siteUrl'=>'/',
-	'adminEmail'=>'admin@example.com',
-	'core'=>'trinity',
-	'maxTransferCount'=>5,
-	'maxAccountCharCount'=>10,
+	'apiBaseUrl' => 'http://wowtransfer2/api.php/api/v1',
+	'emailAdmin'=>'admin@example.com',
+	'core'=>'trinity_335a',
+	'maxTransfersCount'=>55,
+	'maxAccountCharCount'=>25,
 	// array of usernames,
 	'admins'=>array('admin'),
 	// array of usernames

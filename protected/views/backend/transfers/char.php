@@ -14,14 +14,14 @@
 
 <h1>Создание персонажа по заявке #<?php echo $model->id; ?></h1>
 
-<div style="float: right; border: 1px solid blue; width: 260px; height: 120px;">
+<div style="float: right; width: 260px; height: 120px;">
 <a href="#">Clear character's data by GUID and ID</a> <span style="color: green;">safe</span><br>
 <a href="#">Clear character's data by GUID</a> <span style="color: orange;">unsafe</span><br>
 <a href="#">Show character's info by GUID and ID</a><br>
 <a href="#">View lua-dump</a><br>
 <a href="#">View decrypted lua-dump</a><br>
-<a href="#">Список заявок</a><br>
-<a href="#">Управление заявками</a>
+<a href="<?php echo $this->createUrl('/transfers/index') ?>">Список заявок</a><br>
+<a href="<?php echo $this->createUrl('/transfers/admin') ?>">Управление заявками</a>
 </div>
 
 <div style="margin: 5px 0; border: 1px solid blue; width: 430px; height: 140px;">
@@ -62,7 +62,7 @@
 <?php echo $form->hiddenField($model, 'id'); ?>
 
 <fieldset>
-	<legend><?php echo $form->labelEx($model,'transferOptions'); ?></legend>
+	<legend><?php echo $form->labelEx($model, 'transferOptions'); ?></legend>
 
 	<div class="row">
 		<div>
@@ -93,8 +93,8 @@
 		echo CHtml::submitButton('Create', array(
 		'beforeSend' => 'function() { $("#create-char-wait").css("visibility", "visible"); $("#sql-content").text(""); }',
 		'success' => 'js: function(data) { OnCreateCharClick(data); }',
-	)); ?> Create character by AJAX
-	<?php echo CHtml::button('Delete'); ?> Delete transfered character by AJAX...<br>
+		'title' => 'Create character',
+	)); ?>
 	<?php echo CHtml::link('Cancel', Yii::app()->request->ScriptUrl . '/transfers'); ?>
 </div>
 
@@ -124,18 +124,4 @@
 <?php endfor; ?>
 </div>
 
-<pre id="sql-content" style="border: 1px solid blue; height: 400px; overflow: auto;"><?php echo $sql; ?></pre>
-
-<!--<div id="run-queries" style="border: 1px solid blue; height: 100px;">-->
-<?php /*foreach ($queries as $i => $query): ?>
-	<div>
-		<div>
-			<?php echo $i + 1, ': ', $query['status']; ?>
-		</div>
-		<div class="flash-success">
-			<?php echo $query['query']; ?>
-		</div>
-	</div>
-<?php endforeach; */ ?>
-
-<!--</div>-->
+<pre id="sql-content" style="border: 1px solid blue; height: 300px; overflow: auto;"><?php echo $sql; ?></pre>

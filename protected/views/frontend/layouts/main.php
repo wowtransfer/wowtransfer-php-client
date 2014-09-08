@@ -14,6 +14,7 @@
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles.css" />
 
 	<!--
 	<link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css">
@@ -29,6 +30,13 @@
 <div class="container" id="page">
 
 	<div id="header">
+		<div id="login">
+			<?php if (Yii::app()->user->isGuest): ?>
+				<a href="<?php echo $this->createUrl('/site/login') ?>" title="Login">Войти</a>
+			<?php else: ?>
+				<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Logout">Выйти</a>
+			<?php endif; ?>
+		</div>
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 
@@ -36,12 +44,10 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Сайт','url'=>Yii::app()->params['siteUrl']),
-				array('label'=>'Главная', 'url'=>array('/site/index')),
-				array('label'=>'Заявки', 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest),
+				array('label'=>'Заявки', 'url'=>array('/transfers/index'), 'visible' => !Yii::app()->user->isGuest),
 				array('label'=>'Помощь', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Войти', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Выйти (' . Yii::app()->user->name . ', ' . Yii::app()->user->getRole() . ')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Administration', 'url' => Yii::app()->request->baseUrl . '/admin.php', 'visible'=>Yii::app()->user->isAdmin())
+				array('label'=>'Администрирование', 'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
+					'visible'=>Yii::app()->user->isAdmin(), 'htmlOptions' => array('style' => 'float: right;')),
 			),
 		)); ?>
 	</div><!-- mainmenu -->

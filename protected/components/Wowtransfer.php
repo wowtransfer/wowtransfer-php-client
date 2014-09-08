@@ -76,18 +76,19 @@ class Wowtransfer
 	 */
 	public function dumpToSql($dumpLua, $accountId, $configuration)
 	{
-		$filePath = sys_get_temp_dir() . '/' . uniqid('lua') . '.lua';
+		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
 		$file = fopen($filePath, 'w');
 		if (!$file)
 			return 'fopen failed... todo!';
 		fwrite($file, $dumpLua);
 		fclose($file);
 
-		$ch = curl_init($this->serviceBaseUrl . 'dumps/sql');
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'dumps/sql');
 		//curl_setopt($ch, CURLOPT_HEADER, 1);
 		//curl_setopt($ch, CURLOPT_NOBODY, 1);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
 		curl_setopt($ch, CURLOPT_POST, 1);
 		$postfields = array(
 			'dump_lua' => '@' . $filePath,
@@ -95,10 +96,15 @@ class Wowtransfer
 			'account_id' => $accountId
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+		//curl_setopt($ch, CURLOPT_VERBOSE, true);
+		//$verbose = fopen('c:/1.txt', 'w');
+		//curl_setopt($ch, CURLOPT_STDERR, $verbose);
 
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch); //*/
+		curl_close($ch);
+
+		return print_r($result, true);
 
 		unlink($filePath);
 

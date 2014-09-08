@@ -12,7 +12,7 @@ $this->breadcrumbs=array(
 <h1>Авторизация</h1>
 
 <div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form = $this->beginWidget('CActiveForm', array(
 	'id'=>'login-form',
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(

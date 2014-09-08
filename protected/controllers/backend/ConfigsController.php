@@ -1,20 +1,18 @@
 <?php
 
-class SiteController extends BackendController
+class ConfigsController extends Controller
 {
 	public function actionIndex()
 	{
-		$this->render('index');
-	}
-
-	public function actionLogin()
-	{
-		$this->redirect(Yii::app()->request->baseUrl . '/');
-	}
-
-	public function actionLogout()
-	{
-		$this->redirect(Yii::app()->request->baseUrl . '/index.php/site/logout');
+		$model = new AppConfigForm;
+		if (isset($_POST['AppConfigForm']))
+		{
+			$model->attributes = $_POST['AppConfigForm'];
+			if ($model->validate())
+				$model->SaveToFile();
+		}
+		$model->LoadFromFile();
+		$this->render('index', array('model' => $model));
 	}
 
 	// Uncomment the following methods and override them if needed

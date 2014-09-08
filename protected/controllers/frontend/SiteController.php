@@ -32,10 +32,11 @@ class SiteController extends FrontendController
 		//$this->render('index');
 		if (Yii::app()->user->isGuest)
 		{
-			$this->redirect($this->createUrl('guest'));
+			$this->redirect($this->createUrl('login'));
 		}
 
-		$this->render('index');
+		//$this->render('index');
+		$this->redirect($this->createUrl('/transfers'));
 	}
 
 	public function actionGuest()
