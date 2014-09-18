@@ -28,3 +28,9 @@
 	padding: 5px 10px 0;
 	text-align: right;
 }
+
+#admin-switch
+{
+	float: right;
+	padding: 4px 10px 0 0;
+}

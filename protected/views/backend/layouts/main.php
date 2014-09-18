@@ -44,9 +44,14 @@
 				array('label'=>'Заявки', 'url'=>array('/transfers/index'), 'visible' => !Yii::app()->user->isGuest),
 				array('label'=>'Конфигурации', 'url'=>array('/tconfigs')),
 				array('label'=>'Настройка', 'url'=>array('/configs')),
-				array('label'=>'Приложение', 'url' => Yii::app()->request->baseUrl, 'visible'=>Yii::app()->user->isAdmin()),
 			),
 		)); ?>
+
+	<!-- Admin / Application switch -->
+	<?php if (Yii::app()->user->isAdmin()): ?>
+		<div id="admin-switch"><a href="<?php echo Yii::app()->request->baseUrl; ?>">Приложение</a></div>
+	<?php endif; ?>
+
 	</div><!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(

@@ -48,11 +48,15 @@
 				array('label'=>'Сайт','url'=>Yii::app()->params['siteUrl']),
 				array('label'=>'Заявки', 'url'=>array('/transfers/index'), 'visible' => !Yii::app()->user->isGuest),
 				array('label'=>'Помощь', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Администрирование', 'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
-					'visible'=>Yii::app()->user->isAdmin(), 'htmlOptions' => array('style' => 'float: right;')),
 			),
 		)); ?>
 	</div><!-- mainmenu -->
+
+	<!-- Admin / Application switch -->
+	<?php if (Yii::app()->user->isAdmin()): ?>
+		<div id="admin-switch"><a href="<?php echo Yii::app()->request->baseUrl; ?>/admin.php/transfers/index">Администрирование</a></div>
+	<?php endif; ?>
+
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
@@ -67,6 +71,7 @@
 		Copyright &copy; <?php echo date('Y'); ?> <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
+		<?php echo Yii::app()->request->baseUrl; ?>
 	</div><!-- footer -->
 
 </div><!-- page -->
