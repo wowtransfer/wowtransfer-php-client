@@ -6,7 +6,30 @@
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+	<?php echo $data->id; ?>
+
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'url' => $this->createUrl('/transfers/delete', array('id' => $data->id)),
+		'icon' => 'remove',
+		'size' => 'small',
+		'htmlOptions' => array('class' => 'pull-right'),
+	)); ?>
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'url' => $this->createUrl('/transfers/update', array('id' => $data->id)),
+		'icon' => 'pencil',
+		'size' => 'small',
+		'htmlOptions' => array('class' => 'pull-right'),
+	)); ?>
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'url' => $this->createUrl('/transfers/view', array('id' => $data->id)),
+		'icon' => 'eye-open',
+		'size' => 'small',
+		'htmlOptions' => array('class' => 'pull-right'),
+	)); ?>
+
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
@@ -37,6 +60,13 @@
 	<?php echo CHtml::encode($data->username_new); ?>
 	<br />
 
+	<div><b>Опции переноса:</b>
+	<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
+			'model' => $data,
+			'options' => $data->getTransferOptionsToUser()
+		));
+			?>
+	</div>
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('char_guid')); ?>:</b>
 	<?php echo CHtml::encode($data->char_guid); ?>

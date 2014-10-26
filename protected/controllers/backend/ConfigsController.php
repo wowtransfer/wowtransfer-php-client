@@ -12,7 +12,21 @@ class ConfigsController extends Controller
 				$model->SaveToFile();
 		}
 		$model->LoadFromFile();
+		$model->adminsStr = $model->getAdminsStr();
 		$this->render('index', array('model' => $model));
+	}
+
+	public function actionToptions()
+	{
+		$model = new ToptionsConfigForm;
+		if (isset($_POST['ToptionsConfigForm']))
+		{
+			$model->options = $_POST['ToptionsConfigForm'];
+			if ($model->validate())
+				$model->save();
+		}
+		$model->load();
+		$this->render('toptions', array('options' => $model->options));
 	}
 
 	// Uncomment the following methods and override them if needed

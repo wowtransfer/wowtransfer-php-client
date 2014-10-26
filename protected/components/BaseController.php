@@ -39,4 +39,11 @@ class BaseController extends CController
 				$this->render('error', $error);
 		}
 	}
+
+	public function init()
+	{
+		parent::init();
+
+		//$booster = Yii::app()->getComponent('booster');
+	}
 }

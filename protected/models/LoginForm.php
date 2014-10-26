@@ -53,7 +53,7 @@ class LoginForm extends CFormModel
 				if ($this->_identity->errorCode === UserIdentity::ERROR_ACCOUNT_ONLINE)
 					$this->addError('error', Yii::t('app', 'Account is online.'));
 				else
-					$this->addError('password', Yii::t('app', 'Incorrect username or password.'));
+					$this->addError('error', Yii::t('app', 'Incorrect username or password.'));
 			}
 		}
 	}

@@ -4,12 +4,15 @@
 function OnCreateCharClick(button, data, textStatus, jqXHR)
 {
 	var createCharErrorContainer = $("#create-char-error");
-	var sqlContainer = $("#sql-content");
+	var sqlContainer = $("#create-char-sql");
 	var runQueriesContainer = $("#run-queries-table");
 
 	$("#create-char-wait").css("visibility", "hidden");
+	$("#btn-create-char").hide();
 	sqlContainer.text("");
+	sqlContainer.show();
 	runQueriesContainer.text("");
+	runQueriesContainer.show();
 	createCharErrorContainer.hide();
 
 	if (data == "")

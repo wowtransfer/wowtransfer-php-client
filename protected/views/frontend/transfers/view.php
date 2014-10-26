@@ -8,10 +8,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список заявок', 'url'=>array('index')),
-	array('label'=>'Создать заявку', 'url'=>array('create')),
-	array('label'=>'Изменить заявку', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Удалить заявку', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
+	array('label'=>'Создать заявку', 'url'=>array('create'), 'icon' => 'plus'),
+	array('label'=>'Изменить заявку', 'url'=>array('update', 'id'=>$model->id), 'icon' => 'pencil'),
+	array('label'=>'Удалить заявку', 'url'=>'#', 'icon' => 'remove', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 );
 ?>
 

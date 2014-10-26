@@ -44,9 +44,13 @@ admin.php
 * /transfers/update/id  - update transfer's attributes
 * /transders/delete/id  - delete transfer
 * /transfers/char/id    - handle of character
-* /transfers/charinfo/guid - view character's info
 * /transfers/createchar/id  - create character by transfer's id
 * /transfers/deletechar/id  - delete character by transfer's id
+
+* /char/create/id       - create character by transfer's id
+* /char/delete/id       - delete character by transfer's id
+* /char/view/id         - view character's info
+
 
 
 ## SQL ##

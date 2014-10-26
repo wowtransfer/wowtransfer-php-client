@@ -9,9 +9,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список заявок', 'url'=>array('index')),
-	array('label'=>'Просмотр заявки', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Управление заявками', 'url'=>array('admin')),
+	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
+	array('label'=>'Просмотр заявки', 'url'=>array('view', 'id'=>$model->id), 'icon' => 'eye-open'),
+	array('label'=>'Управление заявками', 'url'=>array('admin'), 'icon' => ''),
 );
 ?>
 

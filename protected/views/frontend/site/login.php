@@ -7,36 +7,40 @@ $this->pageTitle = 'Авторизация';
 $this->breadcrumbs=array(
 	'Авторизация',
 );
+
 ?>
 
-<h1>Авторизация</h1>
+<?php if ($model->hasErrors()): ?>
+	<div class="flash-error">
+		<?php echo CHtml::errorSummary($model); ?>
+	</div>
+<?php endif; ?>
 
-<div class="form">
-<?php $form = $this->beginWidget('CActiveForm', array(
-	'id'=>'login-form',
-	'enableClientValidation'=>true,
-	'clientOptions'=>array(
-		'validateOnSubmit'=>true,
-	),
+<div>
+<h1 class="text-center">Авторизация</h1>
+</div>
+<div class="form auth-form">
+<?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
+	'id' => 'loginForm',
+	'type' => 'vertical',
+	'htmlOptions' => array('class' => 'well'),
 )); ?>
 
-	<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->textFieldGroup($model, 'username', array('size' => 20)); ?>
+	<?php echo $form->passwordFieldGroup($model, 'password', array('size' => 20)); ?>
+	<?php //echo $form->checkboxGroup($model, 'remember'); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username'); ?>
-		<?php echo $form->error($model,'username'); ?>
-	</div>
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'submit',
+		'context' => 'primary',
+		'label' => 'Войти',
+	)); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password'); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Войти'); ?>
-	</div>
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'label' => 'Отмена',
+		'url' => '/',
+	)); ?>
 
 <?php $this->endWidget(); ?>
-</div><!-- form -->
+</div>

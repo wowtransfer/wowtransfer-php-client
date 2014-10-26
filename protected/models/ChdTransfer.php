@@ -25,8 +25,11 @@
 class ChdTransfer extends CActiveRecord
 {
 	// virtual attributes
+	// TODO: rename `$options` to optionsStr?
+	// TODO: rename `$transferOptions` to optionsArr?
 	public $transferOptions = array();
 	public $fileLua;
+	public $pass2;
 
 	/**
 	 * @return string the associated database table name
@@ -55,12 +58,13 @@ class ChdTransfer extends CActiveRecord
 			array('options, comment', 'length', 'max'=>255),
 			array('create_char_date', 'safe'),
 
-			array('server, realmlist, realm, account, pass, username_old, transferOptions', 'required'),
+			array('server, realmlist, realm, account, pass, username_old', 'required'),
 			array('transferOptions', 'type', 'type' => 'array', 'allowEmpty' => false),
 
 			// create
-			array('file_lua, fileLua', 'required', 'on' => 'create'),
+			array('pass2', 'required', 'on' => 'create'),
 			array('fileLua', 'file', 'types' => 'lua', 'allowEmpty' => false, 'maxFiles' => 1, 'maxSize' => 1024 * 600, 'on' => 'create'),
+			array('pass', 'compare', 'compareAttribute' => 'pass2', 'operator' => '=', 'on'=>'create'),
 
 			// update
 
@@ -94,6 +98,7 @@ class ChdTransfer extends CActiveRecord
 			'realm' => 'Реалм',
 			'account' => 'Аккаунта',
 			'pass' => 'Пароль',
+			'pass2' => 'Подтверждение пароля',
 			'username_old' => 'Имя персонажа',
 			'username_new' => 'Имя персонажа на текущем сервере',
 			'char_guid' => 'GUID персонажа',

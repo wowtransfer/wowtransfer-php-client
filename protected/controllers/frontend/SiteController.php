@@ -49,6 +49,9 @@ class SiteController extends FrontendController
 	 */
 	public function actionLogin()
 	{
+		if (!Yii::app()->user->isGuest)
+			$this->redirect(Yii::app()->request->baseUrl);
+
 		$model = new LoginForm;
 
 		// if it is ajax validation request

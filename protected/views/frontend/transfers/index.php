@@ -6,8 +6,8 @@ $this->breadcrumbs=array(
 	'Заявки на перенос',
 );
 
-$this->menu=array(
-	array('label'=>'Создать заявку', 'url'=>array('create')),
+$this->menu = array(
+	array('label' => 'Создать заявку', 'url'=>array('create'), 'icon' => 'plus'),
 );
 ?>
 

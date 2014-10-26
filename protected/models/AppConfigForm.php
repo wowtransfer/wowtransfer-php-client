@@ -2,7 +2,11 @@
 
 class AppConfigForm extends CFormModel
 {
-	public $admins = array();
+	private $admins = array();
+	private $moders = array();
+
+	public $adminsStr = '';
+	public $moderatorsStr = '';
 	public $siteUrl = '';
 	public $apiBaseUrl = '';
 	public $emailAdmin = '';
@@ -73,5 +77,24 @@ class AppConfigForm extends CFormModel
 		}
 
 		return true;
+	}
+
+	public function getAdminsStr()
+	{
+		return implode(',', $this->admins);
+	}
+
+	public function getCores()
+	{
+		$service = new Wowtransfer();
+		$cores = $service->getCores();
+		if (!$cores || !is_array($cores))
+			return false;
+
+		$result = array();
+		foreach ($cores as $core)
+			$result[$core['name']] = $core['title'];
+
+		return $result;
 	}
 }

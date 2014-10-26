@@ -2,12 +2,13 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
-//Yii::setPathOfAlias('booster', dirname(__FILE__) . '/../extensions/yiibooster');
+Yii::setPathOfAlias('booster', dirname(__FILE__) . '/../extensions/yiibooster');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
+	'defaultController'=>'site',
 	'name'=>'Перенос персонажей WoW',
 
 	'behaviors'=>array(
@@ -26,7 +27,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		//'booster.*',
+		'booster.helpers.TbHtml',
 	),
 
 	'modules'=>array(
@@ -37,21 +38,24 @@ return array(
 			'password'=>'123',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+			'generatorPaths'=>array('booster.gii'),
 		),
 	),
 
 	// application components
 	'components'=>array(
 		'user'=>array(
-			'class' => 'WebUser',
+			'class'=>'WebUser',
 			// enable cookie-based authentication
 			'allowAutoLogin'=>false,
 		),
 		// uncomment the following to enable URLs in path-format
 
-		/*'booster' => array(
-			'class' => 'application.extensions.yiibooster.components.Booster',
-		),*/
+		'booster' => array(
+			'class'=>'ext.yiibooster.components.Booster',
+			'responsiveCss'=>true,
+            //'fontAwesomeCss'=>true,
+		),
 
 		'urlManager'=>array(
 			'urlFormat'=>'path',
@@ -75,12 +79,12 @@ return array(
 
 		// to app.php
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=characters',
-			'emulatePrepare' => true,
-			'username' => 'wowtransfer',
-			'password' => 'wowtransfer',
-			'charset' => 'utf8',
-			'enableParamLogging' => true,
+			'connectionString'=>'mysql:host=localhost;dbname=characters',
+			'emulatePrepare'=>true,
+			'username'=>'wowtransfer',
+			'password'=>'wowtransfer',
+			'charset'=>'utf8',
+			'enableParamLogging'=>true,
 		),
 
 		'errorHandler'=>array(

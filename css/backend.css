@@ -1,6 +1,48 @@
-#sql-content
+#create-char-sql
 {
 	border: 1px solid blue;
 	height: 400px;
 	overflow: auto;
+	margin: 10px 0 5px;
+	border: 1px solid blue;
+}
+
+#create-char-error
+{
+	font-family: monospace;
+	white-space: pre-wrap;
+}
+
+.query-res
+{
+	width: 20px;
+	height: 16px;
+	display: inline-block;
+	border: 1px solid black;
+	margin: 1px 0 0 1px;
+	padding: 1px;
+	text-align: center;
+	line-height: 16px;
+}
+
+.query-res-success
+{
+	background-color: #00DF70;
+}
+
+.toptions-row
+{
+	margin: 0;
+	padding: 0;
+}
+
+.toptions-row input, label
+{
+	margin: 0;
+	padding: 0;
+}
+
+.toptions-row td
+{
+	padding: 0 10px;
 }

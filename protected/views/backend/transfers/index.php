@@ -7,11 +7,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Управление заявками', 'url'=>array('admin')),
+	array('label'=>'Управление заявками', 'url'=>array('admin'), 'icon' => ''),
 );
 ?>
 
-<h1>Заявки на перенос.</h1>
+<h1>Заявки на перенос</h1>
 
 <?php if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="flash-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>

@@ -1,16 +1,13 @@
 <?php
+
 return CMap::mergeArray(
 
 require_once(dirname(__FILE__).'/main.php'),
 
 array(
-	'defaultController' => 'site',
+	'theme'=>'frontend',
 
 	'components' => array(
-		'errorHandler'=>array(
-			// use 'site/error' action to display errors
-			'errorAction'=>'site/error',
-		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

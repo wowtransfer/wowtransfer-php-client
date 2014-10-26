@@ -43,8 +43,11 @@ class TransfersController extends FrontendController
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$model = $this->loadModel($id);
+		$model->options = str_replace(';', '; ', $model->options); // TODO: hack
+
+		$this->render('view', array(
+			'model' => $model,
 		));
 	}
 
@@ -64,8 +67,17 @@ class TransfersController extends FrontendController
 		{
 			$model->attributes = $_POST['ChdTransfer'];
 			$model->fileLua = CUploadedFile::getInstance($model, 'fileLua');
+			//CVarDumper::dump($_POST['ChdTransfer'], 10, true);
 			if ($model->save())
 				$this->redirect(array('view','id'=>$model->id));
+		}
+		else
+		{
+			if (empty($model->transferOptions))
+			{
+				$model->transferOptions = array_keys(Wowtransfer::getTransferOptions());
+				$model->options = implode(';', $model->transferOptions);
+			}
 		}
 
 		if (defined('YII_DEBUG'))
@@ -74,13 +86,12 @@ class TransfersController extends FrontendController
 			$model->realmlist = 'realmlist';
 			$model->realm = 'realm';
 			$model->account = 'account';
-			$model->pass = '12345';
+			$model->pass = 'password';
+			$model->pass2 = 'password';
 		}
-
-		if (empty($model->transferOptions))
-			$model->transferOptions = array_keys(Wowtransfer::getTransferOptions());
-		$this->render('create',array(
-			'model'=>$model,
+		
+		$this->render('create', array(
+			'model' => $model,
 		));
 	}
 
@@ -97,20 +108,18 @@ class TransfersController extends FrontendController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ChdTransfer']))
+		if (isset($_POST['ChdTransfer']))
 		{
-			$model->attributes=$_POST['ChdTransfer'];
-			if($model->validate())
-			{
-				if ($model->save())
-					$this->redirect(array('view','id'=>$model->id));
-				//CVarDumper::dump($model->attributes, 10, true);
-				//return;
-			}
+			$model->attributes = $_POST['ChdTransfer'];
+			//CVarDumper::dump($model->attributes, 10, true);
+			//return;
+
+			if ($model->save())
+				$this->redirect(array('index'));
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
+		$this->render('update', array(
+			'model' => $model,
 		));
 	}
 
@@ -159,7 +168,9 @@ class TransfersController extends FrontendController
 		if ($model->account_id != Yii::app()->user->id)
 			throw new CHttpException(403,'Error. Unknown transfer id.');
 		if (!empty($model->options))
+		{
 			$model->transferOptions = explode(';', $model->options);
+		}
 
 		return $model;
 	}

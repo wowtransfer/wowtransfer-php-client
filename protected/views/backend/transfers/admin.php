@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список заявок', 'url'=>array('index')),
+	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
 );
 
 Yii::app()->clientScript->registerScript('search', "

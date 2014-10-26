@@ -118,6 +118,8 @@ class TransfersController extends BackendController
 
 	public function actionChar($id)
 	{
+		$this->layout = '//layouts/column1';
+
 		$model = $this->loadModel($id);
 		if ($model->char_guid > 0)
 			throw new CHttpException(403, 'Character created! GUID = ' . $model->char_guid);
@@ -186,6 +188,7 @@ class TransfersController extends BackendController
 		if ($model === null)
 			throw new CHttpException(404, 'The requested page does not exist.');
 		$model->transferOptions = explode(';', $model->options);
+		 $model->options = str_replace(';', ', ', $model->options);
 		return $model;
 	}
 

@@ -8,10 +8,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список заявок', 'url'=>array('index')),
-	array('label'=>'Изменить заявку', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Удалить заявку', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Управление заявками', 'url'=>array('admin')),
+	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
+	array('label'=>'Изменить заявку', 'url'=>array('update', 'id'=>$model->id), 'icon' => 'pencil'),
+	array('label'=>'Удалить заявку', 'url'=>'#', 'icon' => 'remove', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Управление заявками', 'url'=>array('admin'), 'icon' => ''),
+	($model->char_guid > 0) ?
+	array('label'=>'Удалить персонажа', 'url'=>array('/transfers/deletechar/' . $model->id), 'icon' => '') : 
+	array('label'=>'Создать персонажа', 'url'=>array('/transfers/char/' . $model->id), 'icon' => ''),
 );
 ?>
 
@@ -39,3 +42,14 @@ $this->menu=array(
 		'comment',
 	),
 )); ?>
+
+<div class="form-actions">
+<?php
+$this->widget('booster.widgets.TbButton', array(
+	'buttonType' => 'link',
+	'label' => 'Отмена',
+	'icon' => 'cancel',
+	'url' => $this->createUrl('/transfers'),
+));
+?>
+</div>

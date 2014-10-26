@@ -1,25 +1,13 @@
 <?php
 
-class SiteController extends BackendController
+class TconfigsController extends Controller
 {
 	public function actionIndex()
 	{
-		$this->render('index');
-	}
-
-	public function actionLogin()
-	{
-		$this->redirect(Yii::app()->request->baseUrl . '/');
-	}
-
-	public function actionLogout()
-	{
-		$this->redirect(Yii::app()->request->baseUrl . '/index.php/site/logout');
-	}
-
-	public function actionSitemap()
-	{
-		$this->render('sitemap');
+		$service = new Wowtransfer;
+		
+		$model = $service->getTransferConfigs();
+		$this->render('index', array('tconfigs' => $model));
 	}
 
 	// Uncomment the following methods and override them if needed

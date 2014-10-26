@@ -1,22 +1,21 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
-<div class="span-19">
+
+<div style="float: right; width: 215px;">
+	<div id="sidebar">
+	<?php
+		$this->widget('booster.widgets.TbMenu', array(
+			'type' => 'list',
+			'stacked' => true,
+			'items' => $this->menu,
+		));
+	?>
+	</div>
+</div>
+
+<div style="margin: 0 230px 0 0;">
 	<div id="content">
 		<?php echo $content; ?>
 	</div><!-- content -->
-</div>
-<div class="span-5 last">
-	<div id="sidebar">
-	<?php
-		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>'Операции',
-		));
-		$this->widget('zii.widgets.CMenu', array(
-			'items'=>$this->menu,
-			'htmlOptions'=>array('class'=>'operations'),
-		));
-		$this->endWidget();
-	?>
-	</div><!-- sidebar -->
 </div>
 <?php $this->endContent(); ?>

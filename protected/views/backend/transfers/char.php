@@ -6,6 +6,13 @@
 /* @var $queries */
 /* @var $queriesCount */
 /* @var $sql */
+
+$this->breadcrumbs=array(
+	'Заявки на перенос'=>array('index'),
+	$model->id=>array('view','id'=>$model->id),
+	'Создание персонажа',
+);
+
 ?>
 
 <div style="float: right; width: 100px; border: 1px solid blue;">
@@ -66,7 +73,7 @@
 
 	<div class="row">
 		<div>
-			<?php echo $form->error($model,'transferOptions'); ?>
+			<?php echo $form->error($model, 'transferOptions'); ?>
 		</div>
 		<?php echo $form->checkBoxList($model, 'transferOptions', $model->getTransferOptionsToUser(),
 			array(
@@ -80,20 +87,36 @@
 	</div>
 </fieldset>
 
-<div style="height: 1em; float: right;">
+<div style="height: 1em; text-align: right;">
 Если опция недоступна значит она отключена в глобальных настройках.
 </div>
 
 <div class="row submit">
 	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
-    <?php //echo CHtml::submitButton('Создать', Yii::app()->request->requestUri, array(
-		echo CHtml::ajaxButton('Create', $this->createUrl('char', array('id' => $model->id)), array(
-		'type' => 'POST',
-		'beforeSend' => 'function() { $("#create-char-wait").css("visibility", "visible"); $("#sql-content").text(""); }',
-		'success' => 'js: function(data) { OnCreateCharClick(this, data); }',
-		'title' => 'Create character',
-	)); ?>
-	<?php echo CHtml::link('Cancel', Yii::app()->request->ScriptUrl . '/transfers'); ?>
+
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'ajaxButton',
+		'label' => 'Создать',
+		'url' => $this->createUrl('char', array('id' => $model->id)),
+		'ajaxOptions' => array(
+			'type' => 'POST',
+			'beforeSend' => 'function() { $("#create-char-wait").css("visibility", "visible"); $("#create-char-sql").text(""); }',
+			'success' => 'function(data) { OnCreateCharClick(this, data); }',
+		),
+		'htmlOptions' => array(
+			'id' => 'btn-create-char',
+		),
+	));
+	?>
+
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'label' => 'Отмена',
+		'icon' => 'cancel',
+		'url' => $this->createUrl('/transfers'),
+	));
+
+	?>
 </div>
 
 <?php $this->endWidget(); ?>
@@ -107,19 +130,23 @@
 
 <?php $queriesContent = ''; ?>
 
-<div id="run-queries-table" style="border: 1px solid blue; margin: 0; padding: 0 2px 2px 0;">
-<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
-	<?php
-		if (isset($queries[$i])):
-			$query = $queries[$i];
-			$classStatus = 'query-res-success';
-		else:
-			$query = array('query'=>'', 'status'=>'&nbsp;');
-			$classStatus = '';
-		endif;
-	?>
-	<span class="query-res <?php echo $classStatus?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
-<?php endfor; ?>
-</div>
+<?php if ($queriesCount > 0): ?>
+	<div id="run-queries-table" style="border: 1px solid blue; margin: 0; padding: 0 2px 2px 0;">
+	<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
+		<?php
+			if (isset($queries[$i])):
+				$query = $queries[$i];
+				$classStatus = 'query-res-success';
+			else:
+				$query = array('query'=>'', 'status'=>'&nbsp;');
+				$classStatus = '';
+			endif;
+		?>
+		<span class="query-res <?php echo $classStatus?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
+	<?php endfor; ?>
+	</div>
+<?php else: ?>
+	<div id="run-queries-table" style="border: 1px solid blue; margin: 0; padding: 0 2px 2px 0; display: none;"></div>
+<?php endif; ?>
 
-<pre id="sql-content" style="border: 1px solid blue; height: 300px; overflow: auto;"><?php echo $sql; ?></pre>
+<pre id="create-char-sql" style="<?php echo empty($sql) ? 'display: none;' : ''; ?>"><?php echo $sql; ?></pre>
