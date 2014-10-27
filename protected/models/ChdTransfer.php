@@ -186,6 +186,23 @@ class ChdTransfer extends CActiveRecord
 		if ($this->isNewRecord)
 		{
 			$this->account_id = Yii::app()->user->id;
+
+			/* TODO: add limit parameter to application's configuration
+			if (isLimit)
+			{
+				$this->addError('Transfer count was limited by ___');
+				return false;
+			}
+			*/
+
+			/* TODO: add hash field for fileLua
+			if (checkDuplicate)
+			{
+				$this->addError('Transfer was alredy loaded');
+				return false;
+			}
+			*/
+
 			//$this->create_transfer_date = date('Y-m-d h:i:s'); // fills by MySQL
 			if (is_object($this->fileLua) && $this->fileLua instanceof CUploadedFile)
 				$this->file_lua = $this->luaDumpToDb(file_get_contents($this->fileLua->tempName));

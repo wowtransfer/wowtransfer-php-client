@@ -3,31 +3,36 @@
 /* @var $data ChdTransfer */
 ?>
 
-<div class="view">
+<div class="view" style="background-color: #CCFFFF;">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo $data->id; ?>
 
 	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'url' => $this->createUrl('/transfers/delete', array('id' => $data->id)),
+		'buttonType' => 'ajaxButton',
+		'url' => $this->createUrl('/transfers/delete', array('id' => $data->id, 'ajax' => 'delete')),
 		'icon' => 'remove',
 		'size' => 'small',
-		'htmlOptions' => array('class' => 'pull-right'),
+		'htmlOptions' => array('class' => 'pull-right', 'title' => 'Удалить'),
+		'ajaxOptions' => array(
+			'beforeSend' => 'js:function(){return confirm("' . Yii::t('app', 'Are you sure you want to delete this transfer #{id}?', array('{id}' => $data->id)) . '");}',
+			'success' =>'js:function(data){$.fn.yiiListView.update("transfer-list-view",{});}',
+			'type' => 'POST',
+		),
 	)); ?>
 	<?php $this->widget('booster.widgets.TbButton', array(
 		'buttonType' => 'link',
 		'url' => $this->createUrl('/transfers/update', array('id' => $data->id)),
 		'icon' => 'pencil',
 		'size' => 'small',
-		'htmlOptions' => array('class' => 'pull-right'),
+		'htmlOptions' => array('class' => 'pull-right', 'title' => 'Изменить...'),
 	)); ?>
 	<?php $this->widget('booster.widgets.TbButton', array(
 		'buttonType' => 'link',
 		'url' => $this->createUrl('/transfers/view', array('id' => $data->id)),
 		'icon' => 'eye-open',
 		'size' => 'small',
-		'htmlOptions' => array('class' => 'pull-right'),
+		'htmlOptions' => array('class' => 'pull-right', 'title' => 'Просмотр...'),
 	)); ?>
 
 	<br />
