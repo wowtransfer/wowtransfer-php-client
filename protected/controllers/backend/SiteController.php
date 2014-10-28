@@ -9,12 +9,12 @@ class SiteController extends BackendController
 
 	public function actionLogin()
 	{
-		$this->redirect(Yii::app()->request->baseUrl . '/');
+		$this->redirect(Yii::app()->baseUrl . '/');
 	}
 
 	public function actionLogout()
 	{
-		$this->redirect(Yii::app()->request->baseUrl . '/index.php/site/logout');
+		$this->redirect(Yii::app()->baseUrl . '/index.php/site/logout');
 	}
 
 	public function actionSitemap()

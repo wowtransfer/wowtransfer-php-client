@@ -4,6 +4,11 @@ class ConfigsController extends Controller
 {
 	public function actionIndex()
 	{
+		$this->render('index');
+	}
+
+	public function actionApp()
+	{
 		$model = new AppConfigForm;
 		if (isset($_POST['AppConfigForm']))
 		{
@@ -13,7 +18,7 @@ class ConfigsController extends Controller
 		}
 		$model->LoadFromFile();
 		$model->adminsStr = $model->getAdminsStr();
-		$this->render('index', array('model' => $model));
+		$this->render('app', array('model' => $model));
 	}
 
 	public function actionToptions()

@@ -1,14 +1,15 @@
 <?php /* @var $this Controller */ ?>
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon.ico" type="image/x-icon">
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/common.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/frontend.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/main.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/form.css">
+
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/frontend.css">
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -49,6 +50,7 @@
 	<!-- Admin / Application switch -->
 	<?php if (Yii::app()->user->isAdmin()): ?>
 		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'link',
 			'label' => 'Администрирование',
 			'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
 			'icon' => 'cog',
@@ -56,7 +58,7 @@
 		))?>
 	<?php endif; ?>
 
-	<?php if(isset($this->breadcrumbs)): ?>
+	<?php if (isset($this->breadcrumbs)): ?>
 		<?php $this->widget('booster.widgets.TbBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
