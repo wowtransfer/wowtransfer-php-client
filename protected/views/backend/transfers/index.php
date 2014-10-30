@@ -2,12 +2,12 @@
 /* @var $this TransfersController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
+$this->breadcrumbs = array(
 	'Заявки на перенос',
 );
 
-$this->menu=array(
-	array('label'=>'Управление заявками', 'url'=>array('admin'), 'icon' => ''),
+$this->menu = array(
+	array('label' => 'Управление заявками', 'url' => array('admin')),
 );
 ?>
 
@@ -18,6 +18,6 @@ $this->menu=array(
 <?php endif; ?>
 
 <?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'dataProvider' => $dataProvider,
+	'itemView' => '_view',
 )); ?>

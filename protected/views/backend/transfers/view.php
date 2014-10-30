@@ -2,12 +2,12 @@
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 
-$this->breadcrumbs=array(
-	'Заявки на перенос'=>array('index'),
+$this->breadcrumbs = array(
+	'Заявки на перенос' => array('index'),
 	$model->id,
 );
 
-$this->menu=array(
+$this->menu = array(
 	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
 	array('label'=>'Изменить заявку', 'url'=>array('update', 'id'=>$model->id), 'icon' => 'pencil'),
 	array('label'=>'Удалить заявку', 'url'=>'#', 'icon' => 'remove', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
@@ -21,8 +21,8 @@ $this->menu=array(
 <h1>Просмотр заявки #<?php echo $model->id; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
+	'data' => $model,
+	'attributes' => array(
 		'id',
 		'account_id',
 		'server',
@@ -37,18 +37,17 @@ $this->menu=array(
 		'account',
 		'pass',
 		'file_lua_crypt',
-		'file_lua',
 		'options',
 		'comment',
 	),
 )); ?>
 
-<div class="form-actions">
+<div style="margin-top: 10px;">
 <?php
 $this->widget('booster.widgets.TbButton', array(
 	'buttonType' => 'link',
 	'label' => 'Отмена',
-	'icon' => 'cancel',
+	'icon' => 'ban-circle',
 	'url' => $this->createUrl('/transfers'),
 ));
 ?>

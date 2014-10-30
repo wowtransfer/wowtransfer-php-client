@@ -15,15 +15,23 @@ function OnDeleteChar()
 
 	<div style="float: right;">
 	<?php if (!$data->char_guid): ?>
-		<a href="<?php echo $this->createUrl('char', array('id' => $data->id)); ?>">
-			<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/chd_create_char_16.png" alt="character">
-			Character
-		</a><br>
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'link',
+			'context' => 'success',
+			'label' => 'Create character',
+			'url' => $this->createUrl('char', array('id' => $data->id)),
+			'icon' => 'plane',
+		));?>
+		<br>
 	<?php else: ?>
-		<a href="<?php echo $this->createUrl('deletechar', array('id' => $data->id)); ?>" onclick="return OnDeleteChar();">
-			<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/chd_drop_char_16.png" alt="character">
-			Delete character
-		</a>
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'link',
+			'label' => 'Delete character',
+			'url' => $this->createUrl('deletechar', array('id' => $data->id)),
+			'icon' => 'remove',
+			'context' => 'danger',
+			'htmlOptions' => array('onclick' => 'return OnDeleteChar();'),
+		));?>
 	<?php endif; ?>
 	</div>
 

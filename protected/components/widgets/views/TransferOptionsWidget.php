@@ -48,7 +48,7 @@ $options = array_merge($options, array(
 <?php
 $optionsGlobal = Wowtransfer::getTransferOptions();
 $options = explode(';', $model->options);
-///CVarDumper::dump($options, 10, true);
+//CVarDumper::dump($options, 10, true);
 ?>
 
 <?php if (!$readonly): ?>
@@ -101,11 +101,12 @@ $options = explode(';', $model->options);
 			<?php if (isset($option['disabled'])): ?>
 				<?php echo CHtml::label($option['label'], false, array('style' => 'margin-left: 20px; color: gray;')); ?>
 			<?php else: ?>
-				<?php if (in_array($name, $options)): ?>
+				<!--<?php if (in_array($name, $options)): ?>
 					<img width="16" height="16" alt="" title="checked" src="<?php echo Yii::app()->baseUrl; ?>/images/checked.png">				
 				<?php else: ?>
 					<img width="16" height="16" alt="" title="unchecked" src="<?php echo Yii::app()->baseUrl; ?>/images/unchecked.png">
-				<?php endif; ?>
+				<?php endif; ?>-->
+				<span class="<?php echo in_array($name, $options) ? 'checked' : 'unchecked'; ?>"></span>
 				<?php echo CHtml::label($option['label'], false); ?>
 			<?php endif; ?>
 		</span>

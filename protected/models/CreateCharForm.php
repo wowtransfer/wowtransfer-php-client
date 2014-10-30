@@ -38,7 +38,6 @@ class CreateCharForm
 	{
 		$result = array();
 		$result['count'] = 0;
-		$result = array();
 
 		if (empty($sql))
 		{
@@ -145,6 +144,7 @@ class CreateCharForm
 			return $result;
 		}
 
+		$guid = 0;
 		$queries = $this->RunSql($result['sql']);
 		if (isset($queries['error']))
 		{

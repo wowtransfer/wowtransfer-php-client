@@ -1,6 +1,15 @@
 /**
  *
  */
+function OnBeforeCreateCharClick(button)
+{
+	$("#create-char-wait").css("visibility", "visible");
+	$("#create-char-sql").text("");
+}
+
+/**
+ *
+ */
 function OnCreateCharClick(button, data, textStatus, jqXHR)
 {
 	var createCharErrorContainer = $("#create-char-error");
@@ -8,7 +17,6 @@ function OnCreateCharClick(button, data, textStatus, jqXHR)
 	var runQueriesContainer = $("#run-queries-table");
 
 	$("#create-char-wait").css("visibility", "hidden");
-	$("#btn-create-char").hide();
 	sqlContainer.text("");
 	sqlContainer.show();
 	runQueriesContainer.text("");
@@ -25,6 +33,10 @@ function OnCreateCharClick(button, data, textStatus, jqXHR)
 	{
 		createCharErrorContainer.show();
 		createCharErrorContainer.text(result.error);
+	}
+	else
+	{
+		$("#btn-create-char").hide();
 	}
 	sqlContainer.text(result.sql);
 

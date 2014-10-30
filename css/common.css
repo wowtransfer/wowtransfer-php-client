@@ -68,6 +68,28 @@
 .tdata-icon.icon-taxi         { background-position: -156px     0; }
 .tdata-icon.icon-title        { background-position:      0     0; }
 
+.unchecked
+{
+	width: 16px;
+	height: 16px;
+	background-image: url(../images/checkbox.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	line-height: 24px;
+	display: inline-block;
+}
+
+.checked
+{
+	width: 16px;
+	height: 16px;
+	background-image: url(../images/checkbox.png);
+	background-position: -16px 0;
+	background-repeat: no-repeat;
+	line-height: 24px;
+	display: inline-block;
+}
+
 /* Transfer statuses */
 .tstatus
 {

@@ -2,7 +2,7 @@
 /* @var $this TconfigsController */
 /* @var $tconfigs array */
 
-$this->breadcrumbs=array(
+$this->breadcrumbs = array(
 	'Конфигурации переноса',
 );
 ?>

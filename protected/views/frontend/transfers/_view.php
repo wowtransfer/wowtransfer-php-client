@@ -67,10 +67,9 @@
 
 	<div><b>Опции переноса:</b>
 	<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
-			'model' => $data,
-			'options' => $data->getTransferOptionsToUser()
-		));
-			?>
+		'model' => $data,
+		'options' => $data->getTransferOptionsToUser()
+	));	?>
 	</div>
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('char_guid')); ?>:</b>

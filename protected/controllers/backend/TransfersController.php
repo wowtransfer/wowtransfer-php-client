@@ -32,8 +32,11 @@ class TransfersController extends BackendController
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$model = $this->loadModel($id);
+		$model->options = str_replace(';', ', ', $model->options);
+
+		$this->render('view', array(
+			'model' => $model,
 		));
 	}
 
@@ -44,19 +47,19 @@ class TransfersController extends BackendController
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model = $this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ChdTransfer']))
+		if (isset($_POST['ChdTransfer']))
 		{
-			$model->attributes=$_POST['ChdTransfer'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			$model->attributes = $_POST['ChdTransfer'];
+			if ($model->save())
+				$this->redirect(array('view','id' => $model->id));
 		}
 
-		$this->render('update',array(
+		$this->render('update', array(
 			'model'=>$model,
 		));
 	}
@@ -188,7 +191,7 @@ class TransfersController extends BackendController
 		if ($model === null)
 			throw new CHttpException(404, 'The requested page does not exist.');
 		$model->transferOptions = explode(';', $model->options);
-		 $model->options = str_replace(';', ', ', $model->options);
+
 		return $model;
 	}
 
