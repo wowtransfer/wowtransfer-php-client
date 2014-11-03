@@ -87,6 +87,8 @@ class TransfersController extends FrontendController
 			}
 		}
 
+		$model->pass = '';
+		$model->pass2 = '';
 		if (defined('YII_DEBUG'))
 		{
 			$model->server = 'server';
@@ -95,8 +97,9 @@ class TransfersController extends FrontendController
 			$model->account = 'account';
 			$model->pass = 'password';
 			$model->pass2 = 'password';
+			$model->username_old = 'username';
 		}
-		
+
 		$this->render('create', array(
 			'model' => $model,
 		));
@@ -109,7 +112,7 @@ class TransfersController extends FrontendController
 	 */
 	public function actionUpdate($id)
 	{
-		$model = $this->loadModel($id);
+		$model = $this->loadModel($id); // TODO: load some fields, without luaDump
 		$model->setScenario('update');
 
 		// Uncomment the following line if AJAX validation is needed
@@ -117,14 +120,20 @@ class TransfersController extends FrontendController
 
 		if (isset($_POST['ChdTransfer']))
 		{
-			$model->attributes = $_POST['ChdTransfer'];
-			//CVarDumper::dump($model->attributes, 10, true);
-			//return;
+			if (empty($_POST['ChdTransfer']['transferOptions']))
+				$model->addError('transferOptions', 'Заполните опции переноса');
+			else
+			{
+				$model->attributes = $_POST['ChdTransfer'];
+				//CVarDumper::dump($_POST['ChdTransfer'], 10, true);
+				//return;
 
-			if ($model->save())
-				$this->redirect(array('index'));
+				if ($model->save())
+					$this->redirect(array('index'));
+			}
 		}
 
+		$model->pass2 = $model->pass;
 		$this->render('update', array(
 			'model' => $model,
 		));
@@ -173,7 +182,7 @@ class TransfersController extends FrontendController
 		if ($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		if ($model->account_id != Yii::app()->user->id)
-			throw new CHttpException(403,'Error. Unknown transfer id.');
+			throw new CHttpException(403,'Error. Unknown transfer ID.');
 		if (!empty($model->options))
 		{
 			$model->transferOptions = explode(';', $model->options);

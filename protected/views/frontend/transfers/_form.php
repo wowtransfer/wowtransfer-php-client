@@ -22,14 +22,14 @@
 
 	<fieldset>
 		<legend>Удаленный сервер</legend>
-		<?php echo $form->textFieldGroup($model, 'server'); // array('size'=>30,'maxlength'=>100) ?>
-		<?php echo $form->textFieldGroup($model, 'realmlist'); // array('size'=>30,'maxlength'=>40) ?>
-		<?php echo $form->textFieldGroup($model, 'realm'); // array('size'=>30,'maxlength'=>40) ?>
-		<?php echo $form->textFieldGroup($model, 'account'); // array('size'=>30,'maxlength'=>32) ?>
-		<?php echo $form->passwordFieldGroup($model, 'pass'); // array('size'=>30,'maxlength'=>40) ?>
-		<?php echo $form->passwordFieldGroup($model, 'pass2'); // array('size'=>30,'maxlength'=>40) ?>
-		<?php echo $form->textFieldGroup($model, 'username_old'); // array('size'=>30,'maxlength'=>12) ?>
-		<?php echo $form->textFieldGroup($model, 'comment'); // array('size'=>60,'maxlength'=>255) ?>
+		<?php echo $form->textFieldGroup($model, 'server', array('hint' => 'Вводить без указания протокола (без http://), например, myserver.ru или twoserver.com')); ?>
+		<?php echo $form->textFieldGroup($model, 'realmlist'); ?>
+		<?php echo $form->textFieldGroup($model, 'realm'); ?>
+		<?php echo $form->textFieldGroup($model, 'account'); ?>
+		<?php echo $form->passwordFieldGroup($model, 'pass'); ?>
+		<?php echo $form->passwordFieldGroup($model, 'pass2'); ?>
+		<?php echo $form->textFieldGroup($model, 'username_old'); ?>
+		<?php echo $form->textFieldGroup($model, 'comment'); ?>
 	</fieldset>
 
 	<fieldset>

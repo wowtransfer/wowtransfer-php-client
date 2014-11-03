@@ -51,22 +51,25 @@ class ChdTransfer extends CActiveRecord
 			//array('account_id, char_guid', 'length', 'max'=>10),
 			array('account_id', 'compare', 'allowEmpty'=>false, 'compareValue'=>0, 'operator'=>'>', 'strict'=>true),
 			array('server', 'length', 'max'=>100),
+
+			array('server', 'match', 'pattern' => '/^[a-zA-Z0-9\-\.]+$/S'),
+			array('realmlist, realm', 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/S'),
+			array('account', 'match', 'pattern' => '/^[a-z0-9_\-]+$/S'),
+			array('comment', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
+
 			array('account', 'length', 'max'=>32),
 			array('file_lua', 'length', 'allowEmpty'=>false),
 			array('realmlist, realm, pass', 'length', 'max'=>40),
 			array('username_old, username_new', 'length', 'max'=>12),
 			array('options, comment', 'length', 'max'=>255),
-			array('create_char_date', 'safe'),
+			array('create_char_date, pass2', 'safe'),
 
 			array('server, realmlist, realm, account, pass, username_old, transferOptions', 'required'),
 			array('transferOptions', 'type', 'type' => 'array', 'allowEmpty' => false),
 
-			// create
-			array('pass2', 'required', 'on' => 'create'),
+			array('pass2', 'required', 'on' => 'create, update'),
 			array('fileLua', 'file', 'types' => 'lua', 'allowEmpty' => false, 'maxFiles' => 1, 'maxSize' => 1024 * 600, 'on' => 'create'),
-			array('pass', 'compare', 'compareAttribute' => 'pass2', 'operator' => '=', 'on'=>'create'),
-
-			// update
+			array('pass', 'compare', 'compareAttribute' => 'pass2', 'operator' => '=', 'on'=>'create, update'),
 
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
