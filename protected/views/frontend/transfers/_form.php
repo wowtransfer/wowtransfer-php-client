@@ -22,13 +22,29 @@
 
 	<fieldset>
 		<legend>Удаленный сервер</legend>
-		<?php echo $form->textFieldGroup($model, 'server', array('hint' => 'Вводить без указания протокола (без http://), например, myserver.ru или twoserver.com')); ?>
-		<?php echo $form->textFieldGroup($model, 'realmlist'); ?>
-		<?php echo $form->textFieldGroup($model, 'realm'); ?>
-		<?php echo $form->textFieldGroup($model, 'account'); ?>
-		<?php echo $form->passwordFieldGroup($model, 'pass'); ?>
-		<?php echo $form->passwordFieldGroup($model, 'pass2'); ?>
-		<?php echo $form->textFieldGroup($model, 'username_old'); ?>
+		<?php echo $form->textFieldGroup($model, 'server', array(
+			'hint' => 'Вводить без протокола (http://), например, myserver.ru или twoserver.com',
+			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); ?>
+
+		<?php echo $form->textFieldGroup($model, 'realmlist', array(
+			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); ?>
+		<?php echo $form->textFieldGroup($model, 'realm', array(
+			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); ?>
+		<?php echo $form->textFieldGroup($model, 'account', array(
+			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); ?>
+		<?php echo $form->passwordFieldGroup($model, 'pass', array(
+			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); ?>
+		<?php echo $form->passwordFieldGroup($model, 'pass2', array(
+			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); ?>
+		<?php echo $form->textFieldGroup($model, 'username_old', array(
+			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); ?>
 		<?php echo $form->textFieldGroup($model, 'comment'); ?>
 	</fieldset>
 
