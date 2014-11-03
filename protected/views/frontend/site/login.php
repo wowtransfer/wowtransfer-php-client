@@ -34,12 +34,14 @@ $this->breadcrumbs=array(
 		'buttonType' => 'submit',
 		'context' => 'primary',
 		'label' => 'Войти',
+		'icon' => 'log-in',
 	)); ?>
 
 	<?php $this->widget('booster.widgets.TbButton', array(
 		'buttonType' => 'link',
 		'label' => 'Отмена',
 		'url' => '/',
+		'icon' => 'home',
 	)); ?>
 
 <?php $this->endWidget(); ?>

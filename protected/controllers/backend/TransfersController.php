@@ -17,7 +17,7 @@ class TransfersController extends BackendController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','index','view','update','delete','char','createchar','deletechar'),
+				'actions'=>array('admin','index','view','update','delete','char','createchar','deletechar','luadump'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -71,7 +71,7 @@ class TransfersController extends BackendController
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model = $this->loadModel($id);
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -175,6 +175,28 @@ class TransfersController extends BackendController
 
 		$this->render('deletechar', array(
 			'model' => $model,
+		));
+	}
+
+	/**
+	 * Load lua-dump
+	 *
+	 * @param $id integer Transfer's ID
+	 */
+	public function actionLuadump($id)
+	{
+		$model = $this->loadModel($id); // TODO: load only lua-dump
+
+		if (Yii::app()->request->isAjaxRequest)
+		{
+			echo $model->file_lua;
+			Yii:app()->end();
+		}
+
+		$this->render('luadump', array(
+			'model' => $model,
+			'luaDumpContentZip' => $model->file_lua,
+			'luaDumpContent' => $model->luaDumpFromDb(),
 		));
 	}
 

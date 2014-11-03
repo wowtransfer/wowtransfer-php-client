@@ -61,15 +61,22 @@ class TransfersController extends FrontendController
 		$model->setScenario('create');
 
 		// Uncomment the following line if AJAX validation is needed
-		//$this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if (isset($_POST['ChdTransfer']))
 		{
 			$model->attributes = $_POST['ChdTransfer'];
 			$model->fileLua = CUploadedFile::getInstance($model, 'fileLua');
 			//CVarDumper::dump($_POST['ChdTransfer'], 10, true);
+			//exit;
 			if ($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view', 'id' => $model->id));
+			else
+			{
+				//CVarDumper::dump($model, 10, true);
+				//exit;
+				//$model->addError('server', '123');
+			}
 		}
 		else
 		{

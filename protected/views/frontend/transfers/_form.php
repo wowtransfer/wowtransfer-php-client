@@ -4,17 +4,10 @@
 ?>
 
 <?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'id'=>'chd-transfer-form',
-	'type'=>'horizontal',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
-	'enableClientValidation'=>true,
-	'clientOptions' => array(
-		'validateOnSubmit' => true,
-	),
+	'id' => 'chd-transfer-form',
+	'type' => 'horizontal',
+	'enableAjaxValidation' => false,
+	'enableClientValidation' => true,
 	'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
 

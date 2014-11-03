@@ -165,8 +165,6 @@ class CreateCharForm
 		$this->_transfer->create_char_date = date('Y-m-d h:i:s');
 		$this->_transfer->save(false, array('char_guid', 'create_char_date'));
 
-		Yii::app()->user->setFlash('success', 'Character was created success! GUID = ' . $guid);
-
 		return $result;
 	}
 }

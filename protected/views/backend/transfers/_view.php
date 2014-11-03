@@ -14,16 +14,7 @@ function OnDeleteChar()
 <div class="view">
 
 	<div style="float: right;">
-	<?php if (!$data->char_guid): ?>
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'link',
-			'context' => 'success',
-			'label' => 'Create character',
-			'url' => $this->createUrl('char', array('id' => $data->id)),
-			'icon' => 'plane',
-		));?>
-		<br>
-	<?php else: ?>
+	<?php if ($data->char_guid): ?>
 		<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType' => 'link',
 			'label' => 'Delete character',
@@ -32,7 +23,22 @@ function OnDeleteChar()
 			'context' => 'danger',
 			'htmlOptions' => array('onclick' => 'return OnDeleteChar();'),
 		));?>
+	<?php else: ?>
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'link',
+			'context' => 'success',
+			'label' => 'Create character',
+			'url' => $this->createUrl('char', array('id' => $data->id)),
+			'icon' => 'plane',
+		));?>
 	<?php endif; ?>
+
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'label' => 'Lua-dump',
+		'url' => $this->createUrl('luadump', array('id' => $data->id)),
+		'icon' => 'file',
+	));?>
 	</div>
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>

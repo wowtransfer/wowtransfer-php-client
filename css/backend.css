@@ -1,10 +1,13 @@
+#header
+{
+	height: 10px;
+}
+
 #create-char-sql
 {
-	border: 1px solid blue;
 	height: 400px;
 	overflow: auto;
 	margin: 10px 0 5px;
-	border: 1px solid blue;
 }
 
 #create-char-error
@@ -13,10 +16,16 @@
 	white-space: pre-wrap;
 }
 
+#run-queries-table
+{
+	margin: 0;
+	padding: 0 2px 2px 0;
+}
+
 .query-res
 {
 	width: 20px;
-	height: 16px;
+	height: 18px;
 	display: inline-block;
 	border: 1px solid black;
 	margin: 1px 0 0 1px;
@@ -28,6 +37,12 @@
 .query-res-success
 {
 	background-color: #00DF70;
+}
+
+.btn-char-action
+{
+	width: 230px;
+	margin-bottom: 3px !important;
 }
 
 .toptions-row

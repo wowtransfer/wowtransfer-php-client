@@ -28,28 +28,33 @@
 						'buttonType' => 'link',
 						'url' => $this->createUrl('/site/login'),
 						'label' => 'Войти',
+						'icon' => 'log-in',
 					)); ?>
 					<?php endif; ?>
 			<?php else: ?>
 				<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
-				<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Logout">Выйти</a>
+				<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a>
 			<?php endif; ?>
 		</div>
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo">
+			<img alt="" src="<?php echo Yii::app()->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
+			<?php echo CHtml::encode(Yii::app()->name); ?>
+		</div>
 	</div><!-- header -->
 
 	<?php $this->widget('booster.widgets.TbMenu',array(
 		'type' => 'tabs',
 		'items' => array(
-			array('label'=>'Сайт', 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'),
-			array('label'=>'Заявки', 'url'=>array('/transfers/index'), 'icon' => 'list', 'visible' => !Yii::app()->user->isGuest),
-			array('label'=>'Помощь', 'url'=>array('/site/page'), 'icon' => 'flag'),
+			array('label' => 'Сайт', 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home'),
+			array('label' => 'Заявки', 'url' => array('/transfers'), 'icon' => 'list', 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers'),
+			array('label' => 'Помощь', 'url' => array('/site/page'), 'icon' => 'info-sign'),
 		),
 	)); ?><!-- mainmenu -->
 
 	<!-- Admin / Application switch -->
 	<?php if (Yii::app()->user->isAdmin()): ?>
 		<?php $this->widget('booster.widgets.TbButton', array(
+			'context' => 'link',
 			'buttonType' => 'link',
 			'label' => 'Администрирование',
 			'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
@@ -60,7 +65,8 @@
 
 	<?php if (isset($this->breadcrumbs)): ?>
 		<?php $this->widget('booster.widgets.TbBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
+			'links' => $this->breadcrumbs,
+			'homeLink' => false,
 		)); ?><!-- breadcrumbs -->
 	<?php endif; ?>
 

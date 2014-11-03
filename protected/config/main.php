@@ -54,7 +54,7 @@ return array(
 		'booster' => array(
 			'class'=>'ext.yiibooster.components.Booster',
 			'responsiveCss'=>true,
-            //'fontAwesomeCss'=>true,
+			//'fontAwesomeCss'=>true,
 		),
 
 		'urlManager'=>array(
@@ -64,7 +64,7 @@ return array(
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
-			//'showScriptName'=>false,
+			'showScriptName'=>true,
 		),
 
 		'authManager'=>array(

@@ -4,6 +4,9 @@
 <div style="float: right; width: 215px;">
 	<div id="sidebar">
 	<?php
+		array_unshift($this->menu, array(
+			'label' => 'Операции',
+		));
 		$this->widget('booster.widgets.TbMenu', array(
 			'type' => 'list',
 			'stacked' => true,

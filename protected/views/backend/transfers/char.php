@@ -15,49 +15,58 @@ $this->breadcrumbs = array(
 
 ?>
 
-<div style="float: right; width: 100px; border: 1px solid blue;">
-Конфигурация...
+<div style="float: right; width: 300px;">
+	<a class="btn btn-default btn-sm btn-char-action" href="#"
+		onclick="OnClearCharacterDataByTransferIdClick(<?php echo $model->id; ?>); return false;">
+		Clear character's data by GUID and ID
+	</a> <span class="label label-success">safe</span><br>
+	<a class="btn btn-default btn-sm btn-char-action" href="#"
+		onclick="return OnClearCharacterDataByGuidClick(<?php echo $model->id; ?>, <?php echo $model->char_guid; ?>); return false;">
+		Clear character's data by GUID
+	</a> <span class="label label-danger btn-char-action">unsafe</span><br>
+	<a class="btn btn-default btn-sm btn-char-action" href="#"
+		onclick="OnShowCharacterDataClick(<?php echo $model->char_guid; ?>); return false;">
+		Show character's info by GUID and ID
+	</a><br>
+	<a class="btn btn-default btn-sm" href="#"
+		data-toggle="modal"
+		data-target="#lua-dump-dialog"
+		onclick="OnViewLuaDumpClick(<?php echo $model->id; ?>); return false;">
+		lua-dump
+	</a>
+	<a class="btn btn-default btn-sm" href="#"
+		onclick="OnViewUncryptedLuaDumpClick(<?php echo $model->id; ?>); return false;"
+		>uncripted lua-dump</a><br>
+	<a href="<?php echo $this->createUrl('/transfers/index') ?>"><span class="glyphicon glyphicon-list"></span> Список заявок</a><br>
 </div>
 
-<h1>Создание персонажа по заявке #<?php echo $model->id; ?></h1>
-
-
-<div style="float: right; width: 260px; height: 120px;">
-	<a href="#">Clear character's data by GUID and ID</a> <span style="color: green;">safe</span><br>
-	<a href="#">Clear character's data by GUID</a> <span style="color: orange;">unsafe</span><br>
-	<a href="#">Show character's info by GUID and ID</a><br>
-	<a href="#">View lua-dump</a><br>
-	<a href="#">View decrypted lua-dump</a><br>
-	<a href="<?php echo $this->createUrl('/transfers/index') ?>">Список заявок</a><br>
-	<a href="<?php echo $this->createUrl('/transfers/admin') ?>">Управление заявками</a>
-</div>
-
-<div style="margin: 5px 0; border: 1px solid blue; width: 430px; height: 140px;">
+<div style="margin: 5px 305px 5px 0; height: 155px;">
 
 <div>
-<div style="float: left; padding: 3px;">
-	<b>Создана</b><br> <?php echo $model->create_transfer_date; ?><br>
-	<b>Статус</b><br> <?php echo $model->status; ?>
-</div>
+	<div style="float: left; padding: 3px;">
+		<b>Создана</b><br><?php echo $model->create_transfer_date; ?><br>
+		<b>Статус</b><br> <?php echo $model->status; ?>
+	</div>
 
-<div style="float: left; padding: 3px;">
-	<b>Сервер</b><br>
-	<?php echo $model->server; ?><br>
-	<b>Реалмлист</b><br>
-	<?php echo $model->realmlist; ?><br>
-	<b>Реалм</b><br>
-	<?php echo $model->realm; ?>
-</div>
+	<div style="float: left; padding: 3px;">
+		<b>Сервер</b><br>
+		<?php echo $model->server; ?><br>
+		<b>Реалмлист</b><br>
+		<?php echo $model->realmlist; ?><br>
+		<b>Реалм</b><br>
+		<?php echo $model->realm; ?>
+	</div>
 
-<div style="float: left; padding: 3px;">
-	<b>Аккаунт</b><br>
-	<?php echo $model->account; ?><br>
-	<b>Пароль</b><br>
-	*********<br>
-	<b>Персонаж</b><br>
-	<?php echo $model->username_old; ?>
-</div>
-
+	<div style="float: left; padding: 3px;">
+		<b>Аккаунт</b><br>
+		<?php echo $model->account; ?><br>
+		<b>Пароль <input type="checkbox" name="show-password" title="Show/Hide password"
+			onclick="var edt = $('#char-password'); if (true) edt.attr('type', 'password'); else edt.attr('type', 'text'); "></b><br>
+		<!-- <button class="btn btn-info btn-xs" title="Показать пароль" onclick="">+</button> -->
+		<input type="password" id="char-password" value="<?php echo $model->pass; ?>"><br>
+		<b>Персонаж</b><br>
+		<?php echo $model->username_old; ?>
+	</div>
 </div>
 
 <div class="clear">lua-dump properties...</div>
@@ -71,9 +80,17 @@ $this->breadcrumbs = array(
 
 	<?php echo $form->hiddenField($model, 'id'); ?>
 
-	<fieldset>
-		<legend>Опции переноса</legend>
+	<div>
+		<div style="float: right; border: 1px solid blue;">
+			<?php echo CHtml::dropDownList('configs', '', array( // Store in cookie, TODO
+			'conf' => 'Кофигурация',
+			'conf1' => 'config 1',
+			'conf2' => 'config 2',
+			'confn' => 'config N',
+		));	?>
+		</div>
 
+		<h3>Опции переноса</h3>
 		<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
 				'model' => $model,
 				'form' => $form,
@@ -81,7 +98,7 @@ $this->breadcrumbs = array(
 				'readonly' => true,
 			));
 		?>
-	</fieldset>
+	</div>
 
 	<div style="height: 1em; text-align: right;">
 		Если опция недоступна значит она отключена в глобальных настройках.
@@ -89,32 +106,29 @@ $this->breadcrumbs = array(
 
 	<div class="form-actions">
 		<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
-
 		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'ajaxButton',
-			'context' => 'primary',
-			'label' => 'Создать',
-			'url' => $this->createUrl('char', array('id' => $model->id)),
-			'ajaxOptions' => array(
-				'type' => 'POST',
-				'beforeSend' => 'function() { OnBeforeCreateCharClick(this); }',
-				'success' => 'function(data) { OnCreateCharClick(this, data); }',
-			),
-			'htmlOptions' => array(
-				'id' => 'btn-create-char',
-			),
-			'icon' => 'plane',
-		));
-		?>
+				'buttonType' => 'ajaxButton',
+				'context' => 'primary',
+				'label' => 'Создать',
+				'url' => $this->createUrl('char', array('id' => $model->id)),
+				'ajaxOptions' => array(
+					'type' => 'POST',
+					'beforeSend' => 'function() { OnBeforeCreateCharClick(this); }',
+					'success' => 'function(data, textStatus, jqXHR) { OnCreateCharClick(this, data, textStatus, jqXHR); }',
+				),
+				'htmlOptions' => array(
+					'id' => 'btn-create-char',
+				),
+				'icon' => 'plane',
+			)); ?>
 
 		<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType' => 'link',
 			'label' => 'Отмена',
 			'icon' => 'ban-circle',
 			'url' => $this->createUrl('/transfers'),
-		));
-
-		?>
+			'htmlOptions' => array('id' => 'btn-create-char-cancel'),
+		)); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
@@ -122,33 +136,72 @@ $this->breadcrumbs = array(
 
 <div style="margin: 10px 0;"><!-- hack -->
 <?php if (empty($createCharError)): ?>
-	<div id="create-char-error" class="flash-error" style="display: none;"></div>
+	<div id="create-char-error" class="alert alert-danger" style="display: none;"></div>
 <?php else: ?>
-	<div id="create-char-error" class="flash-error"><?php echo $createCharError; ?></div>
+	<div id="create-char-error" class="alert alert-danger"><?php echo $createCharError; ?></div>
 <?php endif; ?>
 </div>
 
-
 <?php $queriesContent = ''; ?>
 
+<h3 id="run-queries-table-header" style="display: none;">Результат выполнения запросов к базе данных</h3>
+
 <?php if ($queriesCount > 0): ?>
-	<div id="run-queries-table" style="border: 1px solid blue; margin: 0; padding: 0 2px 2px 0;">
+	<div id="run-queries-table">
 	<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
 		<?php
-			if (isset($queries[$i])):
+			if (isset($queries[$i])) {
 				$query = $queries[$i];
 				$classStatus = 'query-res-success';
-			else:
+			}
+			else {
 				$query = array('query'=>'', 'status'=>'&nbsp;');
 				$classStatus = '';
-			endif;
+			}
 		?>
-		<span class="query-res <?php echo $classStatus?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
+		<span class="query-res <?php echo $classStatus; ?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
 	<?php endfor; ?>
 	</div>
 <?php else: ?>
-	<div id="run-queries-table" style="border: 1px solid blue; margin: 0; padding: 0 2px 2px 0; display: none;"></div>
+	<div id="run-queries-table" style="display: none;"></div>
 <?php endif; ?>
 
 
-<pre id="create-char-sql" style="<?php echo empty($sql) ? 'display: none;' : ''; ?>"><?php echo $sql; ?></pre>
+<h3 id="create-char-sql-header" style="display: none;">SQL скрипт персонажа</h3>
+
+<pre id="create-char-sql" style="display: none;"><?php echo $sql; ?></pre>
+
+<div style="margin: 30px 0 10px 30px;">
+<?php $this->widget('booster.widgets.TbButton', array(
+	'buttonType' => 'link',
+	'context' => 'success',
+	'label' => 'К заявкам',
+	'url' => $this->createUrl('/transfers'),
+	'htmlOptions' => array('id' => 'btn-create-char-success', 'style' => 'display: none;'),
+	'icon' => 'list',
+)); ?>
+</div>
+
+
+
+
+<!-- Lua dump dialog, TODO -->
+<div class="modal fade" id="lua-dump-dialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="lua-dump-dialog-title">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+					<span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="lua-dump-dialog-title">Lua dump</h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+			</div>
+		</div>
+	</div>
+</div>

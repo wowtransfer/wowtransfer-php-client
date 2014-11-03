@@ -3,7 +3,7 @@
 /* @var $data ChdTransfer */
 ?>
 
-<div class="view" style="background-color: #CCFFFF;">
+<div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo $data->id; ?>

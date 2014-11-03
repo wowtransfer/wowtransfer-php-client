@@ -58,7 +58,7 @@ class ChdTransfer extends CActiveRecord
 			array('options, comment', 'length', 'max'=>255),
 			array('create_char_date', 'safe'),
 
-			array('server, realmlist, realm, account, pass, username_old', 'required'),
+			array('server, realmlist, realm, account, pass, username_old, transferOptions', 'required'),
 			array('transferOptions', 'type', 'type' => 'array', 'allowEmpty' => false),
 
 			// create
@@ -96,7 +96,7 @@ class ChdTransfer extends CActiveRecord
 			'server' => 'Название',
 			'realmlist' => 'Реалмлист',
 			'realm' => 'Реалм',
-			'account' => 'Аккаунта',
+			'account' => 'Аккаунт',
 			'pass' => 'Пароль',
 			'pass2' => 'Подтверждение пароля',
 			'username_old' => 'Имя персонажа',
@@ -284,5 +284,16 @@ class ChdTransfer extends CActiveRecord
 			Yii::app()->user->setFlash('success', 'Character GUID = ' . $this->char_guid . ' was deleted success');
 
 		return $result;
+	}
+
+	public function delete()
+	{
+		if ($this->char_guid > 0)
+		{
+			$this->addError('error', 'Delete the character.');
+			return false;
+		}
+
+		return parent::delete();
 	}
 }

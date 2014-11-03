@@ -12,6 +12,7 @@
 	padding: 4px 10px 0;
 	margin: 4px 4px 0 4px;
 	width: 170px;
+	color: red;
 }
 
 .toptions
@@ -25,17 +26,32 @@
 	width: 160px;
 }
 
+.nav-list > .nav-header
+{
+	background-color: #C9E0ED;
+	padding: 5px;
+	font-size: larger;
+}
+
+.nav-list li
+{
+	border-color: #C9E0ED;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-style: solid;
+}
+
 /* Icons */
 .tdata-icon
 {
-    background-image: url(../images/tdata-icons.png);
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    display: inline-block;
-    height: 24px;
-    line-height: 24px;
-    vertical-align: text-bottom;
-    width: 24px;
+	background-image: url(../images/tdata-icons.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 24px;
+	line-height: 24px;
+	vertical-align: text-bottom;
+	width: 24px;
 }
 
 .tdata-icon.icon-default      { background-position:      0     0; }

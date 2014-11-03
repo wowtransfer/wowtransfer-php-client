@@ -5,7 +5,7 @@
  */
 class Wowtransfer
 {
-	private $serviceBaseUrl = 'http://wowtransfer2/api.php/api/v1/';
+	private $serviceBaseUrl = 'http://wowtransfer/api.php/api/v1/';
 
 	/**
 	 * @return array Transfer's options
