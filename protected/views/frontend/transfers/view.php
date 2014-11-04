@@ -11,13 +11,6 @@ $this->menu = array(
 	array('label'=>'Список заявок', 'url' => array('index'), 'icon' => 'list'),
 	array('label'=>'Создать заявку', 'url' => array('create'), 'icon' => 'plus'),
 	array('label'=>'Изменить заявку', 'url' => array('update', 'id' => $model->id), 'icon' => 'pencil'),
-	array('label'=>'Удалить заявку', 'url' => '#', 'icon' => 'remove', 'linkOptions' => array(
-		'submit' => array(
-			'delete',
-			'id' => $model->id,
-		),
-		'confirm' => Yii::t('app', 'Are you sure you want to delete this transfer #{id}?', array('{id}' => $model->id)))
-	),
 );
 ?>
 

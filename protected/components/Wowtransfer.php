@@ -43,7 +43,7 @@ class Wowtransfer
 
 	public function getCores()
 	{
-		$ch = curl_init($this->serviceBaseUrl);
+		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'cores');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
@@ -57,21 +57,25 @@ class Wowtransfer
 
 	public function getTransferConfigs()
 	{
-		/*$ch = curl_init($this->serviceBaseUrl);
+		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'tconfigs');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
 
-		$cores = json_decode($result, true);*/
+		$tconfigs = array();
 
-		$cores = array(
-			array('name' => 'config1', 'title' => 'title1'),
-			array('name' => 'config2', 'title' => 'title2'),
-		);
+		$tconfigsSource = json_decode($result, true);
+		if (!$tconfigsSource)
+			return $tconfigs;
 
-		return $cores;
+		foreach ($tconfigsSource as $configItem)
+		{
+			$tconfigs[$configItem['id']] = $configItem['title'];
+		}
+
+		return $tconfigs;
 	}
 
 	/**
@@ -123,5 +127,19 @@ class Wowtransfer
 		}
 
 		return $result;
+	}
+
+	public function getWowservers()
+	{
+		$ch = curl_init($this->serviceBaseUrl);
+		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'wowservers');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$result = curl_exec($ch);
+		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+
+		$servers = json_decode($result, true);
+
+		return $servers;
 	}
 }

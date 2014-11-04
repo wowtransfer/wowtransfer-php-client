@@ -1,11 +1,11 @@
 <?php
-/* @var $this TransfersController frontend */
-/* @var $model ChdTransfer model */
-/* @var $retrieveSqlError */
-/* @var $runSqlError */
-/* @var $queries */
-/* @var $queriesCount */
-/* @var $sql */
+/* @var $this TransfersController */
+/* @var $model ChdTransfer */
+/* @var $error string */
+/* @var $queries array */
+/* @var $queriesCount integer */
+/* @var $sql string */
+/* @var $tconfigs array Transfer's configurations */
 
 $this->breadcrumbs = array(
 	'Заявки на перенос' => array('index'),
@@ -30,8 +30,8 @@ $this->breadcrumbs = array(
 	</a><br>
 	<a class="btn btn-default btn-sm" href="#"
 		data-toggle="modal"
-		data-target="#lua-dump-dialog"
-		onclick="OnViewLuaDumpClick(<?php echo $model->id; ?>); return false;">
+		onclick="OnViewLuaDumpClick(<?php echo $model->id; ?>); return false;"
+		> <!--data-target="#lua-dump-dialog"-->
 		lua-dump
 	</a>
 	<a class="btn btn-default btn-sm" href="#"
@@ -81,13 +81,10 @@ $this->breadcrumbs = array(
 	<?php echo $form->hiddenField($model, 'id'); ?>
 
 	<div>
-		<div style="float: right; border: 1px solid blue;">
-			<?php echo CHtml::dropDownList('configs', '', array( // Store in cookie, TODO
-			'conf' => 'Кофигурация',
-			'conf1' => 'config 1',
-			'conf2' => 'config 2',
-			'confn' => 'config N',
-		));	?>
+		<div style="float: right;">
+			<?php echo CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
+				'style' => 'width: 200px;',
+			)); ?>
 		</div>
 
 		<h3>Опции переноса</h3>
@@ -114,7 +111,7 @@ $this->breadcrumbs = array(
 				'ajaxOptions' => array(
 					'type' => 'POST',
 					'beforeSend' => 'function() { OnBeforeCreateCharClick(this); }',
-					'success' => 'function(data, textStatus, jqXHR) { OnCreateCharClick(this, data, textStatus, jqXHR); }',
+					'success' => 'function(data) { OnCreateCharClick(data); }',
 				),
 				'htmlOptions' => array(
 					'id' => 'btn-create-char',
@@ -135,10 +132,10 @@ $this->breadcrumbs = array(
 <?php unset($form); ?>
 
 <div style="margin: 10px 0;"><!-- hack -->
-<?php if (empty($createCharError)): ?>
+<?php if (empty($error)): ?>
 	<div id="create-char-error" class="alert alert-danger" style="display: none;"></div>
 <?php else: ?>
-	<div id="create-char-error" class="alert alert-danger"><?php echo $createCharError; ?></div>
+	<div id="create-char-error" class="alert alert-danger"><?php echo $error; ?></div>
 <?php endif; ?>
 </div>
 
@@ -187,17 +184,17 @@ $this->breadcrumbs = array(
 
 <!-- Lua dump dialog, TODO -->
 <div class="modal fade" id="lua-dump-dialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="lua-dump-dialog-title">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">&times;</span>
 					<span class="sr-only">Close</span>
 				</button>
-				<h4 class="modal-title" id="lua-dump-dialog-title">Lua dump</h4>
+				<h4 class="modal-title" id="lua-dump-dialog-title">Lua dump from database</h4>
 			</div>
 			<div class="modal-body">
-
+				<pre id="lua-dump-dialog-content" style="height: 500px;"></pre>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>

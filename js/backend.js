@@ -1,3 +1,8 @@
+function chdInit(baseUrl)
+{
+	window.baseUrl = baseUrl;
+}
+
 /**
  *
  */
@@ -14,7 +19,7 @@ function OnBeforeCreateCharClick(button)
 /**
  *
  */
-function OnCreateCharClick(button, data, textStatus, jqXHR)
+function OnCreateCharClick(data)
 {
 	var createCharErrorContainer = $("#create-char-error");
 	var sqlContainer = $("#create-char-sql");
@@ -22,28 +27,24 @@ function OnCreateCharClick(button, data, textStatus, jqXHR)
 
 	$("#create-char-wait").css("visibility", "hidden");
 
-	if (data == "")
-		return;
 	result = $.parseJSON(data);
 	if (result == null)
 		return;
 
 	if (result.error != undefined && result.error)
 	{
-		createCharErrorContainer.show();
 		createCharErrorContainer.text(result.error);
+		createCharErrorContainer.show();
 		return false;
 	}
 	else
 	{
 		$("#btn-create-char").hide();
 		$("#btn-create-char-cancel").hide();
-
 		$("#btn-create-char-success").show();
 	}
 	sqlContainer.text(result.sql);
 
-	var span;
 	var queries = result.queries;
 	var queryCount = queries.length;
 	runQueriesContainer.empty();
@@ -88,7 +89,17 @@ function OnShowCharacterDataClick(charactedGuid)
  */
 function OnViewLuaDumpClick(transferId)
 {
-	alert("TODO:\n view lua dump.\nAJAX...");
+	var dialog = $("#lua-dump-dialog");
+	var content = $("#lua-dump-dialog-content");
+
+	$.ajax(window.baseUrl + "/transfers/luadump/" + transferId, {
+		method: "GET",
+		success: function (data, textStatus, jqXHR) {
+			content.text(data);
+		}
+	});
+
+	dialog.modal({keyboard: true});
 }
 
 /**

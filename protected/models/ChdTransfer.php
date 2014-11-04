@@ -293,7 +293,7 @@ class ChdTransfer extends CActiveRecord
 	{
 		if ($this->char_guid > 0)
 		{
-			$this->addError('error', 'Delete the character.');
+			$this->addError('error', 'Невозможно удалить заявку, когда по ней создан персонаж.');
 			return false;
 		}
 

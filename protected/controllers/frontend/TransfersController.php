@@ -146,7 +146,24 @@ class TransfersController extends FrontendController
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model = $this->loadModel($id);
+
+		$model->delete();
+		if (Yii::app()->request->isAjaxRequest)
+		{
+			$result = array();
+			if ($model->hasErrors())
+			{
+				$errors = $model->getErrors(); // TODO: this is hard way to get an error
+				$error = reset($errors);
+				$result['error'] = $error[0];
+			}
+			else
+				$result['message'] = 'Заявка успешно удалена';
+
+			echo json_encode($result);
+			Yii::app()->end();
+		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if (!isset($_GET['ajax']))

@@ -7,10 +7,21 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<ul>
-<?php foreach ($tconfigs as $tconfig): ?>
-	<li><?php echo $tconfig['name'] . ' - ' . $tconfig['title']; ?></li>
+<table class="table">
+<thead>
+	<tr>
+		<th>ID</th>
+		<th>Title</th>
+	</tr>
+</thead>
+<tbody>
+<?php foreach ($tconfigs as $id => $title): ?>
+	<tr>
+		<td><?php echo $id; ?></td>
+		<td><?php echo $title; ?></td>
+	</tr>
 <?php endforeach; ?>
-</ul>
+</tbody>
+</table>
 
 

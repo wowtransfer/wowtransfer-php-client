@@ -32,12 +32,10 @@ class CreateCharForm
 	 *      ['status'] => count of updated rows,
 	 *    ),
 	 *    ['error'] => string,
-	 *    ['count'] => total queries count
 	 */
 	private function RunSql($sql)
 	{
 		$result = array();
-		$result['count'] = 0;
 
 		if (empty($sql))
 		{
@@ -46,7 +44,6 @@ class CreateCharForm
 		}
 
 		$queries = explode(';', $sql);
-		$result['count'] = count($queries);
 		// $connection = new CDbConnection($dsn, $username, $password);
 		$connection = Yii::app()->db;
 
@@ -64,10 +61,8 @@ class CreateCharForm
 			{
 				$query = trim($query);
 				if (empty($query))
-				{
-					--$result['count'];
 					continue;
-				}
+
 				$query1['query'] = substr($query, 0, 255);
 				$command->text = $query;
 				$query1['status'] = $command->execute();
@@ -112,22 +107,19 @@ class CreateCharForm
 	 *                 'status' => integer,
 	 *               ),
 	 *               ['error'] => string
-	 *               ['count'] => total count of queries
 	 *               ['guid'] => GUID of character
 	 */
 	public function createChar()
 	{
 		$result = array();
-		$result['retrieve_sql_error'] = '';
-		$result['run_sql_error'] = '';
+		$result['error'] = '';
 		$result['queries'] = array();
-		$result['count'] = 0;
 		$result['guid'] = 0;
 		$result['sql'] = '';
 
 		if ($this->_transfer->char_guid > 0)
 		{
-			$result['retrieve_sql_error'] = "Character exists! GUID = " . $_transfer->char_guid . '.';
+			$result['error'] = "Character exists! GUID = " . $_transfer->char_guid . '.';
 			return $result;
 		}
 
@@ -140,7 +132,7 @@ class CreateCharForm
 		}
 		catch (exception $ex)
 		{
-			$result['retrieve_sql_error'] = $ex->getMessage();
+			$result['error'] = $ex->getMessage();
 			return $result;
 		}
 
@@ -156,8 +148,6 @@ class CreateCharForm
 			$guid = $this->getCharacterGuid();
 			$result['guid'] = $guid;
 		}
-		$result['count'] = $queries['count'];
-		unset($queries['count']);
 
 		$result['queries'] = $queries;
 

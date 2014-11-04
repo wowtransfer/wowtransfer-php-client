@@ -16,7 +16,7 @@
 		'htmlOptions' => array('class' => 'pull-right', 'title' => 'Удалить'),
 		'ajaxOptions' => array(
 			'beforeSend' => 'js:function(){return confirm("' . Yii::t('app', 'Are you sure you want to delete this transfer #{id}?', array('{id}' => $data->id)) . '");}',
-			'success' =>'js:function(data){$.fn.yiiListView.update("transfer-list-view",{});}',
+			'success' => 'js:function (data){OnDeleteTransferSuccess(data);}',
 			'type' => 'POST',
 		),
 	)); ?>

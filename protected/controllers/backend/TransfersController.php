@@ -127,8 +127,11 @@ class TransfersController extends BackendController
 		if ($model->char_guid > 0)
 			throw new CHttpException(403, 'Character created! GUID = ' . $model->char_guid);
 
-		// performAjaxValidation($model);
-		$result = '';
+		$result = array(
+			'error'   => '',
+			'sql'     => '',
+			'queries' => array(),
+		);
 		if (isset($_POST['ChdTransfer']))
 		{
 			$createCharForm = new CreateCharForm($model);
@@ -141,12 +144,16 @@ class TransfersController extends BackendController
 			}
 		}
 
+		$service = new Wowtransfer;
+		$tconfigs = $service->getTransferConfigs();
+
 		$this->render('char', array(
 			'model'           => $model,
-			'createCharError' => isset($result['error'])   ? $result['error']     : '',
-			'sql'             => isset($result['sql'])     ? $result['sql']       : '',
-			'queries'         => isset($result['queries']) ? $result['queries']   : array(),
-			'queriesCount'    => isset($result['count'])   ? $result['count']     : 0,
+			'error'           => $result['error'],
+			'sql'             => $result['sql'],
+			'queries'         => $result['queries'],
+			'queriesCount'    => count($result['queries']),
+			'tconfigs'        => $tconfigs,
 		));
 	}
 
@@ -189,8 +196,8 @@ class TransfersController extends BackendController
 
 		if (Yii::app()->request->isAjaxRequest)
 		{
-			echo $model->file_lua;
-			Yii:app()->end();
+			echo strip_tags($model->luaDumpFromDb());
+			Yii::app()->end();
 		}
 
 		$this->render('luadump', array(
