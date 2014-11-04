@@ -1,4 +1,10 @@
 <?php
+$installDir = dirname(__FILE_) . '/install';
+if (is_dir($installDir))
+{
+	header('Location: install.php');
+	exit;
+}
 
 $yii = dirname(__FILE__) . '/../../yii/yii.php';
 $config = dirname(__FILE__) . '/protected/config/frontend.php';

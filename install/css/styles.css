@@ -1,0 +1,62 @@
+html,
+body
+{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#page
+{
+	margin: 0 auto;
+	padding: 5px;
+	width: 900px;
+	border: 1px solid black;
+}
+
+#header
+{
+	height: 50px;
+	border: 1px solid black;
+	margin-bottom: 5px;
+	padding: 5px 10px;
+}
+
+#content
+{
+	margin-right: 210px;
+	padding: 10px;
+}
+
+#menu
+{
+	margin: 0 0 10px 0;
+	padding: 0;
+	float: right;
+	width: 200px;
+	border: 1px solid black;
+	list-style-type: none;
+}
+
+#menu li
+{
+	padding: 5px;
+}
+
+#footer
+{
+	margin-top: 10px;
+	border: 1px solid black;
+	text-align: center;
+	height: 50px;
+	clear: both;
+}
+
+.active{
+	font-weight: bold;
+}
+
+.disabled
+{
+	color: gray;
+}
