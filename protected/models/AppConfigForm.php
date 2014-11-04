@@ -89,7 +89,7 @@ class AppConfigForm extends CFormModel
 		$service = new Wowtransfer();
 		$cores = $service->getCores();
 		if (!$cores || !is_array($cores))
-			return false;
+			return array();
 
 		$result = array();
 		foreach ($cores as $core)

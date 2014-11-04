@@ -7,7 +7,7 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<table class="table">
+<table class="table" style="width: 50%">
 <thead>
 	<tr>
 		<th>ID</th>

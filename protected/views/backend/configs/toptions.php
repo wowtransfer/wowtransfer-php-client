@@ -36,12 +36,13 @@ $this->beginWidget('booster.widgets.TbActiveForm', array(
 	<div class="form-actions">
 		<?php $this->widget('booster.widgets.TbButton', array(
 			'context' => 'primary',
-			'label' => 'Изменить',
+			'label' => 'Save',
 		)); ?>
 		<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType' => 'link',
-			'label' => 'Отмена',
+			'label' => 'Cancel',
 			'url' => $this->createUrl('/configs'),
+			'icon' => 'ban-circle',
 		)); ?>
 	</div>
 <?php $this->endWidget(); ?>
