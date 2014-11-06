@@ -16,7 +16,6 @@ body
 
 #header
 {
-	height: 50px;
 	border: 1px solid black;
 	margin-bottom: 5px;
 	padding: 5px 10px;
@@ -52,11 +51,19 @@ body
 	clear: both;
 }
 
-.active{
+.active
+{
 	font-weight: bold;
 }
 
 .disabled
 {
 	color: gray;
+}
+
+.actions-panel
+{
+	margin: 20px 10px 5px;
+	padding: 10px 0 0;
+	border-top: 2px solid black;
 }

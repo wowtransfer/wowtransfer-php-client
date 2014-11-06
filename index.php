@@ -2,7 +2,7 @@
 $installDir = dirname(__FILE_) . '/install';
 if (is_dir($installDir))
 {
-	header('Location: install.php');
+	header('Location: install/');
 	exit;
 }
 

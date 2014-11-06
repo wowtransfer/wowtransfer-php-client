@@ -1,49 +1,63 @@
 <?php
 
+//phpinfo();
+//exit;
+
+include_once('template.php');
+include_once('database.php');
+
 $pages = array(
 	'hello' => array(
-		'step' => 1,
 		'title' => 'Добро пожаловать',
 	),
 	'requirements' => array(
-		'step' => 2,
 		'title' => 'Проверка системных тербований',
 	),
-	'connect' => array(
-		'step' => 3,
+	'core' => array(
+		'title' => 'Выбор ядра WoW сервера',
+	),
+	'db' => array(
 		'title' => 'Подключение к базе',
 	),
-	'step1' => array(
+	'user' => array(
 		'title' => 'Создание пользователя',
-		'step' => 4,
 	),
-	'step2' => array(
+	'struct' => array(
 		'title' => 'Создание таблиц',
-		'step' => 5,
 	),
-	'step3' => array(
+	'procedures' => array(
 		'title' => 'Хранимые процедуры',
-		'step' => 6,
 	),
-	'step4' => array(
+	'privileges' => array(
 		'title' => 'Создание прав',
-		'step' => 7,
 	),
 	'finish' => array(
 		'title' => 'Заключение',
-		'step' => 8,
 	),
 );
+$i = 1;
+foreach ($pages as $name => $item)
+{
+	$pages[$name]['step'] = $i;
+	++$i;
+}
 
-$step = 0;
-$stepCount = count($pages);
+$template = new InstallerTemplate();
+
 $pageName = isset($_GET['page']) ? $_GET['page'] : 'hello';
+$hiddenFields = array();
 
 $page = key_exists($pageName, $pages) ? $pages[$pageName] : reset($pages);
 if (!file_exists('page_' . $pageName . '.php'))
+{
 	$page = reset($pages);
+	$pageName = 'hello';
+}
 
-$title = 'Установка приложения';
+$stepCount = count($pages);
+$stepPercent = intval($page['step'] * 100 / $stepCount);
+
+$template->readSubmitedFields();
 
 ob_start();
 include_once('page_' . $pageName . '.php');

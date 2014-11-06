@@ -1,4 +1,7 @@
 <?php
+
+$configAppFilePath = dirname(__FILE__) . '/../protected/config/app.php';
+
 $requirements = array(
 	'php_version' => array(
 		'value' => 'Версия РНР',
@@ -6,59 +9,60 @@ $requirements = array(
 		'comment' => 'Версия должна быть больше 5.4',
 	),
 	'ext_json' => array(
-		'value' => 'Расширение json',
+		'value' => 'Расширение <strong>json</strong>',
 		'result' => extension_loaded('json'),
-		'comment' => 'Функции для работы с json',
+		'comment' => 'Функции для работы с json данными',
 	),
 	'ext_pdo' => array(
-		'value' => 'Расширение PDO',
+		'value' => 'Расширение <strong>PDO</strong>',
 		'result' => extension_loaded('pdo'),
-		'comment' => 'Функции для работы с json',
+		'comment' => 'Необходимо для PDO MySQL',
 	),
 	'ext_pdo_mysql' => array(
-		'value' => 'Расширение PDO MySQL',
+		'value' => 'Расширение <strong>PDO MySQL</strong>',
 		'result' => extension_loaded('pdo_mysql'),
 		'comment' => 'Необходимо для работы с MySQL',
 	),
+	'ext_zlib' => array(
+		'value' => 'Расширение <strong>zlib</strong>',
+		'result' => extension_loaded('zlib'),
+		'comment' => 'Необходимо для сжатия',
+	),
+	'ext_gd' => array(
+		'value' => 'Расширение <strong>gd</strong>',
+		'result' => extension_loaded('gd'),
+		'comment' => 'Необходимо для капчи',
+	),
+	'config_app' => array(
+		'value' => '/protected/config/app.php',
+		'result' => is_writable($configAppFilePath),
+		'comment' => 'Проверка на запись',
+	),
 );
 
+foreach ($requirements as $name => $item)
+{
+	$template->addCheckItem($name, $item);
+	if (!$item['result'])
+		$template->addError('Предупреждение: ' . $item['value']);
+}
+
+if (isset($_POST['submit']) && !$template->hasErrors())
+{
+	header('Location: index.php?page=core');
+	exit;
+}
+
 ?>
 
-<h1><?php echo $page['title']; ?></h1>
+<form action="" method="post">
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>Значение</th>
-			<th>Результат</th>
-			<th>Комментарий</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach ($requirements as $name => $requirement): ?>
-		<tr>
-			<td><?php echo $requirement['value']; ?></td>
-			<td>
-<?php
-				$resultClass = 'warning';
-				$resultTitle = 'Предупреждение';
-				if (isset($requirement['result']) && $requirement['result'])
-				{
-					$resultClass = 'success';
-					$resultTitle = 'OK';
-				}
-?>
-				<span class="label label-<?php echo $resultClass; ?>"><?php echo $resultTitle; ?></span>
-			</td>
-			<td><?php echo isset($requirement['comment']) ? $requirement['comment'] : ''; ?></td>
-		</tr>
-		<?php endforeach; ?>
-		
-	</tbody>
-</table>
+	<?php $template->errorSummary(); ?>
 
+	<?php $template->printCheckTable(); ?>
 
-<div>
-	<a class="btn btn-default" title="Back" href="index.php">Назад</a>
-	<a class="btn btn-primary" title="Next" href="index.php?page=connect">Далее</a>
-</div>
+	<div class="actions-panel">
+		<button class="btn btn-primary" title="Next" type="submit" name="submit">Далее</button>
+	</div>
+
+</form>

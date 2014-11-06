@@ -1,9 +1,13 @@
 <?php
-
+$template->clearSubmitedFields();
 ?>
 
-<h1>Добро пожаловать</h1>
+<div class="form ">
 
-<p>Вас приветсвует установщик приложения "Клиент сервиса wowtransfer.com".</p>
+<div class="alert alert-info">Вас приветсвует установщик приложения <strong>клиент wowtransfer.com</strong>.</div>
 
-<a class="btn btn-primary" href="index.php?page=requirements" title="Install">Начать установку</a>
+<div class="actions-panel">
+	<a class="btn btn-primary" href="index.php?page=requirements" title="Install">Начать установку</a>
+</div>
+
+</div>
