@@ -30,6 +30,7 @@ $dbCharacters = isset($_POST['db_characters']) ? trim($_POST['db_characters']) :
 if (isset($_POST['back']))
 {
 	unset($_POST['back']);
+	unset($_POST['submit']); // from?
 	$template->writeSubmitedFields();
 	header('Location: index.php?page=core');
 	exit;
@@ -37,13 +38,14 @@ if (isset($_POST['back']))
 
 if (isset($_POST['submit']))
 {
+	unset($_POST['back']);
+	unset($_POST['submit']);
 	$db = new InstallerDatabaseManager($template);
 
 	$db->checkConnection();
 
 	if (!$template->hasErrors())
 	{
-		unset($_POST['submit']);
 		$template->writeSubmitedFields();
 		header('Location: index.php?page=user');
 		exit;
@@ -59,6 +61,7 @@ if (isset($_POST['submit']))
 	<select name="db_type" id="db_type" class="form-control">
 		<option value="mysql" selected="selected">MySQL</option>
 	</select>
+
 
 	<label for="db_host">Сервер</label>
 	<input type="text" name="db_host" id="db_host" value="<?php echo $dbHost; ?>" class="form-control">
@@ -78,6 +81,7 @@ if (isset($_POST['submit']))
 
 	<label for="db_port">База данных с аккаунтами</label>
 	<input type="text" name="db_auth" id="db_auth" value="<?php echo $dbAuth; ?>" class="form-control">
+
 
 	<div class="actions-panel">
 		<button class="btn btn-default" type="submit" name="back">Назад</button>

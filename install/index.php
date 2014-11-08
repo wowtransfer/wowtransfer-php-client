@@ -29,12 +29,13 @@ $pages = array(
 		'title' => 'Хранимые процедуры',
 	),
 	'privileges' => array(
-		'title' => 'Создание прав',
+		'title' => 'Права',
 	),
 	'finish' => array(
 		'title' => 'Заключение',
 	),
 );
+
 $i = 1;
 foreach ($pages as $name => $item)
 {
@@ -46,21 +47,30 @@ $template = new InstallerTemplate();
 
 $pageName = isset($_GET['page']) ? $_GET['page'] : 'hello';
 $hiddenFields = array();
+$maket = 'main';
 
-$page = key_exists($pageName, $pages) ? $pages[$pageName] : reset($pages);
-if (!file_exists('page_' . $pageName . '.php'))
+if ($template->isInstalled())
 {
-	$page = reset($pages);
-	$pageName = 'hello';
+	$maket = 'installed';
+	$pageName = 'installed';
 }
+else
+{
+	$page = key_exists($pageName, $pages) ? $pages[$pageName] : reset($pages);
+	if (!file_exists('page_' . $pageName . '.php'))
+	{
+		$page = reset($pages);
+		$pageName = 'hello';
+	}
 
-$stepCount = count($pages);
-$stepPercent = intval($page['step'] * 100 / $stepCount);
+	$stepCount = count($pages);
+	$stepPercent = intval($page['step'] * 100 / $stepCount);
 
-$template->readSubmitedFields();
+	$template->readSubmitedFields();
+}
 
 ob_start();
 include_once('page_' . $pageName . '.php');
 $content = ob_get_clean();
 
-include_once('main.php');
+include_once($maket . '.php');
