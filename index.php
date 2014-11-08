@@ -1,8 +1,8 @@
 <?php
-$installDir = dirname(__FILE_) . '/install';
+$installDir = dirname(__FILE__) . '/install';
 if (is_dir($installDir))
 {
-	header('Location: install/');
+	header('Location: /chdphp/install/');
 	exit;
 }
 
