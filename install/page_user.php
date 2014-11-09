@@ -29,10 +29,9 @@ if (isset($_POST['submit']))
 		$template->addError('Введите пароль');
 	else
 	{
-		//$template->setHiddenFields($_POST);
 		$db = new InstallerDatabaseManager($template);
 
-		$db->createUser();
+		$db->createUser($dbTransferUser, $dbTransferPassword, $dbTransferUserHost);
 
 		if (!$template->hasErrors())
 		{

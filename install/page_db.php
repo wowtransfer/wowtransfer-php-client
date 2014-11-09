@@ -53,6 +53,23 @@ if (isset($_POST['submit']))
 }
 ?>
 
+<div class="alert alert-info">
+	<p>На этом шаге вводится информация о пользователе, под которым будет устанавливаться приложение.</p>
+	Пользователь должен иметь права на
+	<ul>
+		<li>CREATE USER, опционально.</li>
+		<li>CREATE, DROP таблиц базы данных с персонажами.</li>
+		<li>CREATE ROUTINE базы данных с персонажами.</li>
+		<li>GRANT OPTION (SELECT, INSERT, UPDATE, EXECUTE) базы данных с персонажами.</li>
+		<li>GRANT OPTION (SELECT) базы данных с аккаунтами.</li>
+	</ul>
+</div>
+
+<div class="alert alert-warning">
+Важно! Пользователь, под которым происходит установка, не является пользоваетелем,
+под которым будет работать приложение!
+</div>
+
 <form action="" method="post">
 
 	<?php $template->errorSummary(); ?>

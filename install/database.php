@@ -18,7 +18,7 @@ class InstallerDatabaseManager
 	 *
 	 * @return PDO
 	 */
-	private function _connect($database)
+	private function _connect($database = '')
 	{
 		$host     = $this->_template->getFieldValue('db_host');
 		$port     = $this->_template->getFieldValue('db_port');
@@ -69,8 +69,33 @@ class InstallerDatabaseManager
 		return true;
 	}
 
-	public function createUser()
+	/**
+	 * @param string $user
+	 * @param string $password
+	 * @param string $host
+	 *
+	 * @return bool
+	 */
+	public function createUser($user, $password, $host)
 	{
+		if (empty($host))
+			$host = 'localhost';
+
+		try
+		{
+			$pdo = $this->_connect();
+
+			$query = "CREATE USER '$user'@'$host' IDENTIFIED BY '$password'";
+			$pdo->exec($query);
+
+			unset($pdo);
+		}
+		catch (PDOException $ex)
+		{
+			$this->_template->addError('Выполнение запроса: ' . $ex->getMessage());
+			return false;
+		}
+
 		return true;
 	}
 
@@ -96,6 +121,8 @@ class InstallerDatabaseManager
 				if (!empty($query))
 					$pdo->exec($query);
 			}
+
+			unset($pdo);
 		}
 		catch (PDOException $ex)
 		{
@@ -133,6 +160,8 @@ class InstallerDatabaseManager
 				if (!empty($query))
 					$pdo->exec($query);
 			}
+
+			unset($pdo);
 		}
 		catch (PDOException $ex)
 		{
@@ -166,6 +195,8 @@ class InstallerDatabaseManager
 				if (!empty($query))
 					$pdo->exec($query);
 			}
+
+			unset($pdo);
 		}
 		catch (PDOException $ex)
 		{
