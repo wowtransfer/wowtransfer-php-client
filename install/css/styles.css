@@ -8,7 +8,7 @@ body
 
 #page
 {
-	margin: 0 auto;
+	margin: 5px auto 0;
 	padding: 5px;
 	width: 960px;
 	border: 1px solid black;
