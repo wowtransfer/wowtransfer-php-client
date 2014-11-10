@@ -1,6 +1,6 @@
 # chdphp #
 
-Handle of characters transfers by wowtransfer.com
+Handle of characters transfer by wowtransfer.com
 
 
 ## Desctription ##
@@ -11,11 +11,26 @@ Application divides in two parts:
 
 2. Admin - this is part for administrations, allow create, delete and update transfers, create and delete the characters.
 
-## Dependenses ##
+
+## Requirements
 
 * PHP 5.3+
 * MySQL 5.1+
+
+
+## Dependenses ##
+
+### Installator
+
+* jquery-2.1.1
+* bootstrap-3.2.0
+
+### Application
+
 * Yii framework version 1.15+
+* yiibooster-4.0.1
+
+
 
 ## Roles ##
 
@@ -52,25 +67,8 @@ admin.php
 * /char/view/id         - view character's info
 
 
-
-## SQL ##
-
-### trinity core privileges ###
-
-...
-
-### cmangos privileges ###
-
-...
-
-### chd\_trasnfer
-
-Table *Transfers*
-
-
 ## TODO ##
 
 * Defence from infinite login: give 5 attempts on 15 minutes
-* Add bootstrap styles
-* Make installation script
 * Add multilanguages
+* convert all icons to one image and make styles
