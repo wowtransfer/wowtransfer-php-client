@@ -32,9 +32,10 @@ class ConfigsController extends Controller
 	{
 		$model = new ToptionsConfigForm;
 
-		if (isset($_POST['ToptionsConfigForm']))
+		if (isset($_POST['toptions']))
 		{
-			$model->options = $_POST['ToptionsConfigForm'];
+			//CVarDumper::dump($_POST, 10, true);
+			$model->options = $_POST['toptions'];
 			if ($model->validate())
 				$model->save();
 		}
