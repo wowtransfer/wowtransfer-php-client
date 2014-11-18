@@ -75,12 +75,18 @@
 
 	<div class="clear"></div>
 
+</div><!-- page -->
+
+<div class="container">
+<div class="navbar">
+	<div class="navbar-fixed-bottom">
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
 		All Rights Reserved.<br/>
 	</div><!-- footer -->
-
-</div><!-- page -->
+	</div>
+</div>
+</div>
 
 <div class="modal fade" id="chd-modal-info">
   <div class="modal-dialog">
