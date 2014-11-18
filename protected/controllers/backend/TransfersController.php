@@ -134,8 +134,9 @@ class TransfersController extends BackendController
 		);
 		if (isset($_POST['ChdTransfer']))
 		{
+			$transferConfig = isset($_POST['tconfig']) ? $_POST['tconfig'] : '';
 			$createCharForm = new CreateCharForm($model);
-			$result = $createCharForm->createChar();
+			$result = $createCharForm->createChar($transferConfig);
 
 			if (Yii::app()->request->isAjaxRequest)
 			{
@@ -144,7 +145,7 @@ class TransfersController extends BackendController
 			}
 		}
 
-		$service = new Wowtransfer;
+		$service = new WowtransferUI;
 		$tconfigs = $service->getTransferConfigs();
 
 		$this->render('char', array(

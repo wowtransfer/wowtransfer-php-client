@@ -57,8 +57,10 @@ class Wowtransfer
 
 	public function getTransferConfigs()
 	{
+		$accessToken = '00d4738c0690c8d246d313e2b91c6ae7'; // DEBUG:
+
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'tconfigs');
+		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'tconfigs' . '?access_token=' . $accessToken);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -70,9 +72,15 @@ class Wowtransfer
 		if (!$tconfigsSource)
 			return $tconfigs;
 
-		foreach ($tconfigsSource as $configItem)
+		foreach ($tconfigsSource as $config)
 		{
-			$tconfigs[$configItem['id']] = $configItem['title'];
+			$tconfigs[] = array(
+				'id'    => $config['id'],
+				'name'  => $config['name'],
+				'title' => $config['title'],
+				'udate' => $config['udate'],
+				'type'  => $config['type'],
+			);
 		}
 
 		return $tconfigs;
@@ -90,9 +98,9 @@ class Wowtransfer
 	public function dumpToSql($dumpLua, $accountId, $configuration)
 	{
 		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
-		$file = fopen($filePath, 'w');
+		$file = fopen($filePath, 'w'); // TODO: replace to object
 		if (!$file)
-			return 'fopen failed... todo!';
+			throw new Exception('fopen() failed! file: ' . $filePath);
 		fwrite($file, $dumpLua);
 		fclose($file);
 
@@ -104,9 +112,9 @@ class Wowtransfer
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
 		curl_setopt($ch, CURLOPT_POST, 1);
 		$postfields = array(
-			'dump_lua' => '@' . $filePath,
-			'transferConf' => $configuration,
-			'account_id' => $accountId
+			'dump_lua'      => '@' . $filePath,
+			'configuration' => $configuration,
+			'account_id'    => $accountId
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 		//curl_setopt($ch, CURLOPT_VERBOSE, true);
@@ -117,13 +125,19 @@ class Wowtransfer
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
 
-		return print_r($result, true);
-
 		unlink($filePath);
 
 		if ($status != 200)
 		{
-			throw new CHttpException(501, print_r($result, true));
+			$errors = json_decode($result);
+			if ($errors)
+			{
+				$error = reset($errors)[0];
+			}
+			else
+				$error = 'error';
+
+			throw new CHttpException(501, 'Service: ' . $error);
 		}
 
 		return $result;

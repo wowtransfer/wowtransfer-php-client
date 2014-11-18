@@ -9,21 +9,29 @@ class ConfigsController extends Controller
 
 	public function actionApp()
 	{
+		$serviceUI = new WowtransferUI;
 		$model = new AppConfigForm;
 		if (isset($_POST['AppConfigForm']))
 		{
 			$model->attributes = $_POST['AppConfigForm'];
 			if ($model->validate())
-				$model->SaveToFile();
+				$model->save();
 		}
-		$model->LoadFromFile();
+		else
+		{
+			$model->load();
+		}
 		$model->adminsStr = $model->getAdminsStr();
-		$this->render('app', array('model' => $model));
+		$this->render('app', array(
+			'model' => $model,
+			'cores' => $serviceUI->getCores(),
+		));
 	}
 
 	public function actionToptions()
 	{
 		$model = new ToptionsConfigForm;
+
 		if (isset($_POST['ToptionsConfigForm']))
 		{
 			$model->options = $_POST['ToptionsConfigForm'];
@@ -31,7 +39,9 @@ class ConfigsController extends Controller
 				$model->save();
 		}
 		$model->load();
-		$this->render('toptions', array('options' => $model->options));
+		$this->render('toptions', array(
+			'options' => $model->options,
+		));
 	}
 
 	// Uncomment the following methods and override them if needed

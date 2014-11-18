@@ -76,7 +76,7 @@ class LoginForm extends CFormModel
 			Yii::app()->user->login($this->_identity, 0);
 			if (in_array($this->username, Yii::app()->params['admins']))
 				Yii::app()->user->setState('role', 'admin');
-			elseif (in_array($this->username, Yii::app()->params['moderators']))
+			elseif (in_array($this->username, Yii::app()->params['moders']))
 				Yii::app()->user->setState('role', 'moderator');
 			else
 				Yii::app()->user->setState('role', 'user');

@@ -2,23 +2,32 @@
 
 class AppConfigForm extends CFormModel
 {
-	private $admins = array();
-	private $moders = array();
-
+	// virtual attributes
 	public $adminsStr = '';
-	public $moderatorsStr = '';
-	public $siteUrl = '';
-	public $apiBaseUrl = '';
-	public $emailAdmin = '';
-	public $core = '';
-	public $maxTransfersCount = 0;
-	public $maxAccountCharCount = 0;
+	public $modersStr = '';
+
+	// attributes
+	private $admins = array();
+	public  $apiBaseUrl = '';
+	public  $core = '';
+	public  $emailAdmin = '';
+	public  $maxTransfersCount = 10;
+	public  $maxAccountCharsCount = 10;
+	private $moders = array();
+	public  $publicKey = ''; // TODO
+	public  $secretKey = ''; // TODO
+	public  $siteUrl = '/';
 
 	public function rules()
 	{
 		return array(
-			array('core', 'required'),
-			array('siteUrl, apiBaseUrl, emailAdmin, maxTransfersCount, maxAccountCharCount', 'safe'),
+			array('core, siteUrl', 'required'),
+			array('core', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
+			array('maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000),
+			array('emailAdmin', 'email', 'allowEmpty' => false),
+			array('apiBaseUrl', 'length', 'max' => 255, 'allowEmpty' => false),
+			array('adminsStr, modersStr', 'safe'),
+			// adminsStr and modersStr have a pattern '\w, \w, \w, \w'
 		);
 	}
 
@@ -29,7 +38,9 @@ class AppConfigForm extends CFormModel
 			'emailAdmin' => 'Email администратора',
 			'core' => 'Ядро WoW сервера',
 			'maxTransfersCount' => 'Максимальное количество заявок',
-			'maxAccountCharCount' => 'Максимальное количество персонажей на аккаунте',
+			'maxAccountCharsCount' => 'Максимальное количество персонажей на аккаунте',
+			'adminsStr' => 'Администраторы',
+			'modersStr' => 'Модераторы',
 		);
 	}
 
@@ -38,21 +49,43 @@ class AppConfigForm extends CFormModel
 		return Yii::getPathOfAlias('application.config') . '/app.php';
 	}
 
-	public function SaveToFile()
+	public function save()
 	{
 		$filePath = $this->getConfigFilePath();
 		if (!file_exists($filePath))
 			throw new CHttpException(404, 'File not found: ' . $filePath);
-
-		$file = fopen($filePath, 'w');
-		if (!$file)
+		if (!is_writeable($filePath))
 			throw new CHttpException(501, 'Couldn\t write to file' . $filePath);
 
+		$file = fopen($filePath, 'w');
+
 		fwrite($file, "<?php\n\nreturn array(\n");
-		foreach ($this->attributes as $name => $value)
-		{
-			fwrite($file, "\t'$name'=>'$value',// 1\n");
-		}
+
+		fwrite($file, "\t'apiBaseUrl'=>'{$this->apiBaseUrl}',\n");
+		fwrite($file, "\t'core'=>'{$this->core}',\n");
+		fwrite($file, "\t'emailAdmin'=>'{$this->emailAdmin}',\n");
+		fwrite($file, "\t'maxTransfersCount'=>{$this->maxTransfersCount},\n");
+		fwrite($file, "\t'maxTransfersCount'=>{$this->maxTransfersCount},\n");
+		fwrite($file, "\t'siteUrl'=>'{$this->siteUrl}',\n");
+
+		// write administors
+		$this->admins = explode(',', $this->adminsStr);
+		if (!is_array($this->admins))
+			$this->admins = array();
+		fwrite($file, "\t'admins'=>array(");
+		foreach ($this->admins as $value)
+			fwrite($file, "'" . trim($value) . "',");
+		fwrite($file, "),\n");
+
+		// write moderators
+		$this->moders = explode(',', $this->modersStr);
+		if (!is_array($this->moders))
+			$this->moders = array();
+		fwrite($file, "\t'moders'=>array(");
+		foreach ($this->moders as $value)
+			fwrite($file, "'" . trim($value) . "',");
+		fwrite($file, "),\n");
+
 		fwrite($file, ");");
 
 		fclose($file);
@@ -60,7 +93,7 @@ class AppConfigForm extends CFormModel
 		Yii::app()->user->setFlash('success', Yii::t('app', 'Configuration of application was changed success.'));
 	}
 
-	public function LoadFromFile()
+	public function load()
 	{
 		$filePath = $this->getConfigFilePath();
 		if (!file_exists($filePath))
@@ -75,6 +108,8 @@ class AppConfigForm extends CFormModel
 			if (property_exists($this, $name))
 				$this->$name = $value;
 		}
+		$this->adminsStr = implode(',', $this->admins);
+		$this->modersStr = implode(',', $this->moders);
 
 		return true;
 	}
@@ -82,19 +117,5 @@ class AppConfigForm extends CFormModel
 	public function getAdminsStr()
 	{
 		return implode(',', $this->admins);
-	}
-
-	public function getCores()
-	{
-		$service = new Wowtransfer();
-		$cores = $service->getCores();
-		if (!$cores || !is_array($cores))
-			return array();
-
-		$result = array();
-		foreach ($cores as $core)
-			$result[$core['name']] = $core['title'];
-
-		return $result;
 	}
 }

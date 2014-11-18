@@ -14,7 +14,7 @@ $this->beginWidget('booster.widgets.TbActiveForm', array(
 
 )); ?>
 
-	<table class="table">
+	<table class="table table-condensed table-hover">
 	<thead>
 	<tr>
 		<th></th>

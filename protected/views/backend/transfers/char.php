@@ -36,8 +36,7 @@ $this->breadcrumbs = array(
 	</a>
 	<a class="btn btn-default btn-sm" href="#"
 		onclick="OnViewUncryptedLuaDumpClick(<?php echo $model->id; ?>); return false;"
-		>uncripted lua-dump</a><br>
-	<a href="<?php echo $this->createUrl('/transfers/index') ?>"><span class="glyphicon glyphicon-list"></span> Список заявок</a><br>
+		>uncripted lua-dump</a>
 </div>
 
 <div style="margin: 5px 305px 5px 0; height: 155px;">
@@ -81,7 +80,7 @@ $this->breadcrumbs = array(
 	<?php echo $form->hiddenField($model, 'id'); ?>
 
 	<div>
-		<div style="float: right;">
+		<div class="pull-right">
 			<?php echo CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
 				'style' => 'width: 200px;',
 			)); ?>

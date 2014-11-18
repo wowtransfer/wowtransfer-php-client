@@ -31,13 +31,13 @@ $luaDumpZipSize = strlen($luaDumpContentZip);
 	</tr>
 	<tr>
 		<th>Исходный размер</th>
-		<td><?php echo $luaDumpSize; ?></td>
-		<td><?php echo $luaDumpSize >> 10; ?></td>
+		<td class="text-right"><?php echo $luaDumpSize; ?></td>
+		<td class="text-right"><?php echo $luaDumpSize >> 10; ?></td>
 	</tr>
 	<tr>
 		<th>Сжатый размер</th>
-		<td><?php echo $luaDumpZipSize; ?></td>
-		<td><?php echo $luaDumpZipSize >> 10; ?></td>
+		<td class="text-right"><?php echo $luaDumpZipSize; ?></td>
+		<td class="text-right"><?php echo $luaDumpZipSize >> 10; ?></td>
 	</tr>
 	<tr>
 		<th>Коэфициент сжатия</th>
@@ -49,8 +49,18 @@ $luaDumpZipSize = strlen($luaDumpContentZip);
 
 <h3>Исходный lua-дамп</h3>
 
-<pre style="height: 400px; margin-top: 10px;"><?php echo strip_tags(htmlspecialchars($luaDumpContent)); ?></pre>
+<pre style="height: 300px; margin-top: 10px;"><?php echo strip_tags(htmlspecialchars($luaDumpContent)); ?></pre>
 
 <h3>Сжатый lua-дамп</h3>
 
-<pre style="height: 400px; margin-top: 10px;"><?php echo bin2hex($luaDumpContentZip); ?></pre>
+<pre style="height: 100px; margin-top: 10px;"><?php echo bin2hex($luaDumpContentZip); ?></pre>
+
+<div class="form">
+	<div class="form-actions">
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'label' => 'Назад',
+			'buttonType' => 'link',
+			'url' => Yii::app()->request->urlReferrer,
+		)); ?>
+	</div>
+</div>

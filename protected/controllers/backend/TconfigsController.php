@@ -6,8 +6,8 @@ class TconfigsController extends Controller
 	{
 		$service = new Wowtransfer;
 		
-		$model = $service->getTransferConfigs();
-		$this->render('index', array('tconfigs' => $model));
+		$models = $service->getTransferConfigs();
+		$this->render('index', array('tconfigs' => $models));
 	}
 
 	// Uncomment the following methods and override them if needed

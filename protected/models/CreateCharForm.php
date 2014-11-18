@@ -44,10 +44,9 @@ class CreateCharForm
 		}
 
 		$queries = explode(';', $sql);
-		// $connection = new CDbConnection($dsn, $username, $password);
-		$connection = Yii::app()->db;
+		$db = Yii::app()->db;
 
-		$transaction = $connection->beginTransaction();
+		$transaction = $db->beginTransaction();
 
 		try
 		{
@@ -56,7 +55,7 @@ class CreateCharForm
 				'status' => 0
 			);
 
-			$command = $connection->createCommand();
+			$command = $db->createCommand();
 			foreach ($queries as $query)
 			{
 				$query = trim($query);
@@ -92,7 +91,7 @@ class CreateCharForm
 
 		$connection = Yii::app()->db;
 
-		$command = $connection->createCommand('SELECT @CHAR_GUID FROM dual');
+		$command = $connection->createCommand('SELECT @CHAR_GUID');
 		$result = $command->queryScalar();
 		if ($result)
 			$guid = intval($result);
@@ -109,7 +108,7 @@ class CreateCharForm
 	 *               ['error'] => string
 	 *               ['guid'] => GUID of character
 	 */
-	public function createChar()
+	public function createChar($transferConfigName)
 	{
 		$result = array();
 		$result['error'] = '';
@@ -128,7 +127,7 @@ class CreateCharForm
 		$service = new Wowtransfer;
 		try
 		{
-			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, 'global_335a');
+			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $transferConfigName);
 		}
 		catch (exception $ex)
 		{

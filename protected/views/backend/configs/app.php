@@ -1,12 +1,13 @@
 <?php
 /* @var $this ConfigsController */
+/* @var $model AppConfigForm */
+/* @var $cores array */
 
 $this->breadcrumbs = array(
 	'Настройка' => array('/configs'),
 	'Приложение',
 );
 
-$cores = $model->getCores();
 ?>
 <h1>Настройка приложения</h1>
 
@@ -28,17 +29,19 @@ $cores = $model->getCores();
 <?php echo $form->dropDownListGroup($model, 'core', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'),
 	'widgetOptions' => array('data' => $cores))); ?>
 <?php echo $form->numberFieldGroup($model, 'maxTransfersCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php echo $form->numberFieldGroup($model, 'maxAccountCharCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
+<?php echo $form->numberFieldGroup($model, 'maxAccountCharsCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 <?php echo $form->textFieldGroup($model, 'apiBaseUrl', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 <?php echo $form->textFieldGroup($model, 'adminsStr', array('hint' => 'Строка с именами администраторов, разделенных запятыми')); ?>
-<?php echo $form->textFieldGroup($model, 'moderatorsStr', array('hint' => 'Строка с именами модераторов, разделенных запятыми')); ?>
+<?php echo $form->textFieldGroup($model, 'modersStr', array('hint' => 'Строка с именами модераторов, разделенных запятыми')); ?>
 
 
-<div class="form-actions">
+<div class="form-group">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-9">
 	<?php $this->widget('booster.widgets.TbButton', array(
 		'buttonType' => 'submit',
 		'context' => 'primary',
-		'label' => 'Save'
+		'label' => 'Save',
 	)); ?>
 	<?php $this->widget('booster.widgets.TbButton', array(
 		'buttonType' => 'link',
@@ -46,6 +49,7 @@ $cores = $model->getCores();
 		'icon' => 'ban-circle',
 		'label' => 'Cancel'
 	)); ?>
+	</div>
 </div>
 
 <?php $this->endWidget(); ?>

@@ -7,18 +7,30 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<table class="table" style="width: 50%">
+<div class="alert alert-info">
+Для редактирования конфигурации воспользуйтесь <a class="alert-link" href="http://wowtransfer.com/cp/tconfigs/">сервисом</a>. 
+</div>
+
+<table class="table table-hover">
 <thead>
 	<tr>
+		<th>#</th>
 		<th>ID</th>
+		<th>Name</th>
 		<th>Title</th>
+		<th>Update date</th>
+		<th>Type</th>
 	</tr>
 </thead>
 <tbody>
-<?php foreach ($tconfigs as $id => $title): ?>
+<?php foreach ($tconfigs as $i => $config): ?>
 	<tr>
-		<td><?php echo $id; ?></td>
-		<td><?php echo $title; ?></td>
+		<td><?php echo $i + 1; ?></td>
+		<td><?php echo $config['id']; ?></td>
+		<td><?php echo $config['name']; ?></td>
+		<td><?php echo $config['title']; ?></td>
+		<td><?php echo $config['udate']; ?></td>
+		<td><?php echo $config['type']; ?></td>
 	</tr>
 <?php endforeach; ?>
 </tbody>

@@ -1,14 +1,12 @@
 <?php
 
 return array(
-	'siteUrl'=>'/',
-	'apiBaseUrl' => 'http://wowtransfer2/api.php/api/v1',
-	'emailAdmin'=>'admin@example.com',
+	'apiBaseUrl'=>'http://wowtransfer/api.php/api/v1',
 	'core'=>'trinity_335a',
-	'maxTransfersCount'=>55,
-	'maxAccountCharCount'=>25,
-	// array of usernames,
-	'admins'=>array('admin'),
-	// array of usernames
-	'moderators'=>array(),
+	'emailAdmin'=>'admin@example.com',
+	'maxTransfersCount'=>12,
+	'maxTransfersCount'=>12,
+	'siteUrl'=>'/',
+	'admins'=>array('admin',),
+	'moders'=>array('',),
 );
