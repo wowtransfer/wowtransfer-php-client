@@ -1,21 +1,7 @@
 <?php
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
-
-$service = new Wowtransfer;
-$servers = $service->getWowservers();
-
-$serversList = array();
-if (is_array($servers))
-{
-	$serversList[''] = '';
-	for ($i = 0; $i < count($servers); ++$i)
-	{
-		$server = $servers[$i];
-		$serversList[$server['site_url']] = $server['title'];
-	}
-}
-asort($servers);
+/* @var $wowServers array */
 
 //CVarDumper::dump($serversList, 10, true);
 ?>
@@ -40,7 +26,7 @@ asort($servers);
 	<fieldset>
 		<legend>Удаленный сервер</legend>
 
-		<?php echo CHtml::dropDownList('wowserver', null, $serversList, array(
+		<?php echo CHtml::dropDownList('wowserver', null, $wowServers, array(
 			'onchange' => '$("#ChdTransfer_server").val(this.value);',
 			'class' => 'pull-right',
 			'style' => 'width: 180px;',

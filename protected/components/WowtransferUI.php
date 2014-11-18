@@ -42,4 +42,27 @@ class WowtransferUI extends Wowtransfer
 
 		return $cores;
 	}
+
+	/**
+	 * @return array
+	 *
+	 * incluing empty item [''] = ''
+	 */
+	public function getWowServers()
+	{
+		$serversSource = parent::getWowServers();
+
+		$servers = array('' => '');
+		if (is_array($serversSource))
+		{
+			for ($i = 0; $i < count($serversSource); ++$i)
+			{
+				$server = $serversSource[$i];
+				$servers[$server['site_url']] = $server['title'];
+			}
+		}
+		asort($servers);
+
+		return $servers;
+	}
 }

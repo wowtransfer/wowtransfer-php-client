@@ -100,8 +100,12 @@ class TransfersController extends FrontendController
 			$model->username_old = 'username';
 		}
 
+		$serviceUI = new WowtransferUI;
+		$wowServers = $serviceUI->getWowServers();
+
 		$this->render('create', array(
 			'model' => $model,
+			'wowServers' => $wowServers,
 		));
 	}
 
@@ -133,9 +137,13 @@ class TransfersController extends FrontendController
 			}
 		}
 
+		$serviceUI = new WowtransferUI;
+		$wowServers = $serviceUI->getWowServers();
+
 		$model->pass2 = $model->pass;
 		$this->render('update', array(
 			'model' => $model,
+			'wowServers' => $wowServers,
 		));
 	}
 

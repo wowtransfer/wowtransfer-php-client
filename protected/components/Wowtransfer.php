@@ -143,7 +143,7 @@ class Wowtransfer
 		return $result;
 	}
 
-	public function getWowservers()
+	public function getWowServers()
 	{
 		$ch = curl_init($this->serviceBaseUrl);
 		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'wowservers');
