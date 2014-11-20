@@ -112,9 +112,10 @@ class Wowtransfer
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
 		curl_setopt($ch, CURLOPT_POST, 1);
 		$postfields = array(
-			'dump_lua'      => '@' . $filePath,
-			'configuration' => $configuration,
-			'account_id'    => $accountId
+			'dump_lua'         => '@' . $filePath,
+			'configuration_id' => $configuration,
+			'account_id'       => $accountId,
+			'access_token'     => '2c5c2dc3c11d4def456980af52591f40',
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 		//curl_setopt($ch, CURLOPT_VERBOSE, true);
@@ -132,10 +133,10 @@ class Wowtransfer
 			$errors = json_decode($result);
 			if ($errors)
 			{
-				$error = reset($errors)[0];
+				$error = print_r($errors, true);
 			}
 			else
-				$error = 'error';
+				$error = 'Erorr (' . $status . ')';
 
 			throw new CHttpException(501, 'Service: ' . $error);
 		}

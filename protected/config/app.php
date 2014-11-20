@@ -7,6 +7,6 @@ return array(
 	'maxTransfersCount'=>12,
 	'maxTransfersCount'=>12,
 	'siteUrl'=>'/',
-	'admins'=>array('admin',),
+	'admins'=>array('admin','gracer',),
 	'moders'=>array('',),
 );
