@@ -65,7 +65,7 @@ class AppConfigForm extends CFormModel
 		fwrite($file, "\t'core'=>'{$this->core}',\n");
 		fwrite($file, "\t'emailAdmin'=>'{$this->emailAdmin}',\n");
 		fwrite($file, "\t'maxTransfersCount'=>{$this->maxTransfersCount},\n");
-		fwrite($file, "\t'maxTransfersCount'=>{$this->maxTransfersCount},\n");
+		fwrite($file, "\t'maxAccountCharCount'=>{$this->maxAccountCharsCount},\n");
 		fwrite($file, "\t'siteUrl'=>'{$this->siteUrl}',\n");
 
 		// write administors
