@@ -7,6 +7,7 @@ class AppConfigForm extends CFormModel
 	public $modersStr = '';
 
 	// attributes
+	public  $accessToken = '';
 	private $admins = array();
 	public  $apiBaseUrl = '';
 	public  $core = '';
@@ -22,7 +23,8 @@ class AppConfigForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('core, siteUrl, serviceUsername, apiBaseUrl', 'required'),
+			array('core, siteUrl, serviceUsername, apiBaseUrl, accessToken', 'required'),
+			array('accessToken', 'match', 'pattern' => '/^[a-z0-9]+$/', 'allowEmpty' => false),
 			array('core, serviceUsername', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
 			array('maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000),
 			array('emailAdmin', 'email', 'allowEmpty' => false),
@@ -71,7 +73,7 @@ class AppConfigForm extends CFormModel
 		fwrite($file, "\t'maxAccountCharsCount'=>{$this->maxAccountCharsCount},\n");
 		fwrite($file, "\t'siteUrl'=>'{$this->siteUrl}',\n");
 		fwrite($file, "\t'serviceUsername'=>'{$this->serviceUsername}',\n");
-
+		fwrite($file, "\t'accessToken'=>'{$this->accessToken}',\n");
 
 		$writeArray = function ($attributeName, $explodeStr) use ($file)
 		{
@@ -91,23 +93,6 @@ class AppConfigForm extends CFormModel
 		$writeArray('admins', $this->adminsStr);
 		$writeArray('moders', $this->modersStr);
 
-		/*$this->admins = explode(',', $this->adminsStr);
-		if (!is_array($this->admins))
-			$this->admins = array();
-		fwrite($file, "\t'admins'=>array(");
-		foreach ($this->admins as $value)
-			fwrite($file, "'" . trim($value) . "',");
-		fwrite($file, "),\n");*/
-/*
-		// write moderators
-		$this->moders = explode(',', $this->modersStr);
-		if (!is_array($this->moders))
-			$this->moders = array();
-		fwrite($file, "\t'moders'=>array(");
-		foreach ($this->moders as $value)
-			fwrite($file, "'" . trim($value) . "',");
-		fwrite($file, "),\n");
-*/
 		fwrite($file, ");");
 
 		fclose($file);
