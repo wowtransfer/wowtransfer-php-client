@@ -15,18 +15,20 @@ class AppConfigForm extends CFormModel
 	public  $maxAccountCharsCount = 10;
 	private $moders = array();
 	public  $publicKey = ''; // TODO
+	public  $serviceUsername = '';
 	public  $secretKey = ''; // TODO
 	public  $siteUrl = '/';
 
 	public function rules()
 	{
 		return array(
-			array('core, siteUrl', 'required'),
-			array('core', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
+			array('core, siteUrl, serviceUsername, apiBaseUrl', 'required'),
+			array('core, serviceUsername', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
 			array('maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000),
 			array('emailAdmin', 'email', 'allowEmpty' => false),
 			array('apiBaseUrl', 'length', 'max' => 255, 'allowEmpty' => false),
-			array('adminsStr, modersStr', 'safe'),
+			array('adminsStr', 'required'),
+			array('modersStr', 'safe'),
 			// adminsStr and modersStr have a pattern '\w, \w, \w, \w'
 		);
 	}
@@ -41,6 +43,7 @@ class AppConfigForm extends CFormModel
 			'maxAccountCharsCount' => 'Максимальное количество персонажей на аккаунте',
 			'adminsStr' => 'Администраторы',
 			'modersStr' => 'Модераторы',
+			'serviceUsername' => 'Пользователь',
 		);
 	}
 
@@ -65,18 +68,37 @@ class AppConfigForm extends CFormModel
 		fwrite($file, "\t'core'=>'{$this->core}',\n");
 		fwrite($file, "\t'emailAdmin'=>'{$this->emailAdmin}',\n");
 		fwrite($file, "\t'maxTransfersCount'=>{$this->maxTransfersCount},\n");
-		fwrite($file, "\t'maxAccountCharCount'=>{$this->maxAccountCharsCount},\n");
+		fwrite($file, "\t'maxAccountCharsCount'=>{$this->maxAccountCharsCount},\n");
 		fwrite($file, "\t'siteUrl'=>'{$this->siteUrl}',\n");
+		fwrite($file, "\t'serviceUsername'=>'{$this->serviceUsername}',\n");
 
-		// write administors
-		$this->admins = explode(',', $this->adminsStr);
+
+		$writeArray = function ($attributeName, $explodeStr) use ($file)
+		{
+			$this->$attributeName = explode(',', $explodeStr);
+			if (!is_array($this->$attributeName))
+				$this->$attributeName = array();
+			fwrite($file, "\t'$attributeName'=>array(");
+			foreach ($this->$attributeName as $value)
+			{
+				$value = trim($value);
+				if (!empty($value))
+					fwrite($file, "'$value',");
+			}
+			fwrite($file, "),\n");
+		};
+
+		$writeArray('admins', $this->adminsStr);
+		$writeArray('moders', $this->modersStr);
+
+		/*$this->admins = explode(',', $this->adminsStr);
 		if (!is_array($this->admins))
 			$this->admins = array();
 		fwrite($file, "\t'admins'=>array(");
 		foreach ($this->admins as $value)
 			fwrite($file, "'" . trim($value) . "',");
-		fwrite($file, "),\n");
-
+		fwrite($file, "),\n");*/
+/*
 		// write moderators
 		$this->moders = explode(',', $this->modersStr);
 		if (!is_array($this->moders))
@@ -85,7 +107,7 @@ class AppConfigForm extends CFormModel
 		foreach ($this->moders as $value)
 			fwrite($file, "'" . trim($value) . "',");
 		fwrite($file, "),\n");
-
+*/
 		fwrite($file, ");");
 
 		fclose($file);

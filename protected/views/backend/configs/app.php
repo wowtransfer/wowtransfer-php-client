@@ -24,16 +24,23 @@ $this->breadcrumbs = array(
 	),
 )); ?>
 
+<fieldset>
+<legend>Сервер</legend>
 <?php echo $form->textFieldGroup($model, 'siteUrl', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 <?php echo $form->emailFieldGroup($model, 'emailAdmin', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 <?php echo $form->dropDownListGroup($model, 'core', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'),
 	'widgetOptions' => array('data' => $cores))); ?>
 <?php echo $form->numberFieldGroup($model, 'maxTransfersCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 <?php echo $form->numberFieldGroup($model, 'maxAccountCharsCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php echo $form->textFieldGroup($model, 'apiBaseUrl', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 <?php echo $form->textFieldGroup($model, 'adminsStr', array('hint' => 'Строка с именами администраторов, разделенных запятыми')); ?>
 <?php echo $form->textFieldGroup($model, 'modersStr', array('hint' => 'Строка с именами модераторов, разделенных запятыми')); ?>
+</fieldset>
 
+<fieldset>
+<legend>Сервис</legend>
+<?php echo $form->textFieldGroup($model, 'apiBaseUrl', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
+<?php echo $form->textFieldGroup($model, 'serviceUsername', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
+</fieldset>
 
 <div class="form-group">
 	<div class="col-sm-3"></div>

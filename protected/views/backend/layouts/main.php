@@ -62,15 +62,23 @@
 </div><!-- page -->
 
 
-<div class="container">
 <div class="navbar">
 	<div class="navbar-fixed-bottom navbar-default">
+	<div class="container">
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
-		All Rights Reserved.<br/>
+		<div class="pull-left">
+			<?php if (!empty(Yii::app()->params['serviceUsername'])) ?>
+				Service username: <strong><a href="http://wowtransfer.com/cp/profile/"><?php echo Yii::app()->params['serviceUsername']; ?></a></strong>
+			<?php ?>
+		</div>
+
+		<div>
+			Copyright &copy; <?php echo date('Y'); ?> <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
+			All Rights Reserved.
+		</div>
 	</div><!-- footer -->
 	</div>
-</div>
+	</div>
 </div>
 
 <script>chdInit("<?php echo Yii::app()->homeUrl; ?>");</script>
