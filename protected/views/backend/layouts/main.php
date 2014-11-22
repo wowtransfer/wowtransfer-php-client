@@ -31,9 +31,9 @@
 		'items' => array(
 			array('label'=>'Сайт', 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'),
 			array('label'=>'Главная', 'url'=>array('/'), 'active' => $this->route == 'site/index'),
-			array('label'=>'Заявки', 'url'=>array('/transfers/index'), 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'),
+			array('label'=>'Заявки', 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'),
 			array('label'=>'Конфигурации', 'url'=>array('/tconfigs/index'), 'icon' => 'asterisk'),
-			array('label'=>'Настройка', 'url'=>array('/configs/index'), 'icon' => 'cog', 'active' => $this->id == 'configs'),
+			array('label'=>'Настройка', 'url'=>array('/configs'), 'icon' => 'cog', 'active' => $this->id == 'configs'),
 			array('label'=>'Карта', 'url'=>array('/site/sitemap'), 'icon' => 'map-marker'),
 		),
 	)); ?><!-- mainmenu -->

@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 <h1 class="text-center">Опции переноса</h1>
 
 <div class="alert alert-warning">
-TODO
+TODO: файл <code>/protected/config/toptions.php</code> редактируется в ручную.
 </div>
 
 <?php

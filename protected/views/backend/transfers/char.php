@@ -97,7 +97,7 @@ $this->breadcrumbs = array(
 	</div>
 
 	<div style="height: 1em; text-align: right;">
-		Если опция недоступна значит она отключена в глобальных настройках.
+		Если опция недоступна значит она отключена в <a href="<?php echo Yii::app()->createUrl('/configs/toptions'); ?>">глобальных настройках.</a>
 	</div>
 
 	<div class="form-actions">
