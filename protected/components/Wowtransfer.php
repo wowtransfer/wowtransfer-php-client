@@ -57,7 +57,7 @@ class Wowtransfer
 
 	public function getTransferConfigs()
 	{
-		$accessToken = '00d4738c0690c8d246d313e2b91c6ae7'; // DEBUG:
+		$accessToken = Yii::app()->params['accessToken']; // DEBUG:
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'tconfigs' . '?access_token=' . $accessToken);

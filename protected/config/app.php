@@ -7,8 +7,8 @@ return array(
 	'maxTransfersCount'=>10,
 	'maxAccountCharsCount'=>10,
 	'siteUrl'=>'/',
-	'serviceUsername'=>'gracer',
-	'accessToken'=>'00d4738c0690c8d246d313e2b91c6ae7',
+	'serviceUsername'=>'player',
+	'accessToken'=>'97864b0e3c13e50d027edd97f84c54ee',
 	'admins'=>array('admin','gracer',),
 	'moders'=>array(),
 );

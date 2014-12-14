@@ -47,6 +47,7 @@
 		'type' => 'tabs',
 		'items' => array(
 			array('label' => 'Сайт', 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home'),
+			array('label' => 'Главная', 'url' => array('/site/index')),
 			array('label' => 'Заявки', 'url' => array('/transfers'), 'icon' => 'list', 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers'),
 			array('label' => 'Помощь', 'url' => array('/site/page'), 'icon' => 'info-sign'),
 		),
