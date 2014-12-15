@@ -26,6 +26,9 @@ class CreateCharForm
 	/**
 	 * Runs the SQL script
 	 *
+	 * @param string $sql
+	 * @param integer $accountGuid
+	 *
 	 * @return array
 	 *    index => array(
 	 *      ['query'] => string,
@@ -33,7 +36,7 @@ class CreateCharForm
 	 *    ),
 	 *    ['error'] => string,
 	 */
-	private function RunSql($sql)
+	private function RunSql($sql, $accountGuid)
 	{
 		$result = array();
 
@@ -56,6 +59,12 @@ class CreateCharForm
 			);
 
 			$command = $db->createCommand();
+
+			$query1['query'] = '@ACC_GUID = ' . $accoountGuid;
+			$command->text = $query1['query'];
+			$query1['query'] = $command->execute();
+			$result[] = $query1;
+
 			foreach ($queries as $query)
 			{
 				$query = trim($query);
@@ -125,6 +134,8 @@ class CreateCharForm
 		$dumpLua = $this->_transfer->luaDumpFromDb();
 
 		$service = new Wowtransfer;
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		try
 		{
 			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $transferConfigName);
@@ -136,7 +147,7 @@ class CreateCharForm
 		}
 
 		$guid = 0;
-		$queries = $this->RunSql($result['sql']);
+		$queries = $this->RunSql($result['sql'], $this->_transfer->account_id);
 		if (isset($queries['error']))
 		{
 			$result['error'] = $queries['error'];

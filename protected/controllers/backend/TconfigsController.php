@@ -5,6 +5,8 @@ class TconfigsController extends Controller
 	public function actionIndex()
 	{
 		$service = new Wowtransfer;
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		
 		$models = $service->getTransferConfigs();
 		$this->render('index', array('tconfigs' => $models));

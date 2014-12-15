@@ -28,6 +28,7 @@ $this->breadcrumbs = array(
 		onclick="OnShowCharacterDataClick(<?php echo $model->char_guid; ?>); return false;">
 		Show character's info by GUID and ID
 	</a><br>
+	<a class="btn btn-default btn-sm btn-char-action" href="#" onclick="alert('TODO');">View SQL script</a><br />
 	<a class="btn btn-default btn-sm" href="#"
 		data-toggle="modal"
 		onclick="OnViewLuaDumpClick(<?php echo $model->id; ?>); return false;"
@@ -132,9 +133,9 @@ $this->breadcrumbs = array(
 
 <div style="margin: 10px 0;"><!-- hack -->
 <?php if (empty($error)): ?>
-	<div id="create-char-error" class="alert alert-danger" style="display: none;"></div>
+	<pre id="create-char-error" class="alert alert-danger" style="display: none;"></pre>
 <?php else: ?>
-	<div id="create-char-error" class="alert alert-danger"><?php echo $error; ?></div>
+	<pre id="create-char-error" class="alert alert-danger"><?php echo $error; ?></pre>
 <?php endif; ?>
 </div>
 

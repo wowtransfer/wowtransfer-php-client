@@ -3,7 +3,8 @@
 <html lang="ru">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon.ico" type="image/x-icon">
+
+	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/common.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/main.css">
@@ -47,8 +48,7 @@
 		'type' => 'tabs',
 		'items' => array(
 			array('label' => 'Сайт', 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home'),
-			array('label' => 'Главная', 'url' => array('/site/index')),
-			array('label' => 'Заявки', 'url' => array('/transfers'), 'icon' => 'list', 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers'),
+			array('label' => 'Заявки', 'url' => array('/transfers'), 'icon' => 'list', 'active' => $this->id == 'transfers'),
 			array('label' => 'Помощь', 'url' => array('/site/page'), 'icon' => 'info-sign'),
 		),
 	)); ?><!-- mainmenu -->

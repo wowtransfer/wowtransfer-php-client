@@ -10,7 +10,11 @@ class ConfigsController extends Controller
 	public function actionApp()
 	{
 		$serviceUI = new WowtransferUI;
+		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
+		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
 		$model = new AppConfigForm;
+		// TODO: server and service submit
 		if (isset($_POST['AppConfigForm']))
 		{
 			$model->attributes = $_POST['AppConfigForm'];
@@ -21,10 +25,20 @@ class ConfigsController extends Controller
 		{
 			$model->load();
 		}
+
+		try
+		{
+			$cores = $serviceUI->getCores();
+		}
+		catch (Exception $e)
+		{
+			$cores = array(); // TODO: display message
+		}
+
 		$model->adminsStr = $model->getAdminsStr();
 		$this->render('app', array(
 			'model' => $model,
-			'cores' => $serviceUI->getCores(),
+			'cores' => $cores,
 		));
 	}
 

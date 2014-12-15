@@ -5,7 +5,76 @@
  */
 class Wowtransfer
 {
-	private $serviceBaseUrl = 'http://wowtransfer/api.php/api/v1/';
+	/**
+	 * @var resource
+	 */
+	private $_ch = null; // curl
+
+	/**
+	 * @var string
+	 */
+	protected $serviceBaseUrl;
+
+	/**
+	 * @var string
+	 */
+	protected $accessToken;
+
+
+	public function __construct()
+	{
+		$this->_ch = curl_init();
+	}
+
+	public function __destruct()
+	{
+		curl_close($this->_ch);
+	}
+
+	/**
+	 * @param string $accessToken
+	 * @return $this
+	 */
+	public function setAccessToken($accessToken)
+	{
+		if (empty($accessToken))
+			throw new Exception('Empty access token');
+
+		$this->accessToken = $accessToken;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getAccessToken()
+	{
+		return $this->accessToken;
+	}
+
+	/**
+	 * @param string $url
+	 * @return $this
+	 */
+	public function setBaseUrl($url)
+	{
+		if (empty($url))
+			throw new \exception('Empty base url');
+
+		if ($url[strlen($url) - 1] !== '/')
+			$url .= '/';
+		$this->serviceBaseUrl = $url;
+
+		return $this;
+	}
+
+	/**
+	 * @return string Base url with '/' on end
+	 */
+	public function getBaseUrl()
+	{
+		return $this->serviceBaseUrl;
+	}
 
 	/**
 	 * @return array Transfer's options
@@ -41,35 +110,40 @@ class Wowtransfer
 		return '1.0';
 	}
 
+	/**
+	 * @return array|false
+	 */
 	public function getCores()
 	{
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'cores');
+		$ch = $this->_ch;
+		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . 'cores');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
 
-		$cores = json_decode($result, true);
+		$result = json_decode($result, true);
+		if (!$result)
+			throw new \Exception("Could't get cores from service");
+		if ($status !== 200)
+			throw new \Exception($result['error_message']);
 
-		return $cores;
+		return $result;
 	}
 
 	public function getTransferConfigs()
 	{
-		$accessToken = Yii::app()->params['accessToken']; // DEBUG:
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'tconfigs' . '?access_token=' . $accessToken);
+		$ch = $this->_ch;
+		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . 'tconfigs' . '?access_token=' . $this->getAccessToken());
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
 
 		$tconfigs = array();
 
 		$tconfigsSource = json_decode($result, true);
 		if (!$tconfigsSource)
+			return $tconfigs;
+		if ($status !== 200)
 			return $tconfigs;
 
 		foreach ($tconfigsSource as $config)
@@ -104,7 +178,7 @@ class Wowtransfer
 		fwrite($file, $dumpLua);
 		fclose($file);
 
-		$ch = curl_init();
+		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'dumps/sql');
 		//curl_setopt($ch, CURLOPT_HEADER, 1);
 		//curl_setopt($ch, CURLOPT_NOBODY, 1);
@@ -115,7 +189,7 @@ class Wowtransfer
 			'dump_lua'         => '@' . $filePath,
 			'configuration_id' => $configuration,
 			'account_id'       => $accountId,
-			'access_token'     => '2c5c2dc3c11d4def456980af52591f40',
+			'access_token'     => $this->getAccessToken(),
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 		//curl_setopt($ch, CURLOPT_VERBOSE, true);
@@ -124,16 +198,15 @@ class Wowtransfer
 
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
 
 		unlink($filePath);
 
 		if ($status != 200)
 		{
-			$errors = json_decode($result);
-			if ($errors)
+			$response = json_decode($result, true);
+			if ($response)
 			{
-				$error = print_r($errors, true);
+				$error = $response['error_message']; //print_r();
 			}
 			else
 				$error = 'Erorr (' . $status . ')';
@@ -146,12 +219,11 @@ class Wowtransfer
 
 	public function getWowServers()
 	{
-		$ch = curl_init($this->serviceBaseUrl);
+		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'wowservers');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
 
 		$servers = json_decode($result, true);
 

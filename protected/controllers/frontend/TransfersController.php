@@ -101,6 +101,8 @@ class TransfersController extends FrontendController
 		}
 
 		$serviceUI = new WowtransferUI;
+		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
+		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		$wowServers = $serviceUI->getWowServers();
 
 		$this->render('create', array(
@@ -138,6 +140,8 @@ class TransfersController extends FrontendController
 		}
 
 		$serviceUI = new WowtransferUI;
+		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
+		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		$wowServers = $serviceUI->getWowServers();
 
 		$model->pass2 = $model->pass;

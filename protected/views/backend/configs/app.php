@@ -11,6 +11,10 @@ $this->breadcrumbs = array(
 ?>
 <h1>Настройка приложения</h1>
 
+<div class="alert alert-warning">
+Настройки приложения хранятся в файле <code>/protected/config/app.php</code>. В случае сбоя его можно изменить вручную.
+</div>
+
 <?php if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="flash-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
 <?php endif; ?>
@@ -36,6 +40,27 @@ $this->breadcrumbs = array(
 <?php echo $form->textFieldGroup($model, 'modersStr', array('hint' => 'Строка с именами модераторов, разделенных запятыми')); ?>
 </fieldset>
 
+<div class="form-group">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-9">
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'submit',
+		'context' => 'primary',
+		'label' => 'Save',
+		'htmlOptions' => array(
+			'name' => 'server',
+			'disabled' => 'disabled',
+		),
+	)); ?>
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'url' => $this->createUrl('/configs'),
+		'icon' => 'ban-circle',
+		'label' => 'Cancel'
+	)); ?>
+	</div>
+</div>
+
 <fieldset>
 <legend>Сервис</legend>
 <?php echo $form->textFieldGroup($model, 'serviceUsername', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
@@ -50,6 +75,9 @@ $this->breadcrumbs = array(
 		'buttonType' => 'submit',
 		'context' => 'primary',
 		'label' => 'Save',
+		'htmlOptions' => array(
+			'name' => 'service',
+		),
 	)); ?>
 	<?php $this->widget('booster.widgets.TbButton', array(
 		'buttonType' => 'link',
