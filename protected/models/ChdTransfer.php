@@ -31,6 +31,12 @@ class ChdTransfer extends CActiveRecord
 	public $fileLua;
 	public $pass2;
 
+	const STATUS_PROCESS = 'process';
+	const STATUS_CHECK   = 'check';
+	const STATUS_CANCEL  = 'cancel';
+	const STATUS_APPLY   = 'apply';
+	const STATUS_GAME    = 'game';
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -159,6 +165,18 @@ class ChdTransfer extends CActiveRecord
 		));
 	}
 
+	public static function getStatuses()
+	{
+		return array(
+			self::STATUS_PROCESS,
+			self::STATUS_CHECK,
+			self::STATUS_CANCEL,
+			self::STATUS_APPLY,
+			self::STATUS_GAME,
+		);
+	}
+
+	// TODO: delete
 	public function __get($name)
 	{
 		if ($name == 'statusName')

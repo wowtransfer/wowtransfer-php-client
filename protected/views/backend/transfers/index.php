@@ -14,7 +14,7 @@ $this->menu = array(
 <h1>Заявки на перенос</h1>
 
 <?php if (Yii::app()->user->hasFlash('success')): ?>
-	<div class="flash-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
+	<div class="alert alert-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
 <?php endif; ?>
 
 <?php $this->widget('zii.widgets.CListView', array(

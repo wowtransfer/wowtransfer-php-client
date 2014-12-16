@@ -17,7 +17,7 @@ class TransfersController extends BackendController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','index','view','update','delete','char','createchar','deletechar','luadump'),
+				'actions'=>array('admin','index','view','update','delete','char','createchar','deletechar','luadump','filter'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -119,6 +119,44 @@ class TransfersController extends BackendController
 		));
 	}
 
+	public function actionFilter($id)
+	{
+		var_dump($_GET);
+		var_dump($_POST);
+
+		if (!Yii::app()->request->isAjaxRequest)
+			return false;
+
+		// read filter from session
+		//
+		
+		/*
+		 * statuses array('', '', '', '')
+		 * datetime 2014-01-01 00:00:00
+		 */
+		if (isset($_POST['submit']))
+		{
+			$response = array();
+
+			// checking
+			//
+
+			if ($error)
+			{
+				$response['error'] = 'Error filter';
+			}
+			else
+			{
+				// fill transfers to array
+				//
+				
+				// write filter to session
+			}
+
+			echo json_encode($response);
+		}
+	}
+	
 	public function actionChar($id)
 	{
 		$this->layout = '//layouts/column1';
@@ -195,6 +233,7 @@ class TransfersController extends BackendController
 	 */
 	public function actionLuadump($id)
 	{
+		$this->layout = '//layouts/column1';
 		$model = $this->loadModel($id); // TODO: load only lua-dump
 
 		if (Yii::app()->request->isAjaxRequest)
