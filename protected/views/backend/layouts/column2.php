@@ -1,8 +1,8 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<div style="float: right; width: 215px;">
-	<div id="sidebar">
+<div id="sidebar" style="float: right; width: 215px;">
+
 	<?php
 		array_unshift($this->menu, array(
 			'label' => 'Операции',
@@ -13,26 +13,33 @@
 			'items' => $this->menu,
 		));
 	?>
-	</div>
+
 	<?php if ($this->action->id === 'index'): ?>
-	<!-- TODO: do widget -->
-	<div><h4>Статусы</h4>
+
+	<div class="portlet" style="margin-top: 10px;">
+		<form method="post" action="" onsubmit="return false;" id="frm-filter">
+		<div class="portlet-content">
+		<div class="portlet-title">Статусы</div>
 		<?php foreach (ChdTransfer::getStatuses() as $statusName): ?>
 		<label>
-			<input type="checkbox" name="status_<?php echo $statusName ?>"
+			<input type="checkbox" name="statuses[]"
 				   value="<?php echo $statusName ?>" checked="checked"
 				   onclick="OnStatusClick(this)">
 			<?php echo $statusName ?>
 		</label><br>
 		<?php endforeach; ?>
-	</div>
-	<div><h4>Дата/время</h4>
-		<label><input type="radio" name="dt_last_month" value="last_month" checked="checked"> последний месяц</label><br>
-		<label><input type="radio" name="dt_last_month" value="last_week"> последняя неделя</label><br>
-		<label><input type="radio" name="dt_last_month" value="last_day"> последний день</label>
-	</div>
-	<div style="text-align: center;">
-		<button type="submit" class="btn btn-primary">Применить</button>
+
+		<div class="portlet-title">Дата/время</div>
+		<label><input type="radio" name="dt_range" value="last_month" checked="checked"> последний месяц</label><br>
+		<label><input type="radio" name="dt_range" value="last_week"> последняя неделя</label><br>
+		<label><input type="radio" name="dt_range" value="last_day"> последний день</label>
+
+		<div style="text-align: center;">
+			<button type="submit" name="ftn-filter" class="btn btn-primary" id="btn-filter">Применить</button>
+		</div>
+
+		</form>
+		</div>
 	</div>
 	<?php endif; ?>
 </div>
@@ -47,12 +54,40 @@
 <script>
 function OnStatusClick(checkbox)
 {
-	$.ajax('/transfer/filter',
+/*	$.ajax('/transfer/filter',
 		data: '',
 		method: 'post',
 		success: function (data) {
 			// Build list view...
 		}
-	);
+	);*/
 }
+
+$("#btn-filter").click(function(){
+	var form = $("#frm-filter");
+	var chbStatuses = form.find('input[name="statuses[]"]:checked');
+	var dtRange = form.find('input[name="dt_range"]:checked').val();
+
+	if (!chbStatuses.length) {
+		alert("Не выбраны статусы");
+		return false;
+	}
+
+	var arrStatuses = [];
+	chbStatuses.each(function() {
+		arrStatuses.push($(this).val());
+	});
+
+	$.ajax("", {
+		type: "post",
+		data: {
+			statuses: arrStatuses,
+			dt_range: dtRange
+		},
+		success: function(data) {
+			$("#yw0").replaceWith(data);
+		}
+	});
+});
+
 </script>
