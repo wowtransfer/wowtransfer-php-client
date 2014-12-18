@@ -23,16 +23,19 @@
 		<?php foreach (ChdTransfer::getStatuses() as $statusName): ?>
 		<label>
 			<input type="checkbox" name="statuses[]"
-				   value="<?php echo $statusName ?>" checked="checked"
+				   value="<?php echo $statusName ?>"
+				   <?php echo empty($this->filterStatuses) ? 'checked="checked"' : ''; ?>
+				   <?php echo in_array($statusName, $this->filterStatuses) ? 'checked="checked"' : ''; ?>
 				   onclick="OnStatusClick(this)">
 			<?php echo $statusName ?>
 		</label><br>
 		<?php endforeach; ?>
 
 		<div class="portlet-title">Дата/время</div>
-		<label><input type="radio" name="dt_range" value="last_month" checked="checked"> последний месяц</label><br>
-		<label><input type="radio" name="dt_range" value="last_week"> последняя неделя</label><br>
-		<label><input type="radio" name="dt_range" value="last_day"> последний день</label>
+		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 90 ? 'checked="checked"' : '' ?> value="90"> последниe 3 месяца</label><br>
+		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 30 ? 'checked="checked"' : '' ?> value="30"> последний месяц</label><br>
+		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 7 ? 'checked="checked"' : '' ?> value="7"> последняя неделя</label><br>
+		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 1 ? 'checked="checked"' : '' ?> value="1"> последний день</label>
 
 		<div style="text-align: center;">
 			<button type="submit" name="ftn-filter" class="btn btn-primary" id="btn-filter">Применить</button>

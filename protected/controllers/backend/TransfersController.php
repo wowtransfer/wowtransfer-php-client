@@ -9,6 +9,14 @@ class TransfersController extends BackendController
 	public $layout='//layouts/column2';
 
 	/**
+	 * For filter
+	 * @var integer $filterDt
+	 * @var array|false $filterStatuses
+	 */
+	public $filterDtRange;
+	public $filterStatuses;
+
+	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
@@ -83,34 +91,33 @@ class TransfersController extends BackendController
 	 */
 	public function actionIndex()
 	{
-		$arrRange = array(
-			'last_month' => '-1 month',
-			'last_week' => '-7 days',
-			'last_day' => '-1 day',
-		);
-		$dtRange = reset($arrRange);
-		$statuses = false;
-		$statusesOrigin = ChdTransfer::getStatuses();
+		$dtRange = 30;
+		$statuses = array();
+		$filter = array();
 
-		if (!Yii::app()->request->isAjaxRequest)
+		if (Yii::app()->request->isAjaxRequest)
 		{
-			if (isset($_COOKIE['transfer_filter']))
-				$_POST = unserialize($_COOKIE['transfer_filter']);
-			else
-			{
-				$_POST['statuses'] = array();
-				$_POST['dt_range'] = 'last_month';
-			}
+			setcookie('chd_transfer_filter', serialize($_POST), time() + 60 * 60 * 24 * 30, Yii::app()->request->baseUrl);
+			$filter = $_POST;
+		}
+		else
+		{
+			if (isset($_COOKIE['chd_transfer_filter']))
+				$filter = unserialize($_COOKIE['chd_transfer_filter']);
 		}
 
-		$statuses = $_POST['statuses'];
-		if (count($statusesOrigin) === count($statuses))
-			$statuses = false;
-		if (isset($arrRange[$_POST['dt_range']]))
-			$dtRange = $arrRange[$_POST['dt_range']];
-		setcookie('transfer_filter', serialize($_POST), time() + 60 * 60 * 24 * 30, '/chdphp/');
+		$statuses = isset($filter['statuses']) ? $filter['statuses'] : $statuses;
+		$dtRange = isset($filter['dt_range']) ? (int)$filter['dt_range'] : $dtRange;
+		if ($statuses)
+		{
+			$statusesOrigin = ChdTransfer::getStatuses();
+			if (count($statusesOrigin) === count($statuses))
+				$statuses = array();
+		}
+		$this->filterStatuses = $statuses;
+		$this->filterDtRange = $dtRange;
 
-		$where = "`create_transfer_date` > '" . date('Y-m-d', strtotime($dtRange)) . "'";
+		$where = "`create_transfer_date` > '" . date('Y-m-d', strtotime("-$dtRange days")) . "'";
 		if (!empty($statuses)) {
 			for ($i = 0; $i < count($statuses); ++$i)
 				$statuses[$i] = "'" . $statuses[$i] . "'";
