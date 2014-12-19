@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 ?>
 
 <div class="alert alert-info">
-Для редактирования конфигурации воспользуйтесь <a class="alert-link" href="http://wowtransfer.com/cp/tconfigs/">сервисом</a>. 
+	Воспользуйтесь сервисом для <a class="alert-link" href="http://wowtransfer.com/cp/tconfigs/">редактирования конфигурации</a>. 
 </div>
 
 <table class="table table-hover">

@@ -53,10 +53,11 @@ class ChdTransfer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('account_id, char_guid, status, file_lua_crypt', 'numerical', 'integerOnly'=>true),
+			array('account_id, char_guid, file_lua_crypt', 'numerical', 'integerOnly'=>true),
 			//array('account_id, char_guid', 'length', 'max'=>10),
 			array('account_id', 'compare', 'allowEmpty'=>false, 'compareValue'=>0, 'operator'=>'>', 'strict'=>true),
 			array('server', 'length', 'max'=>100),
+			array('status', 'in', 'range' => array_keys(self::getStatuses())),
 
 			array('server', 'match', 'pattern' => '/^[a-zA-Z0-9\-\.]+$/S'),
 			array('realmlist, realm', 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/S'),
@@ -168,11 +169,11 @@ class ChdTransfer extends CActiveRecord
 	public static function getStatuses()
 	{
 		return array(
-			self::STATUS_PROCESS,
-			self::STATUS_CHECK,
-			self::STATUS_CANCEL,
-			self::STATUS_APPLY,
-			self::STATUS_GAME,
+			self::STATUS_PROCESS => 'В процессе',
+			self::STATUS_CHECK => 'Проверяется',
+			self::STATUS_CANCEL => 'Отклонено',
+			self::STATUS_APPLY => 'Принято',
+			self::STATUS_GAME => 'Игра',
 		);
 	}
 
@@ -207,6 +208,7 @@ class ChdTransfer extends CActiveRecord
 		if ($this->isNewRecord)
 		{
 			$this->account_id = Yii::app()->user->id;
+			$this->status = self::STATUS_PROCESS;
 
 			/* TODO: add limit parameter to application's configuration
 			if (isLimit)

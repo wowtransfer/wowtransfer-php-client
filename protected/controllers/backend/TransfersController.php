@@ -25,7 +25,7 @@ class TransfersController extends BackendController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','index','view','update','delete','char','createchar','deletechar','luadump','filter'),
+				'actions'=>array('admin','index','view','update','delete','char','deletechar','luadump','filter'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -60,11 +60,22 @@ class TransfersController extends BackendController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		if (Yii::app()->request->isAjaxRequest && !empty($_POST))
+		{
+			$model->setScenario('update');
+			$model->attributes = $_POST;
+			if (!$model->save(true, array_keys($_POST)))
+				throw new CHttpException(501, 'Error');
+			Yii::app()->end();
+		}
+
 		if (isset($_POST['ChdTransfer']))
 		{
 			$model->attributes = $_POST['ChdTransfer'];
 			if ($model->save())
-				$this->redirect(array('view','id' => $model->id));
+			{
+				$this->redirect(array('view', 'id' => $model->id));
+			}
 		}
 
 		$this->render('update', array(
@@ -97,7 +108,6 @@ class TransfersController extends BackendController
 
 		if (Yii::app()->request->isAjaxRequest)
 		{
-			setcookie('chd_transfer_filter', serialize($_POST), time() + 60 * 60 * 24 * 30, Yii::app()->request->baseUrl);
 			$filter = $_POST;
 		}
 		else
@@ -112,7 +122,10 @@ class TransfersController extends BackendController
 		{
 			$statusesOrigin = ChdTransfer::getStatuses();
 			if (count($statusesOrigin) === count($statuses))
+			{
 				$statuses = array();
+				$filter['statuses'] = $statuses;
+			}
 		}
 		$this->filterStatuses = $statuses;
 		$this->filterDtRange = $dtRange;
@@ -133,6 +146,12 @@ class TransfersController extends BackendController
 
 		if (Yii::app()->request->isAjaxRequest)
 		{
+			$filterStore = array(
+				'statuses' => $filter['statuses'],
+				'dt_range' => $dtRange,
+			);
+			setcookie('chd_transfer_filter', serialize($filterStore), time() + 60 * 60 * 24 * 30, Yii::app()->request->baseUrl);
+
 			$this->widget('zii.widgets.CListView', array(
 				'dataProvider' => $dataProvider,
 				'itemView' => '_view',
@@ -159,53 +178,6 @@ class TransfersController extends BackendController
 		$this->render('admin',array(
 			'model'=>$model,
 		));
-	}
-
-	public function actionCharinfo($id)
-	{
-		$model = null;
-
-		$this->render('charinfo', array(
-			'model' => $model,
-		));
-	}
-
-	public function actionFilter($id)
-	{
-		var_dump($_GET);
-		var_dump($_POST);
-
-		if (!Yii::app()->request->isAjaxRequest)
-			return false;
-
-		// read filter from session
-		//
-		
-		/*
-		 * statuses array('', '', '', '')
-		 * datetime 2014-01-01 00:00:00
-		 */
-		if (isset($_POST['submit']))
-		{
-			$response = array();
-
-			// checking
-			//
-
-			if ($error)
-			{
-				$response['error'] = 'Error filter';
-			}
-			else
-			{
-				// fill transfers to array
-				//
-				
-				// write filter to session
-			}
-
-			echo json_encode($response);
-		}
 	}
 	
 	public function actionChar($id)
@@ -246,15 +218,6 @@ class TransfersController extends BackendController
 			'queries'         => $result['queries'],
 			'queriesCount'    => count($result['queries']),
 			'tconfigs'        => $tconfigs,
-		));
-	}
-
-	public function actionCreatechar($id)
-	{
-		$model = $this->loadModel($id);
-
-		$this->render('createchar', array(
-			'model' => $model,
 		));
 	}
 

@@ -20,14 +20,14 @@
 		<form method="post" action="" onsubmit="return false;" id="frm-filter">
 		<div class="portlet-content">
 		<div class="portlet-title">Статусы</div>
-		<?php foreach (ChdTransfer::getStatuses() as $statusName): ?>
+		<?php foreach (ChdTransfer::getStatuses() as $name => $value): ?>
 		<label>
 			<input type="checkbox" name="statuses[]"
-				   value="<?php echo $statusName ?>"
+				   value="<?php echo $name ?>"
 				   <?php echo empty($this->filterStatuses) ? 'checked="checked"' : ''; ?>
-				   <?php echo in_array($statusName, $this->filterStatuses) ? 'checked="checked"' : ''; ?>
+				   <?php echo in_array($name, $this->filterStatuses) ? 'checked="checked"' : ''; ?>
 				   onclick="OnStatusClick(this)">
-			<?php echo $statusName ?>
+			<?php echo $value ?>
 		</label><br>
 		<?php endforeach; ?>
 
@@ -54,7 +54,7 @@
 </div>
 <?php $this->endContent(); ?>
 
-<script>
+<script><!--
 function OnStatusClick(checkbox)
 {
 /*	$.ajax('/transfer/filter',
@@ -66,31 +66,40 @@ function OnStatusClick(checkbox)
 	);*/
 }
 
-$("#btn-filter").click(function(){
-	var form = $("#frm-filter");
+function GetCheckedStatuses(form) {
+	if (form === undefined)
+		form = $("#frm-filter");
+
 	var chbStatuses = form.find('input[name="statuses[]"]:checked');
-	var dtRange = form.find('input[name="dt_range"]:checked').val();
-
-	if (!chbStatuses.length) {
-		alert("Не выбраны статусы");
-		return false;
-	}
-
 	var arrStatuses = [];
+
 	chbStatuses.each(function() {
 		arrStatuses.push($(this).val());
 	});
 
+	return arrStatuses;
+}
+
+$("#btn-filter").click(function(){
+	var form = $("#frm-filter");
+	var dtRange = form.find('input[name="dt_range"]:checked').val();
+	var checkedStatuses = GetCheckedStatuses(form);
+
+	if (!checkedStatuses.length) {
+		alert("Не выбраны статусы");
+		return false;
+	}
+
 	$.ajax("", {
 		type: "post",
 		data: {
-			statuses: arrStatuses,
+			statuses: checkedStatuses,
 			dt_range: dtRange
 		},
 		success: function(data) {
 			$("#yw0").replaceWith(data);
+			StatusSetHandlers();
 		}
 	});
 });
-
-</script>
+--></script>

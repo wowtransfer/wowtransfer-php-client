@@ -1,17 +1,11 @@
 <?php
 /* @var $this TransfersController */
 /* @var $data ChdTransfer */
+
+$statuses = ChdTransfer::getStatuses();
 ?>
 
-<script><!--
-function OnDeleteChar()
-{
-	return confirm('Подтвердите удаление.');
-}
-
---></script>
-
-<div class="view">
+<div class="view" id="view_<?php echo $data->id ?>" data-id="<?php echo $data->id ?>">
 
 	<div style="float: right;">
 	<?php if ($data->char_guid): ?>
@@ -21,7 +15,7 @@ function OnDeleteChar()
 			'url' => $this->createUrl('deletechar', array('id' => $data->id)),
 			'icon' => 'remove',
 			'context' => 'danger',
-			'htmlOptions' => array('onclick' => 'return OnDeleteChar();'),
+			'htmlOptions' => array('onclick' => 'return OnDeleteChar();', 'title' => 'Удалить персонажа'),
 		));?>
 	<?php else: ?>
 		<?php $this->widget('booster.widgets.TbButton', array(
@@ -30,6 +24,7 @@ function OnDeleteChar()
 			'label' => 'Create character',
 			'url' => $this->createUrl('char', array('id' => $data->id)),
 			'icon' => 'plane',
+			'htmlOptions' => array('title' => 'Создать персонажа'),
 		));?>
 	<?php endif; ?>
 
@@ -39,6 +34,26 @@ function OnDeleteChar()
 		'url' => $this->createUrl('luadump', array('id' => $data->id)),
 		'icon' => 'file',
 	));?>
+
+		<!--<div style="margin-top: 5px;">
+			<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?></b>
+			<?php echo CHtml::DropDownList('statuses_' . $data->id, $data->status, ChdTransfer::getStatuses(), array(
+				'data-id' => $data->id,
+			)); ?>
+		</div>-->
+
+		<br>
+		<div class="btn-group" style="margin-top: 5px;">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Изменить статус">
+				<span id="status_<?php echo $data->id; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
+			</button><!-- TODO: class transfer-statuses is not defined in css! -->
+			<ul class="dropdown-menu transfer-statuses" role="menu">
+				<?php foreach ($statuses as $name => $title): ?>
+					<li><a href="#" data-name="<?php echo $name; ?>"><?php echo $title; ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+
 	</div>
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
@@ -80,10 +95,6 @@ function OnDeleteChar()
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('create_transfer_date')); ?>:</b>
 	<?php echo CHtml::encode($data->create_transfer_date); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<?php echo CHtml::encode($data->status); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('account')); ?>:</b>
