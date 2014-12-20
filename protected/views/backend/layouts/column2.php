@@ -21,12 +21,12 @@
 		<div class="portlet-content">
 		<div class="portlet-title">Статусы</div>
 		<?php foreach (ChdTransfer::getStatuses() as $name => $value): ?>
-		<label>
+		<label class="tstatus-<?php echo $name; ?>">
 			<input type="checkbox" name="statuses[]"
 				   value="<?php echo $name ?>"
 				   <?php echo empty($this->filterStatuses) ? 'checked="checked"' : ''; ?>
 				   <?php echo in_array($name, $this->filterStatuses) ? 'checked="checked"' : ''; ?>
-				   onclick="OnStatusClick(this)">
+			>
 			<?php echo $value ?>
 		</label><br>
 		<?php endforeach; ?>
@@ -55,17 +55,6 @@
 <?php $this->endContent(); ?>
 
 <script><!--
-function OnStatusClick(checkbox)
-{
-/*	$.ajax('/transfer/filter',
-		data: '',
-		method: 'post',
-		success: function (data) {
-			// Build list view...
-		}
-	);*/
-}
-
 function GetCheckedStatuses(form) {
 	if (form === undefined)
 		form = $("#frm-filter");
@@ -80,7 +69,7 @@ function GetCheckedStatuses(form) {
 	return arrStatuses;
 }
 
-$("#btn-filter").click(function(){
+$("#btn-filter").click(function() {
 	var form = $("#frm-filter");
 	var dtRange = form.find('input[name="dt_range"]:checked').val();
 	var checkedStatuses = GetCheckedStatuses(form);

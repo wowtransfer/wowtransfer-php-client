@@ -188,11 +188,7 @@ class TransfersController extends BackendController
 		if ($model->char_guid > 0)
 			throw new CHttpException(403, 'Character created! GUID = ' . $model->char_guid);
 
-		$result = array(
-			'error'   => '',
-			'sql'     => '',
-			'queries' => array(),
-		);
+		$result = CreateCharForm::getDefaultResult();
 		if (isset($_POST['ChdTransfer']))
 		{
 			$transferConfig = isset($_POST['tconfig']) ? $_POST['tconfig'] : '';
@@ -213,7 +209,8 @@ class TransfersController extends BackendController
 
 		$this->render('char', array(
 			'model'           => $model,
-			'error'           => $result['error'],
+			'errors'          => $result['errors'],
+			'warnings'        => $result['warnings'],
 			'sql'             => $result['sql'],
 			'queries'         => $result['queries'],
 			'queriesCount'    => count($result['queries']),

@@ -6,14 +6,40 @@ function chdInit(baseUrl)
 /**
  *
  */
-function OnBeforeCreateCharClick(button)
+function OnBeforeCreateCharClick()
 {
+	$("#btn-create-char").attr('disabled', 'disabled');
 	$("#create-char-wait").css("visibility", "visible");
 	$("#create-char-sql").text("");
 	$("#create-char-sql-header").hide();
 	$("#create-char-error").hide();
 	$("#run-queries-table").text("");
 	$("#run-queries-table-header").hide();
+	$('#create-char-tabs span').text("0");
+}
+
+/**
+ * @param array messages
+ * @param string type
+ *   "errors"
+ *   "warnings"
+ * @return boolean
+ */
+function ShowMessages(messages, type)
+{
+	var messageContainer = $("#create-char-" + type);
+
+	messageContainer.empty();
+	var ol = messageContainer.append("<ol>").find("ol");
+	for (var i = 0; i < messages.length; ++i)
+	{
+		ol.append("<li>" + messages[i] + "</li>");
+	}
+	var a = $('#create-char-tabs a[href="#tab-' + type + '"]');
+	a.tab("show");
+	a.find("span").text(messages.length);
+
+	return true;
 }
 
 /**
@@ -21,28 +47,26 @@ function OnBeforeCreateCharClick(button)
  */
 function OnCreateCharClick(data)
 {
-	var createCharErrorContainer = $("#create-char-error");
 	var sqlContainer = $("#create-char-sql");
 	var runQueriesContainer = $("#run-queries-table");
 
+	$("#btn-create-char").removeAttr("disabled");
 	$("#create-char-wait").css("visibility", "hidden");
-
+	/*console.log(data);//*/
 	result = $.parseJSON(data);
+	/*console.log(result);//*/
 	if (result == null)
-		return;
+		result = {"errors": ["Не удалось разобрать JSON"]};
 
-	if (result.error != undefined && result.error)
+	if (result.errors != undefined && result.errors)
 	{
-		createCharErrorContainer.text(result.error);
-		createCharErrorContainer.show();
+		ShowMessages(result.errors, "errors");
 		return false;
 	}
-	else
-	{
-		$("#btn-create-char").hide();
-		$("#btn-create-char-cancel").hide();
-		$("#btn-create-char-success").show();
-	}
+
+	$("#btn-create-char").hide();
+	$("#btn-create-char-cancel").hide();
+	$("#btn-create-char-success").show();
 	sqlContainer.text(result.sql);
 
 	var queries = result.queries;
@@ -58,6 +82,8 @@ function OnCreateCharClick(data)
 	sqlContainer.show();
 	$("#run-queries-table-header").show();
 	runQueriesContainer.show();
+
+	return true;
 }
 
 /**

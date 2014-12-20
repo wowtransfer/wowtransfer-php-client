@@ -23,6 +23,16 @@ class CreateCharForm
 		
 	}
 
+	public static function getDefaultResult()
+	{
+		return array(
+			'errors'   => array(),
+			'warnings' => array(),
+			'sql'      => '',
+			'queries'  => array(),
+		);
+	}
+
 	/**
 	 * Runs the SQL script
 	 *
@@ -34,7 +44,7 @@ class CreateCharForm
 	 *      ['query'] => string,
 	 *      ['status'] => count of updated rows,
 	 *    ),
-	 *    ['error'] => string,
+	 *    ['errors'] => array of string,
 	 */
 	private function RunSql($sql, $accountGuid)
 	{
@@ -42,7 +52,7 @@ class CreateCharForm
 
 		if (empty($sql))
 		{
-			$result['error'] = 'Empty SQL script';
+			$result['errors'][] = 'Empty SQL script';
 			return $result;
 		}
 
@@ -85,7 +95,7 @@ class CreateCharForm
 			$result[] = $query1;
 			$transaction->rollback();
 
-			$result['error'] = $ex->getMessage();
+			$result['errors'][] = $ex->getMessage();
 		}
 
 		return $result;
@@ -119,15 +129,11 @@ class CreateCharForm
 	 */
 	public function createChar($transferConfigName)
 	{
-		$result = array();
-		$result['error'] = '';
-		$result['queries'] = array();
-		$result['guid'] = 0;
-		$result['sql'] = '';
+		$result = self::getDefaultResult();
 
 		if ($this->_transfer->char_guid > 0)
 		{
-			$result['error'] = "Character exists! GUID = " . $_transfer->char_guid . '.';
+			$result['errors'][] = "Character exists! GUID = " . $_transfer->char_guid . '.';
 			return $result;
 		}
 
@@ -142,25 +148,20 @@ class CreateCharForm
 		}
 		catch (exception $ex)
 		{
-			$result['error'] = $ex->getMessage();
+			$result['errors'][] = $ex->getMessage();
 			return $result;
 		}
 
-		$guid = 0;
 		$queries = $this->RunSql($result['sql'], $this->_transfer->account_id);
+		$result['queries'] = $queries;
 		if (isset($queries['error']))
 		{
-			$result['error'] = $queries['error'];
+			$result['errors'][] = $queries['error'];
 			unset($queries['error']);
+			return $result;
 		}
-		else
-		{
-			$guid = $this->getCharacterGuid();
-			$result['guid'] = $guid;
-		}
-
-		$result['queries'] = $queries;
-
+		$guid = $this->getCharacterGuid();
+		$result['guid'] = $guid;
 		$this->_transfer->char_guid = $guid;
 		$this->_transfer->create_char_date = date('Y-m-d h:i:s');
 		$this->_transfer->save(false, array('char_guid', 'create_char_date'));

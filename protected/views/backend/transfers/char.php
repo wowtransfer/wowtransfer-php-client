@@ -1,7 +1,7 @@
 <?php
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
-/* @var $error string */
+/* @var $errors string */
 /* @var $queries array */
 /* @var $queriesCount integer */
 /* @var $sql string */
@@ -40,6 +40,11 @@ $this->breadcrumbs = array(
 		>uncripted lua-dump</a>
 </div>
 
+<?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
+	'type' => 'horizontal',
+	'id' => 'create-char-from',
+)); ?>
+
 <div style="margin: 5px 305px 5px 0; height: 160px;">
 
 <div>
@@ -60,10 +65,8 @@ $this->breadcrumbs = array(
 	<div style="float: left; padding: 3px;">
 		<b>Аккаунт</b><br>
 		<?php echo $model->account; ?><br>
-		<b>Пароль <input type="checkbox" name="show-password" title="Show/Hide password"
-			onclick="var edt = $('#char-password'); if (true) edt.attr('type', 'password'); else edt.attr('type', 'text'); "></b><br>
-		<!-- <button class="btn btn-info btn-xs" title="Показать пароль" onclick="">+</button> -->
-		<input type="password" id="char-password" value="<?php echo $model->pass; ?>"><br>
+		<b>Пароль></b><br>
+		<span>**********</span><br>
 		<b>Персонаж</b><br>
 		<?php echo $model->username_old; ?>
 	</div>
@@ -79,11 +82,6 @@ $this->breadcrumbs = array(
 	<div class="clear">lua-dump properties...</div>
 
 </div>
-
-<?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'type' => 'horizontal',
-	'id' => 'create-char-from',
-)); ?>
 
 	<?php echo $form->hiddenField($model, 'id'); ?>
 
@@ -110,7 +108,7 @@ $this->breadcrumbs = array(
 				'url' => $this->createUrl('char', array('id' => $model->id)),
 				'ajaxOptions' => array(
 					'type' => 'POST',
-					'beforeSend' => 'function() { OnBeforeCreateCharClick(this); }',
+					'beforeSend' => 'function() { OnBeforeCreateCharClick(); }',
 					'success' => 'function(data) { OnCreateCharClick(data); }',
 				),
 				'htmlOptions' => array(
@@ -132,19 +130,21 @@ $this->breadcrumbs = array(
 <?php unset($form); ?>
 
 
-<ul class="nav nav-tabs" id="run-tabs">
+<ul class="nav nav-tabs" id="create-char-tabs">
 	<li><a href="#tab-sql" data-toggle="tab">SQL</a></li>
-	<li><a href="#tab-sql-execute" data-toggle="tab">Execute SQL</a></li>
-	<li><a href="#tab-warnings" data-toggle="tab">Warnings (0)</a></li>
-	<li class="active"><a href="#tab-errors" data-toggle="tab">Errors (0)</a></li>
+	<li class="active"><a href="#tab-sql-execute" data-toggle="tab">Execute SQL</a></li>
+	<li><a href="#tab-warnings" data-toggle="tab">Warnings (<span>0</span>)</a></li>
+	<li><a href="#tab-errors" data-toggle="tab">Errors (<span>0</span>)</a></li>
 </ul>
 
 <div class="tab-content">
+
 	<div class="tab-pane" id="tab-sql">
 		<h3>SQL скрипт персонажа</h3>
 		<pre id="create-char-sql"><?php echo $sql; ?></pre>
 	</div>
-	<div class="tab-pane" id="tab-sql-execute">
+
+	<div class="tab-pane active" id="tab-sql-execute">
 		<h3>Результат выполнения запросов к базе данных</h3>
 
 		<?php if ($queriesCount > 0): ?>
@@ -168,21 +168,21 @@ $this->breadcrumbs = array(
 		<?php endif; ?>
 
 	</div>
+
 	<div class="tab-pane" id="tab-warnings">
 		<h3>Предупреждения</h3>
 
+		<div id="create-char-warnings" class="alert alert-warning"></div>
 	</div>
-	<div class="tab-pane active" id="tab-errors">
+
+	<div class="tab-pane" id="tab-errors">
 		<h3>Ошибки</h3>
 
+		<div id="create-char-errors" class="alert alert-danger"></div>
 	</div>
 </div>
 
-
 <?php $queriesContent = ''; ?>
-
-
-
 
 <div style="margin: 30px 0 10px 30px;">
 <?php $this->widget('booster.widgets.TbButton', array(
