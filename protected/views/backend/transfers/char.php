@@ -40,7 +40,7 @@ $this->breadcrumbs = array(
 		>uncripted lua-dump</a>
 </div>
 
-<div style="margin: 5px 305px 5px 0; height: 155px;">
+<div style="margin: 5px 305px 5px 0; height: 160px;">
 
 <div>
 	<div style="float: left; padding: 3px;">
@@ -69,7 +69,14 @@ $this->breadcrumbs = array(
 	</div>
 </div>
 
-<div class="clear">lua-dump properties...</div>
+	<div class="pull-right">
+		<b>Конфигурация</b><br>
+		<?php echo CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
+			'style' => 'width: 200px;',
+		)); ?>
+	</div>
+
+	<div class="clear">lua-dump properties...</div>
 
 </div>
 
@@ -81,13 +88,6 @@ $this->breadcrumbs = array(
 	<?php echo $form->hiddenField($model, 'id'); ?>
 
 	<div>
-		<div class="pull-right">
-			<?php echo CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
-				'style' => 'width: 200px;',
-			)); ?>
-		</div>
-
-		<h3>Опции переноса</h3>
 		<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
 				'model' => $model,
 				'form' => $form,
@@ -97,7 +97,7 @@ $this->breadcrumbs = array(
 		?>
 	</div>
 
-	<div style="height: 1em; text-align: right;">
+	<div class="pull-right" style="height: 1em;">
 		Если опция недоступна значит она отключена в <a href="<?php echo Yii::app()->createUrl('/configs/toptions'); ?>">глобальных настройках.</a>
 	</div>
 
@@ -131,42 +131,58 @@ $this->breadcrumbs = array(
 <?php $this->endWidget(); ?>
 <?php unset($form); ?>
 
-<div style="margin: 10px 0;"><!-- hack -->
-<?php if (empty($error)): ?>
-	<pre id="create-char-error" class="alert alert-danger" style="display: none;"></pre>
-<?php else: ?>
-	<pre id="create-char-error" class="alert alert-danger"><?php echo $error; ?></pre>
-<?php endif; ?>
+
+<ul class="nav nav-tabs" id="run-tabs">
+	<li><a href="#tab-sql" data-toggle="tab">SQL</a></li>
+	<li><a href="#tab-sql-execute" data-toggle="tab">Execute SQL</a></li>
+	<li><a href="#tab-warnings" data-toggle="tab">Warnings (0)</a></li>
+	<li class="active"><a href="#tab-errors" data-toggle="tab">Errors (0)</a></li>
+</ul>
+
+<div class="tab-content">
+	<div class="tab-pane" id="tab-sql">
+		<h3>SQL скрипт персонажа</h3>
+		<pre id="create-char-sql"><?php echo $sql; ?></pre>
+	</div>
+	<div class="tab-pane" id="tab-sql-execute">
+		<h3>Результат выполнения запросов к базе данных</h3>
+
+		<?php if ($queriesCount > 0): ?>
+			<div id="run-queries-table">
+			<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
+<?php
+				if (isset($queries[$i])) {
+					$query = $queries[$i];
+					$classStatus = 'query-res-success';
+				}
+				else {
+					$query = array('query'=>'', 'status'=>'&nbsp;');
+					$classStatus = '';
+				}
+?>
+				<span class="query-res <?php echo $classStatus; ?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
+			<?php endfor; ?>
+			</div>
+		<?php else: ?>
+			<div id="run-queries-table" style="display: none;"></div>
+		<?php endif; ?>
+
+	</div>
+	<div class="tab-pane" id="tab-warnings">
+		<h3>Предупреждения</h3>
+
+	</div>
+	<div class="tab-pane active" id="tab-errors">
+		<h3>Ошибки</h3>
+
+	</div>
 </div>
+
 
 <?php $queriesContent = ''; ?>
 
-<h3 id="run-queries-table-header" style="display: none;">Результат выполнения запросов к базе данных</h3>
-
-<?php if ($queriesCount > 0): ?>
-	<div id="run-queries-table">
-	<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
-		<?php
-			if (isset($queries[$i])) {
-				$query = $queries[$i];
-				$classStatus = 'query-res-success';
-			}
-			else {
-				$query = array('query'=>'', 'status'=>'&nbsp;');
-				$classStatus = '';
-			}
-		?>
-		<span class="query-res <?php echo $classStatus; ?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
-	<?php endfor; ?>
-	</div>
-<?php else: ?>
-	<div id="run-queries-table" style="display: none;"></div>
-<?php endif; ?>
 
 
-<h3 id="create-char-sql-header" style="display: none;">SQL скрипт персонажа</h3>
-
-<pre id="create-char-sql" style="display: none;"><?php echo $sql; ?></pre>
 
 <div style="margin: 30px 0 10px 30px;">
 <?php $this->widget('booster.widgets.TbButton', array(
