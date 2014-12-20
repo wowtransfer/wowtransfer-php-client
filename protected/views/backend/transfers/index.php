@@ -40,11 +40,11 @@ function StatusSetHandlers() {
 		var id = a.closest("div.view").data("id");
 		var eStatus = $("#status_" + id);
 
-		/*if (eStatus.data("name") === status) {
-			return true;
-		}*/
+		if (eStatus.attr("data-name") === status) {
+			return;
+		}
 
-		$.ajax('transfers/update/' + id, {
+		$.ajax("<?php echo Yii::app()->request->scriptUrl; ?>/transfers/update/" + id, {
 			type: "post",
 			data: {
 				status: status
@@ -55,6 +55,8 @@ function StatusSetHandlers() {
 					$("#view_" + id).hide();
 				}
 				eStatus.attr("data-name", status);
+				eStatus.removeClass();
+				eStatus.addClass("tstatus tstatus-" + status);
 				eStatus.text(window.statuses[status]);
 			},
 			error: function (error) {

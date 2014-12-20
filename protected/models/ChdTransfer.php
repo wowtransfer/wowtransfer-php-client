@@ -36,6 +36,7 @@ class ChdTransfer extends CActiveRecord
 	const STATUS_CANCEL  = 'cancel';
 	const STATUS_APPLY   = 'apply';
 	const STATUS_GAME    = 'game';
+	const STATUS_CART    = 'cart';
 
 	/**
 	 * @return string the associated database table name
@@ -174,19 +175,8 @@ class ChdTransfer extends CActiveRecord
 			self::STATUS_CANCEL => 'Отклонено',
 			self::STATUS_APPLY => 'Принято',
 			self::STATUS_GAME => 'Игра',
+			self::STATUS_CART => 'В корзине',
 		);
-	}
-
-	// TODO: delete
-	public function __get($name)
-	{
-		if ($name == 'statusName')
-		{
-			if ($this->status == 0)
-				return 'В процессе';
-			return $this->status;
-		}
-		return parent::__get($name);
 	}
 
 	/**

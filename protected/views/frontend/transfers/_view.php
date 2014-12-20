@@ -38,7 +38,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<?php echo CHtml::encode($data->statusName); ?>
+	<span class="tstatus tstatus-<?php echo $data->status; ?>"><?php echo ChdTransfer::getStatuses()[$data->status]; ?></span>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('create_transfer_date')); ?>:</b>

@@ -114,21 +114,29 @@
 /* Transfer statuses */
 .tstatus
 {
-	
+    font-weight: bold;
 }
 
-.tstatus.process { /* default */ 
+.tstatus-process { /* default */
 	color: #8080C0;
 }
 
-.tstatus.check {
-	color: #8080FF;
+.tstatus-check {
+	color: orange;
 }
 
-.status.game {
-	color: green;
+.tstatus-apply {
+	color: #62c462;
 }
 
-.status.error {
+.tstatus-cancel {
 	color: red;
+}
+
+.tstatus-cart {
+	color: lightcoral;
+}
+
+.tstatus-game {
+	color: darkgreen;
 }

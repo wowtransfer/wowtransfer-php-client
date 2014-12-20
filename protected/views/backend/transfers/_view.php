@@ -45,7 +45,7 @@ $statuses = ChdTransfer::getStatuses();
 		<br>
 		<div class="btn-group" style="margin-top: 5px;">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Изменить статус">
-				<span id="status_<?php echo $data->id; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
+				<span id="status_<?php echo $data->id; ?>" class="tstatus tstatus-<?php echo $data->status; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
 			</button><!-- TODO: class transfer-statuses is not defined in css! -->
 			<ul class="dropdown-menu transfer-statuses" role="menu">
 				<?php foreach ($statuses as $name => $title): ?>
