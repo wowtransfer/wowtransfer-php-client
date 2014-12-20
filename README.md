@@ -7,9 +7,9 @@ Handle of characters transfer by wowtransfer.com
 
 Application divides in two parts:
 
-1. Current area - this is part for users (players).
+1. Frontend - this is part for users (players).
 
-2. Admin - this is part for administrations, allow create, delete and update transfers, create and delete the characters.
+2. Backend - this is part for administrations, allow create, delete and update transfers, create and delete the characters.
 
 
 ## Requirements
@@ -35,8 +35,7 @@ Application divides in two parts:
 ## Roles ##
 
 1. user - Simple users (players).
-2. moderator - Allow check the transfers, create and delete the characters.
-3. admin - Full privileges.
+2. admin - Full privileges.
 
 
 ## sitemap ##
@@ -45,7 +44,6 @@ index.php
 
 * /site/login   - login
 * /site/logout  - logout
-
 * /transfers/           - my transfers
 * /transders/create     - create transfer
 * /transfers/id         - view transfer
@@ -59,16 +57,10 @@ admin.php
 * /transfers/update/id  - update transfer's attributes
 * /transders/delete/id  - delete transfer
 * /transfers/char/id    - handle of character
-* /transfers/createchar/id  - create character by transfer's id
 * /transfers/deletechar/id  - delete character by transfer's id
-
-* /char/create/id       - create character by transfer's id
-* /char/delete/id       - delete character by transfer's id
-* /char/view/id         - view character's info
 
 
 ## TODO ##
 
 * Defence from infinite login: give 5 attempts on 15 minutes
 * Add multilanguages
-* convert all icons to one image and make styles
