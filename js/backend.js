@@ -56,7 +56,7 @@ function OnCreateCharClick(data)
 
 	// 1
 	$("#create-char-sql").text(result.sql);
-	$('#create-char-tabs a[href="#tab-sql"] span').text(Math.floor(result.sql.length / 1024));
+	$('#create-char-tabs a[href="#tab-sql"] span').text(Math.floor(result.sql.length / 1024) + " kb");
 
 	// 2
 	var queries = result.queries;
@@ -66,13 +66,17 @@ function OnCreateCharClick(data)
 	for (var i = 0; i < queryCount; ++i)
 	{
 		query = queries[i];
-		runQueriesContainer.append('<span class="query-res query-res-success" title="' + query.query + '">' + query.status + '</span>');
+		runQueriesContainer.append('<a class="query-res query-res-success" ' +
+			'href="#query_' + i + '" title="' + query.query + '">' + query.status + '</a>');
 	}
 	runQueriesContainer.append("<hr>");
 	for (var i = 0; i < queryCount; ++i)
 	{
 		query = queries[i];
-		runQueriesContainer.append("<div>Status: " + query.status + "<pre>" + query.query + "</pre></div>");
+		runQueriesContainer.append('<div id="query_' + i + '">'	+
+			'<a href="#create-char-tabs" title="up"><span class="glyphicon glyphicon-chevron-up"></span></a> ' +
+			'<span class="label label-info">' + i + '</span>' + ' Status: <code>' +
+			query.status + "</code><pre>" + query.query + "</pre></div>");
 	}
 	$('#create-char-tabs a[href="#tab-queries"] span').text(queryCount);
 

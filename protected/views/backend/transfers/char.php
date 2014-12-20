@@ -137,12 +137,13 @@ $this->breadcrumbs = array(
 <?php $this->endWidget(); ?>
 <?php unset($form); ?>
 
+<hr>
 
 <ul class="nav nav-tabs" id="create-char-tabs">
-	<li><a href="#tab-sql" data-toggle="tab">SQL (<span title="Size of SQL">0</span> kb)</a></li>
-	<li class="active"><a href="#tab-queries" data-toggle="tab">Queries (<span title="Count of queries">0</span>)</a></li>
-	<li><a href="#tab-warnings" data-toggle="tab">Warnings (<span title="Count of warnings">0</span>)</a></li>
-	<li><a href="#tab-errors" data-toggle="tab">Errors (<span title="Count of errors">0</span>)</a></li>
+	<li><a href="#tab-sql" data-toggle="tab">SQL <span class="badge" title="Size of SQL">0</span></a></li>
+	<li class="active"><a href="#tab-queries" data-toggle="tab">Queries <span class="badge" title="Count of queries">0</span></a></li>
+	<li><a href="#tab-warnings" data-toggle="tab">Warnings <span class="badge" title="Count of warnings">0</span></a></li>
+	<li><a href="#tab-errors" data-toggle="tab">Errors <span class="badge" title="Count of errors">0</span></a></li>
 </ul>
 
 <div class="tab-content">
