@@ -15,14 +15,6 @@ class CreateCharForm
 		$this->_transfer = $transfer;
 	}
 
-	/**
-	 *
-	 */
-	private function GetSql()
-	{
-		
-	}
-
 	public static function getDefaultResult()
 	{
 		return array(
@@ -52,7 +44,7 @@ class CreateCharForm
 
 		if (empty($sql))
 		{
-			$result['errors'][] = 'Empty SQL script';
+			$result['error'] = 'Empty SQL script';
 			return $result;
 		}
 
@@ -70,9 +62,9 @@ class CreateCharForm
 
 			$command = $db->createCommand();
 
-			$query1['query'] = '@ACC_GUID = ' . $accoountGuid;
+			$query1['query'] = 'SET @ACC_GUID = ' . $accountGuid;
 			$command->text = $query1['query'];
-			$query1['query'] = $command->execute();
+			$query1['status'] = $command->execute();
 			$result[] = $query1;
 
 			foreach ($queries as $query)
@@ -95,7 +87,7 @@ class CreateCharForm
 			$result[] = $query1;
 			$transaction->rollback();
 
-			$result['errors'][] = $ex->getMessage();
+			$result['error'] = $ex->getMessage();
 		}
 
 		return $result;
@@ -144,6 +136,7 @@ class CreateCharForm
 		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		try
 		{
+			// TODO: service will be return a queries
 			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $transferConfigName);
 		}
 		catch (exception $ex)
@@ -153,18 +146,23 @@ class CreateCharForm
 		}
 
 		$queries = $this->RunSql($result['sql'], $this->_transfer->account_id);
-		$result['queries'] = $queries;
 		if (isset($queries['error']))
 		{
 			$result['errors'][] = $queries['error'];
 			unset($queries['error']);
-			return $result;
 		}
-		$guid = $this->getCharacterGuid();
-		$result['guid'] = $guid;
-		$this->_transfer->char_guid = $guid;
-		$this->_transfer->create_char_date = date('Y-m-d h:i:s');
-		$this->_transfer->save(false, array('char_guid', 'create_char_date'));
+		else
+		{
+			$guid = $this->getCharacterGuid();
+			$result['guid'] = $guid;
+			$this->_transfer->char_guid = $guid;
+			$this->_transfer->create_char_date = date('Y-m-d h:i:s');
+			if (!$this->_transfer->save(false, array('char_guid', 'create_char_date')))
+			{
+				$result['errors'][] = "Active record Save fail";
+			}
+		}
+		$result['queries'] = $queries;
 
 		return $result;
 	}

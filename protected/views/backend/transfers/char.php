@@ -47,7 +47,6 @@ $this->breadcrumbs = array(
 
 <div style="margin: 5px 305px 5px 0; height: 160px;">
 
-<div>
 	<div style="float: left; padding: 3px;">
 		<b>Создана</b><br><?php echo $model->create_transfer_date; ?><br>
 		<b>Статус</b><br> <?php echo $model->status; ?>
@@ -70,7 +69,6 @@ $this->breadcrumbs = array(
 		<b>Персонаж</b><br>
 		<?php echo $model->username_old; ?>
 	</div>
-</div>
 
 	<div class="pull-right">
 		<b>Конфигурация</b><br>
@@ -83,58 +81,68 @@ $this->breadcrumbs = array(
 
 </div>
 
-	<?php echo $form->hiddenField($model, 'id'); ?>
+<?php echo $form->hiddenField($model, 'id'); ?>
 
-	<div>
-		<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
-				'model' => $model,
-				'form' => $form,
-				'options' => $model->getTransferOptionsToUser(),
-				'readonly' => true,
-			));
-		?>
-	</div>
+<div>
+	<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
+			'model' => $model,
+			'form' => $form,
+			'options' => $model->getTransferOptionsToUser(),
+			'readonly' => true,
+		));
+	?>
+</div>
 
-	<div class="pull-right" style="height: 1em;">
-		Если опция недоступна значит она отключена в <a href="<?php echo Yii::app()->createUrl('/configs/toptions'); ?>">глобальных настройках.</a>
-	</div>
+<div class="pull-right" style="height: 1em;">
+	Если опция недоступна значит она отключена в <a href="<?php echo Yii::app()->createUrl('/configs/toptions'); ?>">глобальных настройках.</a>
+</div>
 
-	<div class="form-actions">
-		<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
-		<?php $this->widget('booster.widgets.TbButton', array(
-				'buttonType' => 'ajaxButton',
-				'context' => 'primary',
-				'label' => 'Создать',
-				'url' => $this->createUrl('char', array('id' => $model->id)),
-				'ajaxOptions' => array(
-					'type' => 'POST',
-					'beforeSend' => 'function() { OnBeforeCreateCharClick(); }',
-					'success' => 'function(data) { OnCreateCharClick(data); }',
-				),
-				'htmlOptions' => array(
-					'id' => 'btn-create-char',
-				),
-				'icon' => 'plane',
-			)); ?>
-
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'link',
-			'label' => 'Отмена',
-			'icon' => 'ban-circle',
-			'url' => $this->createUrl('/transfers'),
-			'htmlOptions' => array('id' => 'btn-create-char-cancel'),
+<div class="form-actions">
+	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
+	<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'ajaxButton',
+			'context' => 'primary',
+			'label' => 'Создать',
+			'url' => $this->createUrl('char', array('id' => $model->id)),
+			'ajaxOptions' => array(
+				'type' => 'POST',
+				'beforeSend' => 'function() { OnBeforeCreateCharClick(); }',
+				'success' => 'function(data) { OnCreateCharClick(data); }',
+			),
+			'htmlOptions' => array(
+				'id' => 'btn-create-char',
+			),
+			'icon' => 'plane',
 		)); ?>
-	</div>
+
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'label' => 'Отмена',
+		'icon' => 'ban-circle',
+		'url' => $this->createUrl('/transfers'),
+		'htmlOptions' => array('id' => 'btn-create-char-cancel'),
+	)); ?>
+
+	<?php $this->widget('booster.widgets.TbButton', array(
+		'buttonType' => 'link',
+		'context' => 'success',
+		'label' => 'К заявкам',
+		'url' => $this->createUrl('/transfers'),
+		'htmlOptions' => array('id' => 'btn-create-char-success', 'style' => 'display: none;'),
+		'icon' => 'list',
+	)); ?>
+
+</div>
 
 <?php $this->endWidget(); ?>
 <?php unset($form); ?>
 
 
 <ul class="nav nav-tabs" id="create-char-tabs">
-	<li><a href="#tab-sql" data-toggle="tab">SQL</a></li>
-	<li class="active"><a href="#tab-sql-execute" data-toggle="tab">Execute SQL</a></li>
-	<li><a href="#tab-warnings" data-toggle="tab">Warnings (<span>0</span>)</a></li>
-	<li><a href="#tab-errors" data-toggle="tab">Errors (<span>0</span>)</a></li>
+	<li><a href="#tab-sql" data-toggle="tab">SQL (<span title="Size of SQL">0</span> kb)</a></li>
+	<li class="active"><a href="#tab-queries" data-toggle="tab">Queries (<span title="Count of queries">0</span>)</a></li>
+	<li><a href="#tab-warnings" data-toggle="tab">Warnings (<span title="Count of warnings">0</span>)</a></li>
+	<li><a href="#tab-errors" data-toggle="tab">Errors (<span title="Count of errors">0</span>)</a></li>
 </ul>
 
 <div class="tab-content">
@@ -144,7 +152,7 @@ $this->breadcrumbs = array(
 		<pre id="create-char-sql"><?php echo $sql; ?></pre>
 	</div>
 
-	<div class="tab-pane active" id="tab-sql-execute">
+	<div class="tab-pane active" id="tab-queries">
 		<h3>Результат выполнения запросов к базе данных</h3>
 
 		<?php if ($queriesCount > 0): ?>
@@ -164,7 +172,7 @@ $this->breadcrumbs = array(
 			<?php endfor; ?>
 			</div>
 		<?php else: ?>
-			<div id="run-queries-table" style="display: none;"></div>
+			<div id="run-queries-table"></div>
 		<?php endif; ?>
 
 	</div>
@@ -181,21 +189,6 @@ $this->breadcrumbs = array(
 		<div id="create-char-errors" class="alert alert-danger"></div>
 	</div>
 </div>
-
-<?php $queriesContent = ''; ?>
-
-<div style="margin: 30px 0 10px 30px;">
-<?php $this->widget('booster.widgets.TbButton', array(
-	'buttonType' => 'link',
-	'context' => 'success',
-	'label' => 'К заявкам',
-	'url' => $this->createUrl('/transfers'),
-	'htmlOptions' => array('id' => 'btn-create-char-success', 'style' => 'display: none;'),
-	'icon' => 'list',
-)); ?>
-</div>
-
-
 
 
 <!-- Lua dump dialog, TODO -->

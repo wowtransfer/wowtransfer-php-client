@@ -10,11 +10,10 @@ function OnBeforeCreateCharClick()
 {
 	$("#btn-create-char").attr('disabled', 'disabled');
 	$("#create-char-wait").css("visibility", "visible");
-	$("#create-char-sql").text("");
-	$("#create-char-sql-header").hide();
-	$("#create-char-error").hide();
-	$("#run-queries-table").text("");
-	$("#run-queries-table-header").hide();
+	$("#create-char-sql").empty();
+	$("#create-char-errors").empty();
+	$("#create-char-warnings").empty();
+	$("#run-queries-table").empty();
 	$('#create-char-tabs span').text("0");
 }
 
@@ -47,9 +46,6 @@ function ShowMessages(messages, type)
  */
 function OnCreateCharClick(data)
 {
-	var sqlContainer = $("#create-char-sql");
-	var runQueriesContainer = $("#run-queries-table");
-
 	$("#btn-create-char").removeAttr("disabled");
 	$("#create-char-wait").css("visibility", "hidden");
 	/*console.log(data);//*/
@@ -58,7 +54,32 @@ function OnCreateCharClick(data)
 	if (result == null)
 		result = {"errors": ["Не удалось разобрать JSON"]};
 
-	if (result.errors != undefined && result.errors)
+	// 1
+	$("#create-char-sql").text(result.sql);
+	$('#create-char-tabs a[href="#tab-sql"] span').text(Math.floor(result.sql.length / 1024));
+
+	// 2
+	var queries = result.queries;
+	var queryCount = queries.length;
+	var runQueriesContainer = $("#run-queries-table");
+	runQueriesContainer.empty();
+	for (var i = 0; i < queryCount; ++i)
+	{
+		query = queries[i];
+		runQueriesContainer.append('<span class="query-res query-res-success" title="' + query.query + '">' + query.status + '</span>');
+	}
+	runQueriesContainer.append("<hr>");
+	for (var i = 0; i < queryCount; ++i)
+	{
+		query = queries[i];
+		runQueriesContainer.append("<div>Status: " + query.status + "<pre>" + query.query + "</pre></div>");
+	}
+	$('#create-char-tabs a[href="#tab-queries"] span').text(queryCount);
+
+	// 3
+	ShowMessages(result.warnings, "warnings");
+
+	if (result.errors != undefined && result.errors.length > 0)
 	{
 		ShowMessages(result.errors, "errors");
 		return false;
@@ -67,21 +88,8 @@ function OnCreateCharClick(data)
 	$("#btn-create-char").hide();
 	$("#btn-create-char-cancel").hide();
 	$("#btn-create-char-success").show();
-	sqlContainer.text(result.sql);
 
-	var queries = result.queries;
-	var queryCount = queries.length;
-	runQueriesContainer.empty();
-	for (var i = 0; i < queryCount; ++i)
-	{
-		query = queries[i];
-		runQueriesContainer.append('<span class="query-res query-res-success" title="' + query.query + '">' + query.status + '</span>');
-	}
-
-	$("#create-char-sql-header").show();
-	sqlContainer.show();
-	$("#run-queries-table-header").show();
-	runQueriesContainer.show();
+	$('#create-char-tabs a[href="#tab-queries"]').tab("show");
 
 	return true;
 }
