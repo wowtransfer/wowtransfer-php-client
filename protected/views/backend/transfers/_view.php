@@ -7,18 +7,7 @@ $statuses = ChdTransfer::getStatuses();
 
 <div class="view" id="view_<?php echo $data->id ?>" data-id="<?php echo $data->id ?>">
 
-	<div class="pull-right">
-
-		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Изменить статус">
-				<span id="status_<?php echo $data->id; ?>" class="tstatus tstatus-<?php echo $data->status; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
-			</button><!-- TODO: class transfer-statuses is not defined in css! -->
-			<ul class="dropdown-menu transfer-statuses" role="menu">
-				<?php foreach ($statuses as $name => $title): ?>
-					<li><a href="#" data-name="<?php echo $name; ?>"><?php echo $title; ?></a></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
+	<div class="pull-right col-md-4">
 
 		<a class="btn btn-danger" onclick="OnDeleteChar(this, <?php echo $data->id; ?>); return false;"
 		   href="<?php echo $this->createUrl('deletechar', array('id' => $data->id)); ?>"
@@ -59,10 +48,27 @@ $statuses = ChdTransfer::getStatuses();
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
 
+	&emsp;&emsp;
 	<b><?php echo CHtml::encode($data->getAttributeLabel('account_id')); ?>:</b>
 	<?php echo CHtml::encode($data->account_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Изменить статус">
+			<span id="status_<?php echo $data->id; ?>" class="tstatus tstatus-<?php echo $data->status; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
+		</button><!-- TODO: class transfer-statuses is not defined in css! -->
+		<ul class="dropdown-menu transfer-statuses" role="menu">
+			<?php foreach ($statuses as $name => $title): ?>
+				<li><a href="#" data-name="<?php echo $name; ?>"
+					   onclick="OnUpdateStatus(this); return false;"
+					   >
+					<?php echo $title; ?></a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('server')); ?>:</b>
@@ -81,8 +87,8 @@ $statuses = ChdTransfer::getStatuses();
 	<?php echo CHtml::encode($data->username_old); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('username_new')); ?>:</b>
-	<?php echo CHtml::encode($data->username_new); ?>
+	<b><?php /*echo CHtml::encode($data->getAttributeLabel('username_new')); ?>:</b>
+	<?php echo CHtml::encode($data->username_new); */?>
 	<br />
 
 	<?php /*

@@ -87,7 +87,6 @@ $("#btn-filter").click(function() {
 		},
 		success: function(data) {
 			$("#yw0").replaceWith(data);
-			StatusSetHandlers();
 		}
 	});
 });
