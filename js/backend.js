@@ -7,7 +7,7 @@ function LoadBackend(homeUrl)
 	config.homeUrl = homeUrl;
 }
 
-function showAlert(message)
+function ShowMessage(message)
 {
 	var dlg = $("#dialog");
 	dlg.html('<div class="alert alert-success">' + message + '</div>');
@@ -16,6 +16,19 @@ function showAlert(message)
 		dlg.dialog("close");
 	});
 }
+
+function BeginLoadingMessage(message)
+{
+	var dlg = $("#dialog-loading");
+	dlg.html('<div class="alert alert-info">' + message + '</div>');
+	dlg.dialog("open");
+}
+
+function EndLoadingMessage()
+{
+	$("#dialog-loading").dialog("close");
+}
+
 /**
  *
  */
@@ -28,6 +41,8 @@ function OnBeforeCreateCharClick()
 	$("#create-char-warnings").empty();
 	$("#run-queries-table").empty();
 	$('#create-char-tabs span').text("0");
+
+	BeginLoadingMessage('Создание персонажа...');
 }
 
 /**
@@ -59,6 +74,8 @@ function ShowMessages(messages, type)
  */
 function OnCreateCharClick(data)
 {
+	EndLoadingMessage();
+
 	$("#btn-create-char").removeAttr("disabled");
 	$("#create-char-wait").css("visibility", "hidden");
 	/*console.log(data);//*/
@@ -170,7 +187,7 @@ function UpdateComment(id) {
 			comment: comment
 		},
 		success: function(data) {
-			showAlert("Комментарий изменен");
+			ShowMessage("Комментарий изменен");
 		}
 	});
 }
@@ -211,21 +228,23 @@ function OnDeleteChar(button, id) {
 		return false;
 	}
 
-	dlgWrapper = $("#dialog-ok-cancel");
-	dlgWrapper.html("Удаление персонажа...");
-	dlgWrapper.dialog("open");
+	BeginLoadingMessage("Удаление персонажа...");
+
 	var url = config.homeUrl + '/transfers/deletechar/' + id;
 	console.log(url);
 	$.ajax(url, {
 		type: "post",
 		success: function (data) {
+			EndLoadingMessage();
 			if (data.error !== undefined)
-				showAlert(data.error);
+				ShowMessage(data.error);
 			else
-				showAlert("Персонаж удален");
-			dlgWrapper.dialog("close");
+				ShowMessage("Персонаж удален");
 			$(button).hide();
 			$("#btn-create-char-" + id).show();
+		},
+		error: function () {
+			EndLoadingMessage();
 		}
 	});
 

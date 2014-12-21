@@ -37,7 +37,7 @@ $statuses = ChdTransfer::getStatuses();
 		));?>
 
 		<div style="margin-top: 5px;">
-			<textarea style="width: 100%; height: 65px; resize: none;"><?php echo htmlspecialchars($data->comment) ?></textarea>
+			<textarea style="width: 100%; height: 65px; resize: none;"><?php echo $data->comment; ?></textarea>
 		</div>
 
 		<button id="" class="btn btn-primary pull-right" onclick="UpdateComment(<?php echo $data->id; ?>);">

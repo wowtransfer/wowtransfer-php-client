@@ -98,18 +98,15 @@ $this->widget('zii.widgets.jui.CJuiDialog', array(
 
 <?php
 $this->widget('zii.widgets.jui.CJuiDialog', array(
-	'id' => 'dialog-ok-cancel',
+	'id' => 'dialog-loading',
 	'options' => array(
 		'autoOpen' => false,
-		'buttons' => array(
-			array('text' => 'Ok'),
-			array('text' => 'Cancel', 'click' => 'js: function() { $(this).dialog("close"); }'),
-		),
+		'closeText' => 'hide',
 		'draggable' => false,
 		'modal' => true,
 		'position' => 'center',
 		'resizable' => false,
-		'title' => 'Dialog',
+		'title' => 'Loading',
 	),
 ));
 ?>
