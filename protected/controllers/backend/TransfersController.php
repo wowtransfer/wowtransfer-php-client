@@ -50,37 +50,23 @@ class TransfersController extends BackendController
 
 	/**
 	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
 	public function actionUpdate($id)
 	{
-		$model = $this->loadModel($id);
-
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if (Yii::app()->request->isAjaxRequest && !empty($_POST))
 		{
+			$model = $this->loadModel($id);
 			$model->setScenario('update');
 			$model->attributes = $_POST;
 			if (!$model->save(true, array_keys($_POST)))
 				throw new CHttpException(501, 'Error');
 			Yii::app()->end();
 		}
-
-		if (isset($_POST['ChdTransfer']))
-		{
-			$model->attributes = $_POST['ChdTransfer'];
-			if ($model->save())
-			{
-				$this->redirect(array('view', 'id' => $model->id));
-			}
-		}
-
-		$this->render('update', array(
-			'model'=>$model,
-		));
+		$this->redirect(array('index'));
 	}
 
 	/**
@@ -163,21 +149,6 @@ class TransfersController extends BackendController
 				'dataProvider' => $dataProvider,
 			));
 		}
-	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new ChdTransfer('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ChdTransfer']))
-			$model->attributes=$_GET['ChdTransfer'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
 	}
 	
 	public function actionChar($id)

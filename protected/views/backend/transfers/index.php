@@ -5,10 +5,6 @@
 $this->breadcrumbs = array(
 	'Заявки на перенос',
 );
-
-$this->menu = array(
-	array('label' => 'Управление заявками', 'url' => array('admin')),
-);
 ?>
 
 <h1>Заявки на перенос</h1>

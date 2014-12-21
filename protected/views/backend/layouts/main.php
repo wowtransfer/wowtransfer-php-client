@@ -34,7 +34,6 @@
 			array('label'=>'Заявки', 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'),
 			array('label'=>'Конфигурации', 'url'=>array('/tconfigs/index'), 'icon' => 'asterisk'),
 			array('label'=>'Настройка', 'url'=>array('/configs'), 'icon' => 'cog', 'active' => $this->id == 'configs'),
-			array('label'=>'Карта', 'url'=>array('/site/sitemap'), 'icon' => 'map-marker'),
 		),
 	)); ?><!-- mainmenu -->
 

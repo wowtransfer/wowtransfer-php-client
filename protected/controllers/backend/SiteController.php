@@ -17,11 +17,6 @@ class SiteController extends BackendController
 		$this->redirect(Yii::app()->baseUrl . '/index.php/site/logout');
 	}
 
-	public function actionSitemap()
-	{
-		$this->render('sitemap');
-	}
-
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

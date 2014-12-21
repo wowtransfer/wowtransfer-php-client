@@ -12,7 +12,6 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
 	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
-	
 );
 
 $luaDumpSize = strlen($luaDumpContent);

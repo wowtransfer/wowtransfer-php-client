@@ -9,10 +9,6 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
 	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
-	array('label'=>'Изменить заявку', 'url'=>array('update', 'id'=>$model->id), 'icon' => 'pencil'),
-	array('label'=>'Удалить заявку', 'url'=>'#', 'icon' => 'remove',
-		'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить заявку?')),
-	array('label'=>'Управление заявками', 'url'=>array('admin'), 'icon' => ''),
 	($model->char_guid > 0) ?
 		array('label'=>'Удалить персонажа', 'url'=>'#', 'icon' => 'remove',
 			'linkOptions'=>array('submit'=>array('deletechar','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить персонажа?'))
