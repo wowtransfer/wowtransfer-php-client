@@ -189,7 +189,7 @@ class TransfersController extends FrontendController
 	{
 		$dataProvider = new CActiveDataProvider('ChdTransfer', array(
 			'criteria' => array(
-				'condition' => 'account_id=' . Yii::app()->user->id,
+				'condition' => 'account_id=' . Yii::app()->user->id . " AND status <> 'cart'",
 			),
 		));
 
