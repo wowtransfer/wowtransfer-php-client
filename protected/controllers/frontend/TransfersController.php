@@ -207,11 +207,11 @@ class TransfersController extends FrontendController
 	 */
 	public function loadModel($id)
 	{
-		$model = ChdTransfer::model()->findByPk($id);
-		if ($model===null)
+		$model = ChdTransfer::model()->findByPk($id,
+			'account_id=' . Yii::app()->user->id . " AND status <> 'cart'"
+		);
+		if ($model === null)
 			throw new CHttpException(404,'The requested page does not exist.');
-		if ($model->account_id != Yii::app()->user->id)
-			throw new CHttpException(403,'Error. Unknown transfer ID.');
 		if (!empty($model->options))
 		{
 			$model->transferOptions = explode(';', $model->options);
