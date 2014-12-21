@@ -5,16 +5,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
 
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/main.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/form.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/common.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/form.css" />
-
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/backend.css" />
+	<script src="<?php echo Yii::app()->baseUrl; ?>/js/backend.js"></script>
 
 	<?php
 	$cs = Yii::app()->getClientScript();
-	$cs->registerCoreScript('jquery-ui');
-	$cs->registerCssFile($cs->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
+	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css');
+	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/form.css');
+	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/common.css');
+	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/backend.css');
+	$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/backend.css');
 	?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -111,7 +113,6 @@ $this->widget('zii.widgets.jui.CJuiDialog', array(
 	),
 ));
 ?>
-
 
 <script src="<?php echo Yii::app()->baseUrl; ?>/js/backend.js"></script>
 <script><!--
