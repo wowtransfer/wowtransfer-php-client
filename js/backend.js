@@ -174,3 +174,29 @@ function UpdateComment(id) {
 		}
 	});
 }
+
+function OnDeleteChar(button, id) {
+	if (!confirm("Подтвердите удаление персонажа")) {
+		return false;
+	}
+
+	dlgWrapper = $("#dialog-ok-cancel");
+	dlgWrapper.html("Удаление персонажа...");
+	dlgWrapper.dialog("open");
+	var url = config.homeUrl + '/transfers/deletechar/' + id;
+	console.log(url);
+	$.ajax(url, {
+		type: "post",
+		success: function (data) {
+			if (data.error !== undefined)
+				showAlert(data.error);
+			else
+				showAlert("Персонаж удален");
+			dlgWrapper.dialog("close");
+			$(button).hide();
+			$("#btn-create-char-" + id).show();
+		}
+	});
+
+	return true;
+}

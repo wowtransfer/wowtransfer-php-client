@@ -25,10 +25,6 @@ window.statuses = [];
 	window.statuses["<?php echo $name; ?>"] = "<?php echo $title; ?>";
 <?php endforeach; ?>
 
-function OnDeleteChar() {
-	return confirm('Подтвердите удаление.');
-}
-
 function StatusSetHandlers() {
 	$(".transfer-statuses a").click(function() {
 		var a = $(this);

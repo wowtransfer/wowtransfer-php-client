@@ -20,25 +20,25 @@ $statuses = ChdTransfer::getStatuses();
 			</ul>
 		</div>
 
-		<?php if ($data->char_guid): ?>
-			<?php $this->widget('booster.widgets.TbButton', array(
-				'buttonType' => 'link',
-				'label' => 'Delete character',
-				'url' => $this->createUrl('deletechar', array('id' => $data->id)),
-				'icon' => 'remove',
-				'context' => 'danger',
-				'htmlOptions' => array('onclick' => 'return OnDeleteChar();', 'title' => 'Удалить персонажа'),
-			));?>
-		<?php else: ?>
-			<?php $this->widget('booster.widgets.TbButton', array(
-				'buttonType' => 'link',
-				'context' => 'success',
-				'label' => 'Create character',
-				'url' => $this->createUrl('char', array('id' => $data->id)),
-				'icon' => 'plane',
-				'htmlOptions' => array('title' => 'Создать персонажа'),
-			));?>
-		<?php endif; ?>
+		<a class="btn btn-danger" onclick="OnDeleteChar(this, <?php echo $data->id; ?>); return false;"
+		   href="<?php echo $this->createUrl('deletechar', array('id' => $data->id)); ?>"
+		   style="display: <?php echo !$data->char_guid ? 'none' : 'inline-block'; ?>">
+			<span class="glyphicon glyphicon-remove"></span>
+			Delete cahracter
+		</a>
+
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'link',
+			'context' => 'success',
+			'label' => 'character',
+			'url' => $this->createUrl('char', array('id' => $data->id)),
+			'icon' => 'plane',
+			'htmlOptions' => array(
+				'id' => 'btn-create-char-' . $data->id,
+				'title' => 'Создать персонажа',
+				'style' => 'display:' . ($data->char_guid ? 'none' : 'inline-block'),
+			),
+		));?>
 
 		<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType' => 'link',
@@ -51,8 +51,8 @@ $statuses = ChdTransfer::getStatuses();
 			<textarea style="width: 100%; height: 65px; resize: none;"><?php echo htmlspecialchars($data->comment) ?></textarea>
 		</div>
 
-		<button id="" class="btn btn-primary" onclick="UpdateComment(<?php echo $data->id; ?>);">
-			Change comment
+		<button id="" class="btn btn-primary pull-right" onclick="UpdateComment(<?php echo $data->id; ?>);">
+			Change
 		</button>
 
 	</div>

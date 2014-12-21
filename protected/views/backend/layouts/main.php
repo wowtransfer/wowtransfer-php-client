@@ -94,6 +94,24 @@ $this->widget('zii.widgets.jui.CJuiDialog', array(
 ));
 ?>
 
+<?php
+$this->widget('zii.widgets.jui.CJuiDialog', array(
+	'id' => 'dialog-ok-cancel',
+	'options' => array(
+		'autoOpen' => false,
+		'buttons' => array(
+			array('text' => 'Ok'),
+			array('text' => 'Cancel', 'click' => 'js: function() { $(this).dialog("close"); }'),
+		),
+		'draggable' => false,
+		'modal' => true,
+		'position' => 'center',
+		'resizable' => false,
+		'title' => 'Dialog',
+	),
+));
+?>
+
 
 <script src="<?php echo Yii::app()->baseUrl; ?>/js/backend.js"></script>
 <script><!--
