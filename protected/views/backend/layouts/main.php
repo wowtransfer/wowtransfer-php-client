@@ -10,7 +10,12 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/form.css" />
 
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/backend.css" />
-	<script src="<?php echo Yii::app()->baseUrl; ?>/js/backend.js"></script>
+
+	<?php
+	$cs = Yii::app()->getClientScript();
+	$cs->registerCoreScript('jquery-ui');
+	$cs->registerCssFile($cs->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
+	?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -75,7 +80,25 @@
 	</div>
 </div>
 
-<script>chdInit("<?php echo Yii::app()->homeUrl; ?>");</script>
+
+<?php
+$this->widget('zii.widgets.jui.CJuiDialog', array(
+	'id' => 'dialog',
+	'options' => array(
+		'autoOpen' => false,
+		'draggable' => false,
+		'position' => 'top',
+		'resizable' => false,
+		'title' => 'Message',
+	),
+));
+?>
+
+
+<script src="<?php echo Yii::app()->baseUrl; ?>/js/backend.js"></script>
+<script><!--
+	LoadBackend("<?php echo Yii::app()->homeUrl; ?>");
+--></script>
 
 </body>
 </html>

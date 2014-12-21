@@ -62,4 +62,5 @@ function StatusSetHandlers() {
 	});
 }
 StatusSetHandlers();
+
 --></script>

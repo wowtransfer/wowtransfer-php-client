@@ -20,32 +20,40 @@ $statuses = ChdTransfer::getStatuses();
 			</ul>
 		</div>
 
-	<?php if ($data->char_guid): ?>
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'link',
-			'label' => 'Delete character',
-			'url' => $this->createUrl('deletechar', array('id' => $data->id)),
-			'icon' => 'remove',
-			'context' => 'danger',
-			'htmlOptions' => array('onclick' => 'return OnDeleteChar();', 'title' => 'Удалить персонажа'),
-		));?>
-	<?php else: ?>
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'link',
-			'context' => 'success',
-			'label' => 'Create character',
-			'url' => $this->createUrl('char', array('id' => $data->id)),
-			'icon' => 'plane',
-			'htmlOptions' => array('title' => 'Создать персонажа'),
-		));?>
-	<?php endif; ?>
+		<?php if ($data->char_guid): ?>
+			<?php $this->widget('booster.widgets.TbButton', array(
+				'buttonType' => 'link',
+				'label' => 'Delete character',
+				'url' => $this->createUrl('deletechar', array('id' => $data->id)),
+				'icon' => 'remove',
+				'context' => 'danger',
+				'htmlOptions' => array('onclick' => 'return OnDeleteChar();', 'title' => 'Удалить персонажа'),
+			));?>
+		<?php else: ?>
+			<?php $this->widget('booster.widgets.TbButton', array(
+				'buttonType' => 'link',
+				'context' => 'success',
+				'label' => 'Create character',
+				'url' => $this->createUrl('char', array('id' => $data->id)),
+				'icon' => 'plane',
+				'htmlOptions' => array('title' => 'Создать персонажа'),
+			));?>
+		<?php endif; ?>
 
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'label' => 'Lua-dump',
-		'url' => $this->createUrl('luadump', array('id' => $data->id)),
-		'icon' => 'file',
-	));?>
+		<?php $this->widget('booster.widgets.TbButton', array(
+			'buttonType' => 'link',
+			'label' => 'Lua-dump',
+			'url' => $this->createUrl('luadump', array('id' => $data->id)),
+			'icon' => 'file',
+		));?>
+
+		<div style="margin-top: 5px;">
+			<textarea style="width: 100%; height: 65px; resize: none;"><?php echo htmlspecialchars($data->comment) ?></textarea>
+		</div>
+
+		<button id="" class="btn btn-primary" onclick="UpdateComment(<?php echo $data->id; ?>);">
+			Change comment
+		</button>
 
 	</div>
 

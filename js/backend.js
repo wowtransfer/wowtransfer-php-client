@@ -1,8 +1,21 @@
-function chdInit(baseUrl)
+var config = {
+	homeUrl: ""
+};
+
+function LoadBackend(homeUrl)
 {
-	window.baseUrl = baseUrl;
+	config.homeUrl = homeUrl;
 }
 
+function showAlert(message)
+{
+	var dlg = $("#dialog");
+	dlg.html('<div class="alert alert-success">' + message + '</div>');
+	dlg.dialog("open");
+	dlg.animate({opacity: 1.0}, 1000).fadeOut("slow", function() {
+		dlg.dialog("close");
+	});
+}
 /**
  *
  */
@@ -130,7 +143,7 @@ function OnViewLuaDumpClick(transferId)
 	var dialog = $("#lua-dump-dialog");
 	var content = $("#lua-dump-dialog-content");
 
-	$.ajax(window.baseUrl + "/transfers/luadump/" + transferId, {
+	$.ajax(config.homeUrl + "/transfers/luadump/" + transferId, {
 		method: "GET",
 		success: function (data, textStatus, jqXHR) {
 			content.text(data);
@@ -146,4 +159,18 @@ function OnViewLuaDumpClick(transferId)
 function OnViewUncryptedLuaDumpClick(transferId)
 {
 	alert("TODO:\n view uncrypted lua dump.\nAJAX...");
+}
+
+function UpdateComment(id) {
+	var comment = $("#view_" + id + " textarea").val();
+
+	$.ajax(config.homeUrl + "/transfers/update/" + id, {
+		type: "post",
+		data: {
+			comment: comment
+		},
+		success: function(data) {
+			showAlert("Комментарий изменен");
+		}
+	});
 }
