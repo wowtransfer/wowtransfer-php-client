@@ -128,6 +128,8 @@ class TransfersController extends FrontendController
 		{
 			if (empty($_POST['ChdTransfer']['transferOptions']))
 				$model->addError('transferOptions', 'Заполните опции переноса');
+			elseif ($model->status !== 'process')
+				$model->addError('status', "Статус заявки не позволяет изменить ее");
 			else
 			{
 				$model->attributes = $_POST['ChdTransfer'];
@@ -159,8 +161,12 @@ class TransfersController extends FrontendController
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
-
-		$model->delete();
+		if ($model->status !== 'process') {
+			$model->addError('status', "Статус заявки не позволяет удалить ее");
+		}
+		else {
+			$model->delete();
+		}
 		if (Yii::app()->request->isAjaxRequest)
 		{
 			$result = array();
