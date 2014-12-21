@@ -8,18 +8,10 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo $data->id; ?>
 
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'ajaxButton',
-		'url' => $this->createUrl('/transfers/delete', array('id' => $data->id, 'ajax' => 'delete')),
-		'icon' => 'remove',
-		'size' => 'small',
-		'htmlOptions' => array('class' => 'pull-right', 'title' => 'Удалить'),
-		'ajaxOptions' => array(
-			'beforeSend' => 'js:function(){return confirm("' . Yii::t('app', 'Are you sure you want to delete this transfer #{id}?', array('{id}' => $data->id)) . '");}',
-			'success' => 'js:function (data){OnDeleteTransferSuccess(data);}',
-			'type' => 'POST',
-		),
-	)); ?>
+	<a href="#" class="btn btn-default btn-sm pull-right" onclick="OnDeleteTransfer(<?php echo $data->id; ?>); return false;">
+		<span class="glyphicon glyphicon-remove"></span>
+	</a>
+
 	<?php $this->widget('booster.widgets.TbButton', array(
 		'buttonType' => 'link',
 		'url' => $this->createUrl('/transfers/update', array('id' => $data->id)),

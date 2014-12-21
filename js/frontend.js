@@ -1,19 +1,25 @@
 /**
  *
  */
-function OnDeleteTransferSuccess(data)
+function OnDeleteTransfer(id)
 {
-	var result = $.parseJSON(data);
-	if (result === null)
+	if (!confirm("Подтвердите удаление заявки #" + id)) {
 		return false;
+	}
 
-	var message = result.error ? result.error : result.message;
-	var dialog = $("#chd-modal-info");
-	dialog.find(".modal-body").text(message);
+	$.ajax(config.homeUrl + "/transfers/delete/" + id, {
+		type: "post",
+		dataType: 'json',
+		success: function (data) {
+			var message = (data.error === undefined) ? data.message : data.error;
+			var dialog = $("#chd-modal-info");
+			dialog.find(".modal-body").text(message);
 
-	$("#chd-modal-info").modal('show', {
-		keyboard: true
+			$("#chd-modal-info").modal('show', {
+				keyboard: true
+			});
+
+			$.fn.yiiListView.update("transfer-list-view", {});
+		}
 	});
-
-	$.fn.yiiListView.update("transfer-list-view", {});
 }

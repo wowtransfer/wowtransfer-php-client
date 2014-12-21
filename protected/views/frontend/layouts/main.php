@@ -12,6 +12,11 @@
 	<script src="<?php echo Yii::app()->baseUrl; ?>/js/frontend.js"></script>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+
+	<script>
+		window.config = [];
+		window.config.homeUrl = "<?php echo Yii::app()->homeUrl; ?>";
+	</script>
 </head>
 
 <body>
