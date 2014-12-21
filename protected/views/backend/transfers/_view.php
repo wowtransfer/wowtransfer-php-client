@@ -7,7 +7,19 @@ $statuses = ChdTransfer::getStatuses();
 
 <div class="view" id="view_<?php echo $data->id ?>" data-id="<?php echo $data->id ?>">
 
-	<div style="float: right;">
+	<div class="pull-right">
+
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Изменить статус">
+				<span id="status_<?php echo $data->id; ?>" class="tstatus tstatus-<?php echo $data->status; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
+			</button><!-- TODO: class transfer-statuses is not defined in css! -->
+			<ul class="dropdown-menu transfer-statuses" role="menu">
+				<?php foreach ($statuses as $name => $title): ?>
+					<li><a href="#" data-name="<?php echo $name; ?>"><?php echo $title; ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+
 	<?php if ($data->char_guid): ?>
 		<?php $this->widget('booster.widgets.TbButton', array(
 			'buttonType' => 'link',
@@ -34,25 +46,6 @@ $statuses = ChdTransfer::getStatuses();
 		'url' => $this->createUrl('luadump', array('id' => $data->id)),
 		'icon' => 'file',
 	));?>
-
-		<!--<div style="margin-top: 5px;">
-			<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?></b>
-			<?php echo CHtml::DropDownList('statuses_' . $data->id, $data->status, ChdTransfer::getStatuses(), array(
-				'data-id' => $data->id,
-			)); ?>
-		</div>-->
-
-		<br>
-		<div class="btn-group" style="margin-top: 5px;">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Изменить статус">
-				<span id="status_<?php echo $data->id; ?>" class="tstatus tstatus-<?php echo $data->status; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
-			</button><!-- TODO: class transfer-statuses is not defined in css! -->
-			<ul class="dropdown-menu transfer-statuses" role="menu">
-				<?php foreach ($statuses as $name => $title): ?>
-					<li><a href="#" data-name="<?php echo $name; ?>"><?php echo $title; ?></a></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
 
 	</div>
 
