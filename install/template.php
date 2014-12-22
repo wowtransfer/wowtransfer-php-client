@@ -60,7 +60,7 @@ class InstallerTemplate
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function hasErrors()
 	{
@@ -313,7 +313,7 @@ class InstallerTemplate
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function saveInstallStatus()
 	{
@@ -329,11 +329,73 @@ class InstallerTemplate
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isInstalled()
 	{
 		$filePath = dirname(__FILE__) . '/installed.html';
 		return file_exists($filePath);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function writeAppConfig()
+	{
+		$filePath = dirname(__DIR__) . '/protected/config/app.php';
+		$lines = file($filePath);
+		if (!$lines)
+		{
+			$this->addError("Не удалось прочитать файл конфигурации приложения\n" . $filePath);
+			return false;
+		}
+
+		$configContent = '';
+		$params = array(
+			'core' => false,
+			'transferTable' => false,
+		);
+		foreach ($lines as $line)
+		{
+			// 'return array(' -- begin
+			// ');'            -- end
+
+			$keyValue = explode('=>', $line);
+			if (isset($keyValue[1]))
+			{
+				$key = trim($keyValue[0]);
+				if ($key === "'core'")
+				{
+					$configContent .= "\t'core'=>'{$this->getFieldValue('core')}',\n";
+					$params['core'] = true;
+					continue;
+				}
+				elseif ($key === "'transferTable'")
+				{
+					$configContent .= "\t'transferTable'=>'{$this->getFieldValue('db_transfer_table')}',\n";
+					$params['transferTable'] = true;
+					continue;
+				}
+			}
+
+			if ($line === ');')
+			{
+				if (!$params['core'])
+					$configContent .= "\t'core'=>'{$this->getFieldValue('core')}',\n";
+				if (!$params['transferTable'])
+					$configContent .= "\t'transferTable'=>'{$this->getFieldValue('db_transfer_table')}',\n";
+			}
+
+			$configContent .= $line;
+		}
+
+		$handle = fopen($filePath, 'w');
+		if ($handle)
+		{
+			fwrite($handle, $configContent);
+			fclose($handle);
+		}
+
+		return $handle !== false;
 	}
 }

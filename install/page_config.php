@@ -8,7 +8,7 @@ if (isset($_POST['back']))
 	unset($_POST['submit']);
 
 	$template->writeSubmitedFields();
-	header('Location: index.php?page=procedures');
+	header('Location: index.php?page=privileges');
 	exit;
 }
 
@@ -17,11 +17,9 @@ if (isset($_POST['submit']))
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
-	$db = new InstallerDatabaseManager($template);
-
-	if ($db->applyPrivileges() && !$template->hasErrors())
+	if ($template->writeAppConfig() && !$template->hasErrors())
 	{
-		header('Location: index.php?page=config');
+		header('Location: index.php?page=finish');
 		exit;
 	}
 }
@@ -29,21 +27,25 @@ if (isset($_POST['submit']))
 ?>
 
 <div class="alert alert-info">
-	На этом шаге пользователю будут даны права на объекты базы данных.
+	<p>На этом шаге запишутся некоторые параметры в конфигурационный файл приложения</p>
+	<p><code>/protected/config/app.php</code></p>
 </div>
 
 <form action="" method="post">
 
 	<?php $template->errorSummary(); ?>
 
-
-	<p class="text-center">Пользователь:
+	<p class="text-center">Название таблицы с заявками:
 		<span style="font-weight: bold;">
-		<?php echo "'" . $template->getFieldValue('db_transfer_user') . "'@'" . $template->getFieldValue('db_transfer_user_host') . "'"; ?>
+			<?php echo $template->getFieldValue('db_transfer_table'); ?>
 		</span>
 	</p>
 
-	<pre class="sql-code" style="height: 400px;"><?php echo $template->loadDbPrivileges(); ?></pre>
+	<p class="text-center">Ядро WoW сервера:
+		<span style="font-weight: bold;">
+			<?php echo $template->getFieldValue('core'); ?>
+		</span>
+	</p>
 
 	<div class="actions-panel">
 		<button class="btn btn-default" type="submit" name="back">Назад</button>

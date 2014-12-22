@@ -11,4 +11,5 @@ return array(
 	'accessToken'=>'97864b0e3c13e50d027edd97f84c54ee',
 	'admins'=>array('admin','gracer',),
 	'moders'=>array(),
+	'transferTable'=>'chd_transfer',
 );

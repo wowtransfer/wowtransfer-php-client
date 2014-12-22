@@ -31,6 +31,9 @@ $pages = array(
 	'privileges' => array(
 		'title' => 'Права',
 	),
+	'config' => array(
+		'title' => 'Конфигурация',
+	),
 	'finish' => array(
 		'title' => 'Заключение',
 	),
