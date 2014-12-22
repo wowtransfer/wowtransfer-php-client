@@ -43,7 +43,7 @@ class ChdTransfer extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'chd_transfer';
+		return Yii::app()->params['transferTable'];
 	}
 
 	/**
@@ -283,7 +283,7 @@ class ChdTransfer extends CActiveRecord
 
 		$command = $connection->createCommand('CALL chd_char_del(:id, :table_name)');
 		$command->bindValue(':id', $this->id);
-		$command->bindValue(':table_name', 'chd_transfer'); // TODO: table name
+		$command->bindValue(':table_name', $this->tableName());
 		$command->execute();
 
 		$command = $connection->createCommand('SELECT @CHD_RES');
