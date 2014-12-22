@@ -6,9 +6,7 @@ if (isset($_POST['submit']))
 {
 	$template->removeDir();
 	$template->saveInstallStatus();
-	// get prevent dir... get chdphp dir...
-	header('Location: /chdphp');
-	// $template->addError('Не удалось удалить папку install')
+	header('Location: /');
 	exit;
 }
 ?>
