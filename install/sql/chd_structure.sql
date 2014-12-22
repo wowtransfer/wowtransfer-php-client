@@ -11,7 +11,7 @@ CREATE TABLE `chd_transfer` (
 `char_guid` INT unsigned NOT NULL DEFAULT 0 COMMENT 'Character GUID',
 `create_char_date` timestamp NULL DEFAULT NULL COMMENT 'Character creating date',
 `create_transfer_date` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT 'Transfer creating date',
-`status` INT NOT NULL DEFAULT 0,
+`status` enum ('process', 'check', 'cancel', 'apply', 'game','cart') NOT NULL DEFAULT 'process',
 `account` VARCHAR(32) NOT NULL DEFAULT '' COMMENT 'User acoount name',
 `pass` VARCHAR(40) NOT NULL DEFAULT '' COMMENT 'User password',
 `file_lua_crypt` TINYINT DEFAULT 0 COMMENT 'Crypted/Uncrypted lua file',
