@@ -38,6 +38,7 @@ $this->breadcrumbs = array(
 <?php echo $form->numberFieldGroup($model, 'maxAccountCharsCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 <?php echo $form->textFieldGroup($model, 'adminsStr', array('hint' => 'Строка с именами администраторов, разделенных запятыми')); ?>
 <?php echo $form->textFieldGroup($model, 'modersStr', array('hint' => 'Строка с именами модераторов, разделенных запятыми')); ?>
+<?php echo $form->textFieldGroup($model, 'transferTable', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
 </fieldset>
 
 <div class="form-group">

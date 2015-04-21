@@ -7,23 +7,25 @@ class AppConfigForm extends CFormModel
 	public $modersStr = '';
 
 	// attributes
-	public  $accessToken = '';
+	public  $siteUrl = '/';
 	private $admins = array();
-	public  $apiBaseUrl = '';
 	public  $core = '';
 	public  $emailAdmin = '';
 	public  $maxTransfersCount = 10;
 	public  $maxAccountCharsCount = 10;
 	private $moders = array();
-	public  $publicKey = ''; // TODO
+	public  $transferTable = 'chd_transfer';
+
+	public  $apiBaseUrl = '';
+	public  $accessToken = '';
 	public  $serviceUsername = '';
+	public  $publicKey = ''; // TODO
 	public  $secretKey = ''; // TODO
-	public  $siteUrl = '/';
 
 	public function rules()
 	{
 		return array(
-			array('core, siteUrl, serviceUsername, apiBaseUrl, accessToken', 'required'),
+			array('core, siteUrl, serviceUsername, apiBaseUrl, accessToken, transferTable', 'required'),
 			array('accessToken', 'match', 'pattern' => '/^[a-z0-9]+$/', 'allowEmpty' => false),
 			array('core, serviceUsername', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
 			array('maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000),
@@ -46,6 +48,7 @@ class AppConfigForm extends CFormModel
 			'adminsStr' => 'Администраторы',
 			'modersStr' => 'Модераторы',
 			'serviceUsername' => 'Пользователь',
+			'transferTable' => 'Таблица с заявками',
 		);
 	}
 
