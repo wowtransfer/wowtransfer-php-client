@@ -6,12 +6,14 @@
 class Wowtransfer
 {
 	/**
+	 * Curl handle
+	 *
 	 * @var resource
 	 */
-	private $_ch = null; // curl
+	private $_ch;
 
 	/**
-	 * @var string
+	 * @var string API Base url, without / on end
 	 */
 	protected $serviceBaseUrl;
 
@@ -58,18 +60,20 @@ class Wowtransfer
 	 */
 	public function setBaseUrl($url)
 	{
-		if (empty($url))
+		if (empty($url)) {
 			throw new \exception('Empty base url');
+		}
 
-		if ($url[strlen($url) - 1] !== '/')
-			$url .= '/';
+		if ($url[strlen($url) - 1] === '/') {
+			$url = substr($url, 0, -1);
+		}
 		$this->serviceBaseUrl = $url;
 
 		return $this;
 	}
 
 	/**
-	 * @return string Base url with '/' on end
+	 * @return string API Base url, without '/' on end
 	 */
 	public function getBaseUrl()
 	{
@@ -116,16 +120,19 @@ class Wowtransfer
 	public function getCores()
 	{
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . 'cores');
+		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/cores');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 		$result = json_decode($result, true);
-		if (!$result)
+		if (!$result) {
 			throw new \Exception("Could't get cores from service");
-		if ($status !== 200)
+		}
+		if ($status !== 200) {
 			throw new \Exception($result['error_message']);
+		}
 
 		return $result;
 	}
@@ -133,8 +140,9 @@ class Wowtransfer
 	public function getTransferConfigs()
 	{
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . 'tconfigs' . '?access_token=' . $this->getAccessToken());
+		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/tconfigs' . '?access_token=' . $this->getAccessToken());
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 

@@ -31,8 +31,9 @@ class WowtransferUI extends Wowtransfer
 	{
 		$cores = array();
 
-		if (self::$_cores === null)
+		if (self::$_cores === null) {
 			self::$_cores = parent::getCores();
+		}
 
 		if (is_array(self::$_cores))
 		{
