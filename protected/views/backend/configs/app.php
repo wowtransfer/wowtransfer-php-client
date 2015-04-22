@@ -65,8 +65,16 @@ $this->breadcrumbs = array(
 <fieldset>
 <legend>Сервис</legend>
 <?php echo $form->textFieldGroup($model, 'serviceUsername', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php echo $form->textFieldGroup($model, 'apiBaseUrl'); ?>
-<?php echo $form->textFieldGroup($model, 'accessToken'); ?>
+<?php if (YII_DEBUG): ?>
+	<?php echo $form->textFieldGroup($model, 'apiBaseUrl'); ?>
+<?php endif ?>
+<?php echo $form->textFieldGroup($model, 'accessToken', array(
+	'widgetOptions' => array(
+		'htmlOptions' => array(
+			'maxlength' => 32,
+		)
+	))
+); ?>
 </fieldset>
 
 <div class="form-group">

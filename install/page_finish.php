@@ -16,7 +16,7 @@ if (isset($_POST['submit']))
 </div>
 
 <div class="alert alert-danger">
-	Необходимо удалить папку <i>install</i>.
+	Необходимо удалить папку <code><b>install</b></code>.
 </div>
 
 <div class="alert alert-warning">

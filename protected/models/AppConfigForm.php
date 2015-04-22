@@ -27,10 +27,14 @@ class AppConfigForm extends CFormModel
 		return array(
 			array('core, siteUrl, serviceUsername, apiBaseUrl, accessToken, transferTable', 'required'),
 			array('accessToken', 'match', 'pattern' => '/^[a-z0-9]+$/', 'allowEmpty' => false),
+			array('accessToken', 'length', 'is' => 32),
 			array('core, serviceUsername', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
 			array('maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000),
 			array('emailAdmin', 'email', 'allowEmpty' => false),
 			array('apiBaseUrl', 'length', 'max' => 255, 'allowEmpty' => false),
+			array('apiBaseUrl', 'default', 'value' => 'http://wowtransfer.com/api/v1'),
+			array('secretKey', 'length', 'is' => 32),
+			array('transferTable', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
 			array('adminsStr', 'required'),
 			array('modersStr', 'safe'),
 			// adminsStr and modersStr have a pattern '\w, \w, \w, \w'
@@ -77,6 +81,7 @@ class AppConfigForm extends CFormModel
 		fwrite($file, "\t'siteUrl'=>'{$this->siteUrl}',\n");
 		fwrite($file, "\t'serviceUsername'=>'{$this->serviceUsername}',\n");
 		fwrite($file, "\t'accessToken'=>'{$this->accessToken}',\n");
+		fwrite($file, "\t'transferTable'=>'{$this->transferTable}',\n");
 
 		$writeArray = function ($attributeName, $explodeStr) use ($file)
 		{
