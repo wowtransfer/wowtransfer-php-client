@@ -12,6 +12,7 @@
 	$cs->registerCssFile(Yii::app()->baseUrl . '/css/common.css');
 	$cs->registerCssFile(Yii::app()->baseUrl . '/css/frontend.css');
 
+	$cs->registerScriptFile(Yii::app()->baseUrl . '/js/common.js', CClientScript::POS_END);
 	$cs->registerScriptFile(Yii::app()->baseUrl . '/js/frontend.js', CClientScript::POS_END);
 	?>
 

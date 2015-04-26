@@ -42,8 +42,6 @@ class BaseController extends CController
 
 	public function init()
 	{
-		parent::init();
-
-		//$booster = Yii::app()->getComponent('booster');
+		return parent::init();
 	}
 }

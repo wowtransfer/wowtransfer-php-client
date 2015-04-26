@@ -26,6 +26,32 @@
 	width: 160px;
 }
 
+.toptions-block {
+    position: relative;
+}
+
+.toptions-btn {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    margin-bottom: 5px;
+    position: absolute;
+    right: 5px;
+}
+
+.toptions-btn.set {
+    top: 5px;
+}
+
+.toptions-btn.unset {
+    top: 35px;
+}
+
+.toptions-btn.invert {
+    top: 65px
+}
+
 .nav-list > .nav-header
 {
 	background-color: #C9E0ED;
