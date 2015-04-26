@@ -54,7 +54,8 @@ return array(
 		'booster' => array(
 			'class'=>'ext.yiibooster.components.Booster',
 			'responsiveCss'=>true,
-			//'fontAwesomeCss'=>true,
+			//'fontAwesomeCss'=>false,
+			'minify'=>!YII_DEBUG,
 		),
 
 		'urlManager'=>array(

@@ -1,6 +1,6 @@
 <?php
 $installDir = dirname(__FILE__) . '/install';
-if (is_dir($installDir))
+if (!file_exists('.installed'))
 {
 	$rootPath = $_SERVER['DOCUMENT_ROOT'];
 	$filePath = '/' . substr(dirname(__FILE__), strlen($rootPath) + 1) . '/install';

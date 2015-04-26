@@ -22,16 +22,6 @@ body
 	border-top: 3px solid #C9E0ED;
 }
 
-#content
-{
-    padding: 0;
-}
-
-#sidebar
-{
-	padding: 5px 0 20px 0;
-}
-
 #footer
 {
 	height: 40px;

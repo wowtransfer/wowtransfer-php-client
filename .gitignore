@@ -3,5 +3,7 @@
 /images/
 /protected/extensions/
 /protected/runtime/
-/nbproject/private/
-.install/
+/nbproject
+.install
+
+*.ico

@@ -1,8 +1,14 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<div style="float: right; width: 215px;">
-	<div id="sidebar">
+<div class="col-md-10">
+	<main>
+		<?php echo $content; ?>
+	</main><!-- content -->
+</div>
+
+<div class="col-md-2">
+	<aside>
 	<?php
 		array_unshift($this->menu, array(
 			'label' => 'Операции',
@@ -13,12 +19,7 @@
 			'items' => $this->menu,
 		));
 	?>
-	</div>
+	</aside>
 </div>
 
-<div style="margin: 0 230px 0 0;">
-	<div id="content">
-		<?php echo $content; ?>
-	</div><!-- content -->
-</div>
 <?php $this->endContent(); ?>

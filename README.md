@@ -28,8 +28,16 @@ Application divides in two parts:
 ### Application
 
 * Yii framework version 1.15+
-* yiibooster-4.0.1
+ * yiibooster-4.0.1
 
+
+
+## Aims
+
+* Simple application, KISS principle.
+* Minimum dependences.
+* Minimum network data.
+* Include installer.
 
 
 ## Roles ##
@@ -38,9 +46,11 @@ Application divides in two parts:
 2. admin - Full privileges.
 
 
-## sitemap ##
+## Sitemap ##
 
-index.php
+Simple map of application
+
+frontend
 
 * /site/login   - login
 * /site/logout  - logout
@@ -50,7 +60,7 @@ index.php
 * /transfers/update/id  - update transfer's attributes
 * /transfers/delete/id  - delete transfer
 
-admin.php
+backend
 
 * /transfers/           - view all transfers
 * /transfers/id         - view transfer
@@ -63,4 +73,8 @@ admin.php
 ## TODO ##
 
 * Defence from infinite login: give 5 attempts on 15 minutes
+* Apply cache
 * Add multilanguages
+* register css, js files
+* Rewrite application based on yii2 ()
+* Move the dumps to service

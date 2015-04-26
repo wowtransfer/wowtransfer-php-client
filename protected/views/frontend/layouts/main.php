@@ -5,11 +5,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/main.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/form.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/common.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/frontend.css">
-	<script src="<?php echo Yii::app()->baseUrl; ?>/js/frontend.js"></script>
+	<?php
+	$cs = Yii::app()->clientScript;
+	$cs->registerCssFile(Yii::app()->baseUrl . '/css/main.css');
+	$cs->registerCssFile(Yii::app()->baseUrl . '/css/form.css');
+	$cs->registerCssFile(Yii::app()->baseUrl . '/css/common.css');
+	$cs->registerCssFile(Yii::app()->baseUrl . '/css/frontend.css');
+
+	$cs->registerScriptFile(Yii::app()->baseUrl . '/js/frontend.js', CClientScript::POS_END);
+	?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -23,57 +27,71 @@
 
 <div class="container" id="page">
 
-	<!-- TODO: make widget -->
-	<div id="header">
-		<div id="login">
-			<?php if (Yii::app()->user->isGuest): ?>
-				<?php if ($this->route != 'site/login'): ?>
-					<?php $this->widget('booster.widgets.TbButton', array(
-						'context' => 'link',
-						'buttonType' => 'link',
-						'url' => $this->createUrl('/site/login'),
-						'label' => 'Войти',
-						'icon' => 'log-in',
-					)); ?>
-					<?php endif; ?>
-			<?php else: ?>
-				<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
-				<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a>
-			<?php endif; ?>
-		</div>
-		<div id="logo">
-			<img alt="" src="<?php echo Yii::app()->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
-			<?php echo CHtml::encode(Yii::app()->name); ?>
-		</div>
-	</div><!-- header -->
+	<div class="row">
+	<div class="col-md-12">
+		<!-- TODO: make widget -->
+		<div id="header">
+			<div id="login">
+				<?php if (Yii::app()->user->isGuest): ?>
+					<?php if ($this->route != 'site/login'): ?>
+						<?php $this->widget('booster.widgets.TbButton', array(
+							'context' => 'link',
+							'buttonType' => 'link',
+							'url' => $this->createUrl('/site/login'),
+							'label' => 'Войти',
+							'icon' => 'log-in',
+						)); ?>
+						<?php endif; ?>
+				<?php else: ?>
+					<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
+					<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a>
+				<?php endif; ?>
+			</div>
+			<div id="logo">
+				<img alt="" src="<?php echo Yii::app()->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
+				<?php echo CHtml::encode(Yii::app()->name); ?>
+			</div>
+		</div><!-- header -->
+	</div>
+	</div>
 
-	<?php $this->widget('booster.widgets.TbMenu',array(
-		'type' => 'tabs',
-		'items' => $this->getMenu(),
-	)); ?><!-- mainmenu -->
+	<div class="row">
+	<div class="col-md-12">
+		<?php $this->widget('booster.widgets.TbMenu',array(
+			'type' => 'tabs',
+			'items' => $this->getMenu(),
+		)); ?><!-- mainmenu -->
+	</div>
+	</div>
 
-	<!-- Admin / Application switch -->
-	<?php if (Yii::app()->user->isAdmin()): ?>
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'context' => 'link',
-			'buttonType' => 'link',
-			'label' => 'Администрирование',
-			'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
-			'icon' => 'cog',
-			'htmlOptions' => array('class' => 'right', 'id' => 'admin-switch'),
-		))?>
-	<?php endif; ?>
+	<div class="row">
+	<div class="col-md-12">
+		<!-- Admin / Application switch -->
+		<?php if (Yii::app()->user->isAdmin()): ?>
+			<?php $this->widget('booster.widgets.TbButton', array(
+				'context' => 'link',
+				'buttonType' => 'link',
+				'label' => 'Администрирование',
+				'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
+				'icon' => 'cog',
+				'htmlOptions' => array('class' => 'right', 'id' => 'admin-switch'),
+			))?>
+		<?php endif; ?>
 
-	<?php if (isset($this->breadcrumbs)): ?>
-		<?php $this->widget('booster.widgets.TbBreadcrumbs', array(
-			'links' => $this->breadcrumbs,
-			'homeLink' => false,
-		)); ?><!-- breadcrumbs -->
-	<?php endif; ?>
+		<?php if (!empty($this->breadcrumbs)): ?>
+			<?php $this->widget('booster.widgets.TbBreadcrumbs', array(
+				'links' => $this->breadcrumbs,
+				'homeLink' => false,
+			)); ?><!-- breadcrumbs -->
+		<?php endif; ?>
+	</div>
+	</div>
 
-	<?php echo $content; ?>
+	<div class="row">
+		<?php echo $content; ?>
+	</div>
 
-	<div class="clear"></div>
+	<div class="clearfix"></div>
 
 </div><!-- page -->
 
