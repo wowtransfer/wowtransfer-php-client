@@ -3,15 +3,15 @@
 /* @var $model ChdTransfer */
 /* @var $wowServers array */
 
-//CVarDumper::dump($serversList, 10, true);
 ?>
 
-<?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'id' => 'chd-transfer-form',
-	'type' => 'horizontal',
-	'enableAjaxValidation' => false,
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableClientValidation' => true,
-	'htmlOptions' => array('enctype' => 'multipart/form-data'),
+	'htmlOptions' => array(
+		'enctype' => 'multipart/form-data',
+		'id' => 'chd-transfer-form',
+	),
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -19,49 +19,51 @@
 	<?php if ($model->isNewRecord): ?>
 		<fieldset>
 			<legend>Выбор lua-дампа</legend>
-			<?php echo $form->fileFieldGroup($model, 'fileLua'); ?>
+			<?php echo $form->fileFieldControlGroup($model, 'fileLua'); ?>
 		</fieldset>
 	<?php endif; ?>
 
 	<fieldset>
 		<legend>Удаленный сервер</legend>
 
-		<?php echo CHtml::dropDownList('wowserver', null, $wowServers, array(
+		<?php /* echo CHtml::dropDownList('wowserver', null, $wowServers, array(
 			'onchange' => '$("#ChdTransfer_server").val(this.value);',
 			'class' => 'pull-right',
 			'style' => 'width: 180px;',
-		)); ?>
-		<?php echo $form->textFieldGroup($model, 'server', array(
+		));*/ ?>
+		<?php echo $form->textFieldControlGroup($model, 'server', array(
 			'hint' => 'Вводить без протокола (http://), например, myserver.ru или twoserver.com',
-			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+			'class' => 'col-sm-4',
 		)); ?>
 
-		<?php echo $form->textFieldGroup($model, 'realmlist', array(
-			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		<?php echo $form->textFieldControlGroup($model, 'realmlist', array(
+			'class' => 'col-sm-4'
 		)); ?>
 
-		<?php echo CHtml::dropDownList('wowserver-realm', null, array(), array(
+		<?php /*echo CHtml::dropDownList('wowserver-realm', null, array(), array(
 			'onchange' => '$("#ChdTransfer_realm").val(this.value);',
 			'class' => 'pull-right',
 			'style' => 'width: 180px;',
-		)); ?>
-		<?php echo $form->textFieldGroup($model, 'realm', array(
-			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		)); */ ?>
+		<?php echo $form->textFieldControlGroup($model, 'realm', array(
+			'class' => 'col-sm-4'
 		)); ?>
 
-		<?php echo $form->textFieldGroup($model, 'account', array(
-			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		<?php echo $form->textFieldControlGroup($model, 'account', array(
+			'class' => 'col-sm-4'
 		)); ?>
-		<?php echo $form->passwordFieldGroup($model, 'pass', array(
-			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		<?php echo $form->passwordFieldControlGroup($model, 'pass', array(
+			'class' => 'col-sm-4'
 		)); ?>
-		<?php echo $form->passwordFieldGroup($model, 'pass2', array(
-			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		<?php echo $form->passwordFieldControlGroup($model, 'pass2', array(
+			'class' => 'col-sm-4'
 		)); ?>
-		<?php echo $form->textFieldGroup($model, 'username_old', array(
-			'wrapperHtmlOptions' => array('class' => 'col-sm-4'),
+		<?php echo $form->textFieldControlGroup($model, 'username_old', array(
+			'class' => 'col-sm-4'
 		)); ?>
-		<?php echo $form->textFieldGroup($model, 'comment'); ?>
+		<?php echo $form->textAreaControlGroup($model, 'comment', array(
+			'span' => 8, 'rows' => 4, 'class' => 'col-sm-12',
+		)); ?>
 	</fieldset>
 
 	<fieldset>
@@ -78,17 +80,16 @@
 	</fieldset>
 
 	<div class="form-actions">
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'submit',
-			'context' => 'primary',
-			'label' => $model->isNewRecord ? 'Создать' : 'Сохранить',
-		)); ?>
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'link',
-			'label' => 'Отмена',
-			'url' => $this->createUrl('/transfers'),
-			'icon' => 'ban-circle',
-		)); ?>
+		
+		<button type="submit" class="btn btn-primary">
+			<?php echo $model->isNewRecord ? 'Создать' : 'Сохранить'; ?>
+		</button>
+		
+		<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default">
+			<span class="glyphicon glyphicon-ban-circle"></span>
+			Отмена
+		</a>
+
 	</div>
 
 <?php

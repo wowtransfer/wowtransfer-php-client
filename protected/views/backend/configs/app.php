@@ -12,88 +12,84 @@ $this->breadcrumbs = array(
 <h1>Настройка приложения</h1>
 
 <div class="alert alert-warning">
-Настройки приложения хранятся в файле <code>/protected/config/app.php</code>. В случае сбоя его можно изменить вручную.
+	Настройки приложения хранятся в файле <code>/protected/config/app.php</code>.
+	В случае сбоя его можно изменить вручную.
 </div>
 
 <?php if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="flash-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
 <?php endif; ?>
 
-<?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'id' => 'config-app-form',
-	'type' => 'horizontal',
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableClientValidation' => true,
-	'clientOptions' => array(
-		'validateOnSubmit' => true,
+	'htmlOptions' => array(
+		'id' => 'config-app-form',
 	),
 )); ?>
 
 <fieldset>
-<legend>Сервер</legend>
-<?php echo $form->textFieldGroup($model, 'siteUrl', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php echo $form->emailFieldGroup($model, 'emailAdmin', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php echo $form->dropDownListGroup($model, 'core', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'),
-	'widgetOptions' => array('data' => $cores))); ?>
-<?php echo $form->numberFieldGroup($model, 'maxTransfersCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php echo $form->numberFieldGroup($model, 'maxAccountCharsCount', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php echo $form->textFieldGroup($model, 'adminsStr', array('hint' => 'Строка с именами администраторов, разделенных запятыми')); ?>
-<?php echo $form->textFieldGroup($model, 'modersStr', array('hint' => 'Строка с именами модераторов, разделенных запятыми')); ?>
-<?php echo $form->textFieldGroup($model, 'transferTable', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
+	<legend>Сервер</legend>
+<?php
+	echo $form->textFieldControlGroup($model, 'siteUrl');
+	echo $form->emailFieldControlGroup($model, 'emailAdmin');
+	echo $form->dropDownListControlGroup($model, 'core', $cores);
+	echo $form->numberFieldControlGroup($model, 'maxTransfersCount');
+	echo $form->numberFieldControlGroup($model, 'maxAccountCharsCount');
+	echo $form->textFieldControlGroup($model, 'adminsStr', array(
+		'help' => 'Строка с именами администраторов, разделенных запятыми',
+		'autocomplete' => 'off',
+	));
+	echo $form->textFieldControlGroup($model, 'modersStr', array(
+		'help' => 'Строка с именами модераторов, разделенных запятыми',
+		'autocomplete' => 'off',
+	));
+	echo $form->textFieldControlGroup($model, 'transferTable');
+?>
 </fieldset>
 
 <div class="form-group">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-9">
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'submit',
-		'context' => 'primary',
-		'label' => 'Save',
-		'htmlOptions' => array(
-			'name' => 'server',
-			'disabled' => 'disabled',
-		),
-	)); ?>
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'url' => $this->createUrl('/configs'),
-		'icon' => 'ban-circle',
-		'label' => 'Cancel'
-	)); ?>
+
+		<button type="submit" class="btn btn-primary" name="server" disabled="disabled">
+			Save
+		</button>
+
+		<a href="<?php echo $this->createUrl('/configs') ?>" class="btn btn-default">
+			<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+		</a>
+
 	</div>
 </div>
 
 <fieldset>
 <legend>Сервис</legend>
-<?php echo $form->textFieldGroup($model, 'serviceUsername', array('wrapperHtmlOptions' => array('class' => 'col-sm-4'))); ?>
-<?php if (YII_DEBUG): ?>
-	<?php echo $form->textFieldGroup($model, 'apiBaseUrl'); ?>
-<?php endif ?>
-<?php echo $form->textFieldGroup($model, 'accessToken', array(
-	'widgetOptions' => array(
-		'htmlOptions' => array(
-			'maxlength' => 32,
-		)
-	))
-); ?>
+	<?php echo $form->textFieldControlGroup($model, 'serviceUsername', array(
+		'maxlength' => 32,
+	)); ?>
+	<?php echo $form->textFieldControlGroup($model, 'accessToken', array(
+		'maxlength' => 32,
+	)); ?>
+
+	<?php if (YII_DEBUG): ?>
+		<?php echo $form->textFieldControlGroup($model, 'apiBaseUrl'); ?>
+	<?php endif ?>
 </fieldset>
 
 <div class="form-group">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-9">
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'submit',
-		'context' => 'primary',
-		'label' => 'Save',
-		'htmlOptions' => array(
-			'name' => 'service',
-		),
-	)); ?>
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'url' => $this->createUrl('/configs'),
-		'icon' => 'ban-circle',
-		'label' => 'Cancel'
-	)); ?>
+
+		<button type="submit" class="btn btn-primary" name="service">
+			Save
+		</button>
+
+		<a href="<?php echo $this->createUrl('/configs'); ?>" class="btn btn-default">
+			<span class="glyphicon glyphicon-ban-circle"></span>
+			Cancel
+		</a>
+
 	</div>
 </div>
 

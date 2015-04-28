@@ -7,8 +7,9 @@ $this->pageTitle = 'Авторизация';
 $this->breadcrumbs=array(
 	'Авторизация',
 );
-
 ?>
+
+<h1 class="text-center">Авторизация</h1>
 
 <?php if ($model->hasErrors()): ?>
 	<div class="flash-error">
@@ -16,33 +17,28 @@ $this->breadcrumbs=array(
 	</div>
 <?php endif; ?>
 
-<div>
-<h1 class="text-center">Авторизация</h1>
-</div>
 <div class="form auth-form">
-<?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'id' => 'loginForm',
-	'type' => 'vertical',
-	'htmlOptions' => array('class' => 'well'),
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
+	'htmlOptions' => array(
+		'id' => 'create-char-from',
+		'class' => 'well',
+	),
 )); ?>
 
-	<?php echo $form->textFieldGroup($model, 'username', array('size' => 20)); ?>
-	<?php echo $form->passwordFieldGroup($model, 'password', array('size' => 20)); ?>
-	<?php //echo $form->checkboxGroup($model, 'remember'); ?>
+	<?php echo $form->textFieldControlGroup($model, 'username', array('size' => 20)); ?>
+	<?php echo $form->passwordFieldControlGroup($model, 'password', array('size' => 20)); ?>
+	<?php //echo $form->checkBoxControlGroup($model, 'remember'); ?>
 
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'submit',
-		'context' => 'primary',
-		'label' => 'Войти',
-		'icon' => 'log-in',
-	)); ?>
+	<button type="submit" class="btn btn-primary">
+		<span class="glyphicon glyphicon-log-in"></span>
+		Войти
+	</button>
 
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'label' => 'Отмена',
-		'url' => '/',
-		'icon' => 'home',
-	)); ?>
+	<a href="/" class="btn btn-default">
+		<span class="glyphicon glyphicon-home"></span>
+		Отмена
+	</a>
 
 <?php $this->endWidget(); ?>
 </div>

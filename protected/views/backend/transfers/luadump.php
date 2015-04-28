@@ -6,7 +6,7 @@
 
 $this->breadcrumbs = array(
 	'Заявки на перенос' => array('/transfers'),
-	$model->id => array('view', 'id' => $model->id),
+	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
 	'Lua-дамп'
 );
 
@@ -56,10 +56,8 @@ $luaDumpZipSize = strlen($luaDumpContentZip);
 
 <div class="form">
 	<div class="form-actions">
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'label' => 'Назад',
-			'buttonType' => 'link',
-			'url' => Yii::app()->request->urlReferrer,
-		)); ?>
+		<a href="<?php echo Yii::app()->request->urlReferrer; ?>" class="btn btn-default">
+			Назад
+		</a>
 	</div>
 </div>

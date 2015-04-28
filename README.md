@@ -28,8 +28,10 @@ Application divides in two parts:
 ### Application
 
 * Yii framework version 1.15+
- * yiibooster-4.0.1
-
+ * yiistrap, we are use also
+     * yiibootstrap, depricated
+     * yiibooster-4.0.1, very large
+     * yii bootstrap 3 module, very similar to yiistrap
 
 
 ## Aims

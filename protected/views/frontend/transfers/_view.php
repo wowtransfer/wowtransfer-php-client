@@ -12,25 +12,22 @@
 		<span class="glyphicon glyphicon-remove"></span>
 	</a>
 
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'url' => $this->createUrl('/transfers/update', array('id' => $data->id)),
-		'icon' => 'pencil',
-		'size' => 'small',
-		'htmlOptions' => array('class' => 'pull-right', 'title' => 'Изменить...'),
-	)); ?>
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'url' => $this->createUrl('/transfers/view', array('id' => $data->id)),
-		'icon' => 'eye-open',
-		'size' => 'small',
-		'htmlOptions' => array('class' => 'pull-right', 'title' => 'Просмотр...'),
-	)); ?>
+	<a href="<?php echo $this->createUrl('/transfers/update', array('id' => $data->id)); ?>"
+	   class="btn btn-default btn-sm pull-right" title="Изменить">
+		<span class="glyphicon glyphicon-pencil"></span>
+	</a>
+
+	<a href="<?php echo $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
+	   class="btn btn-default btn-sm pull-right" title="Просмотр...">
+		<span class="glyphicon glyphicon-eye-open"></span>
+	</a>
 
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<span class="tstatus tstatus-<?php echo $data->status; ?>"><?php echo ChdTransfer::getStatuses()[$data->status]; ?></span>
+	<span class="tstatus tstatus-<?php echo $data->status; ?>">
+		<?php echo ChdTransfer::getStatusTitle($data->status); ?>
+	</span>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('create_transfer_date')); ?>:</b>
@@ -63,39 +60,5 @@
 		'options' => $data->getTransferOptionsToUser()
 	));	?>
 	</div>
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('char_guid')); ?>:</b>
-	<?php echo CHtml::encode($data->char_guid); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('create_char_date')); ?>:</b>
-	<?php echo CHtml::encode($data->create_char_date); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('account')); ?>:</b>
-	<?php echo CHtml::encode($data->account); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('pass')); ?>:</b>
-	<?php echo CHtml::encode($data->pass); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('file_lua_crypt')); ?>:</b>
-	<?php echo CHtml::encode($data->file_lua_crypt); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('file_lua')); ?>:</b>
-	<?php echo CHtml::encode($data->file_lua); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('options')); ?>:</b>
-	<?php echo CHtml::encode($data->options); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('comment')); ?>:</b>
-	<?php echo CHtml::encode($data->comment); ?>
-	<br />
-
-	*/ ?>
 
 </div>

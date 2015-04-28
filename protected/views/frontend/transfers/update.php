@@ -1,10 +1,11 @@
 <?php
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
+/* @var $wowServers array */
 
 $this->breadcrumbs = array(
 	'Заявки на перенос'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	' ' . $model->id => array('view', 'id'=>$model->id), // TODO: hack
 	'Изменение',
 );
 

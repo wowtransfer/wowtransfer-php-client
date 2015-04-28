@@ -1,24 +1,17 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<div class="col-md-10">
+<div class="col-md-9">
 	<main>
 		<?php echo $content; ?>
 	</main><!-- content -->
 </div>
 
-<div class="col-md-2">
+<div class="col-md-3">
 	<aside>
 	<?php
-		array_unshift($this->menu, array(
-			'label' => 'Операции',
-		));
-		$this->widget('booster.widgets.TbMenu', array(
-			'type' => 'list',
-			'stacked' => true,
-			'items' => $this->menu,
-		));
-	?>
+		//array_unshift($this->menu, array('label' => 'Операции'));
+		echo TbHtml::stackedTabs($this->menu); ?>
 	</aside>
 </div>
 

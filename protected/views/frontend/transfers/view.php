@@ -33,13 +33,9 @@ $this->menu = array(
 
 <div style="margin: 10px 0;">
 
-<?php $this->widget('booster.widgets.TbButton', array(
-	'buttonType' => 'link',
-	'url' => $this->createUrl('/transfers'),
-	'label' => 'К заявкам',
-	'icon' => 'arrow-left',
-));
-
-?>
+	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default">
+		<span class="glyphicon glyphicon-arrow-left"></span>
+		К заявкам
+	</a>
 
 </div>

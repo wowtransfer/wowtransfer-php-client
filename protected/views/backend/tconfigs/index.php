@@ -12,10 +12,14 @@ $this->breadcrumbs = array(
 </div>
 
 <table class="table table-hover">
+	<col style="width: 40px;">
+	<col>
+	<col>
+	<col style="width: 100px;">
+	<col style="width: 70px;">
 <thead>
 	<tr>
 		<th>#</th>
-		<th>ID</th>
 		<th>Name</th>
 		<th>Title</th>
 		<th>Update date</th>
@@ -26,7 +30,6 @@ $this->breadcrumbs = array(
 <?php foreach ($tconfigs as $i => $config): ?>
 	<tr>
 		<td><?php echo $i + 1; ?></td>
-		<td><?php echo $config['id']; ?></td>
 		<td><?php echo $config['name']; ?></td>
 		<td><?php echo $config['title']; ?></td>
 		<td><?php echo $config['udate']; ?></td>

@@ -5,16 +5,32 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
 
-	<?php
+<?php
 	$cs = Yii::app()->clientScript;
-	$cs->registerCssFile(Yii::app()->baseUrl . '/css/main.css');
-	$cs->registerCssFile(Yii::app()->baseUrl . '/css/form.css');
-	$cs->registerCssFile(Yii::app()->baseUrl . '/css/common.css');
-	$cs->registerCssFile(Yii::app()->baseUrl . '/css/frontend.css');
+	$baseUrl = Yii::app()->request->baseUrl;
 
-	$cs->registerScriptFile(Yii::app()->baseUrl . '/js/common.js', CClientScript::POS_END);
-	$cs->registerScriptFile(Yii::app()->baseUrl . '/js/frontend.js', CClientScript::POS_END);
-	?>
+	// blueprint CSS framework
+	$cs->registerCssFile($baseUrl . '/css/main.css', 'screen, projection');
+	$cs->registerCssFile($baseUrl . '/css/print.css', 'print');
+
+	/*
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
+	<![endif]-->
+	*/
+
+	$cs->registerCssFile($baseUrl . '/css/main.css');
+	$cs->registerCssFile($baseUrl . '/css/form.css');
+
+	Yii::app()->bootstrap->register();
+
+	$cs->registerCssFile($baseUrl . '/css/common.css');
+	$cs->registerCssFile($baseUrl . '/css/frontend.css');
+
+	$cs->registerScriptFile($baseUrl . '/js/common.js', CClientScript::POS_END);
+	$cs->registerScriptFile($baseUrl . '/js/frontend.js', CClientScript::POS_END);
+
+?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -35,21 +51,20 @@
 			<div id="login">
 				<?php if (Yii::app()->user->isGuest): ?>
 					<?php if ($this->route != 'site/login'): ?>
-						<?php $this->widget('booster.widgets.TbButton', array(
-							'context' => 'link',
-							'buttonType' => 'link',
-							'url' => $this->createUrl('/site/login'),
-							'label' => 'Войти',
-							'icon' => 'log-in',
-						)); ?>
-						<?php endif; ?>
+						<a href="<?php echo $this->createUrl('/site/login'); ?>" title="Войти">
+							<span class="glyphicon glyphicon-log-in"></span>
+							Войти
+						</a>
+					<?php endif; ?>
 				<?php else: ?>
 					<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
-					<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a>
+					<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Выйти">
+						<span class="glyphicon glyphicon-log-out"></span> Выйти
+					</a>
 				<?php endif; ?>
 			</div>
 			<div id="logo">
-				<img alt="" src="<?php echo Yii::app()->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
+				<img alt="" src="<?php echo $baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
 				<?php echo CHtml::encode(Yii::app()->name); ?>
 			</div>
 		</div><!-- header -->
@@ -58,7 +73,7 @@
 
 	<div class="row">
 	<div class="col-md-12">
-		<?php $this->widget('booster.widgets.TbMenu',array(
+		<?php $this->widget('bootstrap.widgets.TbNav',array(
 			'type' => 'tabs',
 			'items' => $this->getMenu(),
 		)); ?><!-- mainmenu -->
@@ -69,20 +84,17 @@
 	<div class="col-md-12">
 		<!-- Admin / Application switch -->
 		<?php if (Yii::app()->user->isAdmin()): ?>
-			<?php $this->widget('booster.widgets.TbButton', array(
-				'context' => 'link',
-				'buttonType' => 'link',
-				'label' => 'Администрирование',
-				'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
-				'icon' => 'cog',
-				'htmlOptions' => array('class' => 'right', 'id' => 'admin-switch'),
-			))?>
+		<a href="<?php echo Yii::app()->request->baseUrl . '/admin.php/transfers/index'; ?>"
+		   class="right" id="admin-switch">
+			<span class="glyphicon glyphicon-cog"></span>
+			Администрирование
+		</a>
 		<?php endif; ?>
 
 		<?php if (!empty($this->breadcrumbs)): ?>
-			<?php $this->widget('booster.widgets.TbBreadcrumbs', array(
+			<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 				'links' => $this->breadcrumbs,
-				'homeLink' => false,
+				'homeLabel' => 'Перенос персонажей',
 			)); ?><!-- breadcrumbs -->
 		<?php endif; ?>
 	</div>
@@ -97,10 +109,14 @@
 </div><!-- page -->
 
 <div class="container">
-<div class="navbar" id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
-		All Rights Reserved.<br/>
-</div>
+	<div class="col-md-12">
+		<footer id="footer">
+			<div class="navbar">
+				Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
+				All Rights Reserved.<br/>
+			</div>
+		</footer>
+	</div>
 </div>
 
 <div class="modal fade" id="chd-modal-info">

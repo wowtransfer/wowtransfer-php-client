@@ -10,12 +10,15 @@ $this->breadcrumbs = array(
 <h1 class="text-center">Опции переноса</h1>
 
 <div class="alert alert-warning">
-TODO: файл <code>/protected/config/toptions.php</code> редактируется в ручную.
+	TODO: файл <code>/protected/config/toptions.php</code> редактируется в ручную.
 </div>
 
 <?php
-$form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'id' => 'toptions-form',
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
+	'htmlOptions' => array(
+		'id' => 'toptions-form',
+	),
 )); ?>
 
 	<table class="table table-condensed table-hover">
@@ -36,20 +39,16 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 	</table> 
 
 	<div class="form-actions">
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'submit',
-			'context' => 'primary',
-			'label' => 'Save',
-			'htmlOptions' => array(
-				'disabled' => 'disalbed',
-			),
-		)); ?>
-		<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'link',
-			'label' => 'Cancel',
-			'url' => $this->createUrl('/configs'),
-			'icon' => 'ban-circle',
-		)); ?>
+
+		<button type="submit" class="btn btn-primary" disabled="disalbed">
+			Save
+		</button>
+
+		<a href="<?php echo $this->createUrl('/configs'); ?>" class="btn btn-default">
+			<span class="glyphicon glyphicon-ban-circle"></span>
+			Cancel
+		</a>
+
 	</div>
 <?php
 $this->endWidget();

@@ -2,7 +2,8 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
-Yii::setPathOfAlias('booster', dirname(__FILE__) . '/../extensions/yiibooster');
+Yii::setPathOfAlias('bootstrap', realpath(__DIR__.'/../extensions/yiistrap'));
+Yii::setPathOfAlias('vendor.twbs.bootstrap.dist', realpath(__DIR__.'/../vendor/twbs/bootstrap/dist'));
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -18,7 +19,7 @@ return array(
 	),
 
 	// preloading 'log' component
-	'preload'=>array('log','booster'),
+	'preload'=>array('log'),
 
 	'sourceLanguage'=>'en',
 	'language'=>'ru', // to app.php
@@ -27,7 +28,9 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		'booster.helpers.TbHtml',
+		'bootstrap.helpers.TbHtml',
+		'bootstrap.behaviors.TbWidget',
+		'bootstrap.helpers.*'
 	),
 
 	'modules'=>array(
@@ -38,7 +41,7 @@ return array(
 			'password'=>'123',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-			'generatorPaths'=>array('booster.gii'),
+			'generatorPaths'=>array('bootstrap.gii'),
 		),
 	),
 
@@ -49,15 +52,12 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>false,
 		),
-		// uncomment the following to enable URLs in path-format
 
-		'booster' => array(
-			'class'=>'ext.yiibooster.components.Booster',
-			'responsiveCss'=>true,
-			//'fontAwesomeCss'=>false,
-			'minify'=>!YII_DEBUG,
+		'bootstrap'=>array(
+			'class'=>'bootstrap.components.TbApi',
 		),
 
+		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(

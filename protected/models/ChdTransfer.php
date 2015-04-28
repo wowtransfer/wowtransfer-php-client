@@ -167,16 +167,35 @@ class ChdTransfer extends CActiveRecord
 		));
 	}
 
+	/**
+	 * @var array
+	 */
+	protected static $statuses = array(
+		self::STATUS_PROCESS => 'В процессе',
+		self::STATUS_CHECK => 'Проверяется',
+		self::STATUS_CANCEL => 'Отклонено',
+		self::STATUS_APPLY => 'Принято',
+		self::STATUS_GAME => 'Игра',
+		self::STATUS_CART => 'В корзине',
+	);
+
+	/**
+	 * @return array
+	 */
 	public static function getStatuses()
 	{
-		return array(
-			self::STATUS_PROCESS => 'В процессе',
-			self::STATUS_CHECK => 'Проверяется',
-			self::STATUS_CANCEL => 'Отклонено',
-			self::STATUS_APPLY => 'Принято',
-			self::STATUS_GAME => 'Игра',
-			self::STATUS_CART => 'В корзине',
-		);
+		return self::$statuses;
+	}
+
+	/**
+	 * @param string $name
+	 * @return string
+	 */
+	public static function getStatusTitle($name) {
+		if (isset(self::$statuses[$name])) {
+			return self::$statuses[$name];
+		}
+		return 'undefined';
 	}
 
 	/**

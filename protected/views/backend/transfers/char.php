@@ -9,7 +9,7 @@
 
 $this->breadcrumbs = array(
 	'Заявки на перенос' => array('index'),
-	$model->id => array('view', 'id' => $model->id),
+	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
 	'Создание персонажа',
 );
 
@@ -40,9 +40,11 @@ $this->breadcrumbs = array(
 		>uncripted lua-dump</a>
 </div>
 
-<?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
-	'type' => 'horizontal',
-	'id' => 'create-char-from',
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
+	'htmlOptions' => array(
+		'id' => 'create-char-from',
+	),
 )); ?>
 
 <div style="margin: 5px 305px 5px 0; height: 160px;">
@@ -99,38 +101,28 @@ $this->breadcrumbs = array(
 
 <div class="form-actions">
 	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
-	<?php $this->widget('booster.widgets.TbButton', array(
-			'buttonType' => 'ajaxButton',
-			'context' => 'primary',
-			'label' => 'Создать',
-			'url' => $this->createUrl('char', array('id' => $model->id)),
-			'ajaxOptions' => array(
-				'type' => 'POST',
-				'beforeSend' => 'function() { OnBeforeCreateCharClick(); }',
-				'success' => 'function(data) { OnCreateCharClick(data); }',
-			),
-			'htmlOptions' => array(
-				'id' => 'btn-create-char',
-			),
-			'icon' => 'plane',
-		)); ?>
+	
+	<!-- 
+	'beforeSend' => 'function() { OnBeforeCreateCharClick(); }',
+	'success' => 'function(data) { OnCreateCharClick(data); }',
+	-->
+	<button type="submit" class="btn btn-primary" href="<?php echo $this->createUrl('char', array('id' => $model->id)); ?>"
+		id="btn-create-char">
+		<span class="glyphicon glyphicon-plane"></span>
+		Создать
+	</button>
 
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'label' => 'Отмена',
-		'icon' => 'ban-circle',
-		'url' => $this->createUrl('/transfers'),
-		'htmlOptions' => array('id' => 'btn-create-char-cancel'),
-	)); ?>
+	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default"
+	   id="btn-create-char-cancel">
+		<span class="glyphicon glyphicon-ban-circle"></span>
+		Отмена
+	</a>
 
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'buttonType' => 'link',
-		'context' => 'success',
-		'label' => 'К заявкам',
-		'url' => $this->createUrl('/transfers'),
-		'htmlOptions' => array('id' => 'btn-create-char-success', 'style' => 'display: none;'),
-		'icon' => 'list',
-	)); ?>
+	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-success"
+	   style="display: none;" id="btn-create-char-success">
+		<span class="glyphicon glyphicon-plane"></span>
+		К заявкам
+	</a>
 
 </div>
 

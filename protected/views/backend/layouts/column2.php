@@ -7,7 +7,7 @@
 		array_unshift($this->menu, array(
 			'label' => 'Операции',
 		));
-		$this->widget('booster.widgets.TbMenu', array(
+		$this->widget('bootstrap.widgets.TbNav', array(
 			'type' => 'list',
 			'stacked' => true,
 			'items' => $this->menu,

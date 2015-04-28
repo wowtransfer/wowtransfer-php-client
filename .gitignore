@@ -3,6 +3,7 @@
 /images/
 /protected/extensions/
 /protected/runtime/
+/protected/vendor/
 /nbproject
 .install
 

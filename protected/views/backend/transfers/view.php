@@ -43,12 +43,10 @@ $this->menu = array(
 )); ?>
 
 <div class="form-actions">
-<?php
-$this->widget('booster.widgets.TbButton', array(
-	'buttonType' => 'link',
-	'label' => 'Отмена',
-	'icon' => 'ban-circle',
-	'url' => $this->createUrl('/transfers'),
-));
-?>
+
+	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default">
+		<span class="glyphicon glyphicon-ban-circle"></span>
+		Отмена
+	</a>
+
 </div>

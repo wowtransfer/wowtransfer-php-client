@@ -5,19 +5,20 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/main.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/form.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/common.css">
-	<script src="<?php echo Yii::app()->baseUrl; ?>/js/backend.js"></script>
-
-	<?php
+<?php
 	$cs = Yii::app()->getClientScript();
-	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/main.css');
-	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/form.css');
-	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/common.css');
-	//$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/backend.css');
-	$cs->registerCssFile(Yii::app()->request->baseUrl . '/css/backend.css');
-	?>
+	$baseUrl = Yii::app()->baseUrl;
+
+	$cs->registerCssFile($baseUrl . '/css/main.css');
+	$cs->registerCssFile($baseUrl . '/css/form.css');
+
+	Yii::app()->bootstrap->register();
+
+	$cs->registerCssFile($baseUrl . '/css/common.css');
+	$cs->registerCssFile($baseUrl . '/css/backend.css');
+
+	$cs->registerScriptFile($baseUrl . '/js/backend.js');
+?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -33,7 +34,7 @@
 		</div>
 	</div><!-- header -->
 
-	<?php $this->widget('booster.widgets.TbMenu', array(
+	<?php $this->widget('bootstrap.widgets.TbNav', array(
 		'type' => 'tabs',
 		'items' => array(
 			array('label'=>'Сайт', 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'),
@@ -45,19 +46,16 @@
 	)); ?><!-- mainmenu -->
 
 	<!-- Admin / Application switch -->
-	<?php $this->widget('booster.widgets.TbButton', array(
-		'context' => 'link',
-		'buttonType' => 'link',
-		'url' => Yii::app()->request->baseUrl . '/index.php/transfers/index',
-		'label' => 'Приложение',
-		'icon' => 'arrow-left',
-		'htmlOptions' => array('class' => 'right', 'id' => 'admin-switch', 'title' => 'Приложение'),
-	))?>
+	<a href="<?php echo Yii::app()->request->baseUrl . '/index.php/transfers/index'; ?>"
+	   class="right" id="admin-switch" title="Приложение">
+		<span class="glyphicon glyphicon-arrow-left"></span>
+		Приложение
+	</a>
 
 	<?php if (isset($this->breadcrumbs)):?>
-		<?php $this->widget('booster.widgets.TbBreadcrumbs', array(
+		<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 			'links' => $this->breadcrumbs,
-			'homeLink' => CHtml::link('Админка', Yii::app()->homeUrl),
+			'homeLabel' => CHtml::link('Админка', Yii::app()->homeUrl),
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
