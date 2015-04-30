@@ -1,6 +1,6 @@
 <?php
 
-class TconfigsController extends Controller
+class TconfigsController extends BackendController
 {
 	public function actionIndex()
 	{

@@ -60,4 +60,33 @@ class BackendController extends BaseController
 			}
 		}
 	}
+
+	public function registerCssAndJs() {
+		$cs = Yii::app()->clientScript;
+		$baseUrl = Yii::app()->request->baseUrl;
+
+		if (YII_DEBUG) {
+			// blueprint CSS framework
+			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css', 'screen, projection');
+			$cs->registerCssFile($baseUrl . '/css/dev/common/print.css', 'print');
+			/*
+			<!--[if lt IE 8]>
+			<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
+			<![endif]-->
+			*/
+			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css');
+			$cs->registerCssFile($baseUrl . '/css/dev/common/form.css');
+
+			Yii::app()->bootstrap->register();
+
+			$cs->registerCssFile($baseUrl . '/css/dev/common/common.css');
+			$cs->registerCssFile($baseUrl . '/css/dev/backend/backend.css');
+
+			$cs->registerScriptFile($baseUrl . '/js/dev/common/common.js', CClientScript::POS_END);
+			$cs->registerScriptFile($baseUrl . '/js/dev/backend/backend.js', CClientScript::POS_END);
+		}
+		else {
+			$cs->registerScriptFile($baseUrl . '/js/backend.min.js', CClientScript::POS_END);
+		}
+	}
 }

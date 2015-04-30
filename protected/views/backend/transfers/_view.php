@@ -18,7 +18,7 @@ $statuses = ChdTransfer::getStatuses();
 
 		<a href="<?php echo $this->createUrl('char', array('id' => $data->id)); ?>"
 		   class="btn btn-success" title="Создать персонажа"
-		   style="display: <?php $data->char_guid ? 'none' : 'inline-block' ?>"
+		   style="display: <?php echo $data->char_guid ? 'none' : 'inline-block' ?>"
 		   >
 			<span class="glyphicon glyphicon-plane"></span>
 			character
@@ -26,7 +26,7 @@ $statuses = ChdTransfer::getStatuses();
 
 		<a href="<?php echo $this->createUrl('luadump', array('id' => $data->id)); ?>" class="btn btn-default">
 			<span class="glyphicon glyphicon-file"></span>
-			'Lua-dump
+			Lua-dump
 		</a>
 
 		<div style="margin-top: 5px;">
@@ -34,7 +34,7 @@ $statuses = ChdTransfer::getStatuses();
 		</div>
 
 		<button id="" class="btn btn-primary pull-right" onclick="UpdateComment(<?php echo $data->id; ?>);">
-			Change
+			Save
 		</button>
 
 	</div>

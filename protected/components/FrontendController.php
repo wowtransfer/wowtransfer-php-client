@@ -30,4 +30,33 @@ class FrontEndController extends BaseController
 
 		return $menu;
 	}
+
+	public function registerCssAndJs() {
+		$cs = Yii::app()->clientScript;
+		$baseUrl = Yii::app()->request->baseUrl;
+
+		if (YII_DEBUG) {
+			// blueprint CSS framework
+			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css', 'screen, projection');
+			$cs->registerCssFile($baseUrl . '/css/dev/common/print.css', 'print');
+			/*
+			<!--[if lt IE 8]>
+			<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
+			<![endif]-->
+			*/
+			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css');
+			$cs->registerCssFile($baseUrl . '/css/dev/common/form.css');
+
+			Yii::app()->bootstrap->register();
+
+			$cs->registerCssFile($baseUrl . '/css/dev/common/common.css');
+			$cs->registerCssFile($baseUrl . '/css/dev/frontend/frontend.css');
+
+			$cs->registerScriptFile($baseUrl . '/js/dev/common/common.js', CClientScript::POS_END);
+			$cs->registerScriptFile($baseUrl . '/js/dev/frontend/frontend.js', CClientScript::POS_END);
+		}
+		else {
+			$cs->registerScriptFile($baseUrl . '/js/fronend.min.js', CClientScript::POS_END);
+		}
+	}
 }

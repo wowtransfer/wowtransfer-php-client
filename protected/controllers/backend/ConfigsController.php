@@ -1,6 +1,6 @@
 <?php
 
-class ConfigsController extends Controller
+class ConfigsController extends BackendController
 {
 	// Uncomment the following methods and override them if needed
 	/*

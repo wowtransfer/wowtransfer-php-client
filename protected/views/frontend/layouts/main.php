@@ -1,36 +1,13 @@
-<?php /* @var $this Controller */ ?>
+<?php
+/* @var $this FrontEndController */
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
 
-<?php
-	$cs = Yii::app()->clientScript;
-	$baseUrl = Yii::app()->request->baseUrl;
-
-	// blueprint CSS framework
-	$cs->registerCssFile($baseUrl . '/css/main.css', 'screen, projection');
-	$cs->registerCssFile($baseUrl . '/css/print.css', 'print');
-
-	/*
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
-	<![endif]-->
-	*/
-
-	$cs->registerCssFile($baseUrl . '/css/main.css');
-	$cs->registerCssFile($baseUrl . '/css/form.css');
-
-	Yii::app()->bootstrap->register();
-
-	$cs->registerCssFile($baseUrl . '/css/common.css');
-	$cs->registerCssFile($baseUrl . '/css/frontend.css');
-
-	$cs->registerScriptFile($baseUrl . '/js/common.js', CClientScript::POS_END);
-	$cs->registerScriptFile($baseUrl . '/js/frontend.js', CClientScript::POS_END);
-
-?>
+	<?php $this->registerCssAndJs(); ?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
@@ -64,7 +41,7 @@
 				<?php endif; ?>
 			</div>
 			<div id="logo">
-				<img alt="" src="<?php echo $baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
+				<img alt="" src="<?php echo Yii::app()->request->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
 				<?php echo CHtml::encode(Yii::app()->name); ?>
 			</div>
 		</div><!-- header -->

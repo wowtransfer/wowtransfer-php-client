@@ -1,24 +1,13 @@
-<?php /* @var $this Controller */ ?>
+<?php
+/* @var $this BackendController */
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
 
-<?php
-	$cs = Yii::app()->getClientScript();
-	$baseUrl = Yii::app()->baseUrl;
-
-	$cs->registerCssFile($baseUrl . '/css/main.css');
-	$cs->registerCssFile($baseUrl . '/css/form.css');
-
-	Yii::app()->bootstrap->register();
-
-	$cs->registerCssFile($baseUrl . '/css/common.css');
-	$cs->registerCssFile($baseUrl . '/css/backend.css');
-
-	$cs->registerScriptFile($baseUrl . '/js/backend.js');
-?>
+	<?php $this->registerCssAndJs(); ?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -109,7 +98,6 @@ $this->widget('zii.widgets.jui.CJuiDialog', array(
 ));
 ?>
 
-<script src="<?php echo Yii::app()->baseUrl; ?>/js/backend.js"></script>
 <script><!--
 	LoadBackend("<?php echo Yii::app()->homeUrl; ?>");
 --></script>
