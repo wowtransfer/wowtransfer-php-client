@@ -9,7 +9,7 @@ $statuses = ChdTransfer::getStatuses();
 
 	<div class="col-md-4 pull-right">
 
-		<a class="btn btn-danger" onclick="OnDeleteChar(this, <?php echo $data->id; ?>); return false;"
+		<a class="btn btn-danger delete-char" onclick="OnDeleteChar(this, <?php echo $data->id; ?>); return false;"
 		   href="<?php echo $this->createUrl('deletechar', array('id' => $data->id)); ?>"
 		   style="display: <?php echo $data->char_guid ? 'inline-block' : 'none'; ?>">
 			<span class="glyphicon glyphicon-remove"></span>
@@ -29,11 +29,9 @@ $statuses = ChdTransfer::getStatuses();
 			Lua-dump
 		</a>
 
-		<div style="margin-top: 5px;">
-			<textarea style="width: 100%; height: 65px; resize: none;"><?php echo $data->comment; ?></textarea>
-		</div>
+		<textarea class="transfer-comment"><?php echo $data->comment; ?></textarea>
 
-		<button id="" class="btn btn-primary pull-right" onclick="UpdateComment(<?php echo $data->id; ?>);">
+		<button class="btn btn-primary pull-right transfer-save-comment">
 			Save
 		</button>
 
@@ -56,13 +54,15 @@ $statuses = ChdTransfer::getStatuses();
 				<td>
 				<div class="btn-group">
 					<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						<span id="status_<?php echo $data->id; ?>" class="tstatus tstatus-<?php echo $data->status; ?>" data-name="<?php echo $data->status; ?>"><?php echo $statuses[$data->status]; ?></span> <span class="caret"></span>
-					</button><!-- TODO: class transfer-statuses is not defined in css! -->
+						<span id="status_<?php echo $data->id; ?>"
+							  class="tstatus tstatus-<?php echo $data->status; ?>"
+							  data-name="<?php echo $data->status; ?>">
+								  <?php echo $statuses[$data->status]; ?>
+						</span> <span class="caret"></span>
+					</button>
 					<ul class="dropdown-menu transfer-statuses" role="menu">
 						<?php foreach ($statuses as $name => $title): ?>
-							<li><a href="#" data-name="<?php echo $name; ?>"
-								   onclick="OnUpdateStatus(this); return false;"
-								   >
+							<li><a href="#" data-name="<?php echo $name; ?>">
 								<?php echo $title; ?></a>
 							</li>
 						<?php endforeach; ?>

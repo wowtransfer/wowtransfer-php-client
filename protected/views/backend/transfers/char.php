@@ -15,6 +15,8 @@ $this->breadcrumbs = array(
 
 ?>
 
+<div id="transfer" data-id="<?php echo $model->id ?>" class="hidden"></div>
+
 <div style="float: right; width: 300px;">
 	<a class="btn btn-default btn-sm btn-char-action" href="#"
 		onclick="OnClearCharacterDataByTransferIdClick(<?php echo $model->id; ?>); return false;">
@@ -29,10 +31,8 @@ $this->breadcrumbs = array(
 		Show character's info by GUID and ID
 	</a><br>
 	<a class="btn btn-default btn-sm btn-char-action" href="#" onclick="alert('TODO');">View SQL script</a><br />
-	<a class="btn btn-default btn-sm" href="#"
-		data-toggle="modal"
-		onclick="OnViewLuaDumpClick(<?php echo $model->id; ?>); return false;"
-		> <!--data-target="#lua-dump-dialog"-->
+	<a class="btn btn-default btn-sm" href="#" id="view-luadump"
+		data-toggle="modal">
 		lua-dump
 	</a>
 	<a class="btn btn-default btn-sm" href="#"

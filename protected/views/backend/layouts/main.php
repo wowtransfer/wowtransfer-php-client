@@ -98,9 +98,5 @@ $this->widget('zii.widgets.jui.CJuiDialog', array(
 ));
 ?>
 
-<script><!--
-	LoadBackend("<?php echo Yii::app()->homeUrl; ?>");
---></script>
-
 </body>
 </html>
