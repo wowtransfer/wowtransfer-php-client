@@ -8,17 +8,17 @@ class WowtransferUI extends Wowtransfer
 	/**
 	 * @return array Associative array kind of 'id' => 'name'
 	 */
-	public function getTransferConfigs()
-	{
+	public function getTransferConfigs() {
 		$transferConfigs = array();
 
-		if (self::$_tconfigs === null)
+		if (self::$_tconfigs === null) {
 			self::$_tconfigs = parent::getTransferConfigs();
+		}
 
-		if (is_array(self::$_tconfigs))
-		{
-			foreach (self::$_tconfigs as $config)
+		if (is_array(self::$_tconfigs)) {
+			foreach (self::$_tconfigs as $config) {
 				$transferConfigs[$config['id']] = $config['name'];
+			}
 		}
 
 		return $transferConfigs;
@@ -27,18 +27,17 @@ class WowtransferUI extends Wowtransfer
 	/**
 	 * @return array Associative array kind of 'name' => 'title'
 	 */
-	public function getCores()
-	{
+	public function getCores() {
 		$cores = array();
 
 		if (self::$_cores === null) {
 			self::$_cores = parent::getCores();
 		}
 
-		if (is_array(self::$_cores))
-		{
-			foreach (self::$_cores as $core)
+		if (is_array(self::$_cores)) {
+			foreach (self::$_cores as $core) {
 				$cores[$core['name']] = $core['title'];
+			}
 		}
 
 		return $cores;
@@ -49,15 +48,12 @@ class WowtransferUI extends Wowtransfer
 	 *
 	 * incluing empty item [''] = ''
 	 */
-	public function getWowServers()
-	{
+	public function getWowServers() {
 		$serversSource = parent::getWowServers();
 
 		$servers = array('' => '');
-		if (is_array($serversSource))
-		{
-			for ($i = 0; $i < count($serversSource); ++$i)
-			{
+		if (is_array($serversSource)) {
+			for ($i = 0; $i < count($serversSource); ++$i) {
 				$server = $serversSource[$i];
 				$servers[$server['site_url']] = $server['title'];
 			}

@@ -8,7 +8,7 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo $data->id; ?>
 
-	<a href="#" class="btn btn-default btn-sm pull-right transfer-delete">
+	<a href="#" class="btn btn-default btn-sm pull-right transfer-delete" title="Удалить">
 		<span class="glyphicon glyphicon-remove"></span>
 	</a>
 

@@ -11,7 +11,7 @@
 	<aside>
 	<?php
 		//array_unshift($this->menu, array('label' => 'Операции'));
-		echo TbHtml::stackedTabs($this->menu); ?>
+		echo TbHtml::stackedPills($this->menu); ?>
 	</aside>
 </div>
 

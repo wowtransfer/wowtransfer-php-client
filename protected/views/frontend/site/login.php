@@ -19,7 +19,7 @@ $this->breadcrumbs=array(
 
 <div class="form auth-form">
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
+	'layout' => TbHtml::FORM_LAYOUT_VERTICAL,
 	'htmlOptions' => array(
 		'id' => 'create-char-from',
 		'class' => 'well',

@@ -83,7 +83,7 @@ $statuses = ChdTransfer::getStatuses();
 				<td><?php echo CHtml::encode($data->realm); ?></td>
 			</tr>
 			<tr>
-				<th><?php $data->getAttributeLabel('username_old'); ?></th>
+				<th><?php echo $data->getAttributeLabel('username_old'); ?></th>
 				<td><?php echo CHtml::encode($data->username_old); ?></td>
 			</tr>
 
