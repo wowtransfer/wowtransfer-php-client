@@ -3,12 +3,12 @@
 /* @var $data ChdTransfer */
 ?>
 
-<div class="view">
+<div class="view" data-id="<?php echo $data->id ?>">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo $data->id; ?>
 
-	<a href="#" class="btn btn-default btn-sm pull-right" onclick="OnDeleteTransfer(<?php echo $data->id; ?>); return false;">
+	<a href="#" class="btn btn-default btn-sm pull-right transfer-delete">
 		<span class="glyphicon glyphicon-remove"></span>
 	</a>
 

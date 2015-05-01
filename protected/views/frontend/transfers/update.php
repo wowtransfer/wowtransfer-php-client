@@ -16,7 +16,7 @@ $this->menu = array(
 );
 ?>
 
-<h1>Изменить заявку #<?php echo $model->id; ?></h1>
+<h1>Изменение заявки #<?php echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array(
 	'model' => $model,

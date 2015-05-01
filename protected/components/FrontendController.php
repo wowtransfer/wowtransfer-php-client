@@ -53,7 +53,8 @@ class FrontEndController extends BaseController
 			$cs->registerCssFile($baseUrl . '/css/dev/frontend/frontend.css');
 
 			$cs->registerScriptFile($baseUrl . '/js/dev/common/common.js', CClientScript::POS_END);
-			$cs->registerScriptFile($baseUrl . '/js/dev/frontend/frontend.js', CClientScript::POS_END);
+			$cs->registerScriptFile($baseUrl . '/js/dev/frontend/main.js', CClientScript::POS_END);
+			$cs->registerScriptFile($baseUrl . '/js/dev/frontend/transfers.js', CClientScript::POS_END);
 		}
 		else {
 			$cs->registerScriptFile($baseUrl . '/js/fronend.min.js', CClientScript::POS_END);
