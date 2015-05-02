@@ -111,6 +111,32 @@ var app = app || {};
 			});
 		});
 
+		$(".switch-password").click(function() {
+			var $btn = $(this);
+			var id = $("#transfer").data("id");
+			var $pass = $("#password_" + id);
+			var pass = $pass.data("password");
+			if (pass) {
+				if ($pass.text().indexOf("*******") !== -1) {
+					$pass.text(pass);
+					$btn.text("-");
+				}
+				else {
+					$pass.text("*******");
+					$btn.text("+");
+				}
+			}
+			else {
+				$.post(app.getBaseUrl() + "/transfers/remotepassword/" + id, {}, function(data) {
+					console.log(data);
+					$pass.text(data);
+					$pass.data("password", data);
+					$btn.text("-");
+				});
+			}
+			return false;
+		});
+
 	});
 
 	return transfers;

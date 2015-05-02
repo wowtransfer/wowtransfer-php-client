@@ -25,7 +25,9 @@ class TransfersController extends BackendController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','index','view','update','delete','char','deletechar','luadump','filter'),
+				'actions'=>array(
+					'admin','index','view','update','delete',
+					'char','deletechar','luadump','filter', 'remotepassword'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -86,29 +88,22 @@ class TransfersController extends BackendController
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
-		$dtRange = 30;
-		$statuses = array();
+	public function actionIndex() {
 		$filter = array();
+		$request = Yii::app()->request;
 
-		if (Yii::app()->request->isAjaxRequest)
-		{
+		if ($request->isAjaxRequest) {
 			$filter = $_POST;
 		}
-		else
-		{
-			if (isset($_COOKIE['chd_transfer_filter']))
-				$filter = unserialize($_COOKIE['chd_transfer_filter']);
+		elseif ($request->cookies['chd_transfer_filter']) {
+			$filter = unserialize($request->cookies['chd_transfer_filter']);
 		}
 
 		$statuses = isset($filter['statuses']) ? $filter['statuses'] : $statuses;
 		$dtRange = isset($filter['dt_range']) ? (int)$filter['dt_range'] : $dtRange;
-		if ($statuses)
-		{
+		if ($statuses) {
 			$statusesOrigin = ChdTransfer::getStatuses();
-			if (count($statusesOrigin) === count($statuses))
-			{
+			if (count($statusesOrigin) === count($statuses)) {
 				$statuses = array();
 				$filter['statuses'] = $statuses;
 			}
@@ -118,8 +113,9 @@ class TransfersController extends BackendController
 
 		$where = "`create_transfer_date` > '" . date('Y-m-d', strtotime("-$dtRange days")) . "'";
 		if (!empty($statuses)) {
-			for ($i = 0; $i < count($statuses); ++$i)
+			for ($i = 0; $i < count($statuses); ++$i) {
 				$statuses[$i] = "'" . $statuses[$i] . "'";
+			}
 			$where .= " AND `status` IN (" . implode(',', $statuses) . ")";
 		}
 
@@ -133,41 +129,36 @@ class TransfersController extends BackendController
 		$filterBlock = $this->renderPartial('_filter_form', null, true);
 		$this->addAsideBlockToColumn2($filterBlock);
 
-		if (Yii::app()->request->isAjaxRequest)
-		{
+		if (Yii::app()->request->isAjaxRequest) {
 			$filterStore = array(
 				'statuses' => $filter['statuses'],
 				'dt_range' => $dtRange,
 			);
-			setcookie('chd_transfer_filter', serialize($filterStore), time() + 60 * 60 * 24 * 30, Yii::app()->request->baseUrl);
-
+			setcookie('chd_transfer_filter', serialize($filterStore), time() + 3600 * 24 * 30, Yii::app()->request->baseUrl);
 			$this->renderPartial('_index_data', array('dataProvider' => $dataProvider));
 		}
-		else
-		{
+		else {
 			$this->render('index', array(
 				'dataProvider' => $dataProvider,
 			));
 		}
 	}
 	
-	public function actionChar($id)
-	{
+	public function actionChar($id) {
 		$this->layout = '//layouts/column1';
+		$request = Yii::app()->request;
 
 		$model = $this->loadModel($id);
-		if ($model->char_guid > 0)
+		if ($model->char_guid > 0) {
 			throw new CHttpException(403, 'Character created! GUID = ' . $model->char_guid);
+		}
 
 		$result = CreateCharForm::getDefaultResult();
-		if (isset($_POST['ChdTransfer']))
-		{
-			$transferConfig = isset($_POST['tconfig']) ? $_POST['tconfig'] : '';
+		if ($request->getPost('ChdTransfer')) {
+			$transferConfig = $request->getPost('tconfig');
 			$createCharForm = new CreateCharForm($model);
 			$result = $createCharForm->createChar($transferConfig);
-
-			if (Yii::app()->request->isAjaxRequest)
-			{
+			if (Yii::app()->request->isAjaxRequest) {
 				echo json_encode($result);
 				Yii::app()->end();
 			}
@@ -245,7 +236,7 @@ class TransfersController extends BackendController
 	 * @return ChdTransfer the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($id)
+	protected function loadModel($id)
 	{
 		$model = ChdTransfer::model()->findByPk($id);
 		if ($model === null)
@@ -253,6 +244,13 @@ class TransfersController extends BackendController
 		$model->transferOptions = explode(';', $model->options);
 
 		return $model;
+	}
+
+	public function actionRemotePassword($id) {
+		$model = $this->loadModel($id);
+		if (Yii::app()->request->isAjaxRequest) {
+			echo $model->pass;
+		}
 	}
 
 	/**

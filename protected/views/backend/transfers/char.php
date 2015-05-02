@@ -66,8 +66,11 @@ $this->breadcrumbs = array(
 	<div style="float: left; padding: 3px;">
 		<b>Аккаунт</b><br>
 		<?php echo $model->account; ?><br>
-		<b>Пароль></b><br>
-		<span>**********</span><br>
+		<b>Пароль</b><br>
+
+		<span class="btn btn-default btn-xs switch-password">+</span>
+		<span id="password_<?php echo $model->id ?>" data-password="">*******</span><br>
+
 		<b>Персонаж</b><br>
 		<?php echo $model->username_old; ?>
 	</div>
