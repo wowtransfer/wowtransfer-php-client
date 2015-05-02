@@ -104,11 +104,7 @@ $this->breadcrumbs = array(
 
 <div class="form-actions">
 	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
-	
-	<!-- 
-	'beforeSend' => 'function() { OnBeforeCreateCharClick(); }',
-	'success' => 'function(data) { OnCreateCharClick(data); }',
-	-->
+
 	<button type="submit" class="btn btn-primary" href="<?php echo $this->createUrl('char', array('id' => $model->id)); ?>"
 		id="btn-create-char">
 		<span class="glyphicon glyphicon-plane"></span>

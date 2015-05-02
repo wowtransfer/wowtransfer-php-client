@@ -72,7 +72,7 @@ var app = app || {};
 			var $btnDelChar = $(this);
 			var id = $btnDelChar.closest("view").data("id");
 			var url = $btnDelChar.attr("href");
-			console.log(url);
+
 			$.ajax(url, {
 				type: "post",
 				success: function (data) {
@@ -128,7 +128,6 @@ var app = app || {};
 			}
 			else {
 				$.post(app.getBaseUrl() + "/transfers/remotepassword/" + id, {}, function(data) {
-					console.log(data);
 					$pass.text(data);
 					$pass.data("password", data);
 					$btn.text("-");

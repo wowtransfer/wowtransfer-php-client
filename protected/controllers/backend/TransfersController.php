@@ -155,10 +155,11 @@ class TransfersController extends BackendController
 
 		$result = CreateCharForm::getDefaultResult();
 		if ($request->getPost('ChdTransfer')) {
-			$transferConfig = $request->getPost('tconfig');
-			$createCharForm = new CreateCharForm($model);
-			$result = $createCharForm->createChar($transferConfig);
 			if (Yii::app()->request->isAjaxRequest) {
+				$transferConfig = $request->getPost('tconfig');
+				$createCharForm = new CreateCharForm($model);
+				$result = $createCharForm->createChar($transferConfig);
+				header('Content-Type: application/json; charset utf-8');
 				echo json_encode($result);
 				Yii::app()->end();
 			}

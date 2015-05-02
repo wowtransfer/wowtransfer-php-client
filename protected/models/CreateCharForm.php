@@ -5,18 +5,19 @@
  */
 class CreateCharForm
 {
-	private $_transfer; // ChdTransfer model
-
 	/**
-	 *
+	 * @var ChdTransfer
 	 */
-	public function __construct($transfer)
-	{
+	private $_transfer;
+
+	public function __construct($transfer) {
 		$this->_transfer = $transfer;
 	}
 
-	public static function getDefaultResult()
-	{
+	/**
+	 * @return array
+	 */
+	public static function getDefaultResult() {
 		return array(
 			'errors'   => array(),
 			'warnings' => array(),
@@ -38,8 +39,7 @@ class CreateCharForm
 	 *    ),
 	 *    ['errors'] => array of string,
 	 */
-	private function RunSql($sql, $accountGuid)
-	{
+	private function runSql($sql, $accountGuid) {
 		$result = array();
 
 		if (empty($sql))
@@ -111,6 +111,8 @@ class CreateCharForm
 	}
 
 	/**
+	 * @param string $configName
+	 *
 	 * @return array ['sql'] => 'SQL script'
 	 *               ['queries'] => array (
 	 *                 'query' => string,
@@ -119,13 +121,11 @@ class CreateCharForm
 	 *               ['error'] => string
 	 *               ['guid'] => GUID of character
 	 */
-	public function createChar($transferConfigName)
-	{
+	public function createChar($configName) {
 		$result = self::getDefaultResult();
 
-		if ($this->_transfer->char_guid > 0)
-		{
-			$result['errors'][] = "Character exists! GUID = " . $_transfer->char_guid . '.';
+		if ($this->_transfer->char_guid > 0) {
+			$result['errors'][] = "Character exists! GUID = " . $this->_transfer->char_guid . '.';
 			return $result;
 		}
 
@@ -134,31 +134,26 @@ class CreateCharForm
 		$service = new Wowtransfer;
 		$service->setAccessToken(Yii::app()->params['accessToken']);
 		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-		try
-		{
+		try {
 			// TODO: service will be return a queries
-			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $transferConfigName);
+			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $configName);
 		}
-		catch (exception $ex)
-		{
-			$result['errors'][] = $ex->getMessage();
+		catch (exception $e) {
+			$result['errors'][] = $e->getMessage();
 			return $result;
 		}
 
-		$queries = $this->RunSql($result['sql'], $this->_transfer->account_id);
-		if (isset($queries['error']))
-		{
+		$queries = $this->runSql($result['sql'], $this->_transfer->account_id);
+		if (isset($queries['error'])) {
 			$result['errors'][] = $queries['error'];
 			unset($queries['error']);
 		}
-		else
-		{
+		else {
 			$guid = $this->getCharacterGuid();
 			$result['guid'] = $guid;
 			$this->_transfer->char_guid = $guid;
 			$this->_transfer->create_char_date = date('Y-m-d h:i:s');
-			if (!$this->_transfer->save(false, array('char_guid', 'create_char_date')))
-			{
+			if (!$this->_transfer->save(false, array('char_guid', 'create_char_date'))) {
 				$result['errors'][] = "Active record Save fail";
 			}
 		}

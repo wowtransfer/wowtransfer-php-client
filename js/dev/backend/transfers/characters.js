@@ -43,22 +43,17 @@ var app = app || {};
 		$("#create-char-warnings").empty();
 		$("#run-queries-table").empty();
 		$('#create-char-tabs span').text("0");
-
-		app.beginLoading("Создание персонажа...");
 	}
 
 	/**
-	 *
+	 * @param {String} data
+	 * @returns {Boolean}
 	 */
-	function onCreateCharClick(data) {
-		app.endLoading();
-
+	function onCreateCharClick(result) {
 		$("#btn-create-char").removeAttr("disabled");
 		$("#create-char-wait").css("visibility", "hidden");
-		/*console.log(data);//*/
-		result = $.parseJSON(data);
-		/*console.log(result);//*/
-		if (result === null) {
+
+		if (!result) {
 			result = {"errors": ["Не удалось разобрать JSON"]};
 		}
 
@@ -143,6 +138,28 @@ var app = app || {};
 				$("#lua-dump-dialog").modal({keyboard: true});
 			});
 
+		});
+
+		$("#btn-create-char").click(function() {
+			var $btn = $(this),
+				$form = $("#create-char-from");
+
+			app.beginLoading("Создание персонажа...");
+			onBeforeCreateCharClick();
+			$.ajax($btn.attr("href"), {
+				type: "post",
+				data: $form.serialize(),
+				dataType: "json",
+				success: function(data) {
+					onCreateCharClick(data);
+					app.endLoading();
+				},
+				error: function() {
+					app.endLoading();
+				}
+			});
+
+			return false;
 		});
 
 	});

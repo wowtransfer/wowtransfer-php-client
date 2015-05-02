@@ -133,7 +133,7 @@ class Wowtransfer
 	 */
 	public function getCores() {
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/cores');
+		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/cores'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$result = curl_exec($ch);
@@ -155,7 +155,8 @@ class Wowtransfer
 	 */
 	public function getTransferConfigs() {
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/tconfigs' . '?access_token=' . $this->getAccessToken());
+		$url = $this->getApiUrl('/tconfigs' . '?access_token=' . $this->getAccessToken());
+		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$result = curl_exec($ch);
@@ -201,9 +202,8 @@ class Wowtransfer
 		}
 		fwrite($file, $dumpLua);
 		fclose($file);
-
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getBaseUrl() . '/dumps/sql');
+		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/dumps/sql'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -240,7 +240,7 @@ class Wowtransfer
 	 */
 	public function getWowServers() {
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->serviceBaseUrl . 'wowservers');
+		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/wowservers'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -248,5 +248,30 @@ class Wowtransfer
 		$servers = json_decode($result, true);
 
 		return $servers;
+	}
+
+	/**
+	 * ex. http://wowtransfer.com/api/v1/dumps/
+	 *
+	 * @param string $uri Example /dumps
+	 *
+	 * @return string
+	 */
+	protected function getApiUrl($uri) {
+		if ($uri{0} !== '/') {
+			$uri = '/' . $uri;
+		}
+		$params = '';
+		if (($paramPos = strpos($uri, '?')) !== false) {
+			$params = substr($uri, $paramPos);
+			$uri = substr($uri, 0, $paramPos);
+		}
+		$url = $this->getBaseUrl() . $uri;
+		if ($url{strlen($url) - 1} !== '/') {
+			$url .= '/';
+		}
+		$url .= $params;
+
+		return $url;
 	}
 }
