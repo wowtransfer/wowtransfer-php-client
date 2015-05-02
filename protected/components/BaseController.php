@@ -27,6 +27,11 @@ class BaseController extends CController
 	public $keywords = '';
 
 	/**
+	 * @var array
+	 */
+	protected $asideBlocks = array();
+
+	/**
 	 * This is the action to handle external exceptions.
 	 */
 	public function actionError()
@@ -43,5 +48,12 @@ class BaseController extends CController
 	public function init()
 	{
 		return parent::init();
+	}
+
+	/**
+	 * @param string $block
+	 */
+	public function addAsideBlockToColumn2($block) {
+		$this->asideBlocks[] = $block;
 	}
 }

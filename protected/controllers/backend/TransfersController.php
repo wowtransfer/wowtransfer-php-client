@@ -130,6 +130,9 @@ class TransfersController extends BackendController
 			),
 		));
 
+		$filterBlock = $this->renderPartial('_filter_form', null, true);
+		$this->addAsideBlockToColumn2($filterBlock);
+
 		if (Yii::app()->request->isAjaxRequest)
 		{
 			$filterStore = array(
