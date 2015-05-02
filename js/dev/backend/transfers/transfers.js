@@ -107,7 +107,7 @@ var app = app || {};
 				dt_range: dtRange
 			};
 			$.post("", requestData, function(data) {
-				$("#yw0").replaceWith(data);
+				$("#transfers-listview").replaceWith(data);
 			});
 		});
 

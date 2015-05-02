@@ -13,11 +13,7 @@ $this->breadcrumbs = array(
 	<div class="alert alert-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
 <?php endif; ?>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'id' => 'transfers-listview',
-	'dataProvider' => $dataProvider,
-	'itemView' => '_view',
-)); ?>
+<?php $this->renderPartial('_index_data', array('dataProvider' => $dataProvider)) ?>
 
 <script><!--
 

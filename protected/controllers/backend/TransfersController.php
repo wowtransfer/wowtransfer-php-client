@@ -141,10 +141,7 @@ class TransfersController extends BackendController
 			);
 			setcookie('chd_transfer_filter', serialize($filterStore), time() + 60 * 60 * 24 * 30, Yii::app()->request->baseUrl);
 
-			$this->widget('zii.widgets.CListView', array(
-				'dataProvider' => $dataProvider,
-				'itemView' => '_view',
-			));
+			$this->renderPartial('_index_data', array('dataProvider' => $dataProvider));
 		}
 		else
 		{
