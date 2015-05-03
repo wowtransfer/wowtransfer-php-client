@@ -54,7 +54,7 @@ $options = explode(';', $model->options);
 			<?php if (isset($option['disabled'])): ?>
 				<?php echo CHtml::label($option['label'], false, array('style' => 'margin-left: 20px; color: gray;')); ?>
 			<?php else: ?>
-				<span class="<?php echo in_array($name, $options) ? 'checked' : 'unchecked'; ?>"></span>
+				<span class="spr <?php echo in_array($name, $options) ? 'checked' : 'unchecked'; ?>"></span>
 				<?php echo CHtml::label($option['label'], false); ?>
 			<?php endif; ?>
 		</span>

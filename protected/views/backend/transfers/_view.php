@@ -12,15 +12,15 @@ $statuses = ChdTransfer::getStatuses();
 		<a class="btn btn-danger delete-char" onclick="OnDeleteChar(this, <?php echo $data->id; ?>); return false;"
 		   href="<?php echo $this->createUrl('deletechar', array('id' => $data->id)); ?>"
 		   style="display: <?php echo $data->char_guid ? 'inline-block' : 'none'; ?>">
-			<span class="glyphicon glyphicon-remove"></span>
-			Delete cahracter
+			<span class="spr delete-char"></span>
+			Delete
 		</a>
 
 		<a href="<?php echo $this->createUrl('char', array('id' => $data->id)); ?>"
 		   class="btn btn-success" title="Создать персонажа"
 		   style="display: <?php echo $data->char_guid ? 'none' : 'inline-block' ?>"
 		   >
-			<span class="glyphicon glyphicon-plane"></span>
+			<span class="spr create-char"></span>
 			character
 		</a>
 
@@ -40,12 +40,16 @@ $statuses = ChdTransfer::getStatuses();
 	<table class="table-transfer-view table-condensed">
 		<tbody>
 			<tr>
-				<td>
-					<?php echo CHtml::link('#' . $data->id, array('view', 'id' => $data->id)); ?><br>
+				<td colspan="2">
+					<b style="font-size: large;"><?php echo CHtml::link('#' . $data->id, array('view', 'id' => $data->id)); ?></b>
 					<span title="<?php echo $data->getAttributeLabel('create_transfer_date'); ?>"><?php echo $data->create_transfer_date; ?></span>
 				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo $data->getAttributeLabel('account_id'); ?>
+				</th>
 				<td>
-					<b><?php echo $data->getAttributeLabel('account_id'); ?></b>
 					<?php echo $data->account_id; ?>
 				</td>
 			</tr>

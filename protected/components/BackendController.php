@@ -80,6 +80,7 @@ class BackendController extends BaseController
 			Yii::app()->bootstrap->register();
 
 			$cs->registerCssFile($baseUrl . '/css/dev/common/common.css');
+			$cs->registerCssFile($baseUrl . '/css/dev/common/sprite_main.css');
 			$cs->registerCssFile($baseUrl . '/css/dev/backend/backend.css');
 
 			$cs->registerScriptFile($baseUrl . '/js/dev/common/common.js', CClientScript::POS_END);
