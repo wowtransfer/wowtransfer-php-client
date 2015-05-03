@@ -109,28 +109,6 @@
 .tdata-icon.icon-taxi         { background-position: -156px     0; }
 .tdata-icon.icon-title        { background-position:      0     0; }
 
-.unchecked
-{
-	width: 16px;
-	height: 16px;
-	background-image: url(/chdphp/images/checkbox.png);
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	line-height: 24px;
-	display: inline-block;
-}
-
-.checked
-{
-	width: 16px;
-	height: 16px;
-	background-image: url(/chdphp/images/checkbox.png);
-	background-position: -16px 0;
-	background-repeat: no-repeat;
-	line-height: 24px;
-	display: inline-block;
-}
-
 .form-actions
 {
 	margin: 20px 0 20px 10px;
