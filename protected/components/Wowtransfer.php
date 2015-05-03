@@ -5,6 +5,9 @@
  */
 class Wowtransfer
 {
+	const TCONFIG_TYPE_PRIVATE = 0;
+	const TCONFIG_TYPE_PUBLIC  = 1;
+
 	/**
 	 * Curl handle
 	 *
@@ -172,12 +175,35 @@ class Wowtransfer
 				'id'    => $config['id'],
 				'name'  => $config['name'],
 				'title' => $config['title'],
-				'udate' => $config['udate'],
+				'update_date' => $config['update_date'],
 				'type'  => $config['type'],
 			);
 		}
 
 		return $tconfigs;
+	}
+
+	/**
+	 * @param integer $id Identifier of trasnfer configuration
+	 * @return array
+	 */
+	public function getTransferConfig($id) {
+		$tconfigId = (int)$id;
+		$ch = $this->_ch;
+		$url = $this->getApiUrl('/user/tconfigs/' . $tconfigId . '?access_token=' . $this->getAccessToken());
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		$responseStr = curl_exec($ch);
+		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		if (!$responseStr) {
+			throw new \Exception("Could't get transfer configuration #$tconfigId from service");
+		}
+		$result = json_decode($responseStr, true);
+		if ($status !== 200) {
+			throw new CHttpException($status, $result['error_message']);
+		}
+		return $result;
 	}
 
 	/**

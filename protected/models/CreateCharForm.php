@@ -131,7 +131,7 @@ class CreateCharForm
 
 		$dumpLua = $this->_transfer->luaDumpFromDb();
 
-		$service = new Wowtransfer;
+		$service = new Wowtransfer();
 		$service->setAccessToken(Yii::app()->params['accessToken']);
 		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		try {

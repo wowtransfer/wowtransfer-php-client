@@ -165,7 +165,7 @@ class TransfersController extends BackendController
 			}
 		}
 
-		$service = new WowtransferUI;
+		$service = new WowtransferUI();
 		$service->setAccessToken(Yii::app()->params['accessToken']);
 		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		$tconfigs = $service->getTransferConfigs();

@@ -2,16 +2,6 @@
 
 class TconfigsController extends BackendController
 {
-	public function actionIndex()
-	{
-		$service = new Wowtransfer;
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-		
-		$models = $service->getTransferConfigs();
-		$this->render('index', array('tconfigs' => $models));
-	}
-
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
@@ -38,4 +28,27 @@ class TconfigsController extends BackendController
 		);
 	}
 	*/
+
+	public function actionIndex()
+	{
+		$service = new Wowtransfer();
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
+		$models = $service->getTransferConfigs();
+		$this->render('index', array('tconfigs' => $models));
+	}
+
+	public function actionView($id) {
+		$service = new Wowtransfer();
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+		//try {
+			$tconfig = $service->getTransferConfig($id);
+		/*}
+		catch (\Exception $e) {
+			throw new CHttpException(404, 'Произошли ');
+		}*/
+		$this->render('view', array('tconfig' => $tconfig));
+	}
 }

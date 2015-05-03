@@ -14,7 +14,7 @@ class ToptionsConfigForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'options' => 'Опции переноса',
+			'options' => 'РћРїС†РёРё РїРµСЂРµРЅРѕСЃР°',
 		);
 	}
 

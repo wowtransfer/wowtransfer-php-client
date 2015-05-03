@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 	Воспользуйтесь сервисом для <a class="alert-link" href="http://wowtransfer.com/cp/tconfigs/">редактирования конфигурации</a>. 
 </div>
 
-<table class="table table-hover">
+<table class="table table-hover table-cursored" id="tconfigs-table">
 	<col style="width: 40px;">
 	<col>
 	<col>
@@ -28,15 +28,22 @@ $this->breadcrumbs = array(
 </thead>
 <tbody>
 <?php foreach ($tconfigs as $i => $config): ?>
-	<tr>
+	<tr data-id="<?php echo $config['id']; ?>">
 		<td><?php echo $i + 1; ?></td>
-		<td><?php echo $config['name']; ?></td>
-		<td><?php echo $config['title']; ?></td>
-		<td><?php echo $config['udate']; ?></td>
-		<td><?php echo $config['type']; ?></td>
+		<td><?php echo CHtml::encode($config['name']); ?></td>
+		<td><?php echo CHtml::encode($config['title']); ?></td>
+		<td><?php echo CHtml::encode($config['update_date']); ?></td>
+		<td><?php echo WowtransferUI::getTransferConfigType($config['type']); ?></td>
 	</tr>
 <?php endforeach; ?>
 </tbody>
 </table>
 
-
+<?php
+$url = $this->createUrl("/tconfigs/view");
+Yii::app()->clientScript->registerScript('goto_tconfig', '
+$("#tconfigs-table").on("click", "tr", function() {
+	var id = $(this).data("id");
+	window.location.href = "' . $url . '?id=" + id;
+});'
+); ?>

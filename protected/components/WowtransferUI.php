@@ -25,6 +25,20 @@ class WowtransferUI extends Wowtransfer
 	}
 
 	/**
+	 * @param integer $type
+	 * @return string
+	 */
+	public static function getTransferConfigType($type) {
+		if ($type === self::TCONFIG_TYPE_PRIVATE) {
+			return 'Private';
+		}
+		if ($type === self::TCONFIG_TYPE_PUBLIC) {
+			return 'public';
+		}
+		return '';
+	}
+
+	/**
 	 * @return array Associative array kind of 'name' => 'title'
 	 */
 	public function getCores() {
