@@ -36,29 +36,31 @@ class ConfigsController extends BackendController
 
 	public function actionApp()
 	{
-		$serviceUI = new WowtransferUI;
-		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
-		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-
 		$model = new AppConfigForm;
-		// TODO: server and service submit
-		if (isset($_POST['AppConfigForm']))
-		{
-			$model->attributes = $_POST['AppConfigForm'];
-			if ($model->validate())
-				$model->save();
+
+		if (Yii::app()->request->getQuery('default')) {
+			$model->loadDefaults();
+			$model->save();
+			$this->redirect($this->createUrl('/configs/app'));
 		}
-		else
-		{
+		// TODO: server and service submit
+		if (isset($_POST['AppConfigForm'])) {
+			$model->attributes = $_POST['AppConfigForm'];
+			if ($model->validate()) {
+				$model->save();
+			}
+		}
+		else {
 			$model->load();
 		}
 
-		try
-		{
+		try {
+			$serviceUI = new WowtransferUI;
+			$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
+			$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 			$cores = $serviceUI->getCores();
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			$cores = array(); // TODO: display message
 		}
 

@@ -25,8 +25,8 @@ $statuses = ChdTransfer::getStatuses();
 		</a>
 
 		<a href="<?php echo $this->createUrl('luadump', array('id' => $data->id)); ?>" class="btn btn-default">
-			<span class="glyphicon glyphicon-file"></span>
-			Lua-dump
+			<span class="spr lua-dump"></span>
+			dump
 		</a>
 
 		<textarea class="transfer-comment"><?php echo $data->comment; ?></textarea>

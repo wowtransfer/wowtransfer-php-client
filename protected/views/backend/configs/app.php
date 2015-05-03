@@ -90,6 +90,12 @@ $this->breadcrumbs = array(
 			Cancel
 		</a>
 
+		<a class="btn btn-default" href="?default=1"
+		   onclick="return confirm('Вы уверены?');"
+		   >
+			По-умолчанию
+		</a>
+
 	</div>
 </div>
 

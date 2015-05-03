@@ -4,7 +4,7 @@ return array(
 	'apiBaseUrl'=>'http://wowtransfer.loc/api/v1',
 	'core'=>'trinity_335a',
 	'emailAdmin'=>'admin@example.com',
-	'maxTransfersCount'=>10,
+	'maxTransfersCount'=>5,
 	'maxAccountCharsCount'=>10,
 	'siteUrl'=>'/',
 	'serviceUsername'=>'player',

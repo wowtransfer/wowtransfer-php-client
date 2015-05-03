@@ -2,25 +2,88 @@
 
 class AppConfigForm extends CFormModel
 {
+	protected $data = array(); // array of parameters, todo
+
 	// virtual attributes
+
+	/**
+	 * @var string
+	 */
 	public $adminsStr = '';
+
+	/**
+	 * @var string
+	 */
 	public $modersStr = '';
 
 	// attributes
-	public  $siteUrl = '/';
-	private $admins = array();
-	public  $core = '';
-	public  $emailAdmin = '';
-	public  $maxTransfersCount = 10;
-	public  $maxAccountCharsCount = 10;
-	private $moders = array();
-	public  $transferTable = 'chd_transfer';
 
-	public  $apiBaseUrl = '';
-	public  $accessToken = '';
-	public  $serviceUsername = '';
-	public  $publicKey = ''; // TODO
-	public  $secretKey = ''; // TODO
+	/**
+	 * @var string
+	 */
+	public  $siteUrl;
+
+	/**
+	 * @var array
+	 */
+	private $admins;
+
+	/**
+	 * @var string
+	 */
+	public  $core;
+
+	/**
+	 * @var string
+	 */
+	public  $emailAdmin;
+
+	/**
+	 * @var integer
+	 */
+	public  $maxTransfersCount;
+
+	/**
+	 * @var integer 
+	 */
+	public  $maxAccountCharsCount;
+
+	/**
+	 * @var array
+	 */
+	private $moders;
+
+	/**
+	 * @var string
+	 */
+	public  $transferTable;
+
+	/**
+	 * @var string
+	 */
+	public  $apiBaseUrl;
+
+	/**
+	 * @var string
+	 */
+	public  $accessToken;
+
+	/**
+	 *
+	 * @var string
+	 */
+	public  $serviceUsername;
+
+	/**
+	 *
+	 * @var string
+	 */
+	public  $publicKey; // TODO
+
+	/**
+	 * @var string
+	 */
+	public  $secretKey; // TODO
 
 	public function rules()
 	{
@@ -56,18 +119,27 @@ class AppConfigForm extends CFormModel
 		);
 	}
 
+	public function __construct() {
+		$this->loadDefaults();
+	}
+
+	/**
+	 * @return string
+	 */
 	protected function getConfigFilePath()
 	{
 		return Yii::getPathOfAlias('application.config') . '/app.php';
 	}
 
+	/**
+	 * @throws CHttpException
+	 */
 	public function save()
 	{
 		$filePath = $this->getConfigFilePath();
-		if (!file_exists($filePath))
+		if (!file_exists($filePath)) {
 			throw new CHttpException(404, 'File not found: ' . $filePath);
-		if (!is_writeable($filePath))
-			throw new CHttpException(501, 'Couldn\t write to file' . $filePath);
+		}
 
 		$file = fopen($filePath, 'w');
 
@@ -83,8 +155,7 @@ class AppConfigForm extends CFormModel
 		fwrite($file, "\t'accessToken'=>'{$this->accessToken}',\n");
 		fwrite($file, "\t'transferTable'=>'{$this->transferTable}',\n");
 
-		$writeArray = function ($attributeName, $explodeStr) use ($file)
-		{
+		$writeArray = function ($attributeName, $explodeStr) use ($file) {
 			$this->$attributeName = explode(',', $explodeStr);
 			if (!is_array($this->$attributeName))
 				$this->$attributeName = array();
@@ -108,20 +179,33 @@ class AppConfigForm extends CFormModel
 		Yii::app()->user->setFlash('success', Yii::t('app', 'Configuration of application was changed success.'));
 	}
 
-	public function load()
-	{
+	/**
+	 * @return boolean
+	 * @throws CHttpException
+	 */
+	public function load() {
 		$filePath = $this->getConfigFilePath();
-		if (!file_exists($filePath))
+		if (!file_exists($filePath)) {
 			throw new CHttpException(404, 'File not found: ' . $filePath);
+		}
 
-		$config = include $filePath;
-		if (!is_array($config))
-			throw new CHttpException(404, 'Configuration\' array not found: ' . $filePath);
+		$config =  include $filePath;
+		if (!is_array($config)) {
+			throw new CHttpException(404, 'Configuration\'s array not found: ' . $filePath);
+		}
 
-		foreach ($config as $name => $value)
-		{
-			if (property_exists($this, $name))
+		return $this->loadFromArray($config);
+	}
+
+	/**
+	 * @param array $params
+	 * @return boolean
+	 */
+	protected function loadFromArray($params) {
+		foreach ($params as $name => $value) {
+			if (property_exists($this, $name)) {
 				$this->$name = $value;
+			}
 		}
 		$this->adminsStr = implode(',', $this->admins);
 		$this->modersStr = implode(',', $this->moders);
@@ -129,6 +213,33 @@ class AppConfigForm extends CFormModel
 		return true;
 	}
 
+	/**
+	 * @return boolean
+	 */
+	public function loadDefaults() {
+		$defualParams = array(
+			// app
+			'core' => 'trinity_335a',
+			'emailAdmin' => 'admin@example.com',
+			'maxTransfersCount' => 5,
+			'maxAccountCharsCount' => 10,
+			'siteUrl'=>'/',
+			'transferTable'=>'chd_transfer',
+			'admins'=>array('admin',),
+			'moders'=>array(),
+
+			// service
+			'apiBaseUrl'=>'http://wowtransfer.com/api/v1',
+			'accessToken'=>'',
+			'serviceUsername'=>'',
+		);
+
+		return $this->loadFromArray($defualParams);
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getAdminsStr()
 	{
 		return implode(',', $this->admins);

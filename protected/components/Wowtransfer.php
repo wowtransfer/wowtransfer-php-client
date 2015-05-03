@@ -58,12 +58,7 @@ class Wowtransfer
 	 * @return Wowtransfer
 	 */
 	public function setAccessToken($accessToken) {
-		if (empty($accessToken)) {
-			throw new Exception('Empty access token');
-		}
-
 		$this->accessToken = $accessToken;
-
 		return $this;
 	}
 
@@ -130,16 +125,16 @@ class Wowtransfer
 
 	/**
 	 * @return array|false
+	 * @throws Exception
 	 */
 	public function getCores() {
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/cores'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		$result = curl_exec($ch);
+		$responseStr = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-		$result = json_decode($result, true);
+		$result = json_decode($responseStr, true);
 		if (!$result) {
 			throw new \Exception("Could't get cores from service");
 		}
