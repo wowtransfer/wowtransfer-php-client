@@ -1,7 +1,7 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<div class="col-md-9">
+<div class="col-md-9" style="margin: 0; padding: 0;">
 	<main id="content">
 		<?php echo $content; ?>
 	</main><!-- content -->
