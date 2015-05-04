@@ -42,8 +42,8 @@ $this->breadcrumbs = array(
 <?php
 $url = $this->createUrl("/tconfigs/view");
 Yii::app()->clientScript->registerScript('goto_tconfig', '
-$("#tconfigs-table").on("click", "tr", function() {
-	var id = $(this).data("id");
+$("#tconfigs-table").on("click", "td", function() {
+	var id = $(this).closest("tr").data("id");
 	window.location.href = "' . $url . '?id=" + id;
 });'
 ); ?>
