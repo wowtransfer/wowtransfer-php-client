@@ -28,9 +28,11 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		'bootstrap.helpers.TbHtml',
+		'bootstrap.components.TbApi',
 		'bootstrap.behaviors.TbWidget',
-		'bootstrap.helpers.*'
+		'bootstrap.form.*',
+		'bootstrap.helpers.*',
+		//'bootstrap.widgets.*',
 	),
 
 	'modules'=>array(
@@ -42,6 +44,9 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 			'generatorPaths'=>array('bootstrap.gii'),
+			'import'=>array(
+				'bootstrap.gii.bootstrap.BootstrapCode',
+			),
 		),
 	),
 
@@ -54,7 +59,7 @@ return array(
 		),
 
 		'bootstrap'=>array(
-			'class'=>'bootstrap.components.TbApi',
+			'class'=>'\TbApi',
 		),
 
 		// uncomment the following to enable URLs in path-format
