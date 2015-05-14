@@ -8,7 +8,7 @@ return array(
 	'maxAccountCharsCount'=>10,
 	'siteUrl'=>'/',
 	'serviceUsername'=>'player',
-	'accessToken'=>'f418496de53def11230ca50c806c2b63',
+	'accessToken'=>'f3dccff8cc977870506dea3e19512875',
 	'transferTable'=>'chd_transfer',
 	'admins'=>array('admin','gracer',),
 	'moders'=>array(),

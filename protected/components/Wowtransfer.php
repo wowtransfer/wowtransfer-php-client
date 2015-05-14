@@ -196,10 +196,10 @@ class Wowtransfer
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$responseStr = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if (!$responseStr) {
-			throw new \Exception("Could't get transfer configuration #$tconfigId from service");
-		}
 		$result = json_decode($responseStr, true);
+		if (!$result) {
+			throw new Exception("Could't get transfer configuration #$tconfigId from service");
+		}
 		if ($status !== 200) {
 			throw new CHttpException($status, $result['error_message']);
 		}
@@ -263,10 +263,15 @@ class Wowtransfer
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/wowservers'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$result = curl_exec($ch);
+		$responseStr = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-		$servers = json_decode($result, true);
+		$servers = json_decode($responseStr, true);
+		if (!$responseStr) {
+			throw new \Exception("Couldn't get wowservers from service");
+		}
+		if (!is_array($servers)) {
+			throw new  CHttpException(501, 'Service: status (' . $status . ')');
+		}
 
 		return $servers;
 	}

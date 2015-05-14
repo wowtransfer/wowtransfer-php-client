@@ -89,8 +89,10 @@ class ConfigsController extends BackendController
 	}
 
 	public function actionRemoteServers() {
+		$wowtransfer = new \Wowtransfer();
+		$wowtransfer->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+		$blackServers = $wowtransfer->getWowServers();
 		$whiteServers = array();
-		$blackServers = array();
 
 		$this->render('remoteservers', array(
 			'whiteservers' => $whiteServers,
