@@ -7,6 +7,10 @@ require_once(dirname(__FILE__).'/main.php'),
 array(
 	'theme'=>'backend',
 
+	'import'=>array(
+		'application.models.backend.*',
+	),
+
 	'components' => array(
 		'log'=>array(
 			'class'=>'CLogRouter',

@@ -82,7 +82,7 @@ class TransfersController extends FrontendController
 		{
 			if (empty($model->transferOptions))
 			{
-				$model->transferOptions = array_keys(Wowtransfer::getTransferOptions());
+				$model->transferOptions = Wowtransfer::getDumpFieldsNames();
 				$model->options = implode(';', $model->transferOptions);
 			}
 		}

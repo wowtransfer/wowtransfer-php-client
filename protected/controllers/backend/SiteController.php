@@ -2,21 +2,6 @@
 
 class SiteController extends BackendController
 {
-	public function actionIndex()
-	{
-		$this->render('index');
-	}
-
-	public function actionLogin()
-	{
-		$this->redirect(Yii::app()->baseUrl . '/');
-	}
-
-	public function actionLogout()
-	{
-		$this->redirect(Yii::app()->baseUrl . '/index.php/site/logout');
-	}
-
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
@@ -43,4 +28,19 @@ class SiteController extends BackendController
 		);
 	}
 	*/
+
+	public function actionIndex()
+	{
+		$this->render('index');
+	}
+
+	public function actionLogin()
+	{
+		$this->redirect(Yii::app()->baseUrl . '/');
+	}
+
+	public function actionLogout()
+	{
+		$this->redirect(Yii::app()->baseUrl . '/index.php/site/logout');
+	}
 }

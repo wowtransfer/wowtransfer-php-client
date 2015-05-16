@@ -2,9 +2,7 @@
 
 class AppConfigForm extends CFormModel
 {
-	protected $data = array(); // array of parameters, todo
-
-	// virtual attributes
+	/* virtual attributes */
 
 	/**
 	 * @var string
@@ -16,7 +14,7 @@ class AppConfigForm extends CFormModel
 	 */
 	public $modersStr = '';
 
-	// attributes
+	/* attributes */
 
 	/**
 	 * @var string

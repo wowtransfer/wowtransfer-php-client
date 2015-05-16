@@ -97,12 +97,42 @@ class Wowtransfer
 	}
 
 	/**
-	 * @return array Transfer's options
-	 * @todo Make loading from wowtransfer.com
-	 *       Make locale
+	 * @return array
+	 * @todo loading from wowtransfer.com with locale
 	 */
-	public static function getTransferOptions() {
-		return include(ToptionsConfigForm::getConfigFilePath());
+	public static function getDumpFields() {
+		return [
+			'achievement' => array(),
+			'action'      => array(),
+			'bind'        => array(),
+			'bag'         => array(),
+			'bank'        => array(),
+			'criterias'   => array(),
+			'critter'     => array(),
+			'currency'    => array(),
+			'equipment'   => array('disabled' => 1),
+			'glyph'       => array(),
+			'inventory'   => array(),
+			'mount'       => array(),
+			'pmacro'      => array('disabled' => 1),
+			'quest'       => array(),
+			'questlog'    => array(),
+			'reputation'  => array(),
+			'skill'       => array(),
+			'skillspell'  => array(),
+			'spell'       => array(),
+			'statistic'   => array(),
+			'talent'      => array(),
+			'taxi'        => array(),
+			'title'       => array(),
+		];
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getDumpFieldsNames() {
+		return array_keys(self::getDumpFields());
 	}
 
 	/**

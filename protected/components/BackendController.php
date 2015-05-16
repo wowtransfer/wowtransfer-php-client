@@ -93,4 +93,12 @@ class BackendController extends BaseController
 			$cs->registerScriptFile($baseUrl . '/js/backend.min.js', CClientScript::POS_END);
 		}
 	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isServiceLogined() {
+
+		return false;
+	}
 }

@@ -2,7 +2,15 @@
 
 class ToptionsConfigForm extends CFormModel
 {
-	public $options = array();
+	/**
+	 * @var array
+	 */
+	public $options = [];
+
+	/**
+	 * @var array
+	 */
+	private static $transferOptions;
 
 	public function rules()
 	{
@@ -21,6 +29,16 @@ class ToptionsConfigForm extends CFormModel
 	public static function getConfigFilePath()
 	{
 		return Yii::getPathOfAlias('application.config') . '/toptions.php';
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getTransferOptions() {
+		if (self::$transferOptions === null) {
+			self::$transferOptions = include_once(self::getConfigFilePath());
+		}
+		return self::$transferOptions;
 	}
 
 	public static function getDefaultTransferOptions()

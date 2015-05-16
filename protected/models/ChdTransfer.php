@@ -274,10 +274,11 @@ class ChdTransfer extends CActiveRecord
 	public function getTransferOptionsToUser()
 	{
 		$trasnferOptions = array();
-		$options = Wowtransfer::getTransferOptions();
+		$options = \ToptionsConfigForm::getTransferOptions();
 
-		foreach ($options as $name => $option)
+		foreach ($options as $name => $option) {
 			$trasnferOptions[$name] = $option['label'];
+		}
 
 		return $trasnferOptions;
 	}

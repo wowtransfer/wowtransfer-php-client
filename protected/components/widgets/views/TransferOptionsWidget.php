@@ -14,7 +14,7 @@ option item has:
 <div class="well well-small toptions-block">
 
 <?php
-$optionsGlobal = Wowtransfer::getTransferOptions();
+$optionsGlobal = \ToptionsConfigForm::getTransferOptions();
 $options = explode(';', $model->options);
 ?>
 

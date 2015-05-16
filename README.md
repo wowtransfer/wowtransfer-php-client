@@ -40,6 +40,7 @@ Application divides in two parts:
 * Minimum dependences.
 * Minimum network data.
 * Include installer.
+* If service is denied then use default values, don't throw exceptions!
 
 
 ## Roles ##

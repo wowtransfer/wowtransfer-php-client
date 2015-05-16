@@ -84,14 +84,7 @@ return array(
 		// uncomment the following to use a MySQL database
 
 		// to app.php
-		'db'=>array(
-			'connectionString'=>'mysql:host=localhost;dbname=characters',
-			'emulatePrepare'=>true,
-			'username'=>'wowtransfer',
-			'password'=>'wowtransfer',
-			'charset'=>'utf8',
-			'enableParamLogging'=>true,
-		),
+		'db'=>require_once(__DIR__ . '/db.php'),
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -116,5 +109,5 @@ return array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-	'params'=>require_once(dirname(__FILE__).'/app.php'),
+	'params'=>require_once(__DIR__ . '/app.php'),
 );

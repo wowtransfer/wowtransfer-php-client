@@ -17,7 +17,7 @@ class WebApplicationEndBehavior extends CBehavior
 		$this->_endName = $name;
 
 		$this->onModuleCreate = array($this, 'changeModulePaths');
-		$this->onModuleCreate(new CEvent ($this->owner));
+		$this->onModuleCreate(new CEvent($this->owner));
 
 		$this->owner->run();
 	}
