@@ -47,7 +47,6 @@ class WowtransferUI extends Wowtransfer
 		if (self::$_cores === null) {
 			self::$_cores = parent::getCores();
 		}
-
 		if (is_array(self::$_cores)) {
 			foreach (self::$_cores as $core) {
 				$cores[$core['name']] = $core['title'];

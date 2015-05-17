@@ -9,9 +9,7 @@ class Wowtransfer
 	const TCONFIG_TYPE_PUBLIC  = 1;
 
 	/**
-	 * Curl handle
-	 *
-	 * @var resource
+	 * @var resource Curl handle
 	 */
 	private $_ch;
 
@@ -30,6 +28,21 @@ class Wowtransfer
 	 */
 	protected $useCache;
 
+	/**
+	 * @var int
+	 */
+	protected $lastHttpStatus;
+
+	/**
+	 * @var string
+	 */
+	protected $lastHttpResponse;
+
+	/**
+	 * @var string
+	 */
+	protected $lastError;
+
 	public function __construct()
 	{
 		$this->_ch = curl_init();
@@ -38,6 +51,36 @@ class Wowtransfer
 	public function __destruct()
 	{
 		curl_close($this->_ch);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLastHttpStatus() {
+		return $this->lastHttpStatus;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLastHttpResponse() {
+		return $this->lastHttpResponse;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLastError() {
+		return $this->lastError;
+	}
+
+	/**
+	 * @param string $lastError
+	 * @return \Wowtransfer
+	 */
+	protected function setLastError($lastError) {
+		$this->lastError = $lastError;
+		return $this;
 	}
 
 	/**
@@ -161,53 +204,47 @@ class Wowtransfer
 	 * @throws Exception
 	 */
 	public function getCores() {
+		$defaultValue = [];
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/cores'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		$responseStr = curl_exec($ch);
-		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$result = json_decode($responseStr, true);
-		if (!$result) {
-			throw new \Exception("Could't get cores from service");
+		$this->lastHttpResponse = curl_exec($ch);
+		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$cores = json_decode($this->lastHttpResponse, true);
+		if (!$cores) {
+			$this->lastError = "Could't get cores from service";
+			return $defaultValue;
 		}
-		if ($status !== 200) {
-			throw new \Exception($result['error_message']);
+		if ($this->lastHttpStatus !== 200) {
+			$this->lastError = isset($cores['error_message']) ? $cores['error_message'] : 'Error ' . $this->lastHttpStatus;
+			return $defaultValue;
 		}
 
-		return $result;
+		return $cores;
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getTransferConfigs() {
+		$defaultValue = [];
 		$ch = $this->_ch;
 		$url = $this->getApiUrl('/tconfigs' . '?access_token=' . $this->getAccessToken());
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		$result = curl_exec($ch);
-		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$this->lastHttpResponse = curl_exec($ch);
+		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		$tconfigs = array();
-
-		$tconfigsSource = json_decode($result, true);
-		if (!$tconfigsSource) {
-			return $tconfigs;
+		$tconfigs = json_decode($this->lastHttpResponse, true);
+		if (!$tconfigs) {
+			$this->lastError = "Couldn't get transfer configurations from service";
+			return $defaultValue;
 		}
-		if ($status !== 200) {
-			return $tconfigs;
-		}
-
-		foreach ($tconfigsSource as $config) {
-			$tconfigs[] = array(
-				'id'    => $config['id'],
-				'name'  => $config['name'],
-				'title' => $config['title'],
-				'update_date' => $config['update_date'],
-				'type'  => $config['type'],
-			);
+		if ($this->lastHttpStatus !== 200) {
+			$this->lastError = isset($tconfigs['error_message']) ? $tconfigs['error_message'] : 'Error ' . $this->lastHttpStatus;
+			return $defaultValue;
 		}
 
 		return $tconfigs;
@@ -218,21 +255,25 @@ class Wowtransfer
 	 * @return array
 	 */
 	public function getTransferConfig($id) {
+		$defaultValue = false;
 		$tconfigId = (int)$id;
 		$ch = $this->_ch;
 		$url = $this->getApiUrl('/user/tconfigs/' . $tconfigId . '?access_token=' . $this->getAccessToken());
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		$responseStr = curl_exec($ch);
-		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$result = json_decode($responseStr, true);
+		$this->lastHttpResponse = curl_exec($ch);
+		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$result = json_decode($this->lastHttpResponse, true);
 		if (!$result) {
-			throw new Exception("Could't get transfer configuration #$tconfigId from service");
+			$this->lastError = "Could't get transfer configuration #$tconfigId from service";
+			return $defaultValue;
 		}
-		if ($status !== 200) {
-			throw new CHttpException($status, $result['error_message']);
+		if ($this->lastHttpStatus !== 200) {
+			$this->lastError = isset($result['error_message']) ? $result['error_message'] : 'Error ' . $this->lastHttpStatus;
+			return $defaultValue;
 		}
+
 		return $result;
 	}
 
@@ -246,10 +287,12 @@ class Wowtransfer
 	 * @return string Sql script (200) or error message (501)
 	 */
 	public function dumpToSql($dumpLua, $accountId, $configuration) {
+		$defaultValue = '';
 		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
 		$file = fopen($filePath, 'w'); // TODO: replace to object
 		if (!$file) {
-			throw new Exception('fopen() failed! file: ' . $filePath);
+			$this->lastError = 'fopen() failed! file: ' . $filePath;
+			return $defaultValue;
 		}
 		fwrite($file, $dumpLua);
 		fclose($file);
@@ -266,50 +309,53 @@ class Wowtransfer
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 
-		$result = curl_exec($ch);
-		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$this->lastHttpResponse = curl_exec($ch);
+		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 		unlink($filePath);
 
-		if ($status != 200) {
-			$response = json_decode($result, true);
+		if ($this->lastHttpStatus != 200) {
+			$response = json_decode($this->lastHttpResponse, true);
 			if ($response) {
-				$error = isset($response['error_message']) ? $response['error_message'] : 'Error';
+				$this->lastError = isset($response['error_message']) ? $response['error_message'] : 'Error';
 			}
 			else {
-				$error = 'Erorr (' . $status . ')';
+				$this->lastError = 'Erorr (' . $this->lastHttpStatus . ')';
 			}
-
-			throw new CHttpException(501, 'Service: ' . $error);
+			return $defaultValue;
 		}
 
-		return $result;
+		return $this->lastHttpResponse;
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getWowServers() {
+		$defaultValue = [];
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/wowservers'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$responseStr = curl_exec($ch);
-		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$servers = json_decode($responseStr, true);
-		if (!$responseStr) {
-			throw new \Exception("Couldn't get wowservers from service");
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		$this->lastHttpResponse = curl_exec($ch);
+		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$result = json_decode($this->lastHttpResponse, true);
+		if (!$this->lastHttpResponse) {
+			$this->lastError = "Couldn't get wowservers from service";
+			return $defaultValue;
 		}
-		if (!is_array($servers)) {
-			throw new  CHttpException(501, 'Service: status (' . $status . ')');
+		if ($this->lastHttpStatus !== 200) {
+			$this->lastError = isset($result['error_message']) ? $result['error_message'] : 'Error ' . $this->lastHttpStatus;
+			return $defaultValue;
 		}
 
-		return $servers;
+		return $result;
 	}
 
 	/**
-	 * ex. http://wowtransfer.com/api/v1/dumps/
+	 * for example, http://wowtransfer.com/api/v1/dumps/
 	 *
-	 * @param string $uri Example /dumps
+	 * @param string $uri Example '/dumps', '/dumps/', 'dumps'
 	 *
 	 * @return string
 	 */
