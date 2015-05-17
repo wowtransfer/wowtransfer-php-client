@@ -46,6 +46,8 @@ class Wowtransfer
 	public function __construct()
 	{
 		$this->_ch = curl_init();
+		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($this->_ch, CURLOPT_FOLLOWLOCATION, 1);
 	}
 
 	public function __destruct()
@@ -207,8 +209,6 @@ class Wowtransfer
 		$defaultValue = [];
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/cores'));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$cores = json_decode($this->lastHttpResponse, true);
@@ -232,8 +232,6 @@ class Wowtransfer
 		$ch = $this->_ch;
 		$url = $this->getApiUrl('/tconfigs' . '?access_token=' . $this->getAccessToken());
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -260,8 +258,6 @@ class Wowtransfer
 		$ch = $this->_ch;
 		$url = $this->getApiUrl('/user/tconfigs/' . $tconfigId . '?access_token=' . $this->getAccessToken());
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$result = json_decode($this->lastHttpResponse, true);
@@ -298,7 +294,6 @@ class Wowtransfer
 		fclose($file);
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/dumps/sql'));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
 		curl_setopt($ch, CURLOPT_POST, 1);
 		$postfields = array(
@@ -335,8 +330,6 @@ class Wowtransfer
 		$defaultValue = [];
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/wowservers'));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$result = json_decode($this->lastHttpResponse, true);
