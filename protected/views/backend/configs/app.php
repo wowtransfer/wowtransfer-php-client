@@ -13,7 +13,7 @@ $this->breadcrumbs = array(
 
 <div class="alert alert-warning">
 	Настройки приложения хранятся в файле <code>/protected/config/app.php</code>.
-	В случае сбоя его можно изменить вручную.
+	В случае сбоя его можно изменить вручную либо загрузить значения по-умолчанию.
 </div>
 
 <?php if (Yii::app()->user->hasFlash('success')): ?>
@@ -51,51 +51,17 @@ $this->breadcrumbs = array(
 <div class="form-group">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-9">
-
-		<button type="submit" class="btn btn-primary" name="server" disabled="disabled">
+		<button type="submit" class="btn btn-primary" name="server">
 			Save
 		</button>
-
 		<a href="<?php echo $this->createUrl('/configs') ?>" class="btn btn-default">
 			<span class="glyphicon glyphicon-ban-circle"></span> Cancel
 		</a>
-
-	</div>
-</div>
-
-<fieldset>
-<legend>Сервис</legend>
-	<?php echo $form->textFieldControlGroup($model, 'serviceUsername', array(
-		'maxlength' => 32,
-	)); ?>
-	<?php echo $form->textFieldControlGroup($model, 'accessToken', array(
-		'maxlength' => 32,
-	)); ?>
-
-	<?php if (YII_DEBUG): ?>
-		<?php echo $form->textFieldControlGroup($model, 'apiBaseUrl'); ?>
-	<?php endif ?>
-</fieldset>
-
-<div class="form-group">
-	<div class="col-sm-3"></div>
-	<div class="col-sm-9">
-
-		<button type="submit" class="btn btn-primary" name="service">
-			Save
-		</button>
-
-		<a href="<?php echo $this->createUrl('/configs'); ?>" class="btn btn-default">
-			<span class="glyphicon glyphicon-ban-circle"></span>
-			Cancel
-		</a>
-
 		<a class="btn btn-default" href="?default=1"
 		   onclick="return confirm('Вы уверены?');"
 		   >
-			По-умолчанию
+			Default
 		</a>
-
 	</div>
 </div>
 

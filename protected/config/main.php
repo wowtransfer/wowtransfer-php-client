@@ -109,5 +109,5 @@ return array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-	'params'=>require_once(__DIR__ . '/app.php'),
+	'params'=>require_once(__DIR__ . '/params.php'),
 );

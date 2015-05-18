@@ -58,6 +58,13 @@ class Wowtransfer
 	/**
 	 * @return string
 	 */
+	public static function getDefaultBaseUrl() {
+		return 'http://wowtransfer.com/api/v1';
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getLastHttpStatus() {
 		return $this->lastHttpStatus;
 	}

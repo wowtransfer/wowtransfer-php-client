@@ -3,17 +3,12 @@
 /**
  * Stores options in the files
  */
-class PhpFileForm {
-
-	/**
-	 * @var CActiveForm
-	 */
-	protected $form;
+class PhpFileForm extends CFormModel {
 
 	/**
 	 * @var array
 	 */
-	protected $attributes;
+	protected $workAttributes = [];
 
 	/**
 	 * @var array 
@@ -31,11 +26,10 @@ class PhpFileForm {
 	protected $filePath;
 
 	/**
-	 * 
-	 * @param CActiveForm $form
+	 * @param string $scenario
 	 */
-	public function __construct($form) {
-		$this->form = $form;
+	public function __construct($scenario = '') {
+		parent::__construct($scenario);
 	}
 
 	/**
@@ -73,24 +67,25 @@ class PhpFileForm {
 	/**
 	 * @return array
 	 */
-	public function getAttributes() {
-		return $this->attributes;
+	public function getWorkAttributes($names = null) {
+		return $this->workAttributes;
 	}
 
 	/**
 	 * @param array $attributes
 	 * @return \PhpFileForm
 	 */
-	public function setAttributes($attributes) {
-		$this->attributes = $attributes;
+	public function setWorkAttributes($attributes) {
+		$this->workAttributes = $attributes;
 		return $this;
 	}
 
+	/**
+	 * @return boolean
+	 * @throws Exception
+	 */
 	public function save() {
-		$filePath = '';
-		$content = '';
-		
-		if ($this->safeStore) {
+		if ($this->safeStore) { // TODO:
 			// try write
 
 			// ...
@@ -99,27 +94,38 @@ class PhpFileForm {
 		}
 
 		$params = [];
-		foreach ($this->attributes as $attr) {
-			$params[$attr] = $this->form->$attr;
+		foreach ($this->workAttributes as $attr) {
+			$params[$attr] = $this->$attr;
 		}
 
-		$content = '<?php return ' . var_export($params, true);
-		$h = fopen($filePath, 'w');
+		$content = '<?php return ' . var_export($params, true) . ';';
+		$h = fopen($this->filePath, 'w');
 		if ($h) {
 			fwrite($h, $content);
 			fclose($h);
 		}
 		else {
-			$error = "Couldn't open file " . $filePath;
+			$error = "Couldn't open file " . $this->filePath;
 		}
 
 		if (isset($error)) {
 			throw new Exception($error);
 		}
+
+		return true;
 	}
 
-	public function load() {
-		
+	/**
+	 * @param array $params
+	 * @return \PhpFileForm
+	 */
+	public function loadFromArray($params) {
+		foreach ($params as $name => $value) {
+			if (property_exists($this, $name)) {
+				$this->$name = $value;
+			}
+		}
+		return $this;
 	}
 
 }

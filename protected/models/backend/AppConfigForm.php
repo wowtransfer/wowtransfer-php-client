@@ -1,6 +1,6 @@
 <?php
 
-class AppConfigForm extends CFormModel
+class AppConfigForm extends PhpFileForm
 {
 	/* virtual attributes */
 
@@ -17,14 +17,19 @@ class AppConfigForm extends CFormModel
 	/* attributes */
 
 	/**
-	 * @var string
+	 * @var array
 	 */
-	public  $siteUrl;
+	public $admins;
 
 	/**
 	 * @var array
 	 */
-	private $admins;
+	public $moders;
+
+	/**
+	 * @var string
+	 */
+	public  $siteUrl;
 
 	/**
 	 * @var string
@@ -47,78 +52,40 @@ class AppConfigForm extends CFormModel
 	public  $maxAccountCharsCount;
 
 	/**
-	 * @var array
-	 */
-	private $moders;
-
-	/**
 	 * @var string
 	 */
 	public  $transferTable;
 
-	/**
-	 * @var string
-	 */
-	public  $apiBaseUrl;
-
-	/**
-	 * @var string
-	 */
-	public  $accessToken;
-
-	/**
-	 *
-	 * @var string
-	 */
-	public  $serviceUsername;
-
-	/**
-	 *
-	 * @var string
-	 */
-	public  $publicKey; // TODO
-
-	/**
-	 * @var string
-	 */
-	public  $secretKey; // TODO
+	public function __construct($scenario = '') {
+		parent::__construct($scenario);
+		$this->loadDefaults();
+	}
 
 	public function rules()
 	{
-		return array(
-			array('core, siteUrl, serviceUsername, apiBaseUrl, accessToken, transferTable', 'required'),
-			array('accessToken', 'match', 'pattern' => '/^[a-z0-9]+$/', 'allowEmpty' => false),
-			array('accessToken', 'length', 'is' => 32),
-			array('core, serviceUsername', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
-			array('maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000),
-			array('emailAdmin', 'email', 'allowEmpty' => false),
-			array('apiBaseUrl', 'length', 'max' => 255, 'allowEmpty' => false),
-			array('apiBaseUrl', 'default', 'value' => 'http://wowtransfer.com/api/v1'),
-			array('secretKey', 'length', 'is' => 32),
-			array('transferTable', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false),
-			array('adminsStr', 'required'),
-			array('modersStr', 'safe'),
-			// adminsStr and modersStr have a pattern '\w, \w, \w, \w'
-		);
+		return [
+			['core, siteUrl, transferTable', 'required'],
+			['core', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false],
+			['maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000],
+			['emailAdmin', 'email', 'allowEmpty' => false],
+			['transferTable', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false],
+			['adminsStr', 'required'], // adminsStr and modersStr have a pattern '\w, \w, \w, \w'
+			['admins, moders, modersStr', 'safe'],
+		];
 	}
 
 	public function attributeLabels()
 	{
-		return array(
-			'siteUrl' => 'URL сайта',
-			'emailAdmin' => 'Email администратора',
-			'core' => 'Ядро WoW сервера',
-			'maxTransfersCount' => 'Максимальное количество заявок',
+		return [
+			'siteUrl'              => 'URL сайта',
+			'emailAdmin'           => 'Email администратора',
+			'core'                 => 'Ядро WoW сервера',
+			'maxTransfersCount'    => 'Максимальное количество заявок',
 			'maxAccountCharsCount' => 'Максимальное количество персонажей на аккаунте',
-			'adminsStr' => 'Администраторы',
-			'modersStr' => 'Модераторы',
-			'serviceUsername' => 'Пользователь',
-			'transferTable' => 'Таблица с заявками',
-		);
-	}
-
-	public function __construct() {
-		$this->loadDefaults();
+			'adminsStr'            => 'Администраторы',
+			'modersStr'            => 'Модераторы',
+			'transferTable'        => 'Таблица с заявками',
+		];
 	}
 
 	/**
@@ -139,42 +106,17 @@ class AppConfigForm extends CFormModel
 			throw new CHttpException(404, 'File not found: ' . $filePath);
 		}
 
-		$file = fopen($filePath, 'w');
-
-		fwrite($file, "<?php\n\nreturn array(\n");
-
-		fwrite($file, "\t'apiBaseUrl'=>'{$this->apiBaseUrl}',\n");
-		fwrite($file, "\t'core'=>'{$this->core}',\n");
-		fwrite($file, "\t'emailAdmin'=>'{$this->emailAdmin}',\n");
-		fwrite($file, "\t'maxTransfersCount'=>{$this->maxTransfersCount},\n");
-		fwrite($file, "\t'maxAccountCharsCount'=>{$this->maxAccountCharsCount},\n");
-		fwrite($file, "\t'siteUrl'=>'{$this->siteUrl}',\n");
-		fwrite($file, "\t'serviceUsername'=>'{$this->serviceUsername}',\n");
-		fwrite($file, "\t'accessToken'=>'{$this->accessToken}',\n");
-		fwrite($file, "\t'transferTable'=>'{$this->transferTable}',\n");
-
-		$writeArray = function ($attributeName, $explodeStr) use ($file) {
-			$this->$attributeName = explode(',', $explodeStr);
-			if (!is_array($this->$attributeName))
-				$this->$attributeName = array();
-			fwrite($file, "\t'$attributeName'=>array(");
-			foreach ($this->$attributeName as $value)
-			{
-				$value = trim($value);
-				if (!empty($value))
-					fwrite($file, "'$value',");
-			}
-			fwrite($file, "),\n");
-		};
-
-		$writeArray('admins', $this->adminsStr);
-		$writeArray('moders', $this->modersStr);
-
-		fwrite($file, ");");
-
-		fclose($file);
-
-		Yii::app()->user->setFlash('success', Yii::t('app', 'Configuration of application was changed success.'));
+		$attributes = [
+			'siteUrl', 'emailAdmin', 'core', 'maxTransfersCount',
+			'maxAccountCharsCount', 'admins', 'moders', 'transferTable',
+		];
+		$this->setFilePath($filePath);
+		$this->setWorkAttributes($attributes);
+		$result = parent::save();
+		if ($result) {
+			Yii::app()->user->setFlash('success', Yii::t('app', 'Configuration of application was changed success.'));
+		}
+		return $result;
 	}
 
 	/**
@@ -187,28 +129,15 @@ class AppConfigForm extends CFormModel
 			throw new CHttpException(404, 'File not found: ' . $filePath);
 		}
 
-		$config =  include $filePath;
+		$config = require $filePath;
 		if (!is_array($config)) {
 			throw new CHttpException(404, 'Configuration\'s array not found: ' . $filePath);
 		}
-
-		return $this->loadFromArray($config);
-	}
-
-	/**
-	 * @param array $params
-	 * @return boolean
-	 */
-	protected function loadFromArray($params) {
-		foreach ($params as $name => $value) {
-			if (property_exists($this, $name)) {
-				$this->$name = $value;
-			}
-		}
+		$result = parent::loadFromArray($config);
 		$this->adminsStr = implode(',', $this->admins);
 		$this->modersStr = implode(',', $this->moders);
 
-		return true;
+		return $result;
 	}
 
 	/**
@@ -216,30 +145,16 @@ class AppConfigForm extends CFormModel
 	 */
 	public function loadDefaults() {
 		$defualParams = array(
-			// app
 			'core' => 'trinity_335a',
 			'emailAdmin' => 'admin@example.com',
 			'maxTransfersCount' => 5,
 			'maxAccountCharsCount' => 10,
 			'siteUrl'=>'/',
 			'transferTable'=>'chd_transfer',
-			'admins'=>array('admin',),
+			'admins'=>array('admin'),
 			'moders'=>array(),
-
-			// service
-			'apiBaseUrl'=>'http://wowtransfer.com/api/v1',
-			'accessToken'=>'',
-			'serviceUsername'=>'',
 		);
 
 		return $this->loadFromArray($defualParams);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getAdminsStr()
-	{
-		return implode(',', $this->admins);
 	}
 }

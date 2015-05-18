@@ -36,7 +36,7 @@ class ToptionsConfigForm extends CFormModel
 	 */
 	public static function getTransferOptions() {
 		if (self::$transferOptions === null) {
-			self::$transferOptions = include_once(self::getConfigFilePath());
+			self::$transferOptions = require_once(self::getConfigFilePath());
 		}
 		return self::$transferOptions;
 	}

@@ -36,29 +36,27 @@ class ConfigsController extends BackendController
 
 	public function actionApp()
 	{
-		$model = new AppConfigForm;
+		$request = Yii::app()->request;
+		$model = new AppConfigForm();
 
-		if (Yii::app()->request->getQuery('default')) {
+		if ($request->getQuery('default')) {
 			$model->loadDefaults();
 			$model->save();
 			$this->redirect($this->createUrl('/configs/app'));
 		}
-		// TODO: server and service submit
-		if (isset($_POST['AppConfigForm'])) {
-			$model->attributes = $_POST['AppConfigForm'];
+		if ($request->getPost('AppConfigForm')) {
+			$model->attributes = $request->getPost('AppConfigForm');
 			$model->save();
 		}
 		else {
 			$model->load();
 		}
 
-
 		$serviceUI = new WowtransferUI();
 		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
 		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		$cores = $serviceUI->getCores();
 
-		$model->adminsStr = $model->getAdminsStr();
 		$this->render('app', array(
 			'model' => $model,
 			'cores' => $cores,
@@ -92,5 +90,27 @@ class ConfigsController extends BackendController
 			'whiteservers' => $whiteServers,
 			'blackServers' => $blackServers,
 		));
+	}
+
+	public function actionService() {
+		$request = Yii::app()->request;
+		$model = new ServiceConfigForm();
+
+		if ($request->getQuery('default')) {
+			$model->loadDefaults();
+			$model->save();
+			$this->redirect($this->createUrl('/configs/service'));
+		}
+		if ($request->getPost('ServiceConfigForm')) {
+			$model->attributes = $request->getPost('ServiceConfigForm');
+			$model->save();
+		}
+		else {
+			$model->load();
+		}
+
+		$this->render('service', [
+			'model' => $model,
+		]);
 	}
 }
