@@ -97,10 +97,13 @@ class AppConfigForm extends PhpFileForm
 	}
 
 	/**
+	 * @param boolean $validate
 	 * @throws CHttpException
 	 */
-	public function save()
-	{
+	public function save($validate = true) {
+		if ($validate && !$this->validate()) {
+			return false;
+		}
 		$filePath = $this->getConfigFilePath();
 		if (!file_exists($filePath)) {
 			throw new CHttpException(404, 'File not found: ' . $filePath);
@@ -144,17 +147,41 @@ class AppConfigForm extends PhpFileForm
 	 * @return boolean
 	 */
 	public function loadDefaults() {
-		$defualParams = array(
-			'core' => 'trinity_335a',
-			'emailAdmin' => 'admin@example.com',
-			'maxTransfersCount' => 5,
-			'maxAccountCharsCount' => 10,
-			'siteUrl'=>'/',
-			'transferTable'=>'chd_transfer',
-			'admins'=>array('admin'),
-			'moders'=>array(),
-		);
+		$filePath = Yii::getPathOfAlias('application') . '/config/app.default.php';
+		return $this->loadFromArray(require $filePath);
+	}
 
-		return $this->loadFromArray($defualParams);
+	/**
+	 * @param string $str
+	 * @return array
+	 */
+	protected function trimedStrToArray($str) {
+		$result = [];
+		$arr = explode(',', $str);
+		if (is_array($arr)) {
+			foreach ($arr as $name) {
+				$name = trim($name);
+				if ($name) {
+					$result[] = $name;
+				}
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * @return \AppConfigForm
+	 */
+	public function adminsFromUser() {
+		$this->admins = $this->trimedStrToArray($this->adminsStr);
+		return $this;
+	}
+
+	/**
+	 * @return \AppConfigForm
+	 */
+	public function modersFromUser() {
+		$this->moders = $this->trimedStrToArray($this->modersStr);
+		return $this;
 	}
 }

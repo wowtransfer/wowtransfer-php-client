@@ -41,11 +41,13 @@ class ConfigsController extends BackendController
 
 		if ($request->getQuery('default')) {
 			$model->loadDefaults();
-			$model->save();
+			$model->save(false);
 			$this->redirect($this->createUrl('/configs/app'));
 		}
 		if ($request->getPost('AppConfigForm')) {
 			$model->attributes = $request->getPost('AppConfigForm');
+			$model->adminsFromUser();
+			$model->modersFromUser();
 			$model->save();
 		}
 		else {
@@ -98,8 +100,9 @@ class ConfigsController extends BackendController
 
 		if ($request->getQuery('default')) {
 			$model->loadDefaults();
-			$model->save();
-			$this->redirect($this->createUrl('/configs/service'));
+			if ($model->save(false)) {
+				$this->redirect($this->createUrl('/configs/service'));
+			}
 		}
 		if ($request->getPost('ServiceConfigForm')) {
 			$model->attributes = $request->getPost('ServiceConfigForm');

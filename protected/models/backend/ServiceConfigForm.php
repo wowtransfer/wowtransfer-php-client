@@ -61,13 +61,8 @@ class ServiceConfigForm extends PhpFileForm {
 	}
 
 	public function loadDefaults() {
-		$default = [
-			'apiBaseUrl'=>'http://wowtransfer.com/api/v1',
-			'serviceUsername'=>'',
-			'accessToken'=>'',
-		];
-
-		return parent::loadFromArray($default);
+		$filePath = Yii::getPathOfAlias('application') . '/config/service.default.php';
+		return parent::loadFromArray(require $filePath);
 	}
 
 	public function beforeValidate() {
@@ -87,8 +82,8 @@ class ServiceConfigForm extends PhpFileForm {
 		return parent::loadFromArray($params);
 	}
 
-	public function save() {
-		if (!$this->validate()) {
+	public function save($validate = true) {
+		if ($validate && !$this->validate()) {
 			return false;
 		}
 		$filePath = $this->getConfigFilePath();
