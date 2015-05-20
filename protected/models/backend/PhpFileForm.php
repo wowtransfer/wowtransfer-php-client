@@ -98,6 +98,18 @@ class PhpFileForm extends CFormModel {
 			$params[$attr] = $this->$attr;
 		}
 
+		return $this->saveParams($params);
+	}
+
+	/**
+	 * @param array $params
+	 * @return boolean
+	 * @throws \Exception
+	 */
+	public function saveParams($params) {
+		if (!is_array($params)) {
+			throw new \Exception('Params is not an array');
+		}
 		$content = '<?php return ' . var_export($params, true) . ';';
 		$h = fopen($this->filePath, 'w');
 		if ($h) {
@@ -109,7 +121,7 @@ class PhpFileForm extends CFormModel {
 		}
 
 		if (isset($error)) {
-			throw new Exception($error);
+			throw new \Exception($error);
 		}
 
 		return true;

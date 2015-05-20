@@ -67,18 +67,15 @@ class ConfigsController extends BackendController
 
 	public function actionToptions()
 	{
+		$request = Yii::app()->request;
 		$model = new ToptionsConfigForm;
 
-		if (isset($_POST['toptions']))
-		{
-			//CVarDumper::dump($_POST, 10, true);
-			$model->options = $_POST['toptions'];
-			if ($model->validate())
-				$model->save();
+		if ($request->getPost('toptions')) {
+			$options = $request->getPost('toptions');
+			$model->saveParams($options);
 		}
-		$model->load();
 		$this->render('toptions', array(
-			'options' => $model->options,
+			'options' => $model->getTransferOptions(),
 		));
 	}
 

@@ -17,7 +17,7 @@ $this->breadcrumbs = array(
 </div>
 
 <? if (Yii::app()->user->hasFlash('success')): ?>
-	<div class="flash-success"><?= Yii::app()->user->getFlash('success'); ?></div>
+	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success'); ?></div>
 <? endif; ?>
 
 <? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(

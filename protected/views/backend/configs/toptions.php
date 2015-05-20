@@ -9,9 +9,11 @@ $this->breadcrumbs = array(
 
 <h1 class="text-center">Опции переноса</h1>
 
-<div class="alert alert-warning">
-	TODO: файл <code>/protected/config/toptions.php</code> редактируется в ручную.
+<? if (Yii::app()->user->hasFlash('success')): ?>
+<div class="alert alert-success">
+	<?= Yii::app()->user->getFlash('success') ?>
 </div>
+<? endif ?>
 
 <?php
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -21,7 +23,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	),
 )); ?>
 
-	<table class="table table-condensed table-hover">
+<table class="table table-condensed table-hover">
+	<col style="width: 40px;">
 	<thead>
 	<tr>
 		<th></th>
@@ -31,26 +34,22 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	<tbody>
 	<?php foreach ($options as $name => $option): ?>
 	<tr class="toptions-row">
-		<td><?php echo CHtml::checkBox('toptions[' . $name . ']', !isset($option['disabled'])); ?></td>
-		<td><?php echo $option['label']; ?></td>
+		<td><?php echo CHtml::checkBox('toptions[' . $name . '][disabled]', !isset($option['disabled']), ['id' => 'opt-' . $name]); ?></td>
+		<td><label for="<?= 'opt-' . $name ?>"><?= $option['label']; ?></label></td>
 	</tr>
 	<?php endforeach; ?>
 	</tbody>
-	</table> 
+</table>
 
-	<div class="form-actions">
-
-		<button type="submit" class="btn btn-primary" disabled="disalbed">
-			Save
-		</button>
-
-		<a href="<?php echo $this->createUrl('/configs'); ?>" class="btn btn-default">
-			<span class="glyphicon glyphicon-ban-circle"></span>
-			Cancel
-		</a>
-
-	</div>
+<div class="form-actions">
+	<button type="submit" class="btn btn-primary">
+		Save
+	</button>
+	<a href="<?php echo $this->createUrl('/configs'); ?>" class="btn btn-default">
+		<span class="glyphicon glyphicon-ban-circle"></span>
+		Cancel
+	</a>
+</div>
 <?php
 $this->endWidget();
 unset($form);
-?>

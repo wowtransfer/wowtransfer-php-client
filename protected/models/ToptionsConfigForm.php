@@ -1,12 +1,8 @@
 <?php
+Yii::import('application.models.backend.PhpFileForm');
 
-class ToptionsConfigForm extends CFormModel
+class ToptionsConfigForm extends PhpFileForm
 {
-	/**
-	 * @var array
-	 */
-	public $options = [];
-
 	/**
 	 * @var array
 	 */
@@ -14,21 +10,31 @@ class ToptionsConfigForm extends CFormModel
 
 	public function rules()
 	{
-		return array(
-		
-		);
+		return [
+
+		];
 	}
 
 	public function attributeLabels()
 	{
-		return array(
-			'options' => 'Опции переноса',
-		);
+		return [
+
+		];
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function getConfigFilePath()
 	{
 		return Yii::getPathOfAlias('application.config') . '/toptions.php';
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function getDefaultConfigFilePath() {
+		return Yii::getPathOfAlias('application.config') . '/toptions.default.php';
 	}
 
 	/**
@@ -36,59 +42,90 @@ class ToptionsConfigForm extends CFormModel
 	 */
 	public static function getTransferOptions() {
 		if (self::$transferOptions === null) {
-			self::$transferOptions = require_once(self::getConfigFilePath());
+			$options = self::getDynTransferOptions();
+			self::$transferOptions = array_merge_recursive(self::getDefaultTransferOptions(), $options);
 		}
 		return self::$transferOptions;
 	}
 
-	public static function getDefaultTransferOptions()
-	{
-		
-	} 
-
-	public function save()
-	{
+	/**
+	 * @return array
+	 * @throws \Exception
+	 */
+	public static function getDynTransferOptions() {
 		$filePath = self::getConfigFilePath();
-		if (!file_exists($filePath))
-			throw new CHttpException(404, 'File not found: ' . $filePath);
-
-		$file = fopen($filePath, 'w');
-		if (!$file)
-			throw new CHttpException(501, 'Couldn\t write to file' . $filePath);
-
-		fwrite($file, "<?php\n\nreturn array(\n");
-		foreach ($this->options as $name => $option)
-		{
-			$label = isset($option['label']) ? $option['label'] : '';
-			fprintf($file, "\t%12s=>array(");
-			if (isset($option['disabled']))
-				fwrite($file, 'disabled=>1,');
-			fwrite($file, "'label'=>'$label'),\n", $name);
+		if (!file_exists($filePath)) {
+			$defaultFilePath = self::getDefaultConfigFilePath();
+			copy($defaultFilePath, $filePath);
 		}
-		fwrite($file, ");");
-
-		fclose($file);
-
-		return true;
+		$options = require $filePath;
+		if (!is_array($options)) {
+			throw new Exception('Transfer options is not array: ' . $filePath);
+		}
+		return $options;
 	}
 
-	public function load()
+	/**
+	 * @return array
+	 */
+	public static function getDefaultTransferOptions() {
+		return [
+			'achievement' => array('label' => 'Достижения'),
+			'action'      => array('label' => 'Кнопки на панелях'),
+			'bind'        => array('label' => 'Бинды'),
+			'bag'         => array('label' => 'Вещи в сумках'),
+			'bank'        => array('label' => 'Вещи в банке'),
+			'criterias'   => array('label' => 'Критерии'),
+			'critter'     => array('label' => 'Спутники'),
+			'currency'    => array('label' => 'Валюта'),
+			'equipment'   => array('label' => 'Наборы экипировки'),
+			'glyph'       => array('label' => 'Символы'),
+			'inventory'   => array('label' => 'Инвентарь'),
+			'mount'       => array('label' => 'Транспорт'),
+			'pmacro'      => array('label' => 'Макросы'),
+			'quest'       => array('label' => 'Задания'),
+			'questlog'    => array('label' => 'Журнал заданий'),
+			'reputation'  => array('label' => 'Репутация', ),
+			'skill'       => array('label' => 'Навыки (профессии)'),
+			'skillspell'  => array('label' => 'Рецепты'),
+			'spell'       => array('label' => 'Заклинания'),
+			'statistic'   => array('label' => 'Статистика'),
+			'talent'      => array('label' => 'Таланты'),
+			'taxi'        => array('label' => 'Перелеты'),
+			'title'       => array('label' => 'Звания'),
+		];
+	}
+
+	/**
+	 * @param array $options
+	 * @param boolean $validate
+	 * @return boolean
+	 * @throws CHttpException
+	 */
+	public function saveParams($options, $validate = true)
 	{
 		$filePath = self::getConfigFilePath();
-		if (!file_exists($filePath))
+		if (!file_exists($filePath)) {
 			throw new CHttpException(404, 'File not found: ' . $filePath);
+		}
+		if ($validate && !$this->validate()) {
+			return false;
+		}
+		$this->setFilePath($filePath);
+		// Invert options
+		$dynOptions = self::getDynTransferOptions();
+		$optionsResult = $dynOptions;
+		foreach ($dynOptions as $name => $option) {
+			$optionsResult[$name]['disabled'] = 1;
+		}
+		foreach ($options as $name => &$option) {
+			if (isset($option['disabled'])) {
+				unset($optionsResult[$name]['disabled']);
+			}
+		}
+		Yii::app()->user->setFlash('success', Yii::t('app', 'Transfer options was changed success.'));
 
-		$options = include $filePath;
-		if (!is_array($options))
-			throw new CHttpException(404, 'Transfer options is not array: ' . $filePath);
-
-		/*foreach ($options as $name => $option)
-		{
-			if (property_exists($this, $name))
-				$this->$name = $value;
-		}*/
-		$this->options = $options;
-
-		return true;
+		return parent::saveParams($optionsResult);
 	}
+
 }

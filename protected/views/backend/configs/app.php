@@ -16,9 +16,9 @@ $this->breadcrumbs = array(
 	В случае сбоя его можно изменить вручную либо загрузить значения по-умолчанию.
 </div>
 
-<?php if (Yii::app()->user->hasFlash('success')): ?>
-	<div class="flash-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
-<?php endif; ?>
+<? if (Yii::app()->user->hasFlash('success')): ?>
+	<div class="alert alert-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
+<? endif; ?>
 
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
