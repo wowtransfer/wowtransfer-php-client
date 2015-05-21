@@ -8,6 +8,9 @@ class Wowtransfer
 	const TCONFIG_TYPE_PRIVATE = 0;
 	const TCONFIG_TYPE_PUBLIC  = 1;
 
+	const LANG_RU = 'ru';
+	const LANG_EN = 'en';
+
 	/**
 	 * @var resource Curl handle
 	 */
@@ -43,6 +46,11 @@ class Wowtransfer
 	 */
 	protected $lastError;
 
+	/**
+	 * @var string
+	 */
+	protected $lang;
+
 	public function __construct()
 	{
 		$this->_ch = curl_init();
@@ -53,6 +61,22 @@ class Wowtransfer
 	public function __destruct()
 	{
 		curl_close($this->_ch);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLang() {
+		return $this->lang;
+	}
+
+	/**
+	 * @param string $lang
+	 * @return \Wowtransfer
+	 */
+	public function setLang($lang) {
+		$this->lang = $lang;
+		return $this;
 	}
 
 	/**
