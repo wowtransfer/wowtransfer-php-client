@@ -11,6 +11,12 @@ $this->breadcrumbs = array(
 	Воспользуйтесь сервисом для <a class="alert-link" href="http://wowtransfer.com/cp/tconfigs/">редактирования конфигурации</a>. 
 </div>
 
+<? if (empty($tconfigs)): ?>
+
+<div class="alert alert-info">Нет данных</div>
+
+<? else: ?>
+
 <table class="table table-hover table-cursored" id="tconfigs-table">
 	<col style="width: 40px;">
 	<col>
@@ -38,6 +44,8 @@ $this->breadcrumbs = array(
 <?php endforeach; ?>
 </tbody>
 </table>
+
+<? endif ?>
 
 <?php
 $url = $this->createUrl("/tconfigs/view");

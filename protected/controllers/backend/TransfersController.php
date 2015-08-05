@@ -99,8 +99,8 @@ class TransfersController extends BackendController
 			$filter = unserialize($request->cookies['chd_transfer_filter']);
 		}
 
-		$statuses = isset($filter['statuses']) ? $filter['statuses'] : $statuses;
-		$dtRange = isset($filter['dt_range']) ? (int)$filter['dt_range'] : $dtRange;
+		$statuses = isset($filter['statuses']) ? $filter['statuses'] : [];
+		$dtRange = isset($filter['dt_range']) ? (int)$filter['dt_range'] : 0;
 		if ($statuses) {
 			$statusesOrigin = ChdTransfer::getStatuses();
 			if (count($statusesOrigin) === count($statuses)) {
@@ -111,7 +111,10 @@ class TransfersController extends BackendController
 		$this->filterStatuses = $statuses;
 		$this->filterDtRange = $dtRange;
 
-		$where = "`create_transfer_date` > '" . date('Y-m-d', strtotime("-$dtRange days")) . "'";
+		$where = '1=1';
+		if ($dtRange > 0) {
+			$where .= " AND `create_transfer_date` > '" . date('Y-m-d', strtotime("-$dtRange days")) . "'";
+		}
 		if (!empty($statuses)) {
 			for ($i = 0; $i < count($statuses); ++$i) {
 				$statuses[$i] = "'" . $statuses[$i] . "'";
