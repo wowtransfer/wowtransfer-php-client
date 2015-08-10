@@ -1,10 +1,9 @@
 <?php
 
-$yii = dirname(__FILE__) . '/../../yii/yii.php';
-$config = dirname(__FILE__) . '/protected/config/backend.php';
+$yii = __DIR__ . '/../../yii/yii.php';
+$config = __DIR__ . '/protected/config/backend.php';
 
-if (file_exists('.gitignore'))
-{
+if (file_exists('.gitignore')) {
 	// remove the following lines when in production mode
 	defined('YII_DEBUG') or define('YII_DEBUG', true);
 	// specify how many levels of call stack should be shown in each log message

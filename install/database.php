@@ -78,12 +78,25 @@ class InstallerDatabaseManager
 	 */
 	public function createUser($user, $password, $host)
 	{
-		if (empty($host))
+		if (empty($host)) {
 			$host = 'localhost';
+		}
 
-		try
-		{
+		try {
 			$pdo = $this->_connect();
+
+			// check if user exists alredy
+			/*$query = "
+				SELECT
+					count(*) AS count
+				FROM
+					mysql.user
+				WHERE
+					User = '$user'";
+			$userExists = $pdo->query($query)->fetchColumn() > 0;
+			if ($userExists) {
+				throw new Exception('Пользователь существует');
+			}*/
 
 			$query = "CREATE USER '$user'@'$host' IDENTIFIED BY '$password'";
 			$pdo->exec($query);

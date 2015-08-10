@@ -307,9 +307,15 @@ class InstallerTemplate
 	 */
 	public function removeDir()
 	{
-		$dir = dirname(__FILE__);
+		return $this->_removeDir(__DIR__);
+	}
 
-		return $this->_removeDir($dir);
+	/**
+	 * @return string
+	 */
+	private function getInstalledFilePath()
+	{
+		return __DIR__ . '/.installed';
 	}
 
 	/**
@@ -317,13 +323,15 @@ class InstallerTemplate
 	 */
 	public function saveInstallStatus()
 	{
-		$filePath = dirname(__FILE__) . '/installed.html';
-		if (file_exists($filePath))
+		$filePath = $this->getInstalledFilePath();
+		if (file_exists($filePath)) {
 			return true;
+		}
 
 		$handle = fopen($filePath, 'w');
-		if ($handle)
+		if ($handle) {
 			fclose($handle);
+		}
 
 		return $handle !== false;
 	}
@@ -333,7 +341,7 @@ class InstallerTemplate
 	 */
 	public function isInstalled()
 	{
-		$filePath = dirname(__FILE__) . '/installed.html';
+		$filePath = $this->getInstalledFilePath();
 		return file_exists($filePath);
 	}
 
@@ -342,7 +350,7 @@ class InstallerTemplate
 	 */
 	public function writeAppConfig()
 	{
-		$filePath = dirname(__DIR__) . '/protected/config/app.php';
+		$filePath = $this->getAppConfigAbsoluteFilePath();
 		$lines = file($filePath);
 		if (!$lines)
 		{
@@ -396,6 +404,46 @@ class InstallerTemplate
 			fclose($handle);
 		}
 
+		$this->writeDbConfig();
+
 		return $handle !== false;
+	}
+
+	protected function writeDbConfig() {
+		$dbFilePath = __DIR__ . '/../protected/config/db-local.php';
+
+		$h = fopen($dbFilePath, 'w');
+		if ($h) {
+			ob_start();
+			echo
+				"<?php\n",
+				"return [\n",
+				"	'connectionString'=>'mysql:host=127.0.0.1;dbname={$this->getFieldValue('db_characters')}',\n",
+				"	'emulatePrepare'=>true,\n",
+				"	'username'=>'{$this->getFieldValue('db_transfer_user')}',\n",
+				"	'password'=>'{$this->getFieldValue('db_transfer_password')}',\n",
+				"	'charset'=>'utf8',\n",
+				"	'enableParamLogging'=>true,\n",
+				"];\n";
+			$content = ob_get_clean();
+			fwrite($h, $content);
+			fclose($h);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAppConfigAbsoluteFilePath() {
+		return __DIR__ . '/..' . $this->getAppConfigRelativeFilePath();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAppConfigRelativeFilePath() {
+		return '/protected/config/app.php';
 	}
 }

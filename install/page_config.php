@@ -1,9 +1,9 @@
 <?php
+/* @var $template InstallerTemplate */
 
 $fields = array('submit', 'back');
 
-if (isset($_POST['back']))
-{
+if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
@@ -12,13 +12,11 @@ if (isset($_POST['back']))
 	exit;
 }
 
-if (isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
-	if ($template->writeAppConfig() && !$template->hasErrors())
-	{
+	if ($template->writeAppConfig() && !$template->hasErrors()) {
 		header('Location: index.php?page=finish');
 		exit;
 	}
@@ -28,7 +26,7 @@ if (isset($_POST['submit']))
 
 <div class="alert alert-info">
 	<p>На этом шаге запишутся некоторые параметры в конфигурационный файл приложения</p>
-	<p><code>/protected/config/app.php</code></p>
+	<p><code><?= $template->getAppConfigRelativeFilePath() ?></code></p>
 </div>
 
 <form action="" method="post">

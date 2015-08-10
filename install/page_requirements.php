@@ -1,6 +1,7 @@
 <?php
+/* @var $template InstallerTemplate */
 
-$configAppFilePath = dirname(__FILE__) . '/../protected/config/app.php';
+$configAppFilePath = $template->getAppConfigAbsoluteFilePath();
 
 $requirements = array(
 	'php_version' => array(
@@ -34,21 +35,20 @@ $requirements = array(
 		'comment' => 'Необходимо для капчи',
 	),
 	'config_app' => array(
-		'value' => '/protected/config/app.php',
+		'value' => $template->getAppConfigRelativeFilePath(),
 		'result' => is_writable($configAppFilePath),
 		'comment' => 'Проверка на запись',
 	),
 );
 
-foreach ($requirements as $name => $item)
-{
+foreach ($requirements as $name => $item) {
 	$template->addCheckItem($name, $item);
-	if (!$item['result'])
+	if (!$item['result']) {
 		$template->addError('Предупреждение: ' . $item['value']);
+	}
 }
 
-if (isset($_POST['submit']) && !$template->hasErrors())
-{
+if (isset($_POST['submit']) && !$template->hasErrors()) {
 	header('Location: index.php?page=core');
 	exit;
 }

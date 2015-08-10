@@ -2,7 +2,7 @@
 
 return CMap::mergeArray(
 
-require_once(dirname(__FILE__).'/main.php'),
+require __DIR__ . '/main.php',
 
 array(
 	'theme'=>'frontend',

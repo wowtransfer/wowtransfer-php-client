@@ -73,6 +73,11 @@ backend
 * /transfers/deletechar/id  - delete character by transfer's id
 
 
+## Code style ##
+
+* Yes, we use tabs!
+
+
 ## TODO ##
 
 * Defence from infinite login: give 5 attempts on 15 minutes

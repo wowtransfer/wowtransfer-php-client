@@ -5,8 +5,7 @@ $dbTransferPassword = isset($_POST['db_transfer_password']) ? trim($_POST['db_tr
 
 $fields = array('db_transfer_user', 'db_transfer_user_host', 'db_transfer_password', 'submit', 'back', 'next');
 
-if (isset($_POST['back']))
-{
+if (isset($_POST['back'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
 	unset($_POST['back']);
@@ -16,25 +15,24 @@ if (isset($_POST['back']))
 	exit;
 }
 
-if (isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
 	unset($_POST['back']);
 
 	// simple checking...
-	if (empty($dbTransferUser))
+	if (empty($dbTransferUser)) {
 		$template->addError('Введите имя пользователя');
-	elseif (empty($dbTransferPassword))
+	}
+	elseif (empty($dbTransferPassword)) {
 		$template->addError('Введите пароль');
-	else
-	{
+	}
+	else {
 		$db = new InstallerDatabaseManager($template);
 
 		$db->createUser($dbTransferUser, $dbTransferPassword, $dbTransferUserHost);
 
-		if (!$template->hasErrors())
-		{
+		if (!$template->hasErrors()) {
 			$template->writeSubmitedFields();
 			header('Location: index.php?page=struct');
 			exit;
@@ -42,17 +40,15 @@ if (isset($_POST['submit']))
 	}
 }
 
-if (isset($_POST['next']))
-{
+if (isset($_POST['next'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
 	unset($_POST['back']);
-	unset($_POST['db_transfer_password']);
 
-	if (empty($dbTransferUser))
+	if (empty($dbTransferUser)) {
 		$template->addError('Введите имя пользователя');
-	else
-	{
+	}
+	else {
 		$template->writeSubmitedFields();
 		header('Location: index.php?page=struct');
 		exit;

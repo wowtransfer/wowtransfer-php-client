@@ -60,6 +60,10 @@
 	<div id="content" class="well">
 		<h1 style="margin: 5px 5px 10px;"><?php echo $page['title']; ?></h1>
 
+		<?php echo $content; ?>
+
+		<hr>
+
 		<?php if ($page['step']): ?>
 			<div class="alert alert-warning">
 				При возникновении проблем с установкой, пожалуйста, посетите наш
@@ -68,8 +72,6 @@
 				<a href="http://wowtransfer.com/contact/?from=install" title="wowtransfer.com - Contact us">напишите нам</a>!
 			</div>
 		<?php endif; ?>
-
-		<?php echo $content; ?>
 	</div>
 
 	<?php include_once 'footer.php'; ?>
