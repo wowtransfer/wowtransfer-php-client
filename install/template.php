@@ -315,7 +315,7 @@ class InstallerTemplate
 	 */
 	private function getInstalledFilePath()
 	{
-		return __DIR__ . '/.installed';
+		return __DIR__ . '/../.installed';
 	}
 
 	/**
