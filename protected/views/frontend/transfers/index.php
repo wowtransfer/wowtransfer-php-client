@@ -13,8 +13,6 @@ $this->menu = array(
 
 <h1>Заявки на перенос</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider' => $dataProvider,
-	'itemView' => '_view',
-	'id' => 'transfer-list-view',
-)); ?>
+<? $this->renderPartial('_list', [
+	'dataProvider' => $dataProvider
+]);

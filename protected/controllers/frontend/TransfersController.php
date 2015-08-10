@@ -167,25 +167,25 @@ class TransfersController extends FrontendController
 		else {
 			$model->delete();
 		}
-		if (Yii::app()->request->isAjaxRequest)
-		{
+		if (Yii::app()->request->isAjaxRequest) {
 			$result = array();
-			if ($model->hasErrors())
-			{
+			if ($model->hasErrors()) {
 				$errors = $model->getErrors(); // TODO: this is hard way to get an error
 				$error = reset($errors);
 				$result['error'] = $error[0];
 			}
-			else
+			else {
 				$result['message'] = 'Заявка успешно удалена';
+			}
 
 			echo json_encode($result);
 			Yii::app()->end();
 		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if (!isset($_GET['ajax']))
+		if (!isset($_GET['ajax'])) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+		}
 	}
 
 	/**
@@ -198,8 +198,14 @@ class TransfersController extends FrontendController
 				'condition' => 'account_id=' . Yii::app()->user->id . " AND status <> 'cart'",
 			),
 		));
+		if (Yii::app()->request->isAjaxRequest) {
+			$this->renderPartial('_list', array(
+				'dataProvider'=>$dataProvider,
+			));
+			Yii::app()->end();
+		}
 
-		$this->render('index',array(
+		$this->render('index', array(
 			'dataProvider'=>$dataProvider,
 		));
 	}
