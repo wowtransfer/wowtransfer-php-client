@@ -444,6 +444,13 @@ class InstallerTemplate
 	 * @return string
 	 */
 	public function getAppConfigRelativeFilePath() {
-		return '/protected/config/app.php';
+		return $this->getAppConfigRelativeDir() . '/app.php';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAppConfigRelativeDir() {
+		return '/protected/config';
 	}
 }

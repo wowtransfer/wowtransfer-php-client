@@ -35,7 +35,7 @@ $requirements = array(
 		'comment' => 'Необходимо для капчи',
 	),
 	'config_app' => array(
-		'value' => $template->getAppConfigRelativeFilePath(),
+		'value' => $template->getAppConfigRelativeDir(),
 		'result' => is_writable($configAppFilePath),
 		'comment' => 'Проверка на запись',
 	),
