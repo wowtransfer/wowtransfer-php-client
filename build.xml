@@ -1,9 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="chdphp" default="help" basedir=".">
 	<property name="release.dir" value="./build/release" />
+	<property name="source.dir"  value="." />
+	<property name="source.ext.dir" value="${source.dir}/protected/extensions" />
+	<property name="release.ext.dir" value="${release.dir}/protected/extensions" />
+	<property name="source.vendor.dir" value="${source.dir}/protected/vendor" />
+	<property name="release.vendor.dir" value="${release.dir}/protected/vendor" />
 
 	<target name="release">
 		<mkdir dir="${release.dir}" />
+
+		<echo msg="Create folders..." />
+		<mkdir dir="${release.dir}/assets" />
+		<mkdir dir="${release.dir}/css" />
+		<mkdir dir="${release.dir}/js" />
+		<mkdir dir="${release.dir}/images" />
+		<mkdir dir="${release.dir}/protected" />
+
+
+		<echo msg="Copy source files..." />
+
+		<copy overwrite="true" todir="${release.dir}/protected">
+			<fileset dir="${source.dir}/protected">
+				<exclude name="cache/*"/>
+				<exclude name="extensions/*"/>
+				<exclude name="runtime/*" />
+				<exclude name="vendor/*" />
+			</fileset>
+		</copy>
+		<copy overwrite="true" todir="${release.dir}/themes">
+			<fileset dir="themes" />
+		</copy>
+		<copy overwrite="true" file="${source.dir}/.htaccess" tofile="${release.dir}/.htaccess" />
+		<copy overwrite="true" file="${source.dir}/favicon.ico" tofile="${release.dir}/favicon.ico" />
+		<copy overwrite="true" file="${source.dir}/LICENSE" tofile="${release.dir}/LICENSE" />
+		<copy overwrite="true" file="${source.dir}/README.md" tofile="${release.dir}/README.md" />
+		<copy overwrite="true" file="${source.dir}/TODO.md" tofile="${release.dir}/TODO.md" />
+		<copy overwrite="true" todir="${release.dir}">
+			<fileset dir="${source.dir}">
+				<include name="*.php" />
+			</fileset>
+		</copy>
+
+		<!-- JavaScript -->
+		<copy overwrite="true" todir="${release.dir}/js/dev">
+			<fileset dir="${source.dir}/js/dev" />
+		</copy>
+
+		<!-- CSS -->
+		<copy overwrite="true" todir="${release.dir}/css">
+			<fileset dir="${source.dir}/css" />
+		</copy>
+
+		<!-- Resources -->
+		<copy overwrite="true" todir="${release.dir}/images">
+			<fileset dir="${source.dir}/images">
+				<include name="*.ico" />
+				<include name="*.gif" />
+				<include name="*.png" />
+				<include name="*.jpg" />
+			</fileset>
+		</copy>
+
+
+		<echo msg="Copy extensions..." />
+
+
+		<echo msg="Copy vendor dependensies..." />
+		<!--<copy overwrite="true" file="${source.vendor.dir}/phing-latest.phar" tofile="${release.vendor.dir}/phing-latest.phar" />-->
+		<copy todir="${release.vendor.dir}/twbs">
+			<fileset dir="${source.vendor.dir}/twbs" />
+		</copy>
+
+
+		<echo msg="Copy installer..." />
+		<copy overwrite="true" todir="${release.dir}/install">
+			<fileset dir="${source.dir}/install" />
+		</copy>
+
+		<echo msg="Remove the .gitkeep, .gitignore, .gitattributes files" />
+		<delete includeemptydirs="true" verbose="true">
+			<fileset dir="${release.dir}">
+				<include name=".gitignore" />
+				<include name=".gitkeep" />
+				<include name=".gitattributes" />
+			</fileset>
+		</delete>
 	</target>
 
 	<target name="help">

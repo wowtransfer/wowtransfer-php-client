@@ -35,6 +35,7 @@ Application divides in two parts:
 
 ### For developer
 
+* yiistrap, download extension to /protected/extensions/yiistrap directory
 * phing, download archive to /protected/vendor/phing-latest.phar
 
 
