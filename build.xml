@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="chdphp" default="help" basedir=".">
-	<property name="release.dir" value="./build/release" />
+	<property name="project.name"  value="chdphp" />
 	<property name="source.dir"  value="." />
+	<property name="build.dir" value="./build" />
+	<property name="release.dir" value="${build.dir}/release" />
 	<property name="source.ext.dir" value="${source.dir}/protected/extensions" />
 	<property name="release.ext.dir" value="${release.dir}/protected/extensions" />
 	<property name="source.vendor.dir" value="${source.dir}/protected/vendor" />
 	<property name="release.vendor.dir" value="${release.dir}/protected/vendor" />
+	<property name="release.zip.file" value="${build.dir}/${project.name}.zip" />
 
 	<target name="release">
 		<mkdir dir="${release.dir}" />
@@ -86,6 +89,13 @@
 				<include name=".gitattributes" />
 			</fileset>
 		</delete>
+
+		<!-- Zip -->
+		<echo msg="Zipping..." />
+		<zip destfile="${release.zip.file}">
+			<fileset dir="${release.dir}" />
+		</zip>
+
 	</target>
 
 	<target name="help">
