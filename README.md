@@ -33,6 +33,10 @@ Application divides in two parts:
      * yiibooster-4.0.1, very large
      * yii bootstrap 3 module, very similar to yiistrap
 
+### For developer
+
+* phing, download archive to /protected/vendor/phing-latest.phar
+
 
 ## Aims
 
