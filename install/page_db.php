@@ -40,10 +40,25 @@ if (isset($_POST['submit']))
 {
 	unset($_POST['back']);
 	unset($_POST['submit']);
-	$db = new InstallerDatabaseManager($template);
 
-	$db->checkConnection();
+	// validate
+	if (empty($dbHost)) {
+		$template->addError("Введите сервер");
+	}
+	if (empty($dbUser)) {
+		$template->addError("Введите пользователя");
+	}
+	if (empty($dbAuth)) {
+		$template->addError("Введите название базы данных с аккаунтами");
+	}
+	if (empty($dbCharacters)) {
+		$template->addError("Введите название базы данных с персонажами");
+	}
 
+	if (!$template->hasErrors()) {
+		$db = new InstallerDatabaseManager($template);
+		$db->checkConnection();
+	}
 	if (!$template->hasErrors())
 	{
 		$template->writeSubmitedFields();
