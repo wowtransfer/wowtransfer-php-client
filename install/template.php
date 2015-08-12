@@ -21,10 +21,10 @@ class InstallerTemplate
 	public function readSubmitedFields()
 	{
 		session_start();
-		foreach ($_SESSION as $name => $value)
-		{
-			if (!isset($_POST[$name]))
-				$_POST[$name] = $value;	
+		foreach ($_SESSION as $name => $value) {
+			if (!isset($_POST[$name])) {
+				$_POST[$name] = $value;
+			}
 		}
 		session_write_close();
 
@@ -72,14 +72,16 @@ class InstallerTemplate
 	 */
 	public function errorSummary()
 	{
-		if (empty($this->_errors))
+		if (empty($this->_errors)) {
 			return;
+		}
 
 		echo '<div class="alert alert-danger">';
 		echo '<p>Необходимо исправить следующие ошибки:</p>';
 		echo '<ul>';
-		foreach ($this->_errors as $error)
+		foreach ($this->_errors as $error) {
 			echo '<li>' . $error . '</li>';
+		}
 		echo '</ul>';
 		echo '</div>';
 	}
@@ -93,7 +95,7 @@ class InstallerTemplate
 	}
 
 	/**
-	 *
+	 * @return null
 	 */
 	public function printCheckTable()
 	{
@@ -145,7 +147,7 @@ class InstallerTemplate
 	 */
 	public function addHiddenField($name, $value)
 	{
-		$_hiddenFields[$name] = $value;
+		$this->_hiddenFields[$name] = $value;
 	}
 
 	/**
@@ -153,12 +155,11 @@ class InstallerTemplate
 	 */
 	public function printHiddenFields($excludeHiddenFields = null)
 	{
-		if (!empty($excludeHiddenFields))
-		{
-			foreach ($this->_hiddenFields as $name => $value)
-			{
-				if (!in_array($name, $excludeHiddenFields))
+		if (!empty($excludeHiddenFields)) {
+			foreach ($this->_hiddenFields as $name => $value) {
+				if (!in_array($name, $excludeHiddenFields)) {
 					echo '<input type="hidden" name="' . $name . '" value="' . $value. '">';
+				}
 			}
 		}
 	}
@@ -172,16 +173,15 @@ class InstallerTemplate
 	{
 		$fileName = 'sql/chd_structure.sql';
 
-		if (!file_exists($fileName))
-		{
+		if (!file_exists($fileName)) {
 			$this->addError('Файл ' . $fileName . ' не найден');
 			return false;
 		}
 
 		$sql = file_get_contents($fileName);
-
-		if (!$sql)
+		if (!$sql) {
 			$fileName->addError($fileName . ' не найден или пуст');
+		}
 
 		return $sql;
 	}
@@ -196,22 +196,19 @@ class InstallerTemplate
 		// TODO: make function (filePrefix)
 
 		$core = $this->getFieldValue('core');
-		if (empty($core))
-		{
+		if (empty($core)) {
 			$this->addError('Ядро WoW сервера не найдено');
 			return false;
 		}
 
 		$fileName = 'sql/chd_procedures_' . $core . '.sql';
-		if (!file_exists($fileName))
-		{
+		if (!file_exists($fileName)) {
 			$this->addError('Файл ' . $fileName . ' не найден');
 			return false;
 		}
 
 		$sql = file_get_contents($fileName);
-		if (empty($sql))
-		{
+		if (empty($sql)) {
 			$this->addError('Файл ' . $fileName . ' пустой');
 			return false;
 		}
@@ -238,22 +235,19 @@ class InstallerTemplate
 		// TODO: make function (filePrefix)
 
 		$core = $this->getFieldValue('core');
-		if (empty($core))
-		{
+		if (empty($core)) {
 			$this->addError('Ядро WoW сервера не найдено');
 			return false;
 		}
 
 		$fileName = 'sql/chd_privileges_' . $core . '.sql';
-		if (!file_exists($fileName))
-		{
+		if (!file_exists($fileName)) {
 			$this->addError('Файл ' . $fileName . ' не найден');
 			return false;
 		}
 
 		$sql = file_get_contents($fileName);
-		if (empty($sql))
-		{
+		if (empty($sql)) {
 			$this->addError('Файл ' . $fileName . ' пустой');
 			return false;
 		}
@@ -282,18 +276,17 @@ class InstallerTemplate
 	{
 		$result = false;
 
-		if (is_dir($dir))
-		{
+		if (is_dir($dir)) {
 			$objects = scandir($dir);
-			foreach ($objects as $object)
-			{
-				if ($object != '.' && $object != '..')
-				{
+			foreach ($objects as $object) {
+				if ($object != '.' && $object != '..') {
 					$file = $dir . DIRECTORY_SEPARATOR . $object;
-					if (is_dir($file))
+					if (is_dir($file)) {
 						$result = $this->_removeDir($file) && $result;
-					else
+					}
+					else {
 						$result = unlink($file) && $result;
+					}
 				}
 			}
 			$result = rmdir($dir) && $result;
@@ -352,8 +345,11 @@ class InstallerTemplate
 	{
 		$filePath = $this->getAppConfigAbsoluteFilePath();
 		$lines = file($filePath);
-		if (!$lines)
-		{
+		if (!$lines) {
+			$defaultFilePath = $this->getAppConfigAbsoluteFilePath(true);
+			$lines = file($defaultFilePath);
+		}
+		if (!$lines) {
 			$this->addError("Не удалось прочитать файл конфигурации приложения\n" . $filePath);
 			return false;
 		}
@@ -365,8 +361,8 @@ class InstallerTemplate
 		);
 		foreach ($lines as $line)
 		{
-			// 'return array(' -- begin
-			// ');'            -- end
+			// 'return [' -- begin
+			// '];'       -- end
 
 			$keyValue = explode('=>', $line);
 			if (isset($keyValue[1]))
@@ -386,7 +382,7 @@ class InstallerTemplate
 				}
 			}
 
-			if ($line === ');')
+			if ($line === '];')
 			{
 				if (!$params['core'])
 					$configContent .= "\t'core'=>'{$this->getFieldValue('core')}',\n";
@@ -409,7 +405,11 @@ class InstallerTemplate
 		return $handle !== false;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	protected function writeDbConfig() {
+		$result = false;
 		$dbFilePath = __DIR__ . '/../protected/config/db-local.php';
 
 		$h = fopen($dbFilePath, 'w');
@@ -426,25 +426,30 @@ class InstallerTemplate
 				"	'enableParamLogging'=>true,\n",
 				"];\n";
 			$content = ob_get_clean();
-			fwrite($h, $content);
+			$writedSize = fwrite($h, $content);
 			fclose($h);
+
+			$result = $writedSize > 0;
 		}
 
-		return true;
+		return $result;
 	}
 
 	/**
+	 * @param boolean
 	 * @return string
 	 */
-	public function getAppConfigAbsoluteFilePath() {
-		return __DIR__ . '/..' . $this->getAppConfigRelativeFilePath();
+	public function getAppConfigAbsoluteFilePath($default = false) {
+		return __DIR__ . '/..' . $this->getAppConfigRelativeFilePath($default);
 	}
 
 	/**
+	 * @param boolean
 	 * @return string
 	 */
-	public function getAppConfigRelativeFilePath() {
-		return $this->getAppConfigRelativeDir() . '/app.php';
+	public function getAppConfigRelativeFilePath($default = false) {
+		$useDefault = $default ? '.default' : '';
+		return $this->getAppConfigRelativeDir() . '/app' . $useDefault. '.php';
 	}
 
 	/**
