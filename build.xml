@@ -37,7 +37,7 @@
 			<fileset dir="themes" />
 		</copy>
 		<copy overwrite="true" file="${source.dir}/favicon.ico" tofile="${release.dir}/favicon.ico" />
-		<copy overwrite="true" file="${source.dir}/LICENSE" tofile="${release.dir}/LICENSE" />
+		<copy overwrite="true" file="${source.dir}/LICENSE.txt" tofile="${release.dir}/LICENSE.txt" />
 		<copy overwrite="true" file="${source.dir}/README.md" tofile="${release.dir}/README.md" />
 		<copy overwrite="true" file="${source.dir}/TODO.md" tofile="${release.dir}/TODO.md" />
 		<copy overwrite="true" todir="${release.dir}">
