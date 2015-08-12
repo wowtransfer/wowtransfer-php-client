@@ -2,11 +2,14 @@
 
 $template->clearSubmitedFields();
 
-if (isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
+	$installUrl = '/' . substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT']) + 1);
+	$installUrl = str_replace('\\', '/', $installUrl);
+	// - '/install'
+	$installUrl = substr($installUrl, 0, strlen($installUrl) - 8);
 	$template->removeDir();
 	$template->saveInstallStatus();
-	header('Location: /');
+	header('Location: ' . $installUrl);
 	exit;
 }
 ?>

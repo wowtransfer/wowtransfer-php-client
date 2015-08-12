@@ -1,7 +1,7 @@
 <?php
 if (!file_exists('.installed')) {
-	$rootPath = $_SERVER['DOCUMENT_ROOT'];
-	$installUrl = '/' . substr(__DIR__, strlen($rootPath) + 1) . '/install';
+	$installUrl = '/' . substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT']) + 1) . '/install';
+	$installUrl = str_replace('\\', '/', $installUrl);
 	header('Location: ' . $installUrl);
 	exit;
 }
