@@ -1,6 +1,6 @@
 # chdphp #
 
-Handle of characters transfer by wowtransfer.com
+Handle of characters transfer using wowtransfer.com service.
 
 
 ## Desctription ##
@@ -28,16 +28,20 @@ Application divides in two parts:
 ### Application
 
 * Yii framework version 1.15+
- * yiistrap, we are use also
-     * yiibootstrap, depricated
-     * yiibooster-4.0.1, very large
-     * yii bootstrap 3 module, very similar to yiistrap
+* yiistrap, we are use also
+    * yiibootstrap, depricated
+    * yiibooster-4.0.1, very large
+    * yii bootstrap 3 module, very similar to yiistrap
+* Twitter bootstrap 3
 
 ### For developer
 
-* yiistrap, download extension to /protected/extensions/yiistrap directory
-* phing, download archive to /protected/vendor/phing-latest.phar
-
+* [yiistrap](https://github.com/crisu83/yiistrap/releases),
+download extension to `/protected/extensions/yiistrap` directory
+* [Twitter bootstrap 3](https://github.com/twbs/bootstrap/releases)
+download latest release (twbs/bootstrap) to `/protected/vendor/twbs/bootstrap` directory
+* [Phing](https://www.phing.info/trac/wiki/Users/Installation),
+download the Phar archive (phing-latest.phar) to `/protected/vendor` directory
 
 ## Aims
 
