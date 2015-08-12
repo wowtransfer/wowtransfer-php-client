@@ -19,7 +19,7 @@ if (isset($_POST['submit']))
 	<label for="core" class="control-label">Ядро WoW сервера</label>
 	<select name="core" id="core" class="form-control">
 		<option value="trinity_335a" <?php ?> >trinity_335a</option>
-		<option value="cmangos_335a" <?php ?> >cmangos_335a</option>
+		<!--<option value="cmangos_335a" <?php ?> >cmangos_335a</option>-->
 	</select>
 
 	<div class="actions-panel">

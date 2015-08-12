@@ -57,7 +57,7 @@ if (isset($_POST['next'])) {
 
 ?>
 
-<div class="alert alert-info">Создание пользователя базы данных под которым будет работать приложение.</div>
+<div class="alert alert-info">Выбор или создание пользователя базы данных под которым будет работать приложение.</div>
 
 <div class="alert alert-info">
 По-умолчанию пользователь и пароль равны <code>wowtransfer</code>.
@@ -79,10 +79,22 @@ if (isset($_POST['next'])) {
 		<legend>Пользователь</legend>
 
 		<label for="db_transfer_user">Имя</label>
-		<input type="text" name="db_transfer_user" id="db_transfer_user" value="<?php echo $dbTransferUser; ?>" class="form-control">
+		<input type="text" name="db_transfer_user" id="db_transfer_user"
+			   value="<?php echo $dbTransferUser; ?>" class="form-control"
+			   list="db_transfer_user_list">
+		<datalist id="db_transfer_user_list">
+			<option>trinity</option>
+			<option>mangos</option>
+			<option>wowtransfer</option>
+		</datalist>
 
 		<label for="db_transfer_user_host">Хост</label>
-		<input type="text" name="db_transfer_user_host" id="db_transfer_user_host" value="<?php echo $dbTransferUserHost; ?>" class="form-control">
+		<input type="text" name="db_transfer_user_host" id="db_transfer_user_host"
+			   value="<?php echo $dbTransferUserHost; ?>" class="form-control"
+			   list="db_transfer_user_host_list">
+		<datalist id="db_transfer_user_host_list">
+			<option>localhost</option>
+		</datalist>
 
 		<label for="db_transfer_user">Пароль</label>
 		<input type="password" name="db_transfer_password" id="db_transfer_password" value="<?php echo $dbTransferPassword; ?>" class="form-control">

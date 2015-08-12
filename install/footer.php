@@ -1,7 +1,7 @@
 <div id="footer" class="well well-sm">
 	<div>
-		<a href="http://wowtransfer.com?from=install" title="wowtransfer.com">
-			<img src="images/wowtransfer-icon-48.png" style="float: left;" title="wowtransfer.com" alt="wowtransfer.com">
+		<a href="http://wowtransfer.com?from=install" title="wowtransfer.com" class="pull-left">
+			<img src="images/wowtransfer-icon-48.png" alt="wowtransfer.com">
 		</a>
 
 		Copyright © 2014, <a href="http://wowtransfer.com?from=install" title="wowtransfer.com">wowtransfer.com</a> <span class="label label-info">1.0</span> <br>

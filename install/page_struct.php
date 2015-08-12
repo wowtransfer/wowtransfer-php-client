@@ -49,7 +49,12 @@ if (isset($_POST['submit']))
 	</div>
 
 	<label for="db_transfer_table">Таблица для заявок на перенос</label>
-	<input type="text" name="db_transfer_table" id="db_transfer_table" value="<?php echo $dbTransferTableName;?>" class="form-control">
+	<input type="text" name="db_transfer_table" id="db_transfer_table"
+		   value="<?php echo $dbTransferTableName;?>" class="form-control"
+		   list="db_transfer_table_list">
+	<datalist id="db_transfer_table_list">
+		<option>chd_transfer</option>
+	</datalist>
 
 	<pre class="sql-code" style="height: 400px;"><?php echo $template->loadDbStructure(); ?></pre>
 

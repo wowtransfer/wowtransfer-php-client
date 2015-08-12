@@ -81,23 +81,41 @@ if (isset($_POST['submit']))
 
 
 	<label for="db_host">Сервер</label>
-	<input type="text" name="db_host" id="db_host" value="<?php echo $dbHost; ?>" class="form-control">
+	<input type="text" name="db_host" id="db_host" value="<?php echo $dbHost; ?>" class="form-control" list="db_host_list">
+	<datalist id="db_host_list">
+		<option>localhost</option>
+		<option>127.0.0.1</option>
+	</datalist>
 
 	<label for="db_port">Порт</label>
 	<input type="text" name="db_port" id="db_port" value="<?php echo $dbPort; ?>" class="form-control">
+	<datalist id="db_port_list">
+		<option>3306</option>
+	</datalist>
 
 	<label for="db_port">Пользователь</label>
-	<input type="text" name="db_user" id="db_user" value="<?php echo $dbUser; ?>" class="form-control">
+	<input type="text" name="db_user" id="db_user" value="<?php echo $dbUser; ?>" class="form-control" list="db_user_list">
+	<datalist id="db_user_list">
+		<option>trinity</option>
+		<option>mangos</option>
+	</datalist>
 
 	<label for="db_port">Пароль</label>
 	<input type="password" name="db_password" id="db_password" value="<?php echo $dbPassword; ?>" class="form-control">
 
 
 	<label for="db_port">База даннах с персонажами</label>
-	<input type="text" name="db_characters" id="db_character" value="<?php echo $dbCharacters; ?>" class="form-control">
+	<input type="text" name="db_characters" id="db_character" value="<?php echo $dbCharacters; ?>" class="form-control" list="db_character_list">
+	<datalist id="db_character_list">
+		<option>characters</option>
+	</datalist>
 
 	<label for="db_port">База данных с аккаунтами</label>
-	<input type="text" name="db_auth" id="db_auth" value="<?php echo $dbAuth; ?>" class="form-control">
+	<input type="text" name="db_auth" id="db_auth" value="<?php echo $dbAuth; ?>" class="form-control" list="db_auth_list">
+	<datalist id="db_auth_list">
+		<option>auth</option>
+		<option>realmd</option>
+	</datalist>
 
 
 	<div class="actions-panel">
