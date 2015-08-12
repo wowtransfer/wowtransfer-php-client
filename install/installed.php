@@ -4,6 +4,8 @@
 	<title>Приложение уже установлено</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
