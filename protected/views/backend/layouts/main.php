@@ -57,13 +57,13 @@
 
 <div class="container">
 	<div class="navbar" id="footer">
-		<div class="pull-left" style="position: relative; left: 0; top: 0;">
+		<div class="pull-left" style="height: 3em;">
 			<?php if (!empty(Yii::app()->params['serviceUsername'])): ?>
 				Service username: <strong><a href="http://wowtransfer.com/cp/profile/"><?php echo Yii::app()->params['serviceUsername']; ?></a></strong>
 			<?php endif ?>
 		</div>
 		<div>
-			Copyright &copy; <?php echo date('Y'); ?> <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
+			Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>
 			All Rights Reserved.
 		</div>
 	</div>
