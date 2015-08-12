@@ -10,6 +10,7 @@
 	<property name="source.vendor.dir" value="${source.dir}/protected/vendor" />
 	<property name="release.vendor.dir" value="${release.dir}/protected/vendor" />
 	<property name="release.zip.file" value="${build.dir}/${project.name}-${version}.zip" />
+	<property name="develop.dir" value="${source.dir}/develop" />
 
 	<target name="release">
 		<mkdir dir="${release.dir}" />
@@ -99,6 +100,19 @@
 		<echo msg="Delete release directory..." />
 		<delete dir="${release.dir}" />
 
+	</target>
+
+	<target name="restory_install">
+		<copy todir="${source.dir}/install/images">
+			<fileset dir="${develop.dir}/install/images">
+				<include name="*.png" />
+			</fileset>
+		</copy>
+		<copy todir="${source.dir}/install">
+			<fileset dir="${develop.dir}/install">
+				<include name="favicon.ico" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="help">
