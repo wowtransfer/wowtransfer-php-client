@@ -304,38 +304,11 @@ class InstallerTemplate
 	}
 
 	/**
-	 * @return string
-	 */
-	private function getInstalledFilePath()
-	{
-		return __DIR__ . '/../.installed';
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function saveInstallStatus()
-	{
-		$filePath = $this->getInstalledFilePath();
-		if (file_exists($filePath)) {
-			return true;
-		}
-
-		$handle = fopen($filePath, 'w');
-		if ($handle) {
-			fclose($handle);
-		}
-
-		return $handle !== false;
-	}
-
-	/**
 	 * @return boolean
 	 */
 	public function isInstalled()
 	{
-		$filePath = $this->getInstalledFilePath();
-		return file_exists($filePath);
+		return is_dir(__DIR__ . '/../install');
 	}
 
 	/**

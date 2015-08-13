@@ -8,7 +8,6 @@ if (isset($_POST['submit'])) {
 	// - '/install'
 	$installUrl = substr($installUrl, 0, strlen($installUrl) - 8);
 	$template->removeDir();
-	$template->saveInstallStatus();
 	header('Location: ' . $installUrl);
 	exit;
 }
