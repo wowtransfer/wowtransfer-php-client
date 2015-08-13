@@ -42,8 +42,7 @@ class CreateCharForm
 	private function runSql($sql, $accountGuid) {
 		$result = array();
 
-		if (empty($sql))
-		{
+		if (empty($sql)) {
 			$result['error'] = 'Empty SQL script';
 			return $result;
 		}
@@ -53,12 +52,11 @@ class CreateCharForm
 
 		$transaction = $db->beginTransaction();
 
-		try
-		{
-			$query1 = array(
+		try {
+			$query1 = [
 				'query' => '',
 				'status' => 0
-			);
+			];
 
 			$command = $db->createCommand();
 
@@ -67,11 +65,11 @@ class CreateCharForm
 			$query1['status'] = $command->execute();
 			$result[] = $query1;
 
-			foreach ($queries as $query)
-			{
+			foreach ($queries as $query) {
 				$query = trim($query);
-				if (empty($query))
+				if (empty($query)) {
 					continue;
+				}
 
 				$query1['query'] = substr($query, 0, 255);
 				$command->text = $query;
@@ -81,12 +79,10 @@ class CreateCharForm
 
 			$transaction->commit();
 		}
-		catch (exception $ex)
-		{
+		catch (\Exception $ex) {
 			$query1['status'] = 0;
 			$result[] = $query1;
 			$transaction->rollback();
-
 			$result['error'] = $ex->getMessage();
 		}
 
@@ -104,8 +100,9 @@ class CreateCharForm
 
 		$command = $connection->createCommand('SELECT @CHAR_GUID');
 		$result = $command->queryScalar();
-		if ($result)
+		if ($result) {
 			$guid = intval($result);
+		}
 
 		return $guid;
 	}
@@ -130,18 +127,23 @@ class CreateCharForm
 		}
 
 		$dumpLua = $this->_transfer->luaDumpFromDb();
-
+		$toptions = $this->_transfer->getTransferOptionsFromDb();
 		$service = new Wowtransfer();
 		$service->setAccessToken(Yii::app()->params['accessToken']);
 		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
 		try {
 			// TODO: service will be return a queries
-			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $configName);
+			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $configName, $toptions);
+			if ($service->getLastError()) {
+				$result['errors'][] = 'От сервиса: ' . $service->getLastError();
+			}
 		}
 		catch (exception $e) {
 			$result['errors'][] = $e->getMessage();
 			return $result;
 		}
+		echo $result['sql']; die;
 
 		$queries = $this->runSql($result['sql'], $this->_transfer->account_id);
 		if (isset($queries['error'])) {

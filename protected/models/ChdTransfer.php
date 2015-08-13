@@ -285,8 +285,9 @@ class ChdTransfer extends CActiveRecord
 
 	public function getTransferOptionsFromDb()
 	{
-		if (empty($this->options))
+		if (empty($this->options)) {
 			return array();
+		}
 
 		return explode(';', $this->options);
 	}
