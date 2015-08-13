@@ -312,7 +312,7 @@ class InstallerTemplate
 	 */
 	public function isInstalled()
 	{
-		return is_dir(__DIR__ . '/../install');
+		return !is_dir(__DIR__ . '/../install');
 	}
 
 	/**

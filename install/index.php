@@ -1,7 +1,8 @@
 <?php
-include_once 'global.php';
-include_once 'template.php';
-include_once 'database.php';
+$root = __DIR__;
+include_once $root . '/global.php';
+include_once $root . '/template.php';
+include_once $root . '/database.php';
 
 $pages = array(
 	'hello' => array(
@@ -66,7 +67,7 @@ else {
 }
 
 ob_start();
-include_once('page_' . $pageName . '.php');
+include_once $root . '/page_' . $pageName . '.php';
 $content = ob_get_clean();
 
-include_once($maket . '.php');
+include_once $root . '/' . $maket . '.php';

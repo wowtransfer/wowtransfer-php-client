@@ -4,7 +4,7 @@ $template->clearSubmitedFields();
 
 if (isset($_POST['submit'])) {
 	$template->removeDir();
-	if (!$template->hasError()) {
+	if (!$template->hasErrors()) {
 		header('Location: ' . getAppRelativeUrl());
 		exit;
 	}

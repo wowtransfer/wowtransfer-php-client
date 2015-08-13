@@ -77,7 +77,7 @@
 		<?php endif; ?>
 	</div>
 
-	<?php include_once 'footer.php'; ?>
+	<?php include_once $root . '/footer.php'; ?>
 </div>
 
 </body>
