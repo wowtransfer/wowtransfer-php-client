@@ -13,6 +13,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<script src="js/main.js"></script>
 </head>
 <body>
 
