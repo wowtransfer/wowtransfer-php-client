@@ -1,10 +1,7 @@
 <?php
-
-//phpinfo();
-//exit;
-
-include_once('template.php');
-include_once('database.php');
+include_once 'global.php';
+include_once 'template.php';
+include_once 'database.php';
 
 $pages = array(
 	'hello' => array(
@@ -40,8 +37,7 @@ $pages = array(
 );
 
 $i = 1;
-foreach ($pages as $name => $item)
-{
+foreach ($pages as $name => $item) {
 	$pages[$name]['step'] = $i;
 	++$i;
 }
@@ -52,16 +48,13 @@ $pageName = isset($_GET['page']) ? $_GET['page'] : 'hello';
 $hiddenFields = array();
 $maket = 'main';
 
-if ($template->isInstalled())
-{
+if ($template->isInstalled()) {
 	$maket = 'installed';
 	$pageName = 'installed';
 }
-else
-{
+else {
 	$page = key_exists($pageName, $pages) ? $pages[$pageName] : reset($pages);
-	if (!file_exists('page_' . $pageName . '.php'))
-	{
+	if (!file_exists('page_' . $pageName . '.php')) {
 		$page = reset($pages);
 		$pageName = 'hello';
 	}

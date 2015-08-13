@@ -282,10 +282,10 @@ class InstallerTemplate
 				if ($object != '.' && $object != '..') {
 					$file = $dir . DIRECTORY_SEPARATOR . $object;
 					if (is_dir($file)) {
-						$result = $this->_removeDir($file) && $result;
+						$result = $this->_removeDir($file);
 					}
 					else {
-						$result = unlink($file) && $result;
+						$result = unlink($file);
 					}
 				}
 			}
@@ -300,7 +300,11 @@ class InstallerTemplate
 	 */
 	public function removeDir()
 	{
-		return $this->_removeDir(__DIR__);
+		$result = $this->_removeDir(__DIR__);
+		if (!$result) {
+			$this->addError('Не удалось удалить директорию ' . __DIR__);
+		}
+		return $result;
 	}
 
 	/**
