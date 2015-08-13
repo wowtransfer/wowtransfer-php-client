@@ -310,10 +310,11 @@ class Wowtransfer
 	 * @param string  $dumpLua        Lua dump
 	 * @param integer $accountId      Accounts' identifier
 	 * @param strign  $configuration  Name of configuration
+	 * @param array   $toptions
 	 *
 	 * @return string Sql script (200) or error message (501)
 	 */
-	public function dumpToSql($dumpLua, $accountId, $configuration) {
+	public function dumpToSql($dumpLua, $accountId, $configuration, $toptions) {
 		$defaultValue = '';
 		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
 		$file = fopen($filePath, 'w'); // TODO: replace to object
@@ -332,6 +333,7 @@ class Wowtransfer
 			'configuration_id' => $configuration,
 			'account_id'       => $accountId,
 			'access_token'     => $this->getAccessToken(),
+			'transfer_options' => implode(';', $toptions),
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 

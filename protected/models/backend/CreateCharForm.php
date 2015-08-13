@@ -143,7 +143,6 @@ class CreateCharForm
 			$result['errors'][] = $e->getMessage();
 			return $result;
 		}
-		echo $result['sql']; die;
 
 		$queries = $this->runSql($result['sql'], $this->_transfer->account_id);
 		if (isset($queries['error'])) {
