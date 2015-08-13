@@ -9,3 +9,5 @@
 .install
 
 *.ico
+
+.installed

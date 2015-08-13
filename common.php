@@ -4,7 +4,8 @@
  * @return null
  */
 function checkInstalled() {
-	if (is_dir(__DIR__ . '/install')) {
+	$installedLocal = file_exists(__DIR__ . '/.installed');
+	if (is_dir(__DIR__ . '/install') && !$installedLocal) {
 		$installUrl = '/' . substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT']) + 1) . '/install';
 		$installUrl = str_replace('\\', '/', $installUrl);
 		header('Location: ' . $installUrl);
