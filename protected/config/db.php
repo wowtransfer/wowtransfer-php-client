@@ -8,5 +8,5 @@ return array_merge(
 		'charset'=>'utf8',
 		'enableParamLogging'=>true,
 	],
-	require __DIR__ . './db-local.php'
+	require __DIR__ . '/db-local.php'
 );
