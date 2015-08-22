@@ -5,8 +5,6 @@ return CMap::mergeArray(
 	require __DIR__ . '/main.php',
 
 	[
-		'theme'=>'backend',
-
 		'import'=>array(
 			'application.models.backend.*',
 		),
