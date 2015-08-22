@@ -102,7 +102,7 @@ class ChdTransfer extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID заявки',
+			'id' => 'ID',
 			'account_id' => 'ID аккаунта',
 			'server' => 'Название',
 			'realmlist' => 'Реалмлист',
@@ -111,7 +111,7 @@ class ChdTransfer extends CActiveRecord
 			'pass' => 'Пароль',
 			'pass2' => 'Подтверждение пароля',
 			'username_old' => 'Имя персонажа',
-			'username_new' => 'Имя персонажа на текущем сервере',
+			'username_new' => 'Имя персонажа',
 			'char_guid' => 'GUID персонажа',
 			'create_char_date' => 'Дата создания персонажа',
 			'create_transfer_date' => 'Дата создания заявки',

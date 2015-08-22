@@ -5,57 +5,75 @@
 
 <div class="view" data-id="<?php echo $data->id ?>">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo $data->id; ?>
+	<div class="toptions-view-actions">
+		<div class="toptions-view-top toptions-view-id">
+			<?= $data->getAttributeLabel('id') ?>
+			<span class="toptions-view-id-value"><?= $data->id ?></span>
+		</div>
 
-	<a href="#" class="btn btn-default btn-sm pull-right transfer-delete" title="Удалить">
-		<span class="glyphicon glyphicon-remove"></span>
-	</a>
+		<div class="toptions-view-top">
+			<b><?= $data->getAttributeLabel('status') ?></b>
+			<span class="tstatus tstatus-<?php echo $data->status ?>">
+				<?= ChdTransfer::getStatusTitle($data->status) ?>
+			</span>
+		</div>
 
-	<a href="<?php echo $this->createUrl('/transfers/update', array('id' => $data->id)); ?>"
-	   class="btn btn-default btn-sm pull-right" title="Изменить">
-		<span class="glyphicon glyphicon-pencil"></span>
-	</a>
+		<b><?= $data->getAttributeLabel('create_transfer_date') ?></b>
+		<?= $data->create_transfer_date ?>
 
-	<a href="<?php echo $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
-	   class="btn btn-default btn-sm pull-right" title="Просмотр...">
-		<span class="glyphicon glyphicon-eye-open"></span>
-	</a>
+	</div>
 
-	<br />
+	<div>
+		<a href="#" class="btn btn-default btn-sm pull-right transfer-delete" title="Удалить">
+			<span class="glyphicon glyphicon-remove"></span>
+		</a>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<span class="tstatus tstatus-<?php echo $data->status; ?>">
-		<?php echo ChdTransfer::getStatusTitle($data->status); ?>
-	</span>
-	<br />
+		<a href="<?= $this->createUrl('/transfers/update', array('id' => $data->id)); ?>"
+		   class="btn btn-default btn-sm pull-right" title="Изменить">
+			<span class="glyphicon glyphicon-pencil"></span>
+		</a>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('create_transfer_date')); ?>:</b>
-	<?php echo CHtml::encode($data->create_transfer_date); ?>
-	<br />
+		<a href="<?= $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
+		   class="btn btn-default btn-sm pull-right" title="Просмотр...">
+			<span class="glyphicon glyphicon-eye-open"></span>
+		</a>
+	</div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('server')); ?>:</b>
-	<?php echo CHtml::encode($data->server); ?>
-	<br />
+	<div class="row" style="margin-bottom: 10px;">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('realmlist')); ?>:</b>
-	<?php echo CHtml::encode($data->realmlist); ?>
-	<br />
+		<div class="col-md-5">
+			<h4>Удаленный сервер</h4>
+			<div class="toptions-view-attr">
+				<b><?= $data->getAttributeLabel('server') ?></b>
+				<?= CHtml::encode($data->server) ?>
+			</div>
+			<div class="toptions-view-attr">
+				<b><?= $data->getAttributeLabel('realmlist') ?></b>
+				<?= CHtml::encode($data->realmlist) ?>
+			</div>
+			<div class="toptions-view-attr">
+				<b><?= $data->getAttributeLabel('realm') ?></b>
+				<?= CHtml::encode($data->realm) ?>
+			</div>
+			<div class="toptions-view-attr">
+				<b><?= $data->getAttributeLabel('username_old') ?></b>
+				<?= CHtml::encode($data->username_old) ?>
+			</div>
+		</div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('realm')); ?>:</b>
-	<?php echo CHtml::encode($data->realm); ?>
-	<br />
+		<div class="col-md-5">
+			<h4>Текущий сервер</h4>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('username_old')); ?>:</b>
-	<?php echo CHtml::encode($data->username_old); ?>
-	<br />
+			<div class="toptions-view-attr">
+				<b><?= CHtml::encode($data->getAttributeLabel('username_new')); ?>:</b>
+				<?= CHtml::encode($data->username_new); ?>
+			</div>
+		</div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('username_new')); ?>:</b>
-	<?php echo CHtml::encode($data->username_new); ?>
-	<br />
+	</div>
 
 	<div><b>Опции переноса:</b>
-	<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
+	<? $this->widget('application.components.widgets.TransferOptionsWidget', array(
 		'model' => $data,
 		'options' => $data->getTransferOptionsToUser()
 	));	?>

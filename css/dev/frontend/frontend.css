@@ -3,3 +3,26 @@
 	width: 400px;
 	margin: 20px auto;
 }
+
+.toptions-view-attr b {
+	width: 130px;
+	display: inline-block;
+}
+
+.toptions-view-top {
+	display: inline-block;
+	padding: 3px 5px;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	border-radius: 5px 5px 5px 5px;
+	font-size: 1.3em;
+	margin-right: 20px;
+}
+
+.toptions-view-id {
+	font-weight: bold;
+}
+
+#transfer-list-view .btn {
+	margin-left: 5px;
+}
