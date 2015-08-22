@@ -5,8 +5,6 @@ return CMap::mergeArray(
 require __DIR__ . '/main.php',
 
 array(
-	'theme'=>'frontend',
-
 	'components' => array(
 		'log'=>array(
 			'class'=>'CLogRouter',
