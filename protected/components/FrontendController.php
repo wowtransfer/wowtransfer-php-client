@@ -50,6 +50,7 @@ class FrontEndController extends BaseController
 			Yii::app()->bootstrap->register();
 
 			$cs->registerCssFile($baseUrl . '/css/dev/common/common.css');
+			$cs->registerCssFile($baseUrl . '/css/dev/common/icons.css');
 			$cs->registerCssFile($baseUrl . '/css/dev/common/sprite_main.css');
 			$cs->registerCssFile($baseUrl . '/css/dev/frontend/frontend.css');
 

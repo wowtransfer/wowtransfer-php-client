@@ -1,0 +1,40 @@
+.wait {
+	display: inline-block;
+}
+
+.wait16 {
+	background-image: url(/chdphp/images/wait16.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait24-trans {
+	background-image: url(/chdphp/images/wait24trans.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait24 {
+	background-image: url(/chdphp/images/wait24.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait30-trans {
+	background-image: url(/chdphp/images/wait30trans.gif);
+	width: 16px;
+	height: 16px;
+}
+
+
+.wait30 {
+	background-image: url(/chdphp/images/wait30.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait16-trans {
+	background-image: url(/chdphp/images/wait16trans.gif);
+	width: 16px;
+	height: 16px;
+}

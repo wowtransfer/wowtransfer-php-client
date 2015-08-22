@@ -3,6 +3,10 @@
 	height: 10px;
 }
 
+#content {
+	margin-bottom: 20px;
+}
+
 #create-char-sql
 {
 	/*height: 400px;*/
@@ -69,4 +73,8 @@
     resize: none;
     margin: 5px 0;
     display: block;
+}
+
+#latest-version {
+	font-size: 1.3em;
 }
