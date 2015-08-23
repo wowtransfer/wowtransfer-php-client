@@ -65,7 +65,7 @@ class BackendController extends BaseController
 		$cs = Yii::app()->clientScript;
 		$baseUrl = Yii::app()->request->baseUrl;
 
-		if (YII_DEBUG) {
+		if (true) { // TODO: minify resource
 			// blueprint CSS framework
 			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css', 'screen, projection');
 			$cs->registerCssFile($baseUrl . '/css/dev/common/print.css', 'print');

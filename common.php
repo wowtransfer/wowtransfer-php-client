@@ -17,10 +17,17 @@ function checkInstalled() {
  * @return null
  */
 function preInitApp() {
-	if (file_exists(__DIR__ . '/.gitignore')) {
-		// remove the following lines when in production mode
-		defined('YII_DEBUG') or define('YII_DEBUG', true);
-		// specify how many levels of call stack should be shown in each log message
-		defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
+	$appConfigs = __DIR__ . '/protected/config/app.php';
+	if (file_exists($appConfigs)) {
+		$debug = !empty($appConfigs['yiiDebug']);
+		$traceLevel = isset($appConfigs['yiiTraceLevel']) ? (int)$appConfigs['yiiTraceLevel'] : 0;
+	}
+	else {
+		$debug = false;
+		$traceLevel = 0;
+	}
+	defined('YII_DEBUG') or define('YII_DEBUG', $debug);
+	if ($traceLevel) {
+		defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', $traceLevel);
 	}
 }

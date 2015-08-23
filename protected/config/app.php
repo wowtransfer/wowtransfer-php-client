@@ -1,11 +1,13 @@
 <?php
 return [
-	'siteUrl' => '/',
-	'emailAdmin' => '',
-	'core'=>'trinity_335a',
-	'maxTransfersCount' => 10,
+	'admins'               => ['admin'],
+	'core'                 => 'trinity_335a',
+	'emailAdmin'           => '',
+	'maxTransfersCount'    => 10,
 	'maxAccountCharsCount' => 10,
-	'admins' => ['admin'],
-	'moders' => [],
-	'transferTable'=>'chd_transfer',
+	'moders'               => [],
+	'siteUrl'              => '/',
+	'transferTable'        => 'chd_transfer',
+	'yiiDebug'             => false,
+	'yiiTraceLevel'        => null,
 ];

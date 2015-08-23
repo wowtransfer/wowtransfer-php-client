@@ -48,6 +48,16 @@ $this->breadcrumbs = array(
 ?>
 </fieldset>
 
+<fieldset>
+	<legend>Приложение</legend>
+
+	<?= $form->checkboxControlGroup($model, 'yiiDebug', [0, 1, 2, 3, 4, 5]) ?>
+	<?= $form->dropDownListControlGroup($model, 'yiiTraceLevel', [0, 1, 2, 3, 4, 5], [
+		'help' => '0 - отключить',
+	]) ?>
+
+</fieldset>
+
 <div class="form-group">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-9">

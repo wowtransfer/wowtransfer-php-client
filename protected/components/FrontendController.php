@@ -35,7 +35,7 @@ class FrontEndController extends BaseController
 		$cs = Yii::app()->clientScript;
 		$baseUrl = Yii::app()->request->baseUrl;
 
-		if (YII_DEBUG) {
+		if (true) { // TODO: minify resource
 			// blueprint CSS framework
 			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css', 'screen, projection');
 			$cs->registerCssFile($baseUrl . '/css/dev/common/print.css', 'print');
@@ -59,7 +59,7 @@ class FrontEndController extends BaseController
 			$cs->registerScriptFile($baseUrl . '/js/dev/frontend/transfers.js', CClientScript::POS_END);
 		}
 		else {
-			$cs->registerScriptFile($baseUrl . '/js/fronend.min.js', CClientScript::POS_END);
+			$cs->registerScriptFile($baseUrl . '/js/frontend.min.js', CClientScript::POS_END);
 		}
 	}
 }

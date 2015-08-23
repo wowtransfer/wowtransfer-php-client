@@ -29,32 +29,42 @@ class AppConfigForm extends PhpFileForm
 	/**
 	 * @var string
 	 */
-	public  $siteUrl;
+	public $siteUrl;
 
 	/**
 	 * @var string
 	 */
-	public  $core;
+	public $core;
 
 	/**
 	 * @var string
 	 */
-	public  $emailAdmin;
+	public $emailAdmin;
 
 	/**
 	 * @var integer
 	 */
-	public  $maxTransfersCount;
+	public $maxTransfersCount;
 
 	/**
 	 * @var integer 
 	 */
-	public  $maxAccountCharsCount;
+	public $maxAccountCharsCount;
 
 	/**
 	 * @var string
 	 */
-	public  $transferTable;
+	public $transferTable;
+
+	/**
+	 * @var boolean
+	 */
+	public $yiiDebug;
+
+	/**
+	 * @var integer
+	 */
+	public $yiiTraceLevel;
 
 	public function __construct($scenario = '') {
 		parent::__construct($scenario);
@@ -71,6 +81,8 @@ class AppConfigForm extends PhpFileForm
 			['transferTable', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false],
 			['adminsStr', 'required'], // adminsStr and modersStr have a pattern '\w, \w, \w, \w'
 			['admins, moders, modersStr', 'safe'],
+			['yiiDebug', 'boolean'],
+			['yiiTraceLevel', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 5],
 		];
 	}
 
@@ -85,6 +97,8 @@ class AppConfigForm extends PhpFileForm
 			'adminsStr'            => 'Администраторы',
 			'modersStr'            => 'Модераторы',
 			'transferTable'        => 'Таблица с заявками',
+			'yiiDebug'             => 'Debug',
+			'yiiTraceLevel'        => 'Количество слоев стека вызова для журналирования',
 		];
 	}
 
@@ -103,6 +117,14 @@ class AppConfigForm extends PhpFileForm
 		return Yii::getPathOfAlias('application') . '/config/app.php';
 	}
 
+	protected function beforeValidate() {
+		settype($this->yiiDebug, 'boolean');
+		settype($this->yiiTraceLevel, 'int');
+		settype($this->maxAccountCharsCount, 'int');
+		settype($this->maxTransfersCount, 'int');
+		return parent::beforeValidate();
+	}
+
 	/**
 	 * @param boolean $validate
 	 * @throws CHttpException
@@ -119,6 +141,7 @@ class AppConfigForm extends PhpFileForm
 		$attributes = [
 			'siteUrl', 'emailAdmin', 'core', 'maxTransfersCount',
 			'maxAccountCharsCount', 'admins', 'moders', 'transferTable',
+			'yiiDebug', 'yiiTraceLevel',
 		];
 		$this->setFilePath($filePath);
 		$this->setWorkAttributes($attributes);
