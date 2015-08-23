@@ -97,7 +97,7 @@ class AppConfigForm extends PhpFileForm
 			'adminsStr'            => 'Администраторы',
 			'modersStr'            => 'Модераторы',
 			'transferTable'        => 'Таблица с заявками',
-			'yiiDebug'             => 'Debug',
+			'yiiDebug'             => 'Debug mode',
 			'yiiTraceLevel'        => 'Количество слоев стека вызова для журналирования',
 		];
 	}

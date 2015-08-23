@@ -17,8 +17,9 @@ function checkInstalled() {
  * @return null
  */
 function preInitApp() {
-	$appConfigs = __DIR__ . '/protected/config/app.php';
-	if (file_exists($appConfigs)) {
+	$appConfigsFilePath = __DIR__ . '/protected/config/app-local.php';
+	if (file_exists($appConfigsFilePath)) {
+		$appConfigs = require $appConfigsFilePath;
 		$debug = !empty($appConfigs['yiiDebug']);
 		$traceLevel = isset($appConfigs['yiiTraceLevel']) ? (int)$appConfigs['yiiTraceLevel'] : 0;
 	}
@@ -26,6 +27,7 @@ function preInitApp() {
 		$debug = false;
 		$traceLevel = 0;
 	}
+
 	defined('YII_DEBUG') or define('YII_DEBUG', $debug);
 	if ($traceLevel) {
 		defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', $traceLevel);

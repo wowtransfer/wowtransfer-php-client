@@ -53,7 +53,7 @@ $this->breadcrumbs = array(
 
 	<?= $form->checkboxControlGroup($model, 'yiiDebug', [0, 1, 2, 3, 4, 5]) ?>
 	<?= $form->dropDownListControlGroup($model, 'yiiTraceLevel', [0, 1, 2, 3, 4, 5], [
-		'help' => '0 - отключить',
+		'help' => '0 - отключить. Работает только в Debug режиме.',
 	]) ?>
 
 </fieldset>
