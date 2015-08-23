@@ -425,7 +425,7 @@ class InstallerTemplate
 	 * @return string
 	 */
 	public function getAppConfigRelativeFilePath($default = false) {
-		$useDefault = $default ? '.default' : '';
+		$useDefault = $default ? '' : '-local';
 		return $this->getAppConfigRelativeDir() . '/app' . $useDefault. '.php';
 	}
 
