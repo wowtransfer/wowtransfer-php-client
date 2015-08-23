@@ -61,7 +61,7 @@ class ServiceConfigForm extends PhpFileForm {
 	}
 
 	public function loadDefaults() {
-		$filePath = Yii::getPathOfAlias('application') . '/config/service.default.php';
+		$filePath = $this->getDefaultConfigFilePath();
 		return parent::loadFromArray(require $filePath);
 	}
 
@@ -70,14 +70,22 @@ class ServiceConfigForm extends PhpFileForm {
 		return parent::beforeValidate();
 	}
 
+	/**
+	 * @return boolean
+	 * @throws CHttpException
+	 * @todo Make abstract function
+	 */
 	public function load() {
 		$filePath = $this->getConfigFilePath();
-		if (!file_exists($filePath)) {
-			throw new CHttpException(404, 'File not found: ' . $filePath);
+		if (file_exists($filePath)) {
+			$params = require $filePath;
 		}
-		$params = require $filePath;
+		else {
+			$filePath = $this->getDefaultConfigFilePath();
+			$params = require $filePath;
+		}
 		if (!is_array($params)) {
-			throw new CHttpException(404, 'Is not an array in file ' . $filePath);
+			throw new CHttpException(404, 'File ' . $filePath . ' returns not an array');
 		}
 		return parent::loadFromArray($params);
 	}
@@ -103,7 +111,14 @@ class ServiceConfigForm extends PhpFileForm {
 	/**
 	 * @return string
 	 */
-	public function getConfigFilePath() {
+	protected function getConfigFilePath() {
+		return Yii::getPathOfAlias('application') . '/config/service-local.php';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDefaultConfigFilePath() {
 		return Yii::getPathOfAlias('application') . '/config/service.php';
 	}
 }

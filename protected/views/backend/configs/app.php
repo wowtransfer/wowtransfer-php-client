@@ -12,7 +12,7 @@ $this->breadcrumbs = array(
 <h1>Настройка приложения</h1>
 
 <div class="alert alert-warning">
-	Настройки приложения хранятся в файле <code>/protected/config/app.php</code>.
+	Настройки приложения хранятся в файле <code>/protected/config/app-local.php</code>.
 	В случае сбоя его можно изменить вручную либо загрузить значения по-умолчанию.
 </div>
 

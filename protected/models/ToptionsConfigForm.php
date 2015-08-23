@@ -27,14 +27,14 @@ class ToptionsConfigForm extends PhpFileForm
 	 */
 	public static function getConfigFilePath()
 	{
-		return Yii::getPathOfAlias('application.config') . '/toptions.php';
+		return Yii::getPathOfAlias('application.config') . '/toptions-local.php';
 	}
 
 	/**
 	 * @return string
 	 */
 	public static function getDefaultConfigFilePath() {
-		return Yii::getPathOfAlias('application.config') . '/toptions.default.php';
+		return Yii::getPathOfAlias('application.config') . '/toptions.php';
 	}
 
 	/**
@@ -42,8 +42,9 @@ class ToptionsConfigForm extends PhpFileForm
 	 */
 	public static function getTransferOptions() {
 		if (self::$transferOptions === null) {
-			$options = self::getDynTransferOptions();
-			self::$transferOptions = array_merge_recursive(self::getDefaultTransferOptions(), $options);
+			$options = self::getLocalTransferOptions();
+			$localOptions = array_merge_recursive(self::getDefaultTransferOptions(), self::getTransferOptionsUI());
+			self::$transferOptions = array_merge_recursive($localOptions, $options);
 		}
 		return self::$transferOptions;
 	}
@@ -52,12 +53,8 @@ class ToptionsConfigForm extends PhpFileForm
 	 * @return array
 	 * @throws \Exception
 	 */
-	public static function getDynTransferOptions() {
+	public static function getLocalTransferOptions() {
 		$filePath = self::getConfigFilePath();
-		if (!file_exists($filePath)) {
-			$defaultFilePath = self::getDefaultConfigFilePath();
-			copy($defaultFilePath, $filePath);
-		}
 		$options = require $filePath;
 		if (!is_array($options)) {
 			throw new Exception('Transfer options is not array: ' . $filePath);
@@ -69,30 +66,38 @@ class ToptionsConfigForm extends PhpFileForm
 	 * @return array
 	 */
 	public static function getDefaultTransferOptions() {
+		$filePath = self::getDefaultConfigFilePath();
+		return require $filePath;
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getTransferOptionsUI() {
 		return [
-			'achievement' => array('label' => 'Достижения'),
-			'action'      => array('label' => 'Кнопки на панелях'),
-			'bind'        => array('label' => 'Бинды'),
-			'bag'         => array('label' => 'Вещи в сумках'),
-			'bank'        => array('label' => 'Вещи в банке'),
-			'criterias'   => array('label' => 'Критерии'),
-			'critter'     => array('label' => 'Спутники'),
-			'currency'    => array('label' => 'Валюта'),
-			'equipment'   => array('label' => 'Наборы экипировки'),
-			'glyph'       => array('label' => 'Символы'),
-			'inventory'   => array('label' => 'Инвентарь'),
-			'mount'       => array('label' => 'Транспорт'),
-			'pmacro'      => array('label' => 'Макросы'),
-			'quest'       => array('label' => 'Задания'),
-			'questlog'    => array('label' => 'Журнал заданий'),
-			'reputation'  => array('label' => 'Репутация', ),
-			'skill'       => array('label' => 'Навыки (профессии)'),
-			'skillspell'  => array('label' => 'Рецепты'),
-			'spell'       => array('label' => 'Заклинания'),
-			'statistic'   => array('label' => 'Статистика'),
-			'talent'      => array('label' => 'Таланты'),
-			'taxi'        => array('label' => 'Перелеты'),
-			'title'       => array('label' => 'Звания'),
+			'achievement' => ['label' => 'Достижения'],
+			'action'      => ['label' => 'Кнопки на панелях'],
+			'bind'        => ['label' => 'Бинды'],
+			'bag'         => ['label' => 'Вещи в сумках'],
+			'bank'        => ['label' => 'Вещи в банке'],
+			'criterias'   => ['label' => 'Критерии'],
+			'critter'     => ['label' => 'Спутники'],
+			'currency'    => ['label' => 'Валюта'],
+			'equipment'   => ['label' => 'Наборы экипировки'],
+			'glyph'       => ['label' => 'Символы'],
+			'inventory'   => ['label' => 'Инвентарь'],
+			'mount'       => ['label' => 'Транспорт'],
+			'pmacro'      => ['label' => 'Макросы'],
+			'quest'       => ['label' => 'Задания'],
+			'questlog'    => ['label' => 'Журнал заданий'],
+			'reputation'  => ['label' => 'Репутация', ],
+			'skill'       => ['label' => 'Навыки (профессии)'],
+			'skillspell'  => ['label' => 'Рецепты'],
+			'spell'       => ['label' => 'Заклинания'],
+			'statistic'   => ['label' => 'Статистика'],
+			'talent'      => ['label' => 'Таланты'],
+			'taxi'        => ['label' => 'Перелеты'],
+			'title'       => ['label' => 'Звания'],
 		];
 	}
 
@@ -112,20 +117,20 @@ class ToptionsConfigForm extends PhpFileForm
 			return false;
 		}
 		$this->setFilePath($filePath);
-		// Invert options
-		$dynOptions = self::getDynTransferOptions();
-		$optionsResult = $dynOptions;
-		foreach ($dynOptions as $name => $option) {
-			$optionsResult[$name]['disabled'] = 1;
+
+		$localOptions = self::getDefaultTransferOptions();
+		foreach ($localOptions as $name => $option) {
+			$localOptions[$name]['disabled'] = 1;
 		}
+		// Invert options
 		foreach ($options as $name => &$option) {
 			if (isset($option['disabled'])) {
-				unset($optionsResult[$name]['disabled']);
+				unset($localOptions[$name]['disabled']);
 			}
 		}
 		Yii::app()->user->setFlash('success', Yii::t('app', 'Transfer options was changed success.'));
 
-		return parent::saveParams($optionsResult);
+		return parent::saveParams($localOptions);
 	}
 
 }

@@ -1,4 +1,5 @@
 <?php
+/* @var $optionsGlobal array */
 /*
 Show transfer's options
 
@@ -14,7 +15,6 @@ option item has:
 <div class="well well-small toptions-block">
 
 <?php
-$optionsGlobal = \ToptionsConfigForm::getTransferOptions();
 $options = explode(';', $model->options);
 ?>
 

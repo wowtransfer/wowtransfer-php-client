@@ -93,7 +93,14 @@ class AppConfigForm extends PhpFileForm
 	 */
 	protected function getConfigFilePath()
 	{
-		return Yii::getPathOfAlias('application.config') . '/app.php';
+		return Yii::getPathOfAlias('application') . '/config/app-local.php';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDefaultConfigFilePath() {
+		return Yii::getPathOfAlias('application') . '/config/app.php';
 	}
 
 	/**
@@ -125,16 +132,20 @@ class AppConfigForm extends PhpFileForm
 	/**
 	 * @return boolean
 	 * @throws CHttpException
+	 * @todo Make abstract function
 	 */
 	public function load() {
 		$filePath = $this->getConfigFilePath();
-		if (!file_exists($filePath)) {
-			throw new CHttpException(404, 'File not found: ' . $filePath);
+		if (file_exists($filePath)) {
+			$config = require $filePath;
+		}
+		else {
+			$filePath = $this->getDefaultConfigFilePath();
+			$config = require $filePath;
 		}
 
-		$config = require $filePath;
 		if (!is_array($config)) {
-			throw new CHttpException(404, 'Configuration\'s array not found: ' . $filePath);
+			throw new CHttpException(404, 'File ' . $filePath . ' returns not an array');
 		}
 		$result = parent::loadFromArray($config);
 		$this->adminsStr = implode(',', $this->admins);
@@ -147,7 +158,7 @@ class AppConfigForm extends PhpFileForm
 	 * @return boolean
 	 */
 	public function loadDefaults() {
-		$filePath = Yii::getPathOfAlias('application') . '/config/app.default.php';
+		$filePath = $this->getDefaultConfigFilePath();
 		return $this->loadFromArray(require $filePath);
 	}
 

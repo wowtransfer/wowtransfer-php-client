@@ -137,7 +137,7 @@ class PhpFileForm extends CFormModel {
 				$this->$name = $value;
 			}
 		}
-		return $this;
+		return true;
 	}
 
 }

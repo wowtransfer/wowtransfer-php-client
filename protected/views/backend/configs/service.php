@@ -12,7 +12,7 @@ $this->breadcrumbs = array(
 <h1>Настройка связи с сервисом</h1>
 
 <div class="alert alert-warning">
-	Настройки связи с сервисом хранятся в файле <code>/protected/config/service.php</code>.
+	Настройки связи с сервисом хранятся в файле <code>/protected/config/service-local.php</code>.
 	В случае сбоя его можно изменить вручную либо загрузить значения по-умолчанию.
 </div>
 
