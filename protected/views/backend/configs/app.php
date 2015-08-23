@@ -51,9 +51,11 @@ $this->breadcrumbs = array(
 <fieldset>
 	<legend>Приложение</legend>
 
-	<?= $form->checkboxControlGroup($model, 'yiiDebug', [0, 1, 2, 3, 4, 5]) ?>
+	<?= $form->checkboxControlGroup($model, 'yiiDebug', [
+		'help' => '<div class="alert alert-danger">Выключать на боевом сервере!!!</div>'
+	]) ?>
 	<?= $form->dropDownListControlGroup($model, 'yiiTraceLevel', [0, 1, 2, 3, 4, 5], [
-		'help' => '0 - отключить. Работает только в Debug режиме.',
+		'help' => '<div class="alert alert-info">0 - отключить. Работает только в Debug режиме.</div>',
 	]) ?>
 
 </fieldset>

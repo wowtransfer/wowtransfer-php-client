@@ -61,7 +61,8 @@ class ChdTransfer extends CActiveRecord
 			array('status', 'in', 'range' => array_keys(self::getStatuses())),
 
 			array('server', 'match', 'pattern' => '/^[a-zA-Z0-9\-\.]+$/S'),
-			array('realmlist, realm', 'match', 'pattern' => '/^[a-zA-Z0-9\-]+$/S'),
+			['realmlist', 'match', 'pattern' => '/^[a-zA-Z0-9\-\.]+$/S'],
+			['realm', 'match', 'pattern' => '/^[a-zA-Z0-9\-\. ]+$/S'],
 			array('account', 'match', 'pattern' => '/^[a-z0-9_\-]+$/S'),
 			array('comment', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
 

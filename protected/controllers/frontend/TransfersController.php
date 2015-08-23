@@ -63,25 +63,30 @@ class TransfersController extends FrontendController
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if (isset($_POST['ChdTransfer']))
-		{
+		$service = new Wowtransfer();
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
+		if (isset($_POST['ChdTransfer'])) {
 			$model->attributes = $_POST['ChdTransfer'];
 			$model->fileLua = CUploadedFile::getInstance($model, 'fileLua');
-			//CVarDumper::dump($_POST['ChdTransfer'], 10, true);
-			//exit;
-			if ($model->save())
-				$this->redirect(array('view', 'id' => $model->id));
-			else
-			{
-				//CVarDumper::dump($model, 10, true);
-				//exit;
-				//$model->addError('server', '123');
+			if ($model->fileLua) {
+				$dumpContent = file_get_contents($model->fileLua->tempName);
+				$dump = $service->getDump($dumpContent, ['player', 'global']);
+				if (!$dump) {
+					throw new Exception('Не удалось прочитать поля дампа: player, global.');
+				}
+				//$model->server = '';
+				$model->realmlist = $dump['global']['realmlist'];
+				$model->realm = $dump['global']['realm'];
+				$model->username_old = $dump['player']['name'];
+			}
+			if ($model->save()) {
+				$this->redirect(['view', 'id' => $model->id]);
 			}
 		}
-		else
-		{
-			if (empty($model->transferOptions))
-			{
+		else {
+			if (empty($model->transferOptions)) {
 				$model->transferOptions = Wowtransfer::getDumpFieldsNames();
 				$model->options = implode(';', $model->transferOptions);
 			}
@@ -89,8 +94,8 @@ class TransfersController extends FrontendController
 
 		$model->pass = '';
 		$model->pass2 = '';
-		if (defined('YII_DEBUG'))
-		{
+
+		if (defined('YII_DEBUG') && YII_DEBUG) {
 			$model->server = 'server';
 			$model->realmlist = 'realmlist';
 			$model->realm = 'realm';
@@ -100,15 +105,15 @@ class TransfersController extends FrontendController
 			$model->username_old = 'username';
 		}
 
-		$serviceUI = new WowtransferUI();
-		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
-		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-		$wowServers = $serviceUI->getWowServers();
-
 		$this->render('create', array(
 			'model' => $model,
-			'wowServers' => $wowServers,
 		));
+	}
+
+	public function actionGetCommonFields() {
+		$result = [];
+		
+		echo json_encode($result);
 	}
 
 	/**

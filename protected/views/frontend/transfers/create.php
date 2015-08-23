@@ -1,7 +1,6 @@
 <?php
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
-/* @var $wowServers array */
 
 $this->breadcrumbs = array(
 	'Заявки на перенос'=>array('index'),
@@ -17,5 +16,4 @@ $this->menu = array(
 
 <?php $this->renderPartial('_form', array(
 	'model' => $model,
-	'wowServers' => $wowServers,
 )); ?>

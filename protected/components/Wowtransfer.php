@@ -205,6 +205,50 @@ class Wowtransfer
 	}
 
 	/**
+	 * @param string $dumpLua
+	 * @param array $fiels
+	 * @return boolean|array
+	 */
+	public function getDump($dumpLua, $fiels = []) {
+		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
+		$file = fopen($filePath, 'w');
+		if (!$file) {
+			$this->lastError = 'fopen() failed! file: ' . $filePath;
+			return false;
+		}
+		fwrite($file, $dumpLua);
+		fclose($file);
+
+		$ch = $this->_ch;
+		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/dumps/fields/'));
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
+		curl_setopt($ch, CURLOPT_POST, 1);
+		$postfields = array(
+			'dump_lua'     => '@' . $filePath,
+			'fields'       => implode(',', $fiels),
+		);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+
+		$this->lastHttpResponse = curl_exec($ch);
+		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+		unlink($filePath);
+
+		if ($this->lastHttpStatus != 200) {
+			$response = json_decode($this->lastHttpResponse, true);
+			if ($response) {
+				$this->lastError = isset($response['error_message']) ? $response['error_message'] : 'Error';
+			}
+			else {
+				$this->lastError = 'Erorr (' . $this->lastHttpStatus . ')';
+			}
+			return false;
+		}
+
+		return json_decode($this->lastHttpResponse, true);
+	}
+
+	/**
 	 * @return array
 	 */
 	public static function getDumpFieldsNames() {

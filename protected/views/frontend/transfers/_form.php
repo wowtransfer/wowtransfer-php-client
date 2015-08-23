@@ -1,7 +1,6 @@
 <?php
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
-/* @var $wowServers array */
 
 ?>
 
@@ -26,13 +25,8 @@
 	<fieldset>
 		<legend>Удаленный сервер</legend>
 
-		<?php /* echo CHtml::dropDownList('wowserver', null, $wowServers, array(
-			'onchange' => '$("#ChdTransfer_server").val(this.value);',
-			'class' => 'pull-right',
-			'style' => 'width: 180px;',
-		));*/ ?>
 		<?php echo $form->textFieldControlGroup($model, 'server', array(
-			'hint' => 'Вводить без протокола (http://), например, myserver.ru или twoserver.com',
+			'help' => 'Вводить без протокола (http://), например, myserver.ru или twoserver.com',
 			'class' => 'col-sm-4',
 		)); ?>
 
