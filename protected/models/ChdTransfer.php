@@ -77,7 +77,7 @@ class ChdTransfer extends CActiveRecord
 			array('transferOptions', 'type', 'type' => 'array', 'allowEmpty' => false),
 
 			array('pass2', 'required', 'on' => 'create, update'),
-			array('fileLua', 'file', 'types' => 'lua', 'allowEmpty' => false, 'maxFiles' => 1, 'maxSize' => 1024 * 600, 'on' => 'create'),
+			array('fileLua', 'file', 'types' => 'lua', 'allowEmpty' => true, 'maxFiles' => 1, 'maxSize' => 1024 * 600, 'on' => 'create'),
 			array('pass', 'compare', 'compareAttribute' => 'pass2', 'operator' => '=', 'on'=>'create, update'),
 
 			// The following rule is used by search().
@@ -212,11 +212,18 @@ class ChdTransfer extends CActiveRecord
 
 	public function beforeValidate()
 	{
-		if (!parent::beforeValidate())
+		if (!parent::beforeValidate()) {
 			return false;
+		}
+		if (!Yii::app()->request->isAjaxRequest) {
+			if (!($this->fileLua instanceof CUploadedFile)) {
+				$this->addError('fileLua', Yii::t('yii', '{attribute} cannot be blank.', [
+					'{attribute}' => $this->getAttributeLabel('fileLua')
+				]));
+			}
+		}
 
-		if ($this->isNewRecord)
-		{
+		if ($this->isNewRecord) {
 			$this->account_id = Yii::app()->user->id;
 			$this->status = self::STATUS_PROCESS;
 
@@ -243,8 +250,9 @@ class ChdTransfer extends CActiveRecord
 			// ...
 		}
 
-		if (is_array($this->transferOptions))
+		if (is_array($this->transferOptions)) {
 			$this->options = implode(';', $this->transferOptions);
+		}
 
 		return true;
 	}

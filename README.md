@@ -93,5 +93,7 @@ backend
 * Apply cache
 * Add multilanguages
 * register css, js files
-* Rewrite application based on yii2 ()
 * Move the dumps to service
+* gzip between service and server
+* view transfer page
+* index, view transfer page on admin

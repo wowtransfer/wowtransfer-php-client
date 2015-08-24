@@ -6,7 +6,8 @@
 
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
-	'enableClientValidation' => true,
+	'enableAjaxValidation' => false,
+	'enableClientValidation' => false,
 	'htmlOptions' => array(
 		'enctype' => 'multipart/form-data',
 		'id' => 'chd-transfer-form',
@@ -18,7 +19,7 @@
 	<?php if ($model->isNewRecord): ?>
 		<fieldset>
 			<legend>Выбор lua-дампа</legend>
-			<?php echo $form->fileFieldControlGroup($model, 'fileLua'); ?>
+			<?php echo $form->fileFieldControlGroup($model, 'fileLua', ['help' => ' ']); ?>
 		</fieldset>
 	<?php endif; ?>
 
@@ -31,7 +32,7 @@
 		)); ?>
 
 		<?php echo $form->textFieldControlGroup($model, 'realmlist', array(
-			'class' => 'col-sm-4'
+			'class' => 'col-sm-4', 'readonly' => 1,
 		)); ?>
 
 		<?php /*echo CHtml::dropDownList('wowserver-realm', null, array(), array(
@@ -40,7 +41,7 @@
 			'style' => 'width: 180px;',
 		)); */ ?>
 		<?php echo $form->textFieldControlGroup($model, 'realm', array(
-			'class' => 'col-sm-4'
+			'class' => 'col-sm-4', 'readonly' => 1,
 		)); ?>
 
 		<?php echo $form->textFieldControlGroup($model, 'account', array(
@@ -53,7 +54,7 @@
 			'class' => 'col-sm-4'
 		)); ?>
 		<?php echo $form->textFieldControlGroup($model, 'username_old', array(
-			'class' => 'col-sm-4'
+			'class' => 'col-sm-4', 'readonly' => 1,
 		)); ?>
 		<?php echo $form->textAreaControlGroup($model, 'comment', array(
 			'span' => 8, 'rows' => 4, 'class' => 'col-sm-12',

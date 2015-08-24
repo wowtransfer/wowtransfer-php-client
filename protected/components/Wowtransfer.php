@@ -206,10 +206,13 @@ class Wowtransfer
 
 	/**
 	 * @param string $dumpLua
-	 * @param array $fiels
+	 * @param array $fields
 	 * @return boolean|array
 	 */
-	public function getDump($dumpLua, $fiels = []) {
+	public function getDump($dumpLua, $fields = []) {
+		if (empty($dumpLua)) {
+			return false;
+		}
 		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
 		$file = fopen($filePath, 'w');
 		if (!$file) {
@@ -225,7 +228,7 @@ class Wowtransfer
 		curl_setopt($ch, CURLOPT_POST, 1);
 		$postfields = array(
 			'dump_lua'     => '@' . $filePath,
-			'fields'       => implode(',', $fiels),
+			'fields'       => implode(',', $fields),
 		);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 

@@ -26,15 +26,17 @@ class TransfersController extends FrontendController
 	 */
 	public function accessRules()
 	{
-		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view','create','update','delete'),
-				'users'=>array('@'),
-			),
-			array('deny',  // deny all users
+		return [
+			['allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions' => ['index','view','create','update','delete',
+					'getCommonFields'
+				],
+				'users' => array('@'),
+			],
+			['deny',  // deny all users
 				'users'=>array('*'),
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -67,20 +69,11 @@ class TransfersController extends FrontendController
 		$service->setAccessToken(Yii::app()->params['accessToken']);
 		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 
-		if (isset($_POST['ChdTransfer'])) {
-			$model->attributes = $_POST['ChdTransfer'];
+		$request = Yii::app()->request;
+		if ($request->getPost('ChdTransfer')) {
+			// TODO: exclode 'realmlist', 'realm' and 'username_old'
+			$model->attributes = $request->getPost('ChdTransfer');
 			$model->fileLua = CUploadedFile::getInstance($model, 'fileLua');
-			if ($model->fileLua) {
-				$dumpContent = file_get_contents($model->fileLua->tempName);
-				$dump = $service->getDump($dumpContent, ['player', 'global']);
-				if (!$dump) {
-					throw new Exception('Не удалось прочитать поля дампа: player, global.');
-				}
-				//$model->server = '';
-				$model->realmlist = $dump['global']['realmlist'];
-				$model->realm = $dump['global']['realm'];
-				$model->username_old = $dump['player']['name'];
-			}
 			if ($model->save()) {
 				$this->redirect(['view', 'id' => $model->id]);
 			}
@@ -97,12 +90,7 @@ class TransfersController extends FrontendController
 
 		if (defined('YII_DEBUG') && YII_DEBUG) {
 			$model->server = 'server';
-			$model->realmlist = 'realmlist';
-			$model->realm = 'realm';
 			$model->account = 'account';
-			$model->pass = 'password';
-			$model->pass2 = 'password';
-			$model->username_old = 'username';
 		}
 
 		$this->render('create', array(
@@ -112,7 +100,28 @@ class TransfersController extends FrontendController
 
 	public function actionGetCommonFields() {
 		$result = [];
-		
+
+		$service = new \Wowtransfer();
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
+		try {
+			$fileLua = CUploadedFile::getInstanceByName('fileLua');
+			if (!$fileLua) {
+				throw new Exception('Файл не загружен');
+			}
+			$dumpContent = file_get_contents($fileLua->tempName);
+			$dump = $service->getDump($dumpContent, ['player', 'global']);
+			if (!$dump) {
+				throw new Exception('Не удалось прочитать lua дамп');
+			}
+			$result['realmlist'] = $dump['global']['realmlist'];
+			$result['realm'] = $dump['global']['realm'];
+			$result['username'] = $dump['player']['name'];
+		} catch (Exception $ex) {
+			$result['error_message'] = $ex->getMessage();
+		}
+
 		echo json_encode($result);
 	}
 
@@ -243,8 +252,7 @@ class TransfersController extends FrontendController
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='chd-transfer-form')
-		{
+		if (isset($_POST['ajax']) && $_POST['ajax'] === 'chd-transfer-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
