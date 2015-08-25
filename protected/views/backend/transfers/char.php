@@ -15,19 +15,19 @@ $this->breadcrumbs = array(
 
 ?>
 
-<div id="transfer" data-id="<?php echo $model->id ?>" class="hidden"></div>
+<div id="transfer" data-id="<?= $model->id ?>" class="hidden"></div>
 
 <div style="float: right; width: 300px;">
 	<a class="btn btn-default btn-sm btn-char-action" href="#"
-		onclick="OnClearCharacterDataByTransferIdClick(<?php echo $model->id; ?>); return false;">
+		onclick="OnClearCharacterDataByTransferIdClick(<?= $model->id; ?>); return false;">
 		Clear character's data by GUID and ID
 	</a> <span class="label label-success">safe</span><br>
 	<a class="btn btn-default btn-sm btn-char-action" href="#"
-		onclick="return OnClearCharacterDataByGuidClick(<?php echo $model->id; ?>, <?php echo $model->char_guid; ?>); return false;">
+		onclick="return OnClearCharacterDataByGuidClick(<?= $model->id; ?>, <?= $model->char_guid; ?>); return false;">
 		Clear character's data by GUID
 	</a> <span class="label label-danger btn-char-action">unsafe</span><br>
 	<a class="btn btn-default btn-sm btn-char-action" href="#"
-		onclick="OnShowCharacterDataClick(<?php echo $model->char_guid; ?>); return false;">
+		onclick="OnShowCharacterDataClick(<?= $model->char_guid; ?>); return false;">
 		Show character's info by GUID and ID
 	</a><br>
 	<a class="btn btn-default btn-sm btn-char-action" href="#" onclick="alert('TODO');">View SQL script</a><br />
@@ -36,7 +36,7 @@ $this->breadcrumbs = array(
 		lua-dump
 	</a>
 	<a class="btn btn-default btn-sm" href="#"
-		onclick="OnViewUncryptedLuaDumpClick(<?php echo $model->id; ?>); return false;"
+		onclick="OnViewUncryptedLuaDumpClick(<?= $model->id; ?>); return false;"
 		>uncripted lua-dump</a>
 </div>
 
@@ -50,34 +50,34 @@ $this->breadcrumbs = array(
 <div style="margin: 5px 305px 5px 0; height: 160px;">
 
 	<div style="float: left; padding: 3px;">
-		<b>Создана</b><br><?php echo $model->create_transfer_date; ?><br>
-		<b>Статус</b><br> <?php echo $model->status; ?>
+		<b>Создана</b><br><?= $model->create_transfer_date; ?><br>
+		<b>Статус</b><br> <?= $model->status; ?>
 	</div>
 
 	<div style="float: left; padding: 3px;">
 		<b>Сервер</b><br>
-		<?php echo $model->server; ?><br>
+		<?= $model->server; ?><br>
 		<b>Реалмлист</b><br>
-		<?php echo $model->realmlist; ?><br>
+		<?= $model->realmlist; ?><br>
 		<b>Реалм</b><br>
-		<?php echo $model->realm; ?>
+		<?= $model->realm; ?>
 	</div>
 
 	<div style="float: left; padding: 3px;">
 		<b>Аккаунт</b><br>
-		<?php echo $model->account; ?><br>
+		<?= $model->account; ?><br>
 		<b>Пароль</b><br>
 
 		<span class="btn btn-default btn-xs switch-password">+</span>
-		<span id="password_<?php echo $model->id ?>" data-password="">*******</span><br>
+		<span id="password_<?= $model->id ?>" data-password="">*******</span><br>
 
 		<b>Персонаж</b><br>
-		<?php echo $model->username_old; ?>
+		<?= $model->username_old; ?>
 	</div>
 
 	<div class="pull-right">
 		<b>Конфигурация</b><br>
-		<?php echo CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
+		<?= CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
 			'style' => 'width: 200px;',
 		)); ?>
 	</div>
@@ -86,38 +86,45 @@ $this->breadcrumbs = array(
 
 </div>
 
-<?php echo $form->hiddenField($model, 'id'); ?>
+<?= $form->hiddenField($model, 'id'); ?>
 
 <div>
-	<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
-			'model' => $model,
-			'form' => $form,
-			'options' => $model->getTransferOptionsToUser(),
-			'readonly' => true,
-		));
-	?>
+	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
+		'model' => $model,
+		'form' => $form,
+		'options' => $model->getTransferOptionsToUser(),
+		'readonly' => true,
+	]); ?>
 </div>
 
 <div class="pull-right" style="height: 1em;">
-	Если опция недоступна значит она отключена в <a href="<?php echo Yii::app()->createUrl('/configs/toptions'); ?>">глобальных настройках.</a>
+	Если опция недоступна значит она отключена в
+	<a href="<?= Yii::app()->createUrl('/configs/toptions') ?>">
+	глобальных настройках.</a>
 </div>
 
 <div class="form-actions">
-	<img id="create-char-wait" src="<?php echo Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
+	<img id="create-char-wait" src="<?= Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
 
-	<button type="submit" class="btn btn-primary" href="<?php echo $this->createUrl('char', array('id' => $model->id)); ?>"
+	<button type="submit" class="btn btn-primary" href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
 		id="btn-create-char">
 		<span class="glyphicon glyphicon-plane"></span>
 		Создать
 	</button>
 
-	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default"
+	<button type="submit" class="btn btn-primary" href="<?= $this->createUrl('onlysql', ['id' => $model->id]) ?>"
+		id="btn-only-sql">
+		<span class="glyphicon"></span>
+		SQL
+	</button>
+
+	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
 	   id="btn-create-char-cancel">
 		<span class="glyphicon glyphicon-ban-circle"></span>
 		Отмена
 	</a>
 
-	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-success"
+	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-success"
 	   style="display: none;" id="btn-create-char-success">
 		<span class="glyphicon glyphicon-plane"></span>
 		К заявкам
@@ -141,7 +148,7 @@ $this->breadcrumbs = array(
 
 	<div class="tab-pane" id="tab-sql">
 		<h3>SQL скрипт персонажа</h3>
-		<pre id="create-char-sql"><?php echo $sql; ?></pre>
+		<pre id="create-char-sql"><?= $sql; ?></pre>
 	</div>
 
 	<div class="tab-pane active" id="tab-queries">
@@ -160,7 +167,7 @@ $this->breadcrumbs = array(
 					$classStatus = '';
 				}
 ?>
-				<span class="query-res <?php echo $classStatus; ?>" title="<?php echo $query['query']; ?>"><?php echo $query['status'] ?></span>
+				<span class="query-res <?= $classStatus; ?>" title="<?= $query['query']; ?>"><?= $query['status'] ?></span>
 			<?php endfor; ?>
 			</div>
 		<?php else: ?>

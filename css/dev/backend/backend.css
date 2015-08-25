@@ -69,7 +69,7 @@
 
 .transfer-comment {
     width: 100%;
-    height: 65px;
+    height: 100px;
     resize: none;
     margin: 5px 0;
     display: block;
@@ -78,3 +78,13 @@
 #latest-version {
 	font-size: 1.3em;
 }
+
+.transfer-actions {
+	margin: 5px 0;
+}
+.transfer-actions:before {
+	display: block;
+	content: '';
+	clear: both;
+}
+
