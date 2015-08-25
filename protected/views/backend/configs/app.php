@@ -3,10 +3,10 @@
 /* @var $model AppConfigForm */
 /* @var $cores array */
 
-$this->breadcrumbs = array(
-	'Настройка' => array('/configs'),
-	'Приложение',
-);
+$this->breadcrumbs = [
+	'Настройка' => ['/configs'],
+	Yii::t('app', 'Application')
+];
 
 ?>
 <h1>Настройка приложения</h1>
@@ -49,7 +49,7 @@ $this->breadcrumbs = array(
 </fieldset>
 
 <fieldset>
-	<legend>Приложение</legend>
+	<legend><?= Yii::t('app', 'Application') ?></legend>
 
 	<?= $form->checkboxControlGroup($model, 'yiiDebug', [
 		'help' => '<div class="alert alert-danger">Выключать на боевом сервере!!!</div>'

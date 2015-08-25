@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
 	'Настройка' => array('/configs'),
-	'Приложение',
+	Yii::t('app', 'Application')
 );
 
 ?>

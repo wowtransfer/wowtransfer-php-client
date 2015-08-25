@@ -169,23 +169,20 @@ class ChdTransfer extends CActiveRecord
 	}
 
 	/**
-	 * @var array
-	 */
-	protected static $statuses = array(
-		self::STATUS_PROCESS => 'В процессе',
-		self::STATUS_CHECK => 'Проверяется',
-		self::STATUS_CANCEL => 'Отклонено',
-		self::STATUS_APPLY => 'Принято',
-		self::STATUS_GAME => 'Игра',
-		self::STATUS_CART => 'В корзине',
-	);
-
-	/**
 	 * @return array
 	 */
 	public static function getStatuses()
 	{
-		return self::$statuses;
+		$statuses = [
+			self::STATUS_PROCESS => Yii::t('app', 'In process'),
+			self::STATUS_CHECK => 'Проверяется',
+			self::STATUS_CANCEL => 'Отклонено',
+			self::STATUS_APPLY => 'Принято',
+			self::STATUS_GAME => 'Игра',
+			self::STATUS_CART => 'В корзине',
+		];
+
+		return $statuses;
 	}
 
 	/**
@@ -193,8 +190,9 @@ class ChdTransfer extends CActiveRecord
 	 * @return string
 	 */
 	public static function getStatusTitle($name) {
-		if (isset(self::$statuses[$name])) {
-			return self::$statuses[$name];
+		$statuses = self::getStatuses();
+		if (isset($statuses[$name])) {
+			return $statuses[$name];
 		}
 		return 'undefined';
 	}

@@ -39,9 +39,9 @@
 
 	<!-- Admin / Application switch -->
 	<a href="<?php echo Yii::app()->request->baseUrl . '/index.php/transfers/index'; ?>"
-	   class="right" id="admin-switch" title="Приложение">
+	   class="right" id="admin-switch" title="<?= Yii::t('app', 'Application') ?>">
 		<span class="glyphicon glyphicon-arrow-left"></span>
-		Приложение
+		<?= Yii::t('app', 'Application') ?>
 	</a>
 
 	<?php if (isset($this->breadcrumbs)):?>
