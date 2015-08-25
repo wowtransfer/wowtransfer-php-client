@@ -3,17 +3,17 @@
 /* @var $model ChdTransfer */
 /* @var $wowServers array */
 
-$this->breadcrumbs = array(
-	'Заявки на перенос'=>array('index'),
-	' ' . $model->id => array('view', 'id'=>$model->id), // TODO: hack
+$this->breadcrumbs = [
+	Yii::t('app', 'Transfer requests') => ['index'],
+	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
 	'Изменение',
-);
+];
 
-$this->menu = array(
-	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
-	array('label'=>'Создать заявку', 'url'=>array('create'), 'icon' => 'plus'),
-	array('label'=>'Просмотр заявки', 'url'=>array('view', 'id'=>$model->id), 'icon' => 'eye-open'),
-);
+$this->menu = [
+	['label' => Yii::t('app', 'Requests list'), 'url' => ['index'], 'icon' => 'list'],
+	['label' => Yii::t('app', 'Create request'), 'url'=>['create'], 'icon' => 'plus'],
+	['label' => Yii::t('app', 'Request view'), 'url'=>array('view', 'id'=>$model->id), 'icon' => 'eye-open'],
+];
 ?>
 
 <h1>Изменение заявки #<?php echo $model->id; ?></h1>

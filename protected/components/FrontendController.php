@@ -16,17 +16,17 @@ class FrontEndController extends BaseController
 	public function getMenu() {
 		$menu = array();
 
-		$menu[] = array('label' => 'Сайт', 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home');
+		$menu[] = array('label' => Yii::t('app', 'Site'), 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home');
 		if (Yii::app()->user->isGuest) {
-			$menu[] = array('label' => 'Войти', 'url' => array('/site/login'), 'icon' => 'login');
+			$menu[] = array('label' => Yii::t('app', 'Login'), 'url' => array('/site/login'), 'icon' => 'login');
 		}
 		else {
 			$menu[] = array(
-				'label' => 'Заявки', 'url' => array('/transfers'),
+				'label' => Yii::t('app', 'Requests'), 'url' => array('/transfers'),
 				'icon' => 'list', 'active' => $this->id == 'transfers',
 			);
 		}
-		$menu[] = array('label' => 'Помощь', 'url' => array('/site/page'), 'icon' => 'info-sign');
+		$menu[] = array('label' => Yii::t('app', 'Help'), 'url' => array('/site/page'), 'icon' => 'info-sign');
 
 		return $menu;
 	}

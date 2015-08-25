@@ -8,7 +8,7 @@
 /* @var $tconfigs array Transfer's configurations */
 
 $this->breadcrumbs = array(
-	'Заявки на перенос' => array('index'),
+	Yii::t('app', 'Transfer requests') => array('index'),
 	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
 	'Создание персонажа',
 );
@@ -109,7 +109,7 @@ $this->breadcrumbs = array(
 	<button type="submit" class="btn btn-primary" href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
 		id="btn-create-char">
 		<span class="glyphicon glyphicon-plane"></span>
-		Создать
+		<?= Yii::t('app', 'Create') ?>
 	</button>
 
 	<button type="submit" class="btn btn-primary" href="<?= $this->createUrl('onlysql', ['id' => $model->id]) ?>"
@@ -121,13 +121,13 @@ $this->breadcrumbs = array(
 	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
 	   id="btn-create-char-cancel">
 		<span class="glyphicon glyphicon-ban-circle"></span>
-		Отмена
+		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 
 	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-success"
 	   style="display: none;" id="btn-create-char-success">
 		<span class="glyphicon glyphicon-plane"></span>
-		К заявкам
+		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 
 </div>

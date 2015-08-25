@@ -3,22 +3,22 @@
 /* @var $model ChdTransfer */
 
 $this->breadcrumbs = array(
-	'Заявки на перенос' => array('index'),
+	Yii::t('app', 'Transfer requests') => array('index'),
 	$model->id,
 );
 
-$this->menu = array(
-	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
+$this->menu = [
+	array('label' => Yii::t('app', 'Requests list'), 'url'=>array('index'), 'icon' => 'list'),
 	($model->char_guid > 0) ?
 		array('label'=>'Удалить персонажа', 'url'=>'#', 'icon' => 'remove',
 			'linkOptions'=>array('submit'=>array('deletechar','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить персонажа?'))
 	:
 		array('label'=>'Создать персонажа', 'url'=>array('/transfers/char/' . $model->id), 'icon' => 'plane'),
 	array('label'=>'Lua-dump', 'url'=>array('luadump', 'id'=>$model->id), 'icon' => 'file'),
-);
+];
 ?>
 
-<h1>Просмотр заявки #<?php echo $model->id; ?></h1>
+<h1><?= Yii::t('app', 'Request view') ?> #<?php echo $model->id; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data' => $model,
@@ -46,7 +46,7 @@ $this->menu = array(
 
 	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default">
 		<span class="glyphicon glyphicon-ban-circle"></span>
-		Отмена
+		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 
 </div>

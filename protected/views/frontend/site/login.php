@@ -32,12 +32,12 @@ $this->breadcrumbs=array(
 
 	<button type="submit" class="btn btn-primary">
 		<span class="glyphicon glyphicon-log-in"></span>
-		Войти
+		<?= Yii::t('app', 'Login') ?>
 	</button>
 
 	<a href="/" class="btn btn-default">
 		<span class="glyphicon glyphicon-home"></span>
-		Отмена
+		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 
 <?php $this->endWidget(); ?>

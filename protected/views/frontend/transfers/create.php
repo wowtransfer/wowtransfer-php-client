@@ -2,17 +2,17 @@
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 
-$this->breadcrumbs = array(
-	'Заявки на перенос'=>array('index'),
+$this->breadcrumbs = [
+	Yii::t('app', 'Transfer requests') => ['index'],
 	'Создание',
-);
+];
 
-$this->menu = array(
-	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
-);
+$this->menu = [
+	['label' => Yii::t('app', 'Requests list'), 'url' => ['index'], 'icon' => 'list'],
+];
 ?>
 
-<h1>Создание заявки</h1>
+<h1><?= Yii::t('app', 'Create request') ?></h1>
 
 <?php $this->renderPartial('_form', array(
 	'model' => $model,

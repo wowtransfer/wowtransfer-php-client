@@ -3,11 +3,11 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs = array(
-	'Заявки на перенос',
+	Yii::t('app', 'Transfer requests')
 );
 ?>
 
-<h1>Заявки на перенос</h1>
+<h1><?= Yii::t('app', 'Transfer requests') ?></h1>
 
 <?php if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="alert alert-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>

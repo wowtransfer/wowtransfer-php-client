@@ -13,13 +13,15 @@
 ?>
 
 <?php echo TbHtml::textAreaControlGroup('body', $tconfig['body'], array(
-	'label' => 'Содержание',
+	'label' => Yii::t('app', 'Content'),
 	'readonly' => 1,
 	'rows' => 20,
 )); ?>
 
 <div class="form-actions">
-	<a class="btn btn-default" href="<?php echo $this->createUrl('/tconfigs'); ?>">Отмена</a>
+	<a class="btn btn-default" href="<?php echo $this->createUrl('/tconfigs'); ?>">
+		<?= Yii::t('app', 'Cancel') ?>
+	</a>
 </div>
 
 <?php echo TbHtml::endForm(); ?>

@@ -29,12 +29,12 @@
 		</a>
 
 		<a href="<?= $this->createUrl('/transfers/update', array('id' => $data->id)); ?>"
-		   class="btn btn-default btn-sm pull-right" title="Изменить">
+		   class="btn btn-default btn-sm pull-right" title="<?= Yii::t('app', 'Change') ?>">
 			<span class="glyphicon glyphicon-pencil"></span>
 		</a>
 
 		<a href="<?= $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
-		   class="btn btn-default btn-sm pull-right" title="Просмотр...">
+		   class="btn btn-default btn-sm pull-right" title="<?= Yii::t('app', 'View') ?>">
 			<span class="glyphicon glyphicon-eye-open"></span>
 		</a>
 	</div>
@@ -42,7 +42,7 @@
 	<div class="row" style="margin-bottom: 10px;">
 
 		<div class="col-md-5">
-			<h4>Удаленный сервер</h4>
+			<h4><?= Yii::t('app', 'Remote server') ?></h4>
 			<div class="toptions-view-attr">
 				<b><?= $data->getAttributeLabel('server') ?></b>
 				<?= CHtml::encode($data->server) ?>
@@ -62,7 +62,7 @@
 		</div>
 
 		<div class="col-md-5">
-			<h4>Текущий сервер</h4>
+			<h4><?= Yii::t('app', 'Current server') ?></h4>
 
 			<div class="toptions-view-attr">
 				<b><?= CHtml::encode($data->getAttributeLabel('username_new')); ?>:</b>
@@ -72,7 +72,7 @@
 
 	</div>
 
-	<div><b>Опции переноса:</b>
+	<div><b><?= Yii::t('app', 'Transfer options') ?>:</b>
 	<? $this->widget('application.components.widgets.TransferOptionsWidget', array(
 		'model' => $data,
 		'options' => $data->getTransferOptionsToUser()

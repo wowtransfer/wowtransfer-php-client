@@ -18,13 +18,13 @@
 
 	<?php if ($model->isNewRecord): ?>
 		<fieldset>
-			<legend>Выбор lua-дампа</legend>
+			<legend><?= Yii::t('app', 'Select Lua dump') ?></legend>
 			<?php echo $form->fileFieldControlGroup($model, 'fileLua', ['help' => ' ']); ?>
 		</fieldset>
 	<?php endif; ?>
 
 	<fieldset>
-		<legend>Удаленный сервер</legend>
+		<legend><?= Yii::t('app', 'Remote server') ?></legend>
 
 		<?php echo $form->textFieldControlGroup($model, 'server', array(
 			'help' => 'Вводить без протокола (http://), например, myserver.ru или twoserver.com',
@@ -62,7 +62,7 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>Опции переноса</legend>
+		<legend><?= Yii::t('app', 'Transfer options') ?></legend>
 		<?php echo $form->error($model, 'transferOptions'); ?>
 
 		<?php $this->widget('application.components.widgets.TransferOptionsWidget', array(
@@ -77,12 +77,12 @@
 	<div class="form-actions">
 		
 		<button type="submit" class="btn btn-primary">
-			<?php echo $model->isNewRecord ? 'Создать' : 'Сохранить'; ?>
+			<?php echo $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'); ?>
 		</button>
 		
 		<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default">
 			<span class="glyphicon glyphicon-ban-circle"></span>
-			Отмена
+			<?= Yii::t('app', 'Cancel') ?>
 		</a>
 
 	</div>

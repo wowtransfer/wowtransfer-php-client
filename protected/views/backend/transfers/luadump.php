@@ -5,14 +5,14 @@
 /* @var $luaDumpContentZip string Zipped content */
 
 $this->breadcrumbs = array(
-	'Заявки на перенос' => array('/transfers'),
+	Yii::t('app', 'Transfer requests') => array('/transfers'),
 	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
 	'Lua-дамп'
 );
 
-$this->menu = array(
-	array('label'=>'Список заявок', 'url'=>array('index'), 'icon' => 'list'),
-);
+$this->menu = [
+	['label' => Yii::t('app', 'Requests list'), 'url'=> ['index'], 'icon' => 'list'],
+];
 
 $luaDumpSize = strlen($luaDumpContent);
 $luaDumpZipSize = strlen($luaDumpContentZip);

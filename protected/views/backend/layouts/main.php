@@ -18,21 +18,23 @@
 
 	<div id="header">
 		<div id="login">
-			<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
-			<a href="<?php echo $this->createUrl('/site/logout') ?>" title="Logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a>
+			<div><? Yii::t('app', 'Wellcome') ?> <b><?php echo Yii::app()->user->name; ?></b></div>
+			<a href="<?php echo $this->createUrl('/site/logout') ?>" title="Logout">
+				<span class="glyphicon glyphicon-log-out"></span> <?= Yii::t('app', 'Logout') ?>
+			</a>
 		</div>
 	</div><!-- header -->
 
 	<?php $this->widget('bootstrap.widgets.TbNav', array(
 		'type' => 'tabs',
-		'items' => array(
-			array('label'=>'Сайт', 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'),
+		'items' => [
+			['label' => Yii::t('app', 'Site'), 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'],
 			array('label'=>'Главная', 'url'=>array('/'), 'active' => $this->route == 'site/index'),
-			array('label'=>'Заявки', 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'),
+			array('label' => Yii::t('app', 'Requests'), 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'),
 			array('label'=>'Конфигурации', 'url'=>array('/tconfigs/index'), 'icon' => 'asterisk'),
 			array('label'=>'Настройка', 'url'=>array('/configs'), 'icon' => 'cog', 'active' => $this->id == 'configs'),
 			array('label'=>'Обновление', 'url'=>array('/updates'), 'icon' => 'ok-circle', 'active' => $this->id == 'updates'),
-		),
+		],
 	)); ?><!-- mainmenu -->
 
 	<!-- Admin / Application switch -->
@@ -45,7 +47,7 @@
 	<?php if (isset($this->breadcrumbs)):?>
 		<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 			'links' => $this->breadcrumbs,
-			'homeLabel' => CHtml::link('Админка', Yii::app()->homeUrl),
+			'homeLabel' => CHtml::link(Yii::t('app', 'Administration'), Yii::app()->homeUrl),
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 

@@ -28,21 +28,22 @@
 			<div id="login">
 				<?php if (Yii::app()->user->isGuest): ?>
 					<?php if ($this->route != 'site/login'): ?>
-						<a href="<?php echo $this->createUrl('/site/login'); ?>" title="Войти">
+						<a href="<?php echo $this->createUrl('/site/login'); ?>">
 							<span class="glyphicon glyphicon-log-in"></span>
-							Войти
+							<?= Yii::t('app', 'Login') ?>
 						</a>
 					<?php endif; ?>
 				<?php else: ?>
 					<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
-					<a href="<?php echo Yii::app()->createUrl('site/logout') ?>" title="Выйти">
-						<span class="glyphicon glyphicon-log-out"></span> Выйти
+					<a href="<?php echo Yii::app()->createUrl('site/logout') ?>">
+						<span class="glyphicon glyphicon-log-out"></span>
+						<?= Yii::t('app', 'Logout') ?>
 					</a>
 				<?php endif; ?>
 			</div>
 			<div id="logo">
 				<img alt="" src="<?php echo Yii::app()->request->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
-				<?php echo CHtml::encode(Yii::app()->name); ?>
+				<?= Yii::t('app', 'Characters transfer') ?>
 			</div>
 		</div><!-- header -->
 	</div>
@@ -64,14 +65,14 @@
 		<a href="<?php echo Yii::app()->request->baseUrl . '/admin.php/transfers/index'; ?>"
 		   class="right" id="admin-switch">
 			<span class="glyphicon glyphicon-cog"></span>
-			Администрирование
+			<?= Yii::t('app', 'Administration') ?>
 		</a>
 		<?php endif; ?>
 
 		<?php if (!empty($this->breadcrumbs)): ?>
 			<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 				'links' => $this->breadcrumbs,
-				'homeLabel' => 'Перенос персонажей',
+				'homeLabel' => Yii::t('app', 'Characters transfer'),
 			)); ?><!-- breadcrumbs -->
 		<?php endif; ?>
 	</div>

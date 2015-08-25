@@ -2,16 +2,16 @@
 /* @var $this TransfersController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Заявки на перенос',
-);
+$this->breadcrumbs = [
+	Yii::t('app', 'Transfer requests')
+];
 
-$this->menu = array(
-	array('label' => 'Создать заявку', 'url'=>array('create'), 'icon' => 'plus'),
-);
+$this->menu = [
+	['label' => Yii::t('app', 'Create request'), 'url'=> ['create'], 'icon' => 'plus'],
+];
 ?>
 
-<h1>Заявки на перенос</h1>
+<h1><?= Yii::t('app', 'Transfer requests') ?></h1>
 
 <? $this->renderPartial('_list', [
 	'dataProvider' => $dataProvider

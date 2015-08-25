@@ -3,11 +3,11 @@
 
 $this->breadcrumbs = array(
 	'Настройка' => array('/configs'),
-	'Опции переноса',
+	Yii::t('app', 'Transfer options')
 );
 ?>
 
-<h1 class="text-center">Опции переноса</h1>
+<h1 class="text-center"><?= Yii::t('app', 'Transfer options') ?></h1>
 
 <? if (Yii::app()->user->hasFlash('success')): ?>
 <div class="alert alert-success">
