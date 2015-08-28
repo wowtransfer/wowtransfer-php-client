@@ -85,7 +85,7 @@ $statuses = ChdTransfer::getStatuses();
 			</a>
 
 			<a href="<?= $this->createUrl('char', array('id' => $data->id)); ?>"
-			   class="btn btn-success" title="Создать персонажа"
+			   class="btn btn-success" title="<?= Yii::t('app', 'Create the character') ?>"
 			   style="display: <?= $data->char_guid ? 'none' : 'inline-block' ?>"
 			   >
 				<span class="spr create-char"></span>

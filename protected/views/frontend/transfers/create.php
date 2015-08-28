@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = [
 	Yii::t('app', 'Transfer requests') => ['index'],
-	'Создание',
+	Yii::t('app', 'Create')
 ];
 
 $this->menu = [

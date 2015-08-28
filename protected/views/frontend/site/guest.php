@@ -3,6 +3,10 @@
 
 ?>
 
-<h1>Необходима авторизация</h1>
+<h1><?= Yii::t('yii', 'Login Required') ?></h1>
 
-<p>Добро пожаловать <?php echo Yii::app()->user->guestName; ?>, <a href="<?php echo $this->createUrl('login'); ?>">авторизуйтесь</a> для управления заявками.</p>
+<p>
+	<?= Yii::t('app', 'Wellcome') ?> <?php echo Yii::app()->user->guestName; ?>,
+	<a href="<?php echo $this->createUrl('login'); ?>">
+		<?= Yii::t('app', 'Authorize for transfer request handle') ?></a>.
+</p>

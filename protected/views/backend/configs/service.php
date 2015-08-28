@@ -2,10 +2,10 @@
 /* @var $this ConfigsController */
 /* @var $model ServiceConfigForm */
 
-$this->breadcrumbs = array(
-	'Настройка' => array('/configs'),
+$this->breadcrumbs = [
+	Yii::t('app', 'Settings') => array('/configs'),
 	Yii::t('app', 'Application')
-);
+];
 
 ?>
 
@@ -29,7 +29,7 @@ $this->breadcrumbs = array(
 )); ?>
 
 <fieldset>
-	<legend>Сервис</legend>
+	<legend><?= Yii::t('app', 'Service') ?></legend>
 	<?php echo $form->textFieldControlGroup($model, 'serviceUsername', array(
 		'maxlength' => 32,
 	)); ?>

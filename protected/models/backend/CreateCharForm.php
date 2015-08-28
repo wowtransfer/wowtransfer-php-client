@@ -122,7 +122,7 @@ class CreateCharForm
 		$result = self::getDefaultResult();
 
 		if ($this->_transfer->char_guid > 0) {
-			$result['errors'][] = "Character exists! GUID = " . $this->_transfer->char_guid . '.';
+			$result['errors'][] = Yii::t('app', 'Character exists! GUID = {n}', [$this->_transfer->char_guid]);
 			return $result;
 		}
 
@@ -155,7 +155,7 @@ class CreateCharForm
 			$this->_transfer->char_guid = $guid;
 			$this->_transfer->create_char_date = date('Y-m-d h:i:s');
 			if (!$this->_transfer->save(false, array('char_guid', 'create_char_date'))) {
-				$result['errors'][] = "Active record Save fail";
+				$result['errors'][] = Yii::t('app', 'Saving failed');
 			}
 		}
 		$result['queries'] = $queries;

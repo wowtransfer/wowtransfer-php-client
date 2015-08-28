@@ -89,16 +89,16 @@ class AppConfigForm extends PhpFileForm
 	public function attributeLabels()
 	{
 		return [
-			'siteUrl'              => 'URL сайта',
-			'emailAdmin'           => 'Email администратора',
-			'core'                 => 'Ядро WoW сервера',
-			'maxTransfersCount'    => 'Максимальное количество заявок',
-			'maxAccountCharsCount' => 'Максимальное количество персонажей на аккаунте',
-			'adminsStr'            => 'Администраторы',
-			'modersStr'            => 'Модераторы',
-			'transferTable'        => 'Таблица с заявками',
-			'yiiDebug'             => 'Debug mode',
-			'yiiTraceLevel'        => 'Количество слоев стека вызова для журналирования',
+			'siteUrl'              => Yii::t('app', 'Url of a site'),
+			'emailAdmin'           => Yii::t('app', 'Email of administrator'),
+			'core'                 => Yii::t('app', 'Core of WoW server'),
+			'maxTransfersCount'    => Yii::t('app', 'Max request count'),
+			'maxAccountCharsCount' => Yii::t('app', 'Max characters counf on account'),
+			'adminsStr'            => Yii::t('app', 'Administrators'),
+			'modersStr'            => Yii::t('app', 'Moderators'),
+			'transferTable'        => Yii::t('app', 'Requests table'),
+			'yiiDebug'             => Yii::t('app', 'Debug mode'),
+			'yiiTraceLevel'        => Yii::t('app', 'Trace level'),
 		];
 	}
 

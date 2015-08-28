@@ -7,11 +7,11 @@
 /* @var $sql string */
 /* @var $tconfigs array Transfer's configurations */
 
-$this->breadcrumbs = array(
-	Yii::t('app', 'Transfer requests') => array('index'),
-	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
-	'Создание персонажа',
-);
+$this->breadcrumbs = [
+	Yii::t('app', 'Transfer requests') => ['index'],
+	' ' . $model->id => ['view', 'id' => $model->id], // TODO: hack
+	Yii::t('app', 'Create the character'),
+];
 
 ?>
 
@@ -57,26 +57,26 @@ $this->breadcrumbs = array(
 	<div style="float: left; padding: 3px;">
 		<b>Сервер</b><br>
 		<?= $model->server; ?><br>
-		<b>Реалмлист</b><br>
+		<b><?= Yii::t('app', 'Realmlist') ?></b><br>
 		<?= $model->realmlist; ?><br>
-		<b>Реалм</b><br>
+		<b><?= Yii::t('app', 'Realm') ?></b><br>
 		<?= $model->realm; ?>
 	</div>
 
 	<div style="float: left; padding: 3px;">
-		<b>Аккаунт</b><br>
+		<b><?= Yii::t('app', 'Account') ?></b><br>
 		<?= $model->account; ?><br>
-		<b>Пароль</b><br>
+		<b><?= Yii::t('app', 'Password') ?></b><br>
 
 		<span class="btn btn-default btn-xs switch-password">+</span>
 		<span id="password_<?= $model->id ?>" data-password="">*******</span><br>
 
-		<b>Персонаж</b><br>
+		<b><?= Yii::t('app', 'Character') ?></b><br>
 		<?= $model->username_old; ?>
 	</div>
 
 	<div class="pull-right">
-		<b>Конфигурация</b><br>
+		<b><?= Yii::t('app', 'Configuration') ?></b><br>
 		<?= CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
 			'style' => 'width: 200px;',
 		)); ?>
@@ -177,13 +177,13 @@ $this->breadcrumbs = array(
 	</div>
 
 	<div class="tab-pane" id="tab-warnings">
-		<h3>Предупреждения</h3>
+		<h3><?= Yii::t('app', 'Warnings') ?></h3>
 
 		<div id="create-char-warnings" class="alert alert-warning"></div>
 	</div>
 
 	<div class="tab-pane" id="tab-errors">
-		<h3>Ошибки</h3>
+		<h3><?= Yii::t('app', 'Errors') ?></h3>
 
 		<div id="create-char-errors" class="alert alert-danger"></div>
 	</div>

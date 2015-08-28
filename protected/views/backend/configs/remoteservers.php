@@ -3,14 +3,13 @@
 /* @var $whiteServers array */
 /* @var $blackServers array */
 
-$this->breadcrumbs = array(
-	'Настройка' => array('/configs'),
-	'Удаленные сервера',
-);
-
+$this->breadcrumbs = [
+	Yii::t('app', 'Settings') => ['/configs'],
+	Yii::t('app', 'Remote servers')
+];
 ?>
 
-<h1>Удаленные сервера</h1>
+<h1><?= Yii::t('app', 'Remote servers') ?></h1>
 
 <p>Удаленные сервера World of Warcraft с которых можно переносить персонажей.</p>
 

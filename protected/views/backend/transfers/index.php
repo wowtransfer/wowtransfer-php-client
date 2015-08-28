@@ -2,9 +2,9 @@
 /* @var $this TransfersController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs = array(
+$this->breadcrumbs = [
 	Yii::t('app', 'Transfer requests')
-);
+];
 ?>
 
 <h1><?= Yii::t('app', 'Transfer requests') ?></h1>

@@ -4,7 +4,7 @@
 <div class="portlet" style="margin-top: 10px;">
 	<form method="post" action="" onsubmit="return false;" id="frm-filter">
 		<div class="portlet-content">
-		<div class="portlet-title">Статусы</div>
+		<div class="portlet-title"><?= Yii::t('app', 'Statuses') ?></div>
 		<?php foreach (ChdTransfer::getStatuses() as $name => $value): ?>
 		<label class="tstatus-<?php echo $name; ?>">
 			<input type="checkbox" name="statuses[]"

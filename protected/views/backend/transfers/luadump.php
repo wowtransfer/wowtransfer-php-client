@@ -4,11 +4,11 @@
 /* @var $luaDumpContent string Source content */
 /* @var $luaDumpContentZip string Zipped content */
 
-$this->breadcrumbs = array(
-	Yii::t('app', 'Transfer requests') => array('/transfers'),
-	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
-	'Lua-дамп'
-);
+$this->breadcrumbs = [
+	Yii::t('app', 'Transfer requests') => ['/transfers'],
+	' ' . $model->id => ['view', 'id' => $model->id], // TODO: hack
+	Yii::t('app', 'Lua dump')
+];
 
 $this->menu = [
 	['label' => Yii::t('app', 'Requests list'), 'url'=> ['index'], 'icon' => 'list'],
@@ -18,7 +18,7 @@ $luaDumpSize = strlen($luaDumpContent);
 $luaDumpZipSize = strlen($luaDumpContentZip);
 ?>
 
-<h1>Lua-дамп персонажа</h1>
+<h1><?= Yii::t('app', 'Lua dump') ?></h1>
 
 
 <table class="table table-bordered">

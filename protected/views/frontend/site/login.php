@@ -3,13 +3,13 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle = 'Авторизация';
-$this->breadcrumbs=array(
-	'Авторизация',
-);
+$this->pageTitle = Yii::t('app', 'Autorization');
+$this->breadcrumbs = [
+	Yii::t('app', 'Autorization')
+];
 ?>
 
-<h1 class="text-center">Авторизация</h1>
+<h1 class="text-center"><?= Yii::t('app', 'Autorization') ?></h1>
 
 <?php if ($model->hasErrors()): ?>
 	<div class="flash-error">

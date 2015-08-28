@@ -3,3 +3,5 @@
 - icons: set, unset, invert.
 
 - restruct project files.
+
+- internationalizations, parted

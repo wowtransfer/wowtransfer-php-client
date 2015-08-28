@@ -1,10 +1,10 @@
 <?php
 /* @var $this ConfigsController */
 
-$this->breadcrumbs = array(
-	'Настройка' => array('/configs'),
+$this->breadcrumbs = [
+	Yii::t('app', 'Settings') => ['/configs'],
 	Yii::t('app', 'Transfer options')
-);
+];
 ?>
 
 <h1 class="text-center"><?= Yii::t('app', 'Transfer options') ?></h1>

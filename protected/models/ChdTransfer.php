@@ -175,11 +175,11 @@ class ChdTransfer extends CActiveRecord
 	{
 		$statuses = [
 			self::STATUS_PROCESS => Yii::t('app', 'In process'),
-			self::STATUS_CHECK => 'Проверяется',
-			self::STATUS_CANCEL => 'Отклонено',
-			self::STATUS_APPLY => 'Принято',
-			self::STATUS_GAME => 'Игра',
-			self::STATUS_CART => 'В корзине',
+			self::STATUS_CHECK => Yii::t('app', 'Checking'),
+			self::STATUS_CANCEL => Yii::t('app', 'Canceled'),
+			self::STATUS_APPLY => Yii::t('app', 'Accepted'),
+			self::STATUS_GAME => Yii::t('app', 'In game'),
+			self::STATUS_CART => Yii::t('app', 'In basket'),
 		];
 
 		return $statuses;
@@ -304,8 +304,9 @@ class ChdTransfer extends CActiveRecord
 	 */
 	public function deleteChar()
 	{
-		if (!$this->char_guid)
-			throw new CHttpException(404, 'Character not created');
+		if (!$this->char_guid) {
+			throw new CHttpException(404, Yii::t('app', 'Character has not created'));
+		}
 
 		$connection = Yii::app()->db;
 
@@ -317,17 +318,17 @@ class ChdTransfer extends CActiveRecord
 		$command = $connection->createCommand('SELECT @CHD_RES');
 		$result = $command->queryScalar() > 0;
 
-		if ($result)
-			Yii::app()->user->setFlash('success', 'Character GUID = ' . $this->char_guid . ' was deleted success');
+		if ($result) {
+			Yii::app()->user->setFlash('success', Yii::t('Character GUID = {n} has deleted successful', [$this->char_guid]));
+		}
 
 		return $result;
 	}
 
 	public function delete()
 	{
-		if ($this->char_guid > 0)
-		{
-			$this->addError('error', 'Невозможно удалить заявку, когда по ней создан персонаж.');
+		if ($this->char_guid > 0) {
+			$this->addError('error', Yii::t('app', 'Try to delete the request failed, then a character has created.'));
 			return false;
 		}
 

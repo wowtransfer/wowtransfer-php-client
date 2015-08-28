@@ -1,21 +1,31 @@
 <?php
 /* @var $this ConfigsController */
 
-$this->breadcrumbs = array(
-	'Настройка',
-);
+$this->breadcrumbs = [
+	Yii::t('app', 'Settings')
+];
 ?>
 
 <ul>
 	<li>
-		<a href="<?php echo $this->createUrl('/configs/app'); ?>">
+		<a href="<?= $this->createUrl('/configs/app'); ?>">
 			<?= Yii::t('app', 'Application') ?>
 		</a>
 	</li>
-	<li><a href="<?php echo $this->createUrl('/configs/service'); ?>">Связь с сервисом</a></li>
-	<li><a href="<?php echo $this->createUrl('/configs/toptions'); ?>"><?= Yii::t('app', 'Transfer options') ?></a></li>
 	<li>
-		<a href="<?php echo $this->createUrl('/configs/remoteservers'); ?>">Удаленные сервера</a>
+		<a href="<?= $this->createUrl('/configs/service'); ?>">
+			<?= Yii::t('app', 'Service connection') ?>
+		</a>
+	</li>
+	<li>
+		<a href="<?= $this->createUrl('/configs/toptions'); ?>">
+			<?= Yii::t('app', 'Transfer options') ?>
+		</a>
+	</li>
+	<li>
+		<a href="<?= $this->createUrl('/configs/remoteservers'); ?>">
+			<?= Yii::t('app', 'Remote servers') ?>
+		</a>
 		<span class="label label-warning">todo</span>
 	</li>
 </ul>

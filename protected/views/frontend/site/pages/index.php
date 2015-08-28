@@ -28,7 +28,9 @@ $this->breadcrumbs = array(
 	</li>
 	-->
 	<li>
-		<a href="http://wowtransfer.com/docs/service/tconfig-common/">Конфигурации переноса</a>
+		<a href="http://wowtransfer.com/docs/service/tconfig-common/">
+			<?= Yii::t('app', 'Transfer configurations') ?>
+		</a>
 	</li>
 	<li>Статусы заявок:
 		<ul>

@@ -2,9 +2,9 @@
 /* @var $this TconfigsController */
 /* @var $tconfigs array */
 
-$this->breadcrumbs = array(
-	'Конфигурации переноса',
-);
+$this->breadcrumbs = [
+	Yii::t('app', 'Transfer configurations')
+];
 ?>
 
 <div class="alert alert-info">
@@ -13,7 +13,7 @@ $this->breadcrumbs = array(
 
 <? if (empty($tconfigs)): ?>
 
-<div class="alert alert-info">Нет данных</div>
+<div class="alert alert-info"><?= Yii::t('app', 'No data') ?></div>
 
 <? else: ?>
 

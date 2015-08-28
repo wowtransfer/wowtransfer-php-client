@@ -4,7 +4,7 @@
 /* @var $cores array */
 
 $this->breadcrumbs = [
-	'Настройка' => ['/configs'],
+	Yii::t('app', 'Settings') => ['/configs'],
 	Yii::t('app', 'Application')
 ];
 

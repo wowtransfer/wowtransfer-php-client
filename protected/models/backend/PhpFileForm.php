@@ -108,7 +108,7 @@ class PhpFileForm extends CFormModel {
 	 */
 	public function saveParams($params) {
 		if (!is_array($params)) {
-			throw new \Exception('Params is not an array');
+			throw new \Exception(Yii::t('app', 'Params is not an array'));
 		}
 		$content = '<?php return ' . var_export($params, true) . ';';
 		$h = fopen($this->filePath, 'w');
@@ -117,7 +117,7 @@ class PhpFileForm extends CFormModel {
 			fclose($h);
 		}
 		else {
-			$error = "Couldn't open file " . $this->filePath;
+			$error = Yii::t('App', 'Could not open file {file}', ['{file}' => $this->filePath]);
 		}
 
 		if (isset($error)) {

@@ -5,30 +5,50 @@
 
 <ul>
 
-	<li><a href="<?= $this->createUrl('/transfers') ?>">Заявки на перенос</a>
+	<li>
+		<a href="<?= $this->createUrl('/transfers') ?>">
+			<?= Yii::t('app', 'Transfer requests') ?>
+		</a>
 		<ul>
-			<li>Просмотр, изменение и удаление заявок.</li>
-			<li>Создание персонажей.</li>
+			<li><?= Yii::t('app', 'View') ?>,
+				<?= Yii::t('app', 'Deleting') ?>,
+				<?= Yii::t('app', 'Updating') ?>.
+			</li>
+			<li><?= Yii::t('', 'Create the character') ?></li>
 			<li>Просмотр lua-дампов</li>
 		</ul>
 	</li>
 
-	<li><a href="<?= $this->createUrl('/tconfigs/index'); ?>">Конфигурации переноса</a>
+	<li><a href="<?= $this->createUrl('/tconfigs/index'); ?>">
+			<?= Yii::t('app', 'Transfer configurations') ?>
+		</a>
 		<ul>
-			<li>Просмотр конфигураций переноса.</li>
+			<li><?= Yii::t('app', 'View') ?></li>
 		</ul>
 	</li>
 
-	<li><a href="<?= $this->createUrl('/configs'); ?>">Настройка</a>
+	<li><a href="<?= $this->createUrl('/configs'); ?>"><?= Yii::t('app', 'Settings') ?></a>
 		<ul>
 			<li>
 				<a href="<?= $this->createUrl('/configs/app'); ?>">
 					<?= Yii::t('app', 'Application') ?>
 				</a>
 			</li>
-			<li><a href="<?= $this->createUrl('/configs/service'); ?>">Связь с сервисом</a></li>
-			<li><a href="<?= $this->createUrl('/configs/toptions'); ?>"><?= Yii::t('app', 'Transfer options') ?></a></li>
-			<li><a href="<?= $this->createUrl('/configs/remoteservers') ?>">Удаленные сервера</a></li>
+			<li>
+				<a href="<?= $this->createUrl('/configs/service'); ?>">
+					<?= Yii::t('app', 'Service connection') ?>
+				</a>
+			</li>
+			<li>
+				<a href="<?= $this->createUrl('/configs/toptions'); ?>">
+					<?= Yii::t('app', 'Transfer options') ?>
+				</a>
+			</li>
+			<li>
+				<a href="<?= $this->createUrl('/configs/remoteservers') ?>">
+					<?= Yii::t('app', 'Remote servers') ?>
+				</a>
+			</li>
 		</ul>
 	</li>
 

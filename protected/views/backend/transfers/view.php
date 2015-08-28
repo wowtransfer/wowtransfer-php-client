@@ -2,10 +2,10 @@
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 
-$this->breadcrumbs = array(
-	Yii::t('app', 'Transfer requests') => array('index'),
+$this->breadcrumbs = [
+	Yii::t('app', 'Transfer requests') => ['index'],
 	$model->id,
-);
+];
 
 $this->menu = [
 	array('label' => Yii::t('app', 'Requests list'), 'url'=>array('index'), 'icon' => 'list'),
@@ -13,7 +13,7 @@ $this->menu = [
 		array('label'=>'Удалить персонажа', 'url'=>'#', 'icon' => 'remove',
 			'linkOptions'=>array('submit'=>array('deletechar','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить персонажа?'))
 	:
-		array('label'=>'Создать персонажа', 'url'=>array('/transfers/char/' . $model->id), 'icon' => 'plane'),
+		['label' => Yii::t('app', 'Create the character'), 'url'=>array('/transfers/char/' . $model->id), 'icon' => 'plane'],
 	array('label'=>'Lua-dump', 'url'=>array('luadump', 'id'=>$model->id), 'icon' => 'file'),
 ];
 ?>
