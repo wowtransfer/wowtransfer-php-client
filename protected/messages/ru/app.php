@@ -47,6 +47,7 @@ return [
 	'In basket' => 'В корзине',
 	'In game' => 'В игре',
 	'In process' => 'В процессе',
+	'Invert' => 'Инвертировать',
 	'Login' => 'Войти',
 	'Logout' => 'Выйти',
 	'Lua dump' => 'Lua дамп',
@@ -94,5 +95,5 @@ return [
 	'Url of a site' => 'Url сайта',
 	'View' => 'Просмотр',
 	'Warnings' => 'Предупреждения',
-	'Wellcome' => 'Добро пожаловать',
+	'Welcome' => 'Добро пожаловать',
 ];

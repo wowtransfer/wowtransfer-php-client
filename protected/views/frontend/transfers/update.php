@@ -5,8 +5,8 @@
 
 $this->breadcrumbs = [
 	Yii::t('app', 'Transfer requests') => ['index'],
-	' ' . $model->id => array('view', 'id' => $model->id), // TODO: hack
-	'Изменение',
+	' ' . $model->id => ['view', 'id' => $model->id], // TODO: hack
+	Yii::t('app', 'Update')
 ];
 
 $this->menu = [
@@ -16,7 +16,7 @@ $this->menu = [
 ];
 ?>
 
-<h1>Изменение заявки #<?php echo $model->id; ?></h1>
+<h1><?= Yii::t('app', 'Update request') ?> #<?php echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array(
 	'model' => $model,

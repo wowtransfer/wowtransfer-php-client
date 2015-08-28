@@ -18,7 +18,7 @@
 
 	<div id="header">
 		<div id="login">
-			<div><? Yii::t('app', 'Wellcome') ?> <b><?php echo Yii::app()->user->name; ?></b></div>
+			<div><? Yii::t('app', 'Welcome') ?> <b><?php echo Yii::app()->user->name; ?></b></div>
 			<a href="<?php echo $this->createUrl('/site/logout') ?>" title="Logout">
 				<span class="glyphicon glyphicon-log-out"></span> <?= Yii::t('app', 'Logout') ?>
 			</a>

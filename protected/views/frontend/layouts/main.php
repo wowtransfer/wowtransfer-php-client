@@ -34,12 +34,29 @@
 						</a>
 					<?php endif; ?>
 				<?php else: ?>
-					<div>Добро пожаловать <b><?php echo Yii::app()->user->name; ?></b></div>
+					<div><?= Yii::t('app', 'Welcome') ?> <b><?php echo Yii::app()->user->name; ?></b></div>
 					<a href="<?php echo Yii::app()->createUrl('site/logout') ?>">
 						<span class="glyphicon glyphicon-log-out"></span>
 						<?= Yii::t('app', 'Logout') ?>
 					</a>
 				<?php endif; ?>
+					<div class="dropdown">
+						<? $lang = Yii::app()->user->lang ?>
+						<button class="btn btn-default btn-sm dropdown-toggle" type="button"
+								id="change-lang" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="true">
+							<?= strtoupper($lang) ?>
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="change-lang">
+							<li class="<?= $lang === 'ru' ? 'active' : '' ?>">
+								<a href="<?= $this->createUrl('/site/lang', ['lang' => 'ru']) ?>">RU</a>
+							</li>
+							<li class="<?= $lang === 'en' ? 'active' : '' ?>">
+								<a href="<?= $this->createUrl('/site/lang', ['lang' => 'en']) ?>">EN</a>
+							</li>
+						</ul>
+					</div>
 			</div>
 			<div id="logo">
 				<img alt="" src="<?php echo Yii::app()->request->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">

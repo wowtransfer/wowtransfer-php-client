@@ -22,7 +22,7 @@ $options = explode(';', $model->options);
 	<div>
 		<a class="btn btn-default toptions-btn set" title="Установить все">+</a>
 		<a class="btn btn-default toptions-btn unset" title="Убрать все">-</a>
-		<a class="btn btn-default toptions-btn invert" title="Инвертировать">&pm;</a>
+		<a class="btn btn-default toptions-btn invert" title="<?= Yii::t('app', 'Invert') ?>">&pm;</a>
 	</div>
 
 	<div id="transfer-options-container">

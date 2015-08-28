@@ -24,7 +24,7 @@
 	</div>
 
 	<div>
-		<a href="#" class="btn btn-default btn-sm pull-right transfer-delete" title="Удалить">
+		<a href="#" class="btn btn-default btn-sm pull-right transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
 			<span class="glyphicon glyphicon-remove"></span>
 		</a>
 

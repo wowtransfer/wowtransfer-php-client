@@ -47,7 +47,10 @@ class BaseController extends CController
 
 	public function init()
 	{
-		return parent::init();
+		$result = parent::init();
+		Yii::app()->language = Yii::app()->user->getLang();
+
+		return $result;
 	}
 
 	/**
