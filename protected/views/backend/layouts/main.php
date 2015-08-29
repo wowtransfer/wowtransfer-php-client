@@ -18,7 +18,8 @@
 
 	<div id="header">
 		<div id="login">
-			<div><? Yii::t('app', 'Welcome') ?> <b><?php echo Yii::app()->user->name; ?></b></div>
+			<? Yii::t('app', 'Welcome') ?> <b><?php echo Yii::app()->user->name; ?></b>
+			<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
 			<a href="<?php echo $this->createUrl('/site/logout') ?>" title="Logout">
 				<span class="glyphicon glyphicon-log-out"></span> <?= Yii::t('app', 'Logout') ?>
 			</a>

@@ -3,6 +3,7 @@
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 Yii::setPathOfAlias('bootstrap', realpath(__DIR__.'/../extensions/yiistrap'));
+Yii::setPathOfAlias('common-views', realpath(__DIR__.'/../views/common'));
 Yii::setPathOfAlias('vendor.twbs.bootstrap.dist', realpath(__DIR__.'/../vendor/twbs/bootstrap/dist'));
 
 // This is the main Web application configuration. Any writable

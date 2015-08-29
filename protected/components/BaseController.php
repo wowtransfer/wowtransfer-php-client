@@ -45,6 +45,11 @@ class BaseController extends CController
 		}
 	}
 
+	public function actionLang($lang) {
+		Yii::app()->user->setLang($lang);
+		$this->redirect(Yii::app()->request->urlReferrer);
+	}
+
 	public function init()
 	{
 		$result = parent::init();

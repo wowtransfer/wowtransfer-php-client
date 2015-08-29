@@ -81,9 +81,4 @@ class SiteController extends FrontendController
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
-
-	public function actionLang($lang) {
-		Yii::app()->user->setLang($lang);
-		$this->redirect(Yii::app()->request->urlReferrer);
-	}
 }

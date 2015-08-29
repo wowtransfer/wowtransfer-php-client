@@ -20,8 +20,8 @@ $options = explode(';', $model->options);
 
 <?php if (!$readonly): ?>
 	<div>
-		<a class="btn btn-default toptions-btn set" title="Установить все">+</a>
-		<a class="btn btn-default toptions-btn unset" title="Убрать все">-</a>
+		<a class="btn btn-default toptions-btn set" title="<?= Yii::t('app', 'Set all') ?>">+</a>
+		<a class="btn btn-default toptions-btn unset" title="<?= Yii::t('app', 'Unset all') ?>">-</a>
 		<a class="btn btn-default toptions-btn invert" title="<?= Yii::t('app', 'Invert') ?>">&pm;</a>
 	</div>
 

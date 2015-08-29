@@ -27,7 +27,7 @@
 		<legend><?= Yii::t('app', 'Remote server') ?></legend>
 
 		<?php echo $form->textFieldControlGroup($model, 'server', array(
-			'help' => 'Вводить без протокола (http://), например, myserver.ru или twoserver.com',
+			'help' => Yii::t('app', 'Without a protocol (http://), for example, mysqrver.ru or mysqrver.com'),
 			'class' => 'col-sm-4',
 		)); ?>
 
