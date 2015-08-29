@@ -88,3 +88,7 @@
 	clear: both;
 }
 
+#create-char-subactions {
+	width: 300px;
+	float: right;
+}

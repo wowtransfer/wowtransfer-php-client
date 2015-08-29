@@ -15,27 +15,22 @@ $this->breadcrumbs = [
 
 ?>
 
-<div id="transfer" data-id="<?= $model->id ?>" class="hidden"></div>
+<div id="transfer" data-id="<?= $model->id ?>" data-char-guid="<?= $model->char_guid ?>" class="hidden"></div>
 
-<div style="float: right; width: 300px;" id="create-char-subactions">
-	<a class="btn btn-default btn-sm btn-char-action" href="#"
-		onclick="OnClearCharacterDataByTransferIdClick(<?= $model->id; ?>); return false;">
+<div id="create-char-subactions">
+	<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid-id">
 		<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
 	</a> <span class="label label-success">safe</span><br>
-	<a class="btn btn-default btn-sm btn-char-action" href="#"
-		onclick="return OnClearCharacterDataByGuidClick(<?= $model->id; ?>, <?= $model->char_guid; ?>); return false;">
+	<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid">
 		<?= Yii::t('app', 'Clear character`s data by GUID') ?>
 	</a> <span class="label label-danger btn-char-action">unsafe</span><br>
-	<a class="btn btn-default btn-sm btn-char-action" href="#"
-		onclick="OnShowCharacterDataClick(<?= $model->char_guid; ?>); return false;">
+	<a class="btn btn-default btn-sm btn-char-action" href="#" id="show-char-info">
 		<?= Yii::t('app', 'Show character`s info by GUID') ?>
 	</a><br>
-	<a class="btn btn-default btn-sm" href="#" id="view-luadump"
-		data-toggle="modal">
+	<a class="btn btn-default btn-sm" href="#" id="view-luadump" data-toggle="modal">
 		<?= Yii::t('app', 'Lua dump') ?>
 	</a>
-	<a class="btn btn-default btn-sm" href="#"
-		onclick="OnViewUncryptedLuaDumpClick(<?= $model->id; ?>); return false;">
+	<a class="btn btn-default btn-sm" href="#" id="view-uncrypted-luadump">
 		<?= Yii::t('app', 'Uncrypted lua-dump') ?>
 	</a>
 </div>
@@ -104,7 +99,7 @@ $this->breadcrumbs = [
 </div>
 
 <div class="form-actions">
-	<img id="create-char-wait" src="<?= Yii::app()->request->baseUrl ?>/images/wait32.gif" style="visibility: hidden;">
+	<img id="create-char-wait" src="<?= Yii::app()->request->baseUrl ?>/images/wait30.gif" style="visibility: hidden;">
 
 	<button type="submit" class="btn btn-primary" href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
 		id="btn-create-char">

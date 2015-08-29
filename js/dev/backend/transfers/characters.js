@@ -101,7 +101,7 @@ var app = app || {};
 	/**
 	 *
 	 */
-	function onClearCharacterDataByTransferIdClick(transferId, characterGuid) {
+	function onClearCharacterDataByTransferIdClick(transferId) {
 		alert("TODO: AJAX...");
 	}
 
@@ -126,18 +126,26 @@ var app = app || {};
 		alert("TODO:\n view uncrypted lua dump.\nAJAX...");
 	}
 
+	/**
+	 * Show only SQL
+	 * @param {Number} transferId
+	 * @returns {undefined}
+	 */
+	function onOnlySqlClick(transferId) {
+		alert("TODO");
+	}
+
 	$(function() {
 
-		var $transfer = $("#transfer");
+		var $transferRequest = $("#transfer"),
+			transferId = $transferRequest.data("id"),
+			charGuid = $transferRequest.data("char-guid");
 
 		$("#view-luadump").click(function() {
-			var transferId = $transfer.data("id");
-
 			$.get(app.getBaseUrl() + "/transfers/luadump/" + transferId, {}, function (data) {
 				$("#lua-dump-dialog-content").text(data);
 				$("#lua-dump-dialog").modal({keyboard: true});
 			});
-
 		});
 
 		$("#btn-create-char").click(function() {
@@ -162,6 +170,30 @@ var app = app || {};
 			return false;
 		});
 
+		$("#view-uncrypted-luadump").click(function() {
+			onViewUncryptedLuaDumpClick(transferId);
+			return false;
+		});
+
+		$("#show-char-info").click(function() {
+			onShowCharacterDataClick(charGuid);
+			return false;
+		});
+
+		$("#clear-by-guid").click(function() {
+			onClearCharacterDataByGuidClick(charGuid);
+			return false;
+		});
+
+		$("#clear-by-guid-id").click(function() {
+			onClearCharacterDataByTransferIdClick(transferId);
+			return false;
+		});
+
+		$("#btn-only-sql").click(function() {
+			onOnlySqlClick(transferId);
+			return false;
+		});
 	});
 
 	return characters;
