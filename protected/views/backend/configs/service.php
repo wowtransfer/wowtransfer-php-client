@@ -4,16 +4,15 @@
 
 $this->breadcrumbs = [
 	Yii::t('app', 'Settings') => array('/configs'),
-	Yii::t('app', 'Application')
+	Yii::t('app', 'Service')
 ];
 
 ?>
 
-<h1>Настройка связи с сервисом</h1>
+<h1><?= Yii::t('app', 'Service connection') ?></h1>
 
 <div class="alert alert-warning">
-	Настройки связи с сервисом хранятся в файле <code>/protected/config/service-local.php</code>.
-	В случае сбоя его можно изменить вручную либо загрузить значения по-умолчанию.
+	<?= Yii::t('app', 'Settings saves in the file') ?> <code>/protected/config/service-local.php</code>.
 </div>
 
 <? if (Yii::app()->user->hasFlash('success')): ?>

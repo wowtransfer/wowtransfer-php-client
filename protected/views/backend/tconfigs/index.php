@@ -8,7 +8,9 @@ $this->breadcrumbs = [
 ?>
 
 <div class="alert alert-info">
-	Воспользуйтесь сервисом для <a class="alert-link" href="http://wowtransfer.com/cp/tconfigs/">редактирования конфигурации</a>. 
+	<a class="alert-link" href="http://wowtransfer.com/cp/tconfigs/">
+		<?= Yii::t('app', 'Use the service for configuration edit') ?>
+	</a>
 </div>
 
 <? if (empty($tconfigs)): ?>

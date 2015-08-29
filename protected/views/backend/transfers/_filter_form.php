@@ -6,28 +6,35 @@
 		<div class="portlet-content">
 		<div class="portlet-title"><?= Yii::t('app', 'Statuses') ?></div>
 		<?php foreach (ChdTransfer::getStatuses() as $name => $value): ?>
-		<label class="tstatus-<?php echo $name; ?>">
+		<label class="tstatus-<?= $name; ?>">
 			<input type="checkbox" name="statuses[]"
-				   value="<?php echo $name ?>"
-				   <?php echo empty($this->filterStatuses) ? 'checked="checked"' : ''; ?>
-				   <?php echo in_array($name, $this->filterStatuses) ? 'checked="checked"' : ''; ?>
+				   value="<?= $name ?>"
+				   <?= empty($this->filterStatuses) ? 'checked="checked"' : ''; ?>
+				   <?= in_array($name, $this->filterStatuses) ? 'checked="checked"' : ''; ?>
 			>
-			<?php echo $value ?>
+			<?= $value ?>
 		</label><br>
 		<?php endforeach; ?>
 
 		<div class="portlet-title"><?= Yii::t('app', 'Date/Time') ?></div>
-		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 0 ? 'checked="checked"' : '' ?> value="0">
+		<label><input type="radio" name="dt_range" <?= $this->filterDtRange == 0 ? 'checked="checked"' : '' ?> value="0">
 			<?= Yii::t('app', 'All time') ?>
 		</label><br>
-		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 90 ? 'checked="checked"' : '' ?> value="90">
+		<label><input type="radio" name="dt_range" <?= $this->filterDtRange == 90 ? 'checked="checked"' : '' ?> value="90">
 			<?= Yii::t('app', 'last 3 months') ?>
 		</label>
 		<br>
-		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 30 ? 'checked="checked"' : '' ?> value="30"> последний месяц</label><br>
-		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 7 ? 'checked="checked"' : '' ?> value="7"> последняя неделя</label><br>
-		<label><input type="radio" name="dt_range" <?php echo $this->filterDtRange == 1 ? 'checked="checked"' : '' ?> value="1"> последний день</label>
-
+		<label><input type="radio" name="dt_range" <?= $this->filterDtRange == 30 ? 'checked="checked"' : '' ?> value="30">
+			<?= Yii::t('app', 'last month') ?>
+		</label>
+		<br>
+		<label><input type="radio" name="dt_range" <?= $this->filterDtRange == 7 ? 'checked="checked"' : '' ?> value="7">
+			<?= Yii::t('app', 'last week') ?>
+		</label>
+		<br>
+		<label><input type="radio" name="dt_range" <?= $this->filterDtRange == 1 ? 'checked="checked"' : '' ?> value="1">
+			<?= Yii::t('app', 'last day') ?>
+		</label>
 		<div style="text-align: center; margin: 5px;">
 			<button type="submit" name="ftn-filter" class="btn btn-primary" id="btn-filter">
 				<?= Yii::t('app', 'Apply') ?>

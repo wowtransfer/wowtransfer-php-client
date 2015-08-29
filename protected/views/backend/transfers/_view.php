@@ -70,6 +70,7 @@ $statuses = ChdTransfer::getStatuses();
 
 	<div class="col-md-6">
 
+		<b><?= $data->getAttributeLabel('comment'); ?></b>
 		<textarea class="transfer-comment"><?= $data->comment; ?></textarea>
 
 		<button class="btn btn-primary pull-right transfer-save-comment">

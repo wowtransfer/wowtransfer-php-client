@@ -17,27 +17,27 @@ $this->breadcrumbs = [
 
 <div id="transfer" data-id="<?= $model->id ?>" class="hidden"></div>
 
-<div style="float: right; width: 300px;">
+<div style="float: right; width: 300px;" id="create-char-subactions">
 	<a class="btn btn-default btn-sm btn-char-action" href="#"
 		onclick="OnClearCharacterDataByTransferIdClick(<?= $model->id; ?>); return false;">
-		Clear character's data by GUID and ID
+		<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
 	</a> <span class="label label-success">safe</span><br>
 	<a class="btn btn-default btn-sm btn-char-action" href="#"
 		onclick="return OnClearCharacterDataByGuidClick(<?= $model->id; ?>, <?= $model->char_guid; ?>); return false;">
-		Clear character's data by GUID
+		<?= Yii::t('app', 'Clear character`s data by GUID') ?>
 	</a> <span class="label label-danger btn-char-action">unsafe</span><br>
 	<a class="btn btn-default btn-sm btn-char-action" href="#"
 		onclick="OnShowCharacterDataClick(<?= $model->char_guid; ?>); return false;">
-		Show character's info by GUID and ID
+		<?= Yii::t('app', 'Show character`s info by GUID') ?>
 	</a><br>
-	<a class="btn btn-default btn-sm btn-char-action" href="#" onclick="alert('TODO');">View SQL script</a><br />
 	<a class="btn btn-default btn-sm" href="#" id="view-luadump"
 		data-toggle="modal">
-		lua-dump
+		<?= Yii::t('app', 'Lua dump') ?>
 	</a>
 	<a class="btn btn-default btn-sm" href="#"
-		onclick="OnViewUncryptedLuaDumpClick(<?= $model->id; ?>); return false;"
-		>uncripted lua-dump</a>
+		onclick="OnViewUncryptedLuaDumpClick(<?= $model->id; ?>); return false;">
+		<?= Yii::t('app', 'Uncrypted lua-dump') ?>
+	</a>
 </div>
 
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -50,12 +50,12 @@ $this->breadcrumbs = [
 <div style="margin: 5px 305px 5px 0; height: 160px;">
 
 	<div style="float: left; padding: 3px;">
-		<b>Создана</b><br><?= $model->create_transfer_date; ?><br>
-		<b>Статус</b><br> <?= $model->status; ?>
+		<b><?= Yii::t('app', 'Created at') ?></b><br><?= $model->create_transfer_date; ?><br>
+		<b><?= Yii::t('app', 'Status') ?></b><br> <?= $model->status; ?>
 	</div>
 
 	<div style="float: left; padding: 3px;">
-		<b>Сервер</b><br>
+		<b><?= Yii::t('app', 'Server') ?></b><br>
 		<?= $model->server; ?><br>
 		<b><?= Yii::t('app', 'Realmlist') ?></b><br>
 		<?= $model->realmlist; ?><br>
@@ -98,9 +98,9 @@ $this->breadcrumbs = [
 </div>
 
 <div class="pull-right" style="height: 1em;">
-	Если опция недоступна значит она отключена в
 	<a href="<?= Yii::app()->createUrl('/configs/toptions') ?>">
-	глобальных настройках.</a>
+		<?= Yii::t('app', 'If the option are disabled then she not sets in global settings') ?>
+	</a>
 </div>
 
 <div class="form-actions">
@@ -138,21 +138,37 @@ $this->breadcrumbs = [
 <hr>
 
 <ul class="nav nav-tabs" id="create-char-tabs">
-	<li><a href="#tab-sql" data-toggle="tab">SQL <span class="badge" title="Size of SQL">0</span></a></li>
-	<li class="active"><a href="#tab-queries" data-toggle="tab">Queries <span class="badge" title="Count of queries">0</span></a></li>
-	<li><a href="#tab-warnings" data-toggle="tab">Warnings <span class="badge" title="Count of warnings">0</span></a></li>
-	<li><a href="#tab-errors" data-toggle="tab">Errors <span class="badge" title="Count of errors">0</span></a></li>
+	<li>
+		<a href="#tab-sql" data-toggle="tab">
+			SQL <span class="badge" title="Size of SQL">0</span>
+		</a>
+	</li>
+	<li class="active">
+		<a href="#tab-queries" data-toggle="tab">
+			Queries <span class="badge" title="Count of queries">0</span>
+		</a>
+	</li>
+	<li>
+		<a href="#tab-warnings" data-toggle="tab">
+			<?= Yii::t('app', 'Warnings') ?> <span class="badge" title="Count of warnings">0</span>
+		</a>
+	</li>
+	<li>
+		<a href="#tab-errors" data-toggle="tab">
+		<?= Yii::t('app', 'Errors') ?> <span class="badge" title="Count of errors">0</span>
+		</a>
+	</li>
 </ul>
 
 <div class="tab-content">
 
 	<div class="tab-pane" id="tab-sql">
-		<h3>SQL скрипт персонажа</h3>
+		<h3><?= Yii::t('app', 'SQL script of character') ?></h3>
 		<pre id="create-char-sql"><?= $sql; ?></pre>
 	</div>
 
 	<div class="tab-pane active" id="tab-queries">
-		<h3>Результат выполнения запросов к базе данных</h3>
+		<h3><?= Yii::t('app', 'Result of the queries runing') ?></h3>
 
 		<?php if ($queriesCount > 0): ?>
 			<div id="run-queries-table">

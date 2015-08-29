@@ -9,11 +9,10 @@ $this->breadcrumbs = [
 ];
 
 ?>
-<h1>Настройка приложения</h1>
+<h1><?= Yii::t('app', 'Application settings') ?></h1>
 
 <div class="alert alert-warning">
-	Настройки приложения хранятся в файле <code>/protected/config/app-local.php</code>.
-	В случае сбоя его можно изменить вручную либо загрузить значения по-умолчанию.
+	<?= Yii::t('app', 'Settings saves in the file') ?> <code>/protected/config/app-local.php</code>.
 </div>
 
 <? if (Yii::app()->user->hasFlash('success')): ?>
@@ -29,21 +28,21 @@ $this->breadcrumbs = [
 )); ?>
 
 <fieldset>
-	<legend>Сервер</legend>
+	<legend><?= Yii::t('app', 'Server') ?></legend>
 <?php
 	echo $form->textFieldControlGroup($model, 'siteUrl');
 	echo $form->emailFieldControlGroup($model, 'emailAdmin');
 	echo $form->dropDownListControlGroup($model, 'core', $cores);
 	echo $form->numberFieldControlGroup($model, 'maxTransfersCount');
 	echo $form->numberFieldControlGroup($model, 'maxAccountCharsCount');
-	echo $form->textFieldControlGroup($model, 'adminsStr', array(
-		'help' => 'Строка с именами администраторов, разделенных запятыми',
+	echo $form->textFieldControlGroup($model, 'adminsStr', [
+		'help' => Yii::t('app', 'Administrator`s names separated by semicolon'),
 		'autocomplete' => 'off',
-	));
-	echo $form->textFieldControlGroup($model, 'modersStr', array(
-		'help' => 'Строка с именами модераторов, разделенных запятыми',
+	]);
+	echo $form->textFieldControlGroup($model, 'modersStr', [
+		'help' => Yii::t('app', 'Moderator`s names separated by semicolon'),
 		'autocomplete' => 'off',
-	));
+	]);
 	echo $form->textFieldControlGroup($model, 'transferTable');
 ?>
 </fieldset>
@@ -52,10 +51,14 @@ $this->breadcrumbs = [
 	<legend><?= Yii::t('app', 'Application') ?></legend>
 
 	<?= $form->checkboxControlGroup($model, 'yiiDebug', [
-		'help' => '<div class="alert alert-danger">Выключать на боевом сервере!!!</div>'
+		'help' => '<div class="alert alert-danger">' .
+		Yii::t('app', 'Disable on prdaction server') .
+		'</div>'
 	]) ?>
 	<?= $form->dropDownListControlGroup($model, 'yiiTraceLevel', [0, 1, 2, 3, 4, 5], [
-		'help' => '<div class="alert alert-info">0 - отключить. Работает только в Debug режиме.</div>',
+		'help' => '<div class="alert alert-info">' .
+		'0 - disable. Works only on debug mode.' .
+		'</div>',
 	]) ?>
 
 </fieldset>
