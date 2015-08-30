@@ -10,6 +10,11 @@ class CreateCharForm
 	 */
 	private $_transfer;
 
+	/**
+	 * @var string
+	 */
+	private $transferConfig;
+
 	public function __construct($transfer) {
 		$this->_transfer = $transfer;
 	}
@@ -24,6 +29,15 @@ class CreateCharForm
 			'sql'      => '',
 			'queries'  => array(),
 		);
+	}
+
+	/**
+	 * @param string $transferConfig
+	 * @return \CreateCharForm
+	 */
+	public function setTransferConfig($transferConfig) {
+		$this->transferConfig = $transferConfig;
+		return $this;
 	}
 
 	/**
@@ -118,11 +132,15 @@ class CreateCharForm
 	 *               ['error'] => string
 	 *               ['guid'] => GUID of character
 	 */
-	public function createChar($configName) {
+	public function createChar() {
 		$result = self::getDefaultResult();
 
 		if ($this->_transfer->char_guid > 0) {
 			$result['errors'][] = Yii::t('app', 'Character exists! GUID = {n}', [$this->_transfer->char_guid]);
+			return $result;
+		}
+		if (empty($this->transferConfig)) {
+			$result['errors'][] = Yii::t('app', 'Empty transfer configuration');
 			return $result;
 		}
 
@@ -134,12 +152,12 @@ class CreateCharForm
 
 		try {
 			// TODO: service will be return a queries
-			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $configName, $toptions);
+			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $this->transferConfig, $toptions);
 			if ($service->getLastError()) {
-				$result['errors'][] = 'От сервиса: ' . $service->getLastError();
+				$result['errors'][] = Yii::t('app', 'From the service') . ': ' . $service->getLastError();
 			}
 		}
-		catch (exception $e) {
+		catch (\Exception $e) {
 			$result['errors'][] = $e->getMessage();
 			return $result;
 		}
@@ -161,5 +179,25 @@ class CreateCharForm
 		$result['queries'] = $queries;
 
 		return $result;
+	}
+
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
+	public function getSql() {
+		$dumpLua = $this->_transfer->luaDumpFromDb();
+		$toptions = $this->_transfer->getTransferOptionsFromDb();
+		$service = new Wowtransfer();
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
+		$sql = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $this->transferConfig, $toptions);
+
+		if ($service->getLastError()) {
+			throw new \Exception(Yii::t('app', 'From the service') . ': ' . $service->getLastError());
+		}
+
+		return $sql;
 	}
 }

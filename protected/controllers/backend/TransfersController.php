@@ -27,7 +27,7 @@ class TransfersController extends BackendController
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(
 					'admin','index','view','update','delete',
-					'char','deletechar','luadump','filter', 'remotepassword'),
+					'char','deletechar','luadump','filter', 'remotepassword', 'onlysql'),
 				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -146,7 +146,30 @@ class TransfersController extends BackendController
 			));
 		}
 	}
-	
+
+	public function actionOnlysql($id) {
+		$request = Yii::app()->request;
+		$model = $this->loadModel($id);
+
+		if ($request->isAjaxRequest && $request->isPostRequest) {
+			$transferConfig = $request->getPost('tconfig');
+			try {
+				$result = [];
+				$createCharForm = new CreateCharForm($model);
+				$result['sql'] = $createCharForm
+					->setTransferConfig($transferConfig)
+					->getSql();
+
+			} catch (Exception $ex) {
+				$result['error'] = $ex->getMessage();
+			}
+
+			header('Content-Type: application/json; charset utf-8');
+			echo json_encode($result);
+			Yii::app()->end();
+		}
+	}
+
 	public function actionChar($id) {
 		$this->layout = '//layouts/column1';
 		$request = Yii::app()->request;
@@ -158,10 +181,12 @@ class TransfersController extends BackendController
 
 		$result = CreateCharForm::getDefaultResult();
 		if ($request->getPost('ChdTransfer')) {
-			if (Yii::app()->request->isAjaxRequest) {
+			if ($request->isAjaxRequest) {
 				$transferConfig = $request->getPost('tconfig');
 				$createCharForm = new CreateCharForm($model);
-				$result = $createCharForm->createChar($transferConfig);
+				$result = $createCharForm
+					->setTransferConfig($transferConfig)
+					->createChar();
 				header('Content-Type: application/json; charset utf-8');
 				echo json_encode($result);
 				Yii::app()->end();

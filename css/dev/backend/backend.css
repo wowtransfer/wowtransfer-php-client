@@ -88,7 +88,6 @@
 	clear: both;
 }
 
-#create-char-subactions {
-	width: 300px;
-	float: right;
+.create-char-top {
+	margin-bottom: 10px;
 }

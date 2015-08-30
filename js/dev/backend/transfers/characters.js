@@ -38,9 +38,9 @@ var app = app || {};
 	function onBeforeCreateCharClick() {
 		$("#btn-create-char").attr("disabled", "disabled");
 		$("#create-char-wait").css("visibility", "visible");
-		$("#create-char-sql").empty();
-		$("#create-char-errors").empty();
-		$("#create-char-warnings").empty();
+		$("#create-char-sql").empty().removeClass("hidden");
+		$("#create-char-errors").empty().removeClass("hidden");
+		$("#create-char-warnings").empty().removeClass("hidden");
 		$("#run-queries-table").empty();
 		$('#create-char-tabs span').text("0");
 	}
@@ -52,10 +52,6 @@ var app = app || {};
 	function onCreateCharClick(result) {
 		$("#btn-create-char").removeAttr("disabled");
 		$("#create-char-wait").css("visibility", "hidden");
-
-		if (!result) {
-			result = {"errors": ["Не удалось разобрать JSON"]};
-		}
 
 		// 1
 		$("#create-char-sql").text(result.sql);
@@ -128,11 +124,27 @@ var app = app || {};
 
 	/**
 	 * Show only SQL
+	 * @param {String} url
 	 * @param {Number} transferId
 	 * @returns {undefined}
 	 */
-	function onOnlySqlClick(transferId) {
-		alert("TODO");
+	function onOnlySqlClick(url, transferId) {
+		var $form = $("#create-char-from");
+		$.post(url, $form.serialize(), function(response) {
+			var sqlSize = 0;
+			var $sqlBlock = $("#create-char-sql");
+			if (response.error) {
+				$sqlBlock.text("");
+				$("#create-char-errors").text(response.error).removeClass("hidden");
+				$('#create-char-tabs a[href="#tab-errors"]').tab("show");
+			}
+			else {
+				sqlSize = Math.floor(response.sql.length / 1024) + " kb";
+				$sqlBlock.text(response.sql).removeClass("hidden");
+				$('#create-char-tabs a[href="#tab-sql"]').tab("show");
+			}
+			$('#create-char-tabs a[href="#tab-sql"] span').text(sqlSize);
+		}, "json");
 	}
 
 	$(function() {
@@ -149,22 +161,16 @@ var app = app || {};
 		});
 
 		$("#btn-create-char").click(function() {
-			var $btn = $(this),
+			var url = $(this).attr("href"),
 				$form = $("#create-char-from");
 
-			app.beginLoading("Создание персонажа...");
+			app.beginLoading($("#text-create-char").text());
 			onBeforeCreateCharClick();
-			$.ajax($btn.attr("href"), {
-				type: "post",
-				data: $form.serialize(),
-				dataType: "json",
-				success: function(data) {
-					onCreateCharClick(data);
-					app.endLoading();
-				},
-				error: function() {
-					app.endLoading();
-				}
+			$.post(url, $form.serialize(), function(data) {
+				onCreateCharClick(data);
+				app.endLoading();
+			}, "json").fail(function() {
+				app.endLoading();
 			});
 
 			return false;
@@ -191,7 +197,8 @@ var app = app || {};
 		});
 
 		$("#btn-only-sql").click(function() {
-			onOnlySqlClick(transferId);
+			var url = $(this).attr("href");
+			onOnlySqlClick(url, transferId);
 			return false;
 		});
 	});

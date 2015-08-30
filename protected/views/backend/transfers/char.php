@@ -15,25 +15,12 @@ $this->breadcrumbs = [
 
 ?>
 
-<div id="transfer" data-id="<?= $model->id ?>" data-char-guid="<?= $model->char_guid ?>" class="hidden"></div>
-
-<div id="create-char-subactions">
-	<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid-id">
-		<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
-	</a> <span class="label label-success">safe</span><br>
-	<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid">
-		<?= Yii::t('app', 'Clear character`s data by GUID') ?>
-	</a> <span class="label label-danger btn-char-action">unsafe</span><br>
-	<a class="btn btn-default btn-sm btn-char-action" href="#" id="show-char-info">
-		<?= Yii::t('app', 'Show character`s info by GUID') ?>
-	</a><br>
-	<a class="btn btn-default btn-sm" href="#" id="view-luadump" data-toggle="modal">
-		<?= Yii::t('app', 'Lua dump') ?>
-	</a>
-	<a class="btn btn-default btn-sm" href="#" id="view-uncrypted-luadump">
-		<?= Yii::t('app', 'Uncrypted lua-dump') ?>
-	</a>
+<div id="transfer"
+	 data-id="<?= $model->id ?>"
+	 data-char-guid="<?= $model->char_guid ?>"
+	 class="hidden">
 </div>
+
 
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
@@ -42,46 +29,66 @@ $this->breadcrumbs = [
 	),
 )); ?>
 
-<div style="margin: 5px 305px 5px 0; height: 160px;">
 
-	<div style="float: left; padding: 3px;">
-		<b><?= Yii::t('app', 'Created at') ?></b><br><?= $model->create_transfer_date; ?><br>
-		<b><?= Yii::t('app', 'Status') ?></b><br> <?= $model->status; ?>
+<div class="row create-char-top">
+	<div class="col-md-6">
+
+		<div style="float: left; padding: 3px;">
+			<b><?= Yii::t('app', 'Created at') ?></b><br><?= $model->create_transfer_date; ?><br>
+			<b><?= Yii::t('app', 'Status') ?></b><br> <?= $model->status; ?>
+		</div>
+
+		<div style="float: left; padding: 3px;">
+			<b><?= Yii::t('app', 'Server') ?></b><br>
+			<?= $model->server; ?><br>
+			<b><?= Yii::t('app', 'Realmlist') ?></b><br>
+			<?= $model->realmlist; ?><br>
+			<b><?= Yii::t('app', 'Realm') ?></b><br>
+			<?= $model->realm; ?>
+		</div>
+
+		<div style="float: left; padding: 3px;">
+			<b><?= Yii::t('app', 'Account') ?></b><br>
+			<?= $model->account; ?><br>
+			<b><?= Yii::t('app', 'Password') ?></b><br>
+
+			<span class="btn btn-default btn-xs switch-password">+</span>
+			<span id="password_<?= $model->id ?>" data-password="">*******</span><br>
+
+			<b><?= Yii::t('app', 'Character') ?></b><br>
+			<?= $model->username_old; ?>
+		</div>
+
 	</div>
-
-	<div style="float: left; padding: 3px;">
-		<b><?= Yii::t('app', 'Server') ?></b><br>
-		<?= $model->server; ?><br>
-		<b><?= Yii::t('app', 'Realmlist') ?></b><br>
-		<?= $model->realmlist; ?><br>
-		<b><?= Yii::t('app', 'Realm') ?></b><br>
-		<?= $model->realm; ?>
-	</div>
-
-	<div style="float: left; padding: 3px;">
-		<b><?= Yii::t('app', 'Account') ?></b><br>
-		<?= $model->account; ?><br>
-		<b><?= Yii::t('app', 'Password') ?></b><br>
-
-		<span class="btn btn-default btn-xs switch-password">+</span>
-		<span id="password_<?= $model->id ?>" data-password="">*******</span><br>
-
-		<b><?= Yii::t('app', 'Character') ?></b><br>
-		<?= $model->username_old; ?>
-	</div>
-
-	<div class="pull-right">
-		<b><?= Yii::t('app', 'Configuration') ?></b><br>
+	<div class="col-md-2">
+		<label for="tconfig"><?= Yii::t('app', 'Configuration') ?></label>
 		<?= CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
-			'style' => 'width: 200px;',
+			'style' => 'width: 100%;',
+			'id' => 'tconfig'
 		)); ?>
 	</div>
+	<div class="col-md-4">
 
-	<div class="clear">lua-dump properties...</div>
+		<div id="create-char-subactions">
+			<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid-id">
+				<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
+			</a> <span class="label label-success"><?= Yii::t('app', 'safe') ?></span><br>
+			<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid">
+				<?= Yii::t('app', 'Clear character`s data by GUID') ?>
+			</a> <span class="label label-danger btn-char-action"><?= Yii::t('app', 'unsafe') ?></span><br>
+			<a class="btn btn-default btn-sm btn-char-action" href="#" id="show-char-info">
+				<?= Yii::t('app', 'Show character`s info by GUID') ?>
+			</a><br>
+			<a class="btn btn-default btn-sm" href="#" id="view-luadump" data-toggle="modal">
+				<?= Yii::t('app', 'Lua dump') ?>
+			</a>
+			<a class="btn btn-default btn-sm" href="#" id="view-uncrypted-luadump">
+				<?= Yii::t('app', 'Uncrypted lua-dump') ?>
+			</a>
+		</div>
 
+	</div>
 </div>
-
-<?= $form->hiddenField($model, 'id'); ?>
 
 <div>
 	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
@@ -101,17 +108,17 @@ $this->breadcrumbs = [
 <div class="form-actions">
 	<img id="create-char-wait" src="<?= Yii::app()->request->baseUrl ?>/images/wait30.gif" style="visibility: hidden;">
 
-	<button type="submit" class="btn btn-primary" href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
+	<a class="btn btn-primary" href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
 		id="btn-create-char">
 		<span class="glyphicon glyphicon-plane"></span>
 		<?= Yii::t('app', 'Create') ?>
-	</button>
+	</a>
 
-	<button type="submit" class="btn btn-primary" href="<?= $this->createUrl('onlysql', ['id' => $model->id]) ?>"
+	<a class="btn btn-primary" href="<?= $this->createUrl('onlysql', ['id' => $model->id]) ?>"
 		id="btn-only-sql">
 		<span class="glyphicon"></span>
 		SQL
-	</button>
+	</a>
 
 	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
 	   id="btn-create-char-cancel">
@@ -135,22 +142,22 @@ $this->breadcrumbs = [
 <ul class="nav nav-tabs" id="create-char-tabs">
 	<li>
 		<a href="#tab-sql" data-toggle="tab">
-			SQL <span class="badge" title="Size of SQL">0</span>
+			SQL <span class="badge" title="<?= Yii::t('app', 'Size of SQL') ?>">0</span>
 		</a>
 	</li>
 	<li class="active">
 		<a href="#tab-queries" data-toggle="tab">
-			Queries <span class="badge" title="Count of queries">0</span>
+			Queries <span class="badge" title="<?= Yii::t('app', 'Count of queries') ?>">0</span>
 		</a>
 	</li>
 	<li>
 		<a href="#tab-warnings" data-toggle="tab">
-			<?= Yii::t('app', 'Warnings') ?> <span class="badge" title="Count of warnings">0</span>
+			<?= Yii::t('app', 'Warnings') ?> <span class="badge" title="<?= Yii::t('app', 'Count of warnings') ?>">0</span>
 		</a>
 	</li>
 	<li>
 		<a href="#tab-errors" data-toggle="tab">
-		<?= Yii::t('app', 'Errors') ?> <span class="badge" title="Count of errors">0</span>
+		<?= Yii::t('app', 'Errors') ?> <span class="badge" title="<?= Yii::t('app', 'Count of errors') ?>">0</span>
 		</a>
 	</li>
 </ul>
@@ -159,7 +166,7 @@ $this->breadcrumbs = [
 
 	<div class="tab-pane" id="tab-sql">
 		<h3><?= Yii::t('app', 'SQL script of character') ?></h3>
-		<pre id="create-char-sql"><?= $sql; ?></pre>
+		<pre id="create-char-sql" class="hidden"><?= $sql; ?></pre>
 	</div>
 
 	<div class="tab-pane active" id="tab-queries">
@@ -190,13 +197,13 @@ $this->breadcrumbs = [
 	<div class="tab-pane" id="tab-warnings">
 		<h3><?= Yii::t('app', 'Warnings') ?></h3>
 
-		<div id="create-char-warnings" class="alert alert-warning"></div>
+		<div id="create-char-warnings" class="alert alert-warning hidden"></div>
 	</div>
 
 	<div class="tab-pane" id="tab-errors">
 		<h3><?= Yii::t('app', 'Errors') ?></h3>
 
-		<div id="create-char-errors" class="alert alert-danger"></div>
+		<div id="create-char-errors" class="alert alert-danger hidden"></div>
 	</div>
 </div>
 
@@ -221,3 +228,6 @@ $this->breadcrumbs = [
 		</div>
 	</div>
 </div>
+
+
+<div class="hidden" id="text-create-char"><?= Yii::t('app', 'Create the character') ?></div>
