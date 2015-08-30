@@ -32,12 +32,7 @@
 		});
 
 		if (!data.error) {
-			$.fn.yiiListView.update("transfer-list-view", {
-				complete: function() {
-					initTransfersListview();
-				}
-			});
-
+			$.fn.yiiListView.update("transfer-list-view");
 			return false;
 		}
 	}
@@ -46,7 +41,7 @@
 	 * @returns {undefined}
 	 */
 	function initTransfersListview() {
-		$("#transfer-list-view").on("click", ".transfer-delete", function() {
+		$("#transfer-list-view-block").on("click", ".transfer-delete", function() {
 			var id = $(this).closest(".view").data("id");
 			if (!confirm("Подтвердите удаление заявки #" + id)) {
 				return false;
