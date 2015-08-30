@@ -25,7 +25,7 @@ var app = app || {};
 
 	$(function() {
 
-		$("#transfers-listview").on("click", ".transfer-save-comment", function() {
+		$("#transfers-listview-block").on("click", ".transfer-save-comment", function() {
 			var $view = $(this).closest(".view"),
 				id = $view.data("id"),
 				comment = $view.find(".transfer-comment").val();
@@ -37,7 +37,7 @@ var app = app || {};
 			});
 		});
 
-		$("#transfers-listview").on("click", ".transfer-statuses a", function() {
+		$("#transfers-listview-block").on("click", ".transfer-statuses a", function() {
 			console.log("change status");
 			var $a = $(this),
 				status = $a.data("name"),
@@ -63,7 +63,7 @@ var app = app || {};
 			});
 		});
 
-		$("#transfers-listview").on("click", ".delete-char", function() {
+		$("#transfers-listview-block").on("click", ".delete-char", function() {
 			if (!confirm("Подтвердите удаление персонажа")) {
 				return false;
 			}

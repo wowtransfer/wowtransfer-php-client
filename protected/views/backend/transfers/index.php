@@ -13,7 +13,9 @@ $this->breadcrumbs = [
 	<div class="alert alert-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
 <?php endif; ?>
 
-<?php $this->renderPartial('_index_data', array('dataProvider' => $dataProvider)) ?>
+<div id="transfers-listview-block">
+	<?php $this->renderPartial('_index_data', array('dataProvider' => $dataProvider)) ?>
+</div>
 
 <script><!--
 
