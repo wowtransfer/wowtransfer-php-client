@@ -38,6 +38,7 @@ var app = app || {};
 		});
 
 		$("#transfers-listview").on("click", ".transfer-statuses a", function() {
+			console.log("change status");
 			var $a = $(this),
 				status = $a.data("name"),
 				id = $a.closest(".view").data("id"),
@@ -92,8 +93,8 @@ var app = app || {};
 			}, "json");
 		});
 
-		$("#btn-filter").click(function() {
-			var $form = $("#frm-filter"),
+		$("#frm-filter").submit(function() {
+			var $form = $(this),
 				dtRange = $form.find('input[name="dt_range"]:checked').val(),
 				checkedStatuses = getFilterCheckedStatuses($form);
 
@@ -109,6 +110,11 @@ var app = app || {};
 			$.post("", requestData, function(data) {
 				$("#transfers-listview").replaceWith(data);
 			});
+
+			return false;
+		});
+		$("#frm-filter").on("change", "input", function() {
+			$("#frm-filter").submit();
 		});
 
 		$(".switch-password").click(function() {

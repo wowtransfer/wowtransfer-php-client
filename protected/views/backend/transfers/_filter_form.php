@@ -35,11 +35,6 @@
 		<label><input type="radio" name="dt_range" <?= $this->filterDtRange == 1 ? 'checked="checked"' : '' ?> value="1">
 			<?= Yii::t('app', 'last day') ?>
 		</label>
-		<div style="text-align: center; margin: 5px;">
-			<button type="submit" name="ftn-filter" class="btn btn-primary" id="btn-filter">
-				<?= Yii::t('app', 'Apply') ?>
-			</button>
-		</div>
 
 	</form>
 	</div>
