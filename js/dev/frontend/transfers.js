@@ -43,7 +43,7 @@
 	function initTransfersListview() {
 		$("#transfer-list-view-block").on("click", ".transfer-delete", function() {
 			var id = $(this).closest(".view").data("id");
-			if (!confirm("Подтвердите удаление заявки #" + id)) {
+			if (!confirm($("#configrm-request-delete").text() + " #" + id)) {
 				return false;
 			}
 			$.post(app.getBaseUrl() + "/transfers/delete/" + id, {}, function (data) {

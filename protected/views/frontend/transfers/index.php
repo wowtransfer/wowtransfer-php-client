@@ -18,3 +18,5 @@ $this->menu = [
 	'dataProvider' => $dataProvider
 ]); ?>
 </div>
+
+<div id="configrm-request-delete"><?= Yii::t('app', 'Confirm delete request') ?></div>

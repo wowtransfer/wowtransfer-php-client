@@ -33,7 +33,7 @@ var app = app || {};
 				comment: comment
 			};
 			$.post(app.getBaseUrl() + "/transfers/update/" + id, requestData, function(data) {
-					app.showMessage("Комментарий изменен");
+				app.showMessage($("#t-success-changed").text());
 			});
 		});
 
@@ -64,11 +64,11 @@ var app = app || {};
 		});
 
 		$("#transfers-listview-block").on("click", ".delete-char", function() {
-			if (!confirm("Подтвердите удаление персонажа")) {
+			if (!confirm($("#confirm-delete-character").text())) {
 				return false;
 			}
 
-			app.beginLoading("Удаление персонажа...");
+			app.beginLoading($("#delete-character"));
 
 			var $btnDelChar = $(this);
 			var id = $btnDelChar.closest("view").data("id");
@@ -82,7 +82,7 @@ var app = app || {};
 						app.showMessage(data.error);
 					}
 					else {
-						app.showMessage("Персонаж удален");
+						app.showMessage($("#character-deleted"));
 					}
 					$btnDelChar.hide();
 					$("#btn-create-char-" + id).show();
@@ -99,7 +99,6 @@ var app = app || {};
 				checkedStatuses = getFilterCheckedStatuses($form);
 
 			if (!checkedStatuses.length) {
-				alert("Не выбраны статусы");
 				return false;
 			}
 

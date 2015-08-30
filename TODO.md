@@ -5,3 +5,5 @@
 - restruct project files.
 
 - internationalizations, parted
+
+- Use normal translate js code
