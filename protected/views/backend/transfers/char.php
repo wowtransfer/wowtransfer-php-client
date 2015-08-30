@@ -70,7 +70,8 @@ $this->breadcrumbs = [
 	<div class="col-md-4">
 
 		<div id="create-char-subactions">
-			<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid-id">
+			<a class="btn btn-default btn-sm btn-char-action" id="clear-by-guid-id"
+			   href="<?= Yii::t('app', 'clearchardata', ['id' => $model->id]) ?>">
 				<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
 			</a> <span class="label label-success"><?= Yii::t('app', 'safe') ?></span><br>
 			<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid">

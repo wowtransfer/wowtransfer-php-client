@@ -176,11 +176,11 @@ class TransfersController extends BackendController
 
 		$model = $this->loadModel($id);
 		if ($model->char_guid > 0) {
-			throw new CHttpException(403, 'Character created! GUID = ' . $model->char_guid);
+			throw new CHttpException(403, Yii::t('app', 'Character has created already, GUID = {guid}', ['{guid}' => $model->char_guid]));
 		}
 
 		$result = CreateCharForm::getDefaultResult();
-		if ($request->getPost('ChdTransfer')) {
+		if ($request->isAjaxRequest && $request->isPostRequest) {
 			if ($request->isAjaxRequest) {
 				$transferConfig = $request->getPost('tconfig');
 				$createCharForm = new CreateCharForm($model);
@@ -233,6 +233,10 @@ class TransfersController extends BackendController
 		$this->render('deletechar', array(
 			'model' => $model,
 		));
+	}
+
+	public function actionClearCharData($id) {
+
 	}
 
 	/**

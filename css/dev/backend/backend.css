@@ -28,19 +28,27 @@
 
 .query-res
 {
-	width: 20px;
+	width: 40px;
 	height: 18px;
 	display: inline-block;
-	border: 1px solid black;
+	outline: 1px solid gray;
 	margin: 1px 0 0 1px;
 	padding: 1px;
 	text-align: center;
-	line-height: 16px;
+	line-height: 18px;
+	vertical-align: middle;
+}
+.query-res:hover {
+	outline: 1px solid black;
 }
 
 .query-res-success
 {
 	background-color: #00DF70;
+}
+
+.query-res-failed {
+	background-color: #FFC0CB;
 }
 
 .btn-char-action

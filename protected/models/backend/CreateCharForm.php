@@ -79,7 +79,9 @@ class CreateCharForm
 			$query1['status'] = $command->execute();
 			$result[] = $query1;
 
+			$i = 1;
 			foreach ($queries as $query) {
+				++$i;
 				$query = trim($query);
 				if (empty($query)) {
 					continue;
@@ -87,17 +89,17 @@ class CreateCharForm
 
 				$query1['query'] = substr($query, 0, 255);
 				$command->text = $query;
-				$query1['status'] = $command->execute();
+				$query1['status'] =  $command->execute();
 				$result[] = $query1;
 			}
 
 			$transaction->commit();
 		}
 		catch (\Exception $ex) {
-			$query1['status'] = 0;
+			$query1['status'] = 'failed';
 			$result[] = $query1;
 			$transaction->rollback();
-			$result['error'] = $ex->getMessage();
+			$result['error'] = Yii::t('app', 'Query') . ' #' . $i . ' ' . $ex->getMessage();
 		}
 
 		return $result;

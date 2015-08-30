@@ -15,7 +15,7 @@ var app = app || {};
 	 *   "warnings"
 	 * @return boolean
 	 */
-	function ShowMessages(messages, type)
+	function showMessages(messages, type)
 	{
 		var messageContainer = $("#create-char-" + type);
 
@@ -64,8 +64,13 @@ var app = app || {};
 		runQueriesContainer.empty();
 		for (var i = 0; i < queryCount; ++i) {
 			query = queries[i];
-			runQueriesContainer.append('<a class="query-res query-res-success" ' +
-				'href="#query_' + i + '" title="' + query.query + '">' + query.status + '</a>');
+			var failed = query.status === 'failed';
+			runQueriesContainer.append('<a class="query-res query-res-' +
+				(failed ? 'failed' : 'success') +
+				'" ' +
+				'href="#query_' + i + '" title="' + query.query + '">' +
+				(failed ? '' : query.status) +
+				'</a>');
 		}
 		runQueriesContainer.append("<hr>");
 		for (var i = 0; i < queryCount; ++i) {
@@ -78,10 +83,10 @@ var app = app || {};
 		$('#create-char-tabs a[href="#tab-queries"] span').text(queryCount);
 
 		// 3
-		ShowMessages(result.warnings, "warnings");
+		showMessages(result.warnings, "warnings");
 
 		if (result.errors !== undefined && result.errors.length > 0) {
-			ShowMessages(result.errors, "errors");
+			showMessages(result.errors, "errors");
 			return false;
 		}
 
@@ -97,8 +102,12 @@ var app = app || {};
 	/**
 	 *
 	 */
-	function onClearCharacterDataByTransferIdClick(transferId) {
-		alert("TODO: AJAX...");
+	function onClearCharacterDataByTransferIdClick(url, transferId) {
+		console.log("clearing");
+		$.post(url, {id: transferId}, function() {
+
+			console.log("cleared");
+		}, "json");
 	}
 
 	/**
@@ -192,7 +201,7 @@ var app = app || {};
 		});
 
 		$("#clear-by-guid-id").click(function() {
-			onClearCharacterDataByTransferIdClick(transferId);
+			onClearCharacterDataByTransferIdClick($(this).attr("href"), transferId);
 			return false;
 		});
 
