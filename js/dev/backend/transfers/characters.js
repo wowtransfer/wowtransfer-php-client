@@ -151,6 +151,8 @@ var app = app || {};
 				sqlSize = Math.floor(response.sql.length / 1024) + " kb";
 				$sqlBlock.text(response.sql).removeClass("hidden");
 				$('#create-char-tabs a[href="#tab-sql"]').tab("show");
+				$("#create-char-warnings").empty().addClass("hidden");
+				$("#create-char-errors").empty().addClass("hidden");
 			}
 			$('#create-char-tabs a[href="#tab-sql"] span').text(sqlSize);
 		}, "json");

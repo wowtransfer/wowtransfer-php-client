@@ -364,17 +364,15 @@ class Wowtransfer
 	public function dumpToSql($dumpLua, $accountId, $configuration, $toptions) {
 		$defaultValue = '';
 		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
-		$file = fopen($filePath, 'w'); // TODO: replace to object
+		$file = fopen($filePath, 'w');
 		if (!$file) {
 			$this->lastError = 'fopen() failed! file: ' . $filePath;
 			return $defaultValue;
 		}
-		fwrite($file, $dumpLua);
+		fwrite($file, gzencode($dumpLua));
 		fclose($file);
+
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/dumps/sql'));
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
-		curl_setopt($ch, CURLOPT_POST, 1);
 		$postfields = array(
 			'dump_lua'         => '@' . $filePath,
 			'configuration_id' => $configuration,
@@ -382,7 +380,12 @@ class Wowtransfer
 			'access_token'     => $this->getAccessToken(),
 			'transfer_options' => implode(';', $toptions),
 		);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+		curl_setopt_array($ch, [
+			CURLOPT_URL         => $this->getApiUrl('/dumps/sql'),
+			CURLOPT_HTTPHEADER  => ['Content-type: multipart/form-data'],
+			CURLOPT_POST        => 1,
+			CURLOPT_POSTFIELDS  => $postfields,
+		]);
 
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
