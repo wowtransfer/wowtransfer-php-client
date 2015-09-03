@@ -28,10 +28,10 @@ $this->breadcrumbs = [
 <thead>
 	<tr>
 		<th>#</th>
-		<th>Name</th>
-		<th>Title</th>
-		<th>Update date</th>
-		<th>Type</th>
+		<th><?= Yii::t('app', 'Name') ?></th>
+		<th><?= Yii::t('app', 'Description') ?></th>
+		<th><?= Yii::t('app', 'Change date') ?></th>
+		<th><?= Yii::t('app', 'Type') ?></th>
 	</tr>
 </thead>
 <tbody>

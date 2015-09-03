@@ -127,7 +127,7 @@ $this->breadcrumbs = [
 		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 
-	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-success"
+	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
 	   style="display: none;" id="btn-create-char-success">
 		<span class="glyphicon glyphicon-plane"></span>
 		<?= Yii::t('app', 'Cancel') ?>

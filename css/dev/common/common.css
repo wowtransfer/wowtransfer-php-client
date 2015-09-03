@@ -100,8 +100,8 @@
 	color: darkgreen;
 }
 
-.table-cursored td {
-    cursor: pointer;
+#tconfigs-table td {
+	cursor: pointer;
 }
 
 ol.breadcrumb {

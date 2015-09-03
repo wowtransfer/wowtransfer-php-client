@@ -215,20 +215,21 @@ class TransfersController extends BackendController
 
 		$model = $this->loadModel($id);
 		try {
-			if (!$model->deleteChar())
-				$result['error'] = 'Не удалось удалить персонажа';
+			if (!$model->deleteChar()) {
+				$result['error'] = 'Delete the character failed';
+			}
 		} catch (Exception $ex) {
 			$result['error'] = $ex->getMessage();
 		}
 
-		if (Yii::app()->request->isAjaxRequest)
-		{
+		if (Yii::app()->request->isAjaxRequest) {
 			echo json_encode($result);
 			Yii::app()->end();
 		}
 
-		if (!isset($result['error']))
-			$this->redirect(Yii::app()->request->ScriptUrl . '/transfers');
+		if (!isset($result['error'])) {
+			$this->redirect($this->createUrl('/transfers'));
+		}
 
 		$this->render('deletechar', array(
 			'model' => $model,
