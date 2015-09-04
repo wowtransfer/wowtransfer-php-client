@@ -73,34 +73,5 @@
 	</div>
 </div>
 
-
-<?php
-$this->widget('zii.widgets.jui.CJuiDialog', array(
-	'id' => 'dialog',
-	'options' => array(
-		'autoOpen' => false,
-		'draggable' => false,
-		'position' => 'top',
-		'resizable' => false,
-		'title' => 'Message',
-	),
-));
-?>
-
-<?php
-$this->widget('zii.widgets.jui.CJuiDialog', array(
-	'id' => 'dialog-loading',
-	'options' => array(
-		'autoOpen' => false,
-		'closeText' => 'hide',
-		'draggable' => false,
-		'modal' => true,
-		'position' => 'center',
-		'resizable' => false,
-		'title' => 'Loading',
-	),
-));
-?>
-
 </body>
 </html>
