@@ -72,7 +72,7 @@
 
 	</div>
 
-	<div><b><?= Yii::t('app', 'Transfer options') ?>:</b>
+	<div>
 	<? $this->widget('application.components.widgets.TransferOptionsWidget', array(
 		'model' => $data,
 		'options' => $data->getTransferOptionsToUser()

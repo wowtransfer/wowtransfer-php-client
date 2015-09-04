@@ -212,12 +212,15 @@ app.characters = (function($) {
 		});
 
 		$("#btn-delete-char").click(function() {
-			$("#create-char-wait").css("visibility", "visible");
-			characters.deleteCharacter($(this), function() {
-				$("#btn-create-char").show();
-				$("#run-queries-table").empty();
-				$("#create-char-sql").empty();
-				$("#create-char-wait").css("visibility", "hidden");
+			var $btn = $(this);
+			app.dialogs.confirm($("#t-confirm-delete-character").text(), function() {
+				$("#create-char-wait").css("visibility", "visible");
+				characters.deleteCharacter($btn, function() {
+					$("#btn-create-char").show();
+					$("#run-queries-table").empty();
+					$("#create-char-sql").empty();
+					$("#create-char-wait").css("visibility", "hidden");
+				});
 			});
 			return false;
 		});

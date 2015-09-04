@@ -26,7 +26,7 @@ window.statuses = [];
 
 --></script>
 
-<div class="hidden" id="confirm-delete-character"><?= Yii::t('app', 'Confirm delete the character') ?></div>
+<div class="hidden" id="t-confirm-delete-character"><?= Yii::t('app', 'Confirm delete the character') ?></div>
 <div class="hidden" id="delete-character"><?= Yii::t('app', 'Delete the character') ?></div>
 <div class="hidden" id="character-deleted"><?= Yii::t('app', 'Character has deleted') ?></div>
 <div class="hidden" id="t-success-changed"><?= Yii::t('app', 'Success changed') ?></div>

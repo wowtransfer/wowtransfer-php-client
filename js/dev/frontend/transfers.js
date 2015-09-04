@@ -43,13 +43,12 @@
 	function initTransfersListview() {
 		$("#transfer-list-view-block").on("click", ".transfer-delete", function() {
 			var id = $(this).closest(".view").data("id");
-			if (!confirm($("#configrm-request-delete").text() + " #" + id)) {
-				return false;
-			}
-			$.post(app.getBaseUrl() + "/transfers/delete/" + id, {}, function (data) {
-				updateTransfersListview(data);
-			}, "json");
-
+			var message = $("#t-configrm-request-delete").text() + " #" + id;
+			app.dialogs.confirm(message, function() {
+				$.post(app.getBaseUrl() + "/transfers/delete/" + id, {}, function (data) {
+					updateTransfersListview(data);
+				}, "json");
+			});
 			return false;
 		});
 	}

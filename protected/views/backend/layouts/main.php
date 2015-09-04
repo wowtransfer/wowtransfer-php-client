@@ -91,5 +91,7 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<? $this->renderFile(Yii::getPathOfAlias('application.views.common.blocks') . '/main_dialogs.php') ?>
+
 </body>
 </html>

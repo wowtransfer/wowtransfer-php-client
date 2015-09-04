@@ -19,4 +19,4 @@ $this->menu = [
 ]); ?>
 </div>
 
-<div id="configrm-request-delete"><?= Yii::t('app', 'Confirm delete request') ?></div>
+<div id="t-configrm-request-delete" class="hidden"><?= Yii::t('app', 'Confirm delete request') ?></div>

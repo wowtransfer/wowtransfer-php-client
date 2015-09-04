@@ -36,6 +36,7 @@ return [
 	'Configuration' => 'Конфигурация',
 	'Configurations' => 'Конфигурации',
 	'Configuration of application was changed success.' => 'Конфигурация приложения успешно изменена',
+	'Confirmation' => 'Подтверждение',
 	'Confirm delete the character' => 'Подтвердите удаление персонажа',
 	'Confirm delete request' => 'Подтвердите удаление заявки',
 	'Comment' => 'Комментарий',

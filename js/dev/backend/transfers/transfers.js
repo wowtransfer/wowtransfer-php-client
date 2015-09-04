@@ -64,10 +64,10 @@ var app = app || {};
 		});
 
 		$("#transfers-listview-block").on("click", "a.delete-char", function() {
-			if (confirm($("#confirm-delete-character").text())) {
-				console.log(app.characters);
-				app.characters.deleteCharacter($(this));
-			}
+			var $btn = $(this);
+			app.dialogs.confirm($("#t-confirm-delete-character").text(), function() {
+				app.characters.deleteCharacter($btn);
+			});
 			return false;
 		});
 

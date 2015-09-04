@@ -82,7 +82,7 @@ $statuses = ChdTransfer::getStatuses();
 			<a href="<?= $this->createUrl('char', array('id' => $data->id)); ?>"
 			   class="btn btn-success" title="<?= Yii::t('app', 'Character') ?>">
 				<span class="spr create-char"></span>
-				<?= Yii::t('app', 'Character') ?>
+				<?= Yii::t('app', 'Character') ?>...
 			</a>
 
 			<a class="btn btn-danger delete-char"

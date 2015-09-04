@@ -234,3 +234,4 @@ $this->breadcrumbs = [
 
 
 <div class="hidden" id="text-create-char"><?= Yii::t('app', 'Create the character') ?></div>
+<div class="hidden" id="t-confirm-delete-character"><?= Yii::t('app', 'Confirm delete the character') ?></div>
