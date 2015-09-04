@@ -309,7 +309,6 @@ class ChdTransfer extends CActiveRecord
 		}
 
 		$connection = Yii::app()->db;
-
 		$command = $connection->createCommand('CALL chd_char_del(:id, :table_name)');
 		$command->bindValue(':id', $this->id);
 		$command->bindValue(':table_name', $this->tableName());
@@ -317,10 +316,6 @@ class ChdTransfer extends CActiveRecord
 
 		$command = $connection->createCommand('SELECT @CHD_RES');
 		$result = $command->queryScalar() > 0;
-
-		if ($result) {
-			Yii::app()->user->setFlash('success', Yii::t('Character GUID = {n} has deleted successful', [$this->char_guid]));
-		}
 
 		return $result;
 	}

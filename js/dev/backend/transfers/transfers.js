@@ -63,34 +63,12 @@ var app = app || {};
 			});
 		});
 
-		$("#transfers-listview-block").on("click", ".delete-char", function() {
-			if (!confirm($("#confirm-delete-character").text())) {
-				return false;
+		$("#transfers-listview-block").on("click", "a.delete-char", function() {
+			if (confirm($("#confirm-delete-character").text())) {
+				console.log(app.characters);
+				app.characters.deleteCharacter($(this));
 			}
-
-			app.beginLoading($("#delete-character"));
-
-			var $btnDelChar = $(this);
-			var id = $btnDelChar.closest("view").data("id");
-			var url = $btnDelChar.attr("href");
-
-			$.ajax(url, {
-				type: "post",
-				success: function (data) {
-					app.endLoading();
-					if (data.error !== undefined) {
-						app.showMessage(data.error);
-					}
-					else {
-						app.showMessage($("#character-deleted"));
-					}
-					$btnDelChar.hide();
-					$("#btn-create-char-" + id).show();
-				},
-				error: function () {
-					app.endLoading();
-				}
-			}, "json");
+			return false;
 		});
 
 		$("#frm-filter").submit(function() {

@@ -175,9 +175,6 @@ class TransfersController extends BackendController
 		$request = Yii::app()->request;
 
 		$model = $this->loadModel($id);
-		if ($model->char_guid > 0) {
-			throw new CHttpException(403, Yii::t('app', 'Character has created already, GUID = {guid}', ['{guid}' => $model->char_guid]));
-		}
 
 		$result = CreateCharForm::getDefaultResult();
 		if ($request->isAjaxRequest && $request->isPostRequest) {
@@ -215,7 +212,11 @@ class TransfersController extends BackendController
 
 		$model = $this->loadModel($id);
 		try {
-			if (!$model->deleteChar()) {
+			if ($model->deleteChar()) {
+				$result['success'] = true;
+				$result['message'] = Yii::t('app', 'Character GUID = {n} has deleted successful', $model->char_guid);
+			}
+			else {
 				$result['error'] = 'Delete the character failed';
 			}
 		} catch (Exception $ex) {
@@ -227,13 +228,8 @@ class TransfersController extends BackendController
 			Yii::app()->end();
 		}
 
-		if (!isset($result['error'])) {
-			$this->redirect($this->createUrl('/transfers'));
-		}
-
-		$this->render('deletechar', array(
-			'model' => $model,
-		));
+		$redirUrl = Yii::app()->request->urlReferrer;
+		$this->redirect($redirUrl);
 	}
 
 	public function actionClearCharData($id) {

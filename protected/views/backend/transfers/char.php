@@ -74,16 +74,16 @@ $this->breadcrumbs = [
 			   href="<?= Yii::t('app', 'clearchardata', ['id' => $model->id]) ?>">
 				<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
 			</a> <span class="label label-success"><?= Yii::t('app', 'safe') ?></span><br>
-			<a class="btn btn-default btn-sm btn-char-action" href="#" id="clear-by-guid">
+			<a class="btn btn-default btn-sm disabled btn-char-action" href="#" id="clear-by-guid">
 				<?= Yii::t('app', 'Clear character`s data by GUID') ?>
 			</a> <span class="label label-danger btn-char-action"><?= Yii::t('app', 'unsafe') ?></span><br>
-			<a class="btn btn-default btn-sm btn-char-action" href="#" id="show-char-info">
+			<a class="btn btn-default btn-sm disabled btn-char-action" href="#" id="show-char-info">
 				<?= Yii::t('app', 'Show character`s info by GUID') ?>
 			</a><br>
 			<a class="btn btn-default btn-sm" href="#" id="view-luadump" data-toggle="modal">
 				<?= Yii::t('app', 'Lua dump') ?>
 			</a>
-			<a class="btn btn-default btn-sm" href="#" id="view-uncrypted-luadump">
+			<a class="btn btn-default disabled btn-sm" href="#" id="view-uncrypted-luadump">
 				<?= Yii::t('app', 'Uncrypted lua-dump') ?>
 			</a>
 		</div>
@@ -109,10 +109,18 @@ $this->breadcrumbs = [
 <div class="form-actions">
 	<img id="create-char-wait" src="<?= Yii::app()->request->baseUrl ?>/images/wait30.gif" style="visibility: hidden;">
 
-	<a class="btn btn-primary" href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
-		id="btn-create-char">
+	<a href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
+	   class="btn btn-primary" id="btn-create-char" autocomplete="off"
+	   style="display: <?= $model->char_guid ? 'none' : 'inline-block' ?>">
 		<span class="glyphicon glyphicon-plane"></span>
 		<?= Yii::t('app', 'Create') ?>
+	</a>
+
+	<a href="<?= $this->createUrl('deletechar', ['id' => $model->id]); ?>"
+	   class="btn btn-danger" id="btn-delete-char" autocomplete="off"
+	   style="display: <?= $model->char_guid ? 'inline-block' : 'none' ?>">
+		<span class="spr delete-char"></span>
+		<?= Yii::t('app', 'Delete') ?>
 	</a>
 
 	<a class="btn btn-primary" href="<?= $this->createUrl('onlysql', ['id' => $model->id]) ?>"

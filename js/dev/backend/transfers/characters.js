@@ -3,8 +3,7 @@
  */
 var app = app || {};
 
-
-(function($) {
+app.characters = (function($) {
 
 	var characters = {};
 
@@ -93,6 +92,7 @@ var app = app || {};
 		$("#btn-create-char").hide();
 		$("#btn-create-char-cancel").hide();
 		$("#btn-create-char-success").show();
+		$("#btn-delete-char").show();
 
 		$('#create-char-tabs a[href="#tab-queries"]').tab("show");
 
@@ -121,7 +121,7 @@ var app = app || {};
 	 *
 	 */
 	function onShowCharacterDataClick(charactedGuid) {
-		alert("TODO:\n Character's information...\n AJAX...");
+
 	}
 
 	/**
@@ -158,6 +158,26 @@ var app = app || {};
 		}, "json");
 	}
 
+	characters.deleteCharacter = function($btn, onComplete) {
+		var url = $btn.attr("href");
+
+		$btn.button("loading");
+		$.post(url, function (data) {
+				if (data.error) {
+					app.showMessage(data.error);
+				}
+				else {
+					$btn.hide();
+					if (typeof onComplete === "function") {
+						onComplete();
+					}
+				}
+			},  "json")
+		.always(function() {
+			$btn.button("reset");
+		});
+	};
+
 	$(function() {
 
 		var $transferRequest = $("#transfer"),
@@ -172,18 +192,29 @@ var app = app || {};
 		});
 
 		$("#btn-create-char").click(function() {
-			var url = $(this).attr("href"),
+			var $btn = $(this),
+				url = $btn.data("href"),
 				$form = $("#create-char-from");
 
-			app.beginLoading($("#text-create-char").text());
+			$btn.button("loading");
 			onBeforeCreateCharClick();
 			$.post(url, $form.serialize(), function(data) {
 				onCreateCharClick(data);
-				app.endLoading();
-			}, "json").fail(function() {
-				app.endLoading();
+			}, "json").always(function() {
+				$btn.button("reset");
 			});
 
+			return false;
+		});
+
+		$("#btn-delete-char").click(function() {
+			$("#create-char-wait").css("visibility", "visible");
+			characters.deleteCharacter($(this), function() {
+				$("#btn-create-char").show();
+				$("#run-queries-table").empty();
+				$("#create-char-sql").empty();
+				$("#create-char-wait").css("visibility", "hidden");
+			});
 			return false;
 		});
 

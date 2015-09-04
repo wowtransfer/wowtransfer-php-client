@@ -77,20 +77,19 @@ $statuses = ChdTransfer::getStatuses();
 			<?= Yii::t('app', 'Save comment') ?>
 		</button>
 
+		<div class="clearfix"></div>
 		<div class="transfer-actions">
-			<a class="btn btn-danger delete-char" onclick="OnDeleteChar(this, <?= $data->id; ?>); return false;"
+			<a href="<?= $this->createUrl('char', array('id' => $data->id)); ?>"
+			   class="btn btn-success" title="<?= Yii::t('app', 'Character') ?>">
+				<span class="spr create-char"></span>
+				<?= Yii::t('app', 'Character') ?>
+			</a>
+
+			<a class="btn btn-danger delete-char"
 			   href="<?= $this->createUrl('deletechar', array('id' => $data->id)); ?>"
 			   style="display: <?= $data->char_guid ? 'inline-block' : 'none'; ?>">
 				<span class="spr delete-char"></span>
 				<?= Yii::t('app', 'Delete') ?>
-			</a>
-
-			<a href="<?= $this->createUrl('char', array('id' => $data->id)); ?>"
-			   class="btn btn-success" title="<?= Yii::t('app', 'Create the character') ?>"
-			   style="display: <?= $data->char_guid ? 'none' : 'inline-block' ?>"
-			   >
-				<span class="spr create-char"></span>
-				<?= Yii::t('app', 'Create') ?>
 			</a>
 
 			<a href="<?= $this->createUrl('luadump', array('id' => $data->id)); ?>" class="btn btn-default">
