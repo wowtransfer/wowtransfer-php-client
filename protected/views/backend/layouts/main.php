@@ -30,7 +30,7 @@
 		'type' => 'tabs',
 		'items' => [
 			['label' => Yii::t('app', 'Site'), 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'],
-			array('label'=>'Главная', 'url'=>array('/'), 'active' => $this->route == 'site/index'),
+			['label' => Yii::t('zii', 'Home'), 'url'=>array('/'), 'active' => $this->route == 'site/index'],
 			array('label' => Yii::t('app', 'Requests'), 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'),
 			['label' => Yii::t('app', 'Configurations'), 'url' => ['/tconfigs/index'], 'icon' => 'asterisk'],
 			['label' => Yii::t('app', 'Settings'), 'url' => ['/configs'], 'icon' => 'cog', 'active' => $this->id == 'configs'],

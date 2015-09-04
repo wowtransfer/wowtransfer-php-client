@@ -141,9 +141,9 @@ class TransfersController extends FrontendController
 		if (isset($_POST['ChdTransfer']))
 		{
 			if (empty($_POST['ChdTransfer']['transferOptions']))
-				$model->addError('transferOptions', 'Заполните опции переноса');
+				$model->addError('transferOptions', Yii::t('app', 'Fill the transfer options'));
 			elseif ($model->status !== 'process')
-				$model->addError('status', "Статус заявки не позволяет изменить ее");
+				$model->addError('status', Yii::t('app', 'No change of the request by status'));
 			else
 			{
 				$model->attributes = $_POST['ChdTransfer'];

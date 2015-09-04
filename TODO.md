@@ -1,9 +1,5 @@
-- update password of remote account.
-
+- update password of the remote account.
 - icons: set, unset, invert.
-
-- restruct project files.
-
-- internationalizations, parted
-
-- Use normal translate js code
+- internationalizations, parted (80%)
+- use normal translate js code
+- remove dependence from the "chdphp" application name, uses in the css.

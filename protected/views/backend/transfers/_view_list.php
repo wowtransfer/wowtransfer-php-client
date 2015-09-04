@@ -84,17 +84,15 @@ $statuses = ChdTransfer::getStatuses();
 				<span class="spr create-char"></span>
 				<?= Yii::t('app', 'Character') ?>...
 			</a>
-
 			<a class="btn btn-danger delete-char"
 			   href="<?= $this->createUrl('deletechar', array('id' => $data->id)); ?>"
 			   style="display: <?= $data->char_guid ? 'inline-block' : 'none'; ?>">
 				<span class="spr delete-char"></span>
 				<?= Yii::t('app', 'Delete') ?>
 			</a>
-
 			<a href="<?= $this->createUrl('luadump', array('id' => $data->id)); ?>" class="btn btn-default">
 				<span class="spr lua-dump"></span>
-				<?= Yii::t('app', 'Dump') ?>
+				<?= Yii::t('app', 'Dump') ?>...
 			</a>
 		</div>
 

@@ -38,7 +38,6 @@ var app = app || {};
 		});
 
 		$("#transfers-listview-block").on("click", ".transfer-statuses a", function() {
-			console.log("change status");
 			var $a = $(this),
 				status = $a.data("name"),
 				id = $a.closest(".view").data("id"),

@@ -23,17 +23,19 @@ class TransfersController extends BackendController
 	 */
 	public function accessRules()
 	{
-		return array(
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array(
+		return [
+			['allow',
+				'actions' => [
 					'admin','index','view','update','delete',
-					'char','deletechar','luadump','filter', 'remotepassword', 'onlysql'),
-				'roles'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
+					'char','deletechar','luadump','filter', 'remotepassword', 'onlysql',
+					'changeview',
+				],
+				'roles' => ['admin'],
+			],
+			['deny',  // deny all users
+				'users' => ['*'],
+			],
+		];
 	}
 
 	/**
@@ -132,19 +134,38 @@ class TransfersController extends BackendController
 		$filterBlock = $this->renderPartial('_filter_form', null, true);
 		$this->addAsideBlockToColumn2($filterBlock);
 
+		$viewMode = $this->getViewMode();
+		$viewParams = [
+			'dataProvider' => $dataProvider,
+			'viewMode' => $viewMode,
+		];
+
 		if (Yii::app()->request->isAjaxRequest) {
 			$filterStore = array(
 				'statuses' => $filter['statuses'],
 				'dt_range' => $dtRange,
 			);
 			setcookie('chd_transfer_filter', serialize($filterStore), time() + 3600 * 24 * 30, Yii::app()->request->baseUrl);
-			$this->renderPartial('_index_data', array('dataProvider' => $dataProvider));
+			$this->renderPartial('_index_data', $viewParams);
 		}
 		else {
-			$this->render('index', array(
-				'dataProvider' => $dataProvider,
-			));
+			$this->render('index', $viewParams);
 		}
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getViewMode() {
+		$modes = ['table'];
+		$cookie = Yii::app()->request->cookies['chd_requests_mode'];
+		if (!$cookie || !in_array($cookie->value, $modes)) {
+			$mode = 'list';
+		}
+		else {
+			$mode = $cookie->value;
+		}
+		return $mode;
 	}
 
 	public function actionOnlysql($id) {
@@ -269,8 +290,9 @@ class TransfersController extends BackendController
 	protected function loadModel($id)
 	{
 		$model = ChdTransfer::model()->findByPk($id);
-		if ($model === null)
+		if ($model === null) {
 			throw new CHttpException(404, 'The requested page does not exist.');
+		}
 		$model->transferOptions = explode(';', $model->options);
 
 		return $model;
@@ -289,10 +311,17 @@ class TransfersController extends BackendController
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='chd-transfer-form')
-		{
+		if (Yii::app()->request->getPost('ajax') === 'chd-transfer-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionChangeview($mode) {
+		$cookie = new CHttpCookie('chd_requests_mode', $mode);
+		$cookie->path = '/chdphp';
+		$cookie->expire = time() + 3600 * 30;
+		Yii::app()->request->cookies['chd_requests_mode'] = $cookie;
+		$this->redirect('index');
 	}
 }

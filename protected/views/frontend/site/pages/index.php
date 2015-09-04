@@ -11,28 +11,21 @@ $this->breadcrumbs = array(
 
 <ul>
 	<li>
-		<a href="http://wowtransfer.com/downloads/chardumps/">Скачать аддон для трансфера</a>.
-	</li>
-	<li>
-		<a href="http://wowtransfer.com/docs/service/create-dump-335a/">Создание дампа персонажа в игре 3.3.5a</a>.
-	</li>
-	<!--
-	<li>
-		<a href="http://wowtransfer.com/docs/service/create-dump-434/">
-			Создание дампа персонажа в игре 4.3.4
+		<a href="http://wowtransfer.com/downloads/chardumps/">
+			<?= Yii::t('app', 'Download the addon for transfer') ?>
 		</a>
-		<span class="label label-warning">в разработке</span>
 	</li>
 	<li>
-		Создание заявки на перенос <span class="label label-warning">todo</span>
+		<a href="http://wowtransfer.com/docs/service/create-dump-335a/">
+			<?= Yii::t('app', 'Create the dump of character in 3.3.5a') ?>
+		</a>.
 	</li>
-	-->
 	<li>
 		<a href="http://wowtransfer.com/docs/service/tconfig-common/">
 			<?= Yii::t('app', 'Transfer configurations') ?>
 		</a>
 	</li>
-	<li>Статусы заявок:
+	<li><?= Yii::t('app', 'Request`s statuses') ?>:
 		<ul>
 			<li>process: заявка создана, никаких действий над ней не произведено.</li>
 			<li>check: заявка проверяется администратором</li>

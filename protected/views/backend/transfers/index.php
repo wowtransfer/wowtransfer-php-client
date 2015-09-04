@@ -1,11 +1,23 @@
 <?php
 /* @var $this TransfersController */
 /* @var $dataProvider CActiveDataProvider */
+/* @var $viewMode string */
 
 $this->breadcrumbs = [
 	Yii::t('app', 'Transfer requests')
 ];
 ?>
+
+<div class="change-view-mode pull-right">
+	<a href="<?= $this->createUrl('changeview', ['mode' => 'list']) ?>"
+	   title="<?= Yii::t('app', 'List') ?>">
+		<span class="glyphicon glyphicon-th"></span>
+	</a>
+	<a href="<?= $this->createUrl('changeview', ['mode' => 'table']) ?>"
+	   title="<?= Yii::t('app', 'Table') ?>">
+		<span class="glyphicon glyphicon-th-list"></span>
+	</a>
+</div>
 
 <h1><?= Yii::t('app', 'Transfer requests') ?></h1>
 
@@ -14,7 +26,10 @@ $this->breadcrumbs = [
 <?php endif; ?>
 
 <div id="transfers-listview-block">
-	<?php $this->renderPartial('_index_data', array('dataProvider' => $dataProvider)) ?>
+	<?php $this->renderPartial('_index_data', [
+		'dataProvider' => $dataProvider,
+		'viewMode' => $viewMode,
+	]) ?>
 </div>
 
 <script><!--
