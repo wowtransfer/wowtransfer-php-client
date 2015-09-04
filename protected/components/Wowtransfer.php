@@ -375,6 +375,7 @@ class Wowtransfer
 		$ch = $this->_ch;
 		$postfields = array(
 			'dump_lua'         => '@' . $filePath,
+			'dump_encode'      => 'gzip',
 			'configuration_id' => $configuration,
 			'account_id'       => $accountId,
 			'access_token'     => $this->getAccessToken(),
