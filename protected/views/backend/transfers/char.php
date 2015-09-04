@@ -70,7 +70,7 @@ $this->breadcrumbs = [
 	<div class="col-md-4">
 
 		<div id="create-char-subactions">
-			<a class="btn btn-default btn-sm btn-char-action" id="clear-by-guid-id"
+			<a class="btn btn-default btn-sm disabled btn-char-action" id="clear-by-guid-id"
 			   href="<?= Yii::t('app', 'clearchardata', ['id' => $model->id]) ?>">
 				<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
 			</a> <span class="label label-success"><?= Yii::t('app', 'safe') ?></span><br>
@@ -132,12 +132,6 @@ $this->breadcrumbs = [
 	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
 	   id="btn-create-char-cancel">
 		<span class="glyphicon glyphicon-ban-circle"></span>
-		<?= Yii::t('app', 'Cancel') ?>
-	</a>
-
-	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
-	   style="display: none;" id="btn-create-char-success">
-		<span class="glyphicon glyphicon-plane"></span>
 		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 

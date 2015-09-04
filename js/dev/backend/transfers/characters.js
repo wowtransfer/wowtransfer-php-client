@@ -90,7 +90,6 @@ app.characters = (function($) {
 		}
 
 		$("#btn-create-char").hide();
-		$("#btn-create-char-cancel").hide();
 		$("#btn-create-char-success").show();
 		$("#btn-delete-char").show();
 
@@ -133,12 +132,15 @@ app.characters = (function($) {
 
 	/**
 	 * Show only SQL
-	 * @param {String} url
+	 * @param {Object} $btn
 	 * @param {Number} transferId
 	 * @returns {undefined}
 	 */
-	function onOnlySqlClick(url, transferId) {
+	function onOnlySqlClick($btn, transferId) {
+		var url = $btn.attr("href");
 		var $form = $("#create-char-from");
+
+		$btn.button("loading");
 		$.post(url, $form.serialize(), function(response) {
 			var sqlSize = 0;
 			var $sqlBlock = $("#create-char-sql");
@@ -155,7 +157,9 @@ app.characters = (function($) {
 				$("#create-char-errors").empty().addClass("hidden");
 			}
 			$('#create-char-tabs a[href="#tab-sql"] span').text(sqlSize);
-		}, "json");
+		}, "json").always(function() {
+			$btn.button("reset");
+		});
 	}
 
 	characters.deleteCharacter = function($btn, onComplete) {
@@ -239,8 +243,7 @@ app.characters = (function($) {
 		});
 
 		$("#btn-only-sql").click(function() {
-			var url = $(this).attr("href");
-			onOnlySqlClick(url, transferId);
+			onOnlySqlClick($(this), transferId);
 			return false;
 		});
 	});
