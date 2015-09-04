@@ -214,7 +214,7 @@ class ChdTransfer extends CActiveRecord
 			return false;
 		}
 		if (!Yii::app()->request->isAjaxRequest) {
-			if (!($this->fileLua instanceof CUploadedFile)) {
+			if (!($this->fileLua instanceof CUploadedFile) && $this->scenario !== 'update') {
 				$this->addError('fileLua', Yii::t('yii', '{attribute} cannot be blank.', [
 					'{attribute}' => $this->getAttributeLabel('fileLua')
 				]));
