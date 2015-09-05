@@ -37,7 +37,9 @@ class UpdatesController extends BackEndController
 			$release['size'] = filesize($latestReleaseFilePath);
 		}
 		$this->render('index', [
-			'release' => $release,
+			'release'    => $release,
+			'appVersion' => Yii::app()->params['version'],
+			'appDate'    => Yii::app()->params['date'],
 		]);
 	}
 
@@ -65,8 +67,6 @@ class UpdatesController extends BackEndController
 	}
 
 	public function actionUploadRelease() {
-		$request = Yii::app()->request;
-
 		try {
 			$this->uploadArchive();
 		} catch (Exception $ex) {
@@ -132,15 +132,6 @@ class UpdatesController extends BackEndController
 		}
 		$zip->extractTo($archiveDestDir);
 		$zip->close();
-
-		$sourceReleaseDir = $this->getSourceReleaseDir($archiveDestDir);
-
-		// overwrite files!!!
-		$fileHelper = new CFileHelper();
-
-		$webRoot = Yii::getPathOfAlias('webroot');
-
-		var_dump($fileHelper->copyDirectory($sourceReleaseDir, $webRoot));
 	}
 
 	/**
