@@ -61,13 +61,13 @@ class TransfersController extends BackendController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if (Yii::app()->request->isAjaxRequest && !empty($_POST))
-		{
+		if (Yii::app()->request->isAjaxRequest && !empty($_POST)) {
 			$model = $this->loadModel($id);
 			$model->setScenario('update');
 			$model->attributes = $_POST;
-			if (!$model->save(true, array_keys($_POST)))
+			if (!$model->save(true, array_keys($_POST))) {
 				throw new CHttpException(501, 'Error');
+			}
 			Yii::app()->end();
 		}
 		$this->redirect(array('index'));

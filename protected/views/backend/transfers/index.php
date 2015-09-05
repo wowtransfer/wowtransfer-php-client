@@ -9,14 +9,25 @@ $this->breadcrumbs = [
 ?>
 
 <div class="change-view-mode pull-right">
-	<a href="<?= $this->createUrl('changeview', ['mode' => 'list']) ?>"
-	   title="<?= Yii::t('app', 'List') ?>">
-		<span class="glyphicon glyphicon-th"></span>
-	</a>
-	<a href="<?= $this->createUrl('changeview', ['mode' => 'table']) ?>"
-	   title="<?= Yii::t('app', 'Table') ?>">
-		<span class="glyphicon glyphicon-th-list"></span>
-	</a>
+	<? if ($viewMode === 'list'): ?>
+		<span title="<?= Yii::t('app', 'List') ?>" class="selected">
+			<span class="glyphicon glyphicon-th"></span>
+		</span>
+	<? else: ?>
+		<a href="<?= $this->createUrl('changeview', ['mode' => 'list']) ?>"
+			title="<?= Yii::t('app', 'List') ?>">
+			 <span class="glyphicon glyphicon-th"></span></a>
+	<? endif ?>
+
+	<? if ($viewMode === 'table'): ?>
+		<span title="<?= Yii::t('app', 'Table') ?>" class="selected">
+			<span class="glyphicon glyphicon-th-list"></span>
+		</span>
+	<? else: ?>
+		<a href="<?= $this->createUrl('changeview', ['mode' => 'table']) ?>"
+			title="<?= Yii::t('app', 'Table') ?>">
+			 <span class="glyphicon glyphicon-th-list"></span></a>
+	<? endif ?>
 </div>
 
 <h1><?= Yii::t('app', 'Transfer requests') ?></h1>

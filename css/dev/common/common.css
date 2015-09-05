@@ -115,3 +115,12 @@ h1 {
 .change-view-mode {
 	margin-top: 5px;
 }
+.change-view-mode a {
+	color: #ddd;
+}
+.change-view-mode .selected {
+	color: lightcoral;
+}
+.change-view-mode a:hover {
+	color: red;
+}
