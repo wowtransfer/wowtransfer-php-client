@@ -31,6 +31,7 @@
 				<exclude name="extensions/*"/>
 				<exclude name="runtime/*" />
 				<exclude name="vendor/*" />
+				<exclude name="config/*-local.php" />
 			</fileset>
 		</copy>
 		<copy overwrite="true" todir="${release.dir}/themes">
