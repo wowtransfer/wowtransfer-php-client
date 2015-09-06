@@ -65,17 +65,17 @@
 
 		<?php echo $content; ?>
 
-		<hr>
-
-		<?php if ($page['step']): ?>
-			<div class="alert alert-warning">
-				При возникновении проблем с установкой, пожалуйста, посетите наш
-				<a href="http://forum.wowtransfer.com?from=install" title="wowtransfer.com forum">форум</a>
-				или
-				<a href="http://wowtransfer.com/contact/?from=install" title="wowtransfer.com - Contact us">напишите нам</a>!
-			</div>
-		<?php endif; ?>
 	</div>
+
+	<div class="clearfix"></div>
+	<?php if ($page['step']): ?>
+		<div class="alert alert-warning">
+			При возникновении проблем с установкой, пожалуйста, посетите наш
+			<a href="http://forum.wowtransfer.com?from=install" title="wowtransfer.com forum">форум</a>
+			или
+			<a href="http://wowtransfer.com/contact/?from=install" title="wowtransfer.com - Contact us">напишите нам</a>!
+		</div>
+	<?php endif; ?>
 
 	<?php include_once $root . '/footer.php'; ?>
 </div>

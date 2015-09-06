@@ -57,7 +57,7 @@ $this->breadcrumbs = [
 	]) ?>
 	<?= $form->dropDownListControlGroup($model, 'yiiTraceLevel', [0, 1, 2, 3, 4, 5], [
 		'help' => '<div class="alert alert-info">' .
-		'0 - disable. Works only on debug mode.' .
+		Yii::t('app', '0 - disable. Works only on debug mode.') .
 		'</div>',
 	]) ?>
 

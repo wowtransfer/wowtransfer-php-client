@@ -11,6 +11,9 @@ $pages = array(
 	'requirements' => array(
 		'title' => 'Проверка системных тербований',
 	),
+	'yii' => [
+		'title' => 'Путь к фреймворку',
+	],
 	'core' => array(
 		'title' => 'Выбор ядра WoW сервера',
 	),

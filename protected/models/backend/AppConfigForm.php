@@ -98,7 +98,7 @@ class AppConfigForm extends PhpFileForm
 			'modersStr'            => Yii::t('app', 'Moderators'),
 			'transferTable'        => Yii::t('app', 'Requests table'),
 			'yiiDebug'             => Yii::t('app', 'Debug mode'),
-			'yiiTraceLevel'        => Yii::t('app', 'Trace level'),
+			'yiiTraceLevel'        => 'YII_TRACE_LEVEL',
 		];
 	}
 

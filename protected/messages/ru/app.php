@@ -61,7 +61,7 @@ return [
 	'Delete the character failed' => 'Не удалось удалить персонажа',
 	'Deleting' => 'Удаление',
 	'Description' => 'Описание',
-	'Disable on prdaction server' => 'Выключать на боевом сервере',
+	'Disable on prdaction server' => 'Выключить на боевом сервере',
 	'Download the addon for transfer' => 'Скачать аддон для трансфера',
 	'Dump' => 'Дамп',
 	'Equipment sets' => 'Наборы экипировки',
@@ -147,7 +147,6 @@ return [
 	'Talents' => 'Таланты',
 	'Taxi' => 'Перелеты',
 	'Title' => 'Звания',
-	'Trace level' => 'Количество слоев стека вызова для журналирования',
 	'Transfer configurations' => 'Конфигурации переноса',
 	'Transfer requests' => 'Заявки на перенос',
 	'Transfer options' => 'Опции переноса',
@@ -166,5 +165,5 @@ return [
 	'Warnings' => 'Предупреждения',
 	'Without a protocol (http://), for example, mysqrver.ru or mysqrver.com' => 'Без протокола (http://), например, myserver.ru или myserver.com',
 	'Welcome' => 'Добро пожаловать',
-	'0 - disable. Works only on debug mode.' => '0 - отключить. Работает только в режиме отладки.ва',
+	'0 - disable. Works only on debug mode.' => '0 - отключить. Работает только в режиме отладки.',
 ];

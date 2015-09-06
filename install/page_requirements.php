@@ -49,7 +49,7 @@ foreach ($requirements as $name => $item) {
 }
 
 if (isset($_POST['submit']) && !$template->hasErrors()) {
-	header('Location: index.php?page=core');
+	header('Location: index.php?page=yii');
 	exit;
 }
 

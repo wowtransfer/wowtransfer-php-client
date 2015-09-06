@@ -1,10 +1,17 @@
 <?php
-$fields = array('core');
+$fields = ['core'];
 
-if (isset($_POST['submit']))
-{
-	if (!$template->hasErrors())
-	{
+if (isset($_POST['back'])) {
+	unset($_POST['back']);
+	unset($_POST['submit']);
+	$template->writeSubmitedFields();
+	header('Location: index.php?page=core');
+	exit;
+}
+
+if (isset($_POST['submit'])) {
+	if (!$template->hasErrors()) {
+		unset($_POST['back']);
 		unset($_POST['submit']);
 		$template->writeSubmitedFields();
 		header('Location: index.php?page=db');
@@ -23,6 +30,7 @@ if (isset($_POST['submit']))
 	</select>
 
 	<div class="actions-panel">
+		<button class="btn btn-default" type="submit" name="back">Назад</button>
 		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
 
 		<?php $template->printHiddenFields($fields); ?>

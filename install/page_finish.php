@@ -33,6 +33,6 @@ if (isset($_POST['submit'])) {
 <form action="" method="post">
 
 
-	<button class="btn btn-primary" type="submit" name="submit">Удалить папку <i>install</i> и перейди к авторизации</button>
+	<button class="btn btn-primary" type="submit" name="submit">Удалить папку <i>install</i> и перейти к авторизации</button>
 
 </form>

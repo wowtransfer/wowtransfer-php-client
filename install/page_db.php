@@ -27,10 +27,9 @@ $dbAuth = isset($_POST['db_auth']) ? trim($_POST['db_auth']) : $default['auth'];
 $dbCharacters = isset($_POST['db_characters']) ? trim($_POST['db_characters']) : $default['characters'];
 
 
-if (isset($_POST['back']))
-{
+if (isset($_POST['back'])) {
 	unset($_POST['back']);
-	unset($_POST['submit']); // from?
+	unset($_POST['submit']);
 	$template->writeSubmitedFields();
 	header('Location: index.php?page=core');
 	exit;

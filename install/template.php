@@ -1,11 +1,19 @@
-<?php
+<?
 
 class InstallerTemplate
 {
-	private $_name = 'Wowtransfer клиент';
-	private $_errors = array();
-	private $_checkItems = array();
-	private $_hiddenFields = array();
+	/**
+	 * @var array
+	 */
+	private $_errors = [];
+	/**
+	 * @var array
+	 */
+	private $_checkItems = [];
+	/**
+	 * @var array
+	 */
+	private $_hiddenFields = [];
 
 	/**
 	 * @return string Field's value by $name
@@ -37,7 +45,7 @@ class InstallerTemplate
 	public function writeSubmitedFields()
 	{
 		session_start();
-		$_SESSION = isset($_POST) ? $_POST : array();
+		$_SESSION = isset($_POST) ? $_POST : [];
 		session_write_close();
 	}
 
@@ -109,28 +117,27 @@ class InstallerTemplate
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($this->_checkItems as $name => $item): ?>
+			<? foreach ($this->_checkItems as $name => $item): ?>
 			<tr>
-				<td><?php echo $item['value']; ?></td>
+				<td><?= $item['value']; ?></td>
 				<td>
-<?php
+<?
 					$resultClass = 'warning';
 					$resultTitle = 'Предупреждение';
-					if (!empty($item['result']))
-					{
+					if (!empty($item['result'])) {
 						$resultClass = 'success';
 						$resultTitle = 'OK';
 					}
 ?>
-					<span class="label label-<?php echo $resultClass; ?>"><?php echo $resultTitle; ?></span>
+					<span class="label label-<?= $resultClass; ?>"><?= $resultTitle; ?></span>
 				</td>
-				<td><?php echo isset($item['comment']) ? $item['comment'] : ''; ?></td>
+				<td><?= isset($item['comment']) ? $item['comment'] : ''; ?></td>
 			</tr>
-			<?php endforeach; ?>
+			<? endforeach ?>
 			
 		</tbody>
 		</table>
-<?php
+<?
 	}
 
 	/**
@@ -321,65 +328,67 @@ class InstallerTemplate
 	public function writeAppConfig()
 	{
 		$filePath = $this->getAppConfigAbsoluteFilePath();
+		$localFilePath = $this->getAppConfigAbsoluteFilePath(true);
 		$lines = file($filePath);
-		if (!$lines) {
-			$defaultFilePath = $this->getAppConfigAbsoluteFilePath(true);
-			$lines = file($defaultFilePath);
-		}
 		if (!$lines) {
 			$this->addError("Не удалось прочитать файл конфигурации приложения\n" . $filePath);
 			return false;
 		}
 
 		$configContent = '';
-		$params = array(
-			'core' => false,
-			'transferTable' => false,
-		);
-		foreach ($lines as $line)
-		{
+		$params = [];
+		foreach ($lines as $line) {
 			// 'return [' -- begin
 			// '];'       -- end
 
 			$keyValue = explode('=>', $line);
-			if (isset($keyValue[1]))
-			{
+			if (isset($keyValue[1])) {
 				$key = trim($keyValue[0]);
-				if ($key === "'core'")
-				{
+				if ($key === "'core'") {
 					$configContent .= "\t'core'=>'{$this->getFieldValue('core')}',\n";
 					$params['core'] = true;
 					continue;
 				}
-				elseif ($key === "'transferTable'")
-				{
+				elseif ($key === "'transferTable'") {
 					$configContent .= "\t'transferTable'=>'{$this->getFieldValue('db_transfer_table')}',\n";
 					$params['transferTable'] = true;
 					continue;
 				}
+				elseif ($key === "'yiiDir'") {
+					$configContent .= "\t'yiiDir'=>'{$this->getFieldValue('yii_dir')}',\n";
+					$params['yiiDir'] = true;
+					continue;
+				}
 			}
 
-			if ($line === '];')
-			{
-				if (!$params['core'])
+			if (trim($line) === '];') {
+				if (!isset($params['core'])) {
 					$configContent .= "\t'core'=>'{$this->getFieldValue('core')}',\n";
-				if (!$params['transferTable'])
+				}
+				if (!isset($params['transferTable'])) {
 					$configContent .= "\t'transferTable'=>'{$this->getFieldValue('db_transfer_table')}',\n";
+				}
+				if (!isset($params['yiiDir'])) {
+					$configContent .= "\t'yiiDir'=>'{$this->getFieldValue('yii_dir')}',\n";
+				}
 			}
 
 			$configContent .= $line;
 		}
 
-		$handle = fopen($filePath, 'w');
-		if ($handle)
-		{
-			fwrite($handle, $configContent);
-			fclose($handle);
+		$handle = fopen($localFilePath, 'w');
+		if (!$handle) {
+			$this->addError("Не удалось записать в файл $localFilePath\n");
+			return false;
 		}
+		fwrite($handle, $configContent);
+		fclose($handle);
 
 		$this->writeDbConfig();
+		$this->writeServiceConfig();
+		$this->writeTransferOptionsConfig();
 
-		return $handle !== false;
+		return true;
 	}
 
 	/**
@@ -393,7 +402,7 @@ class InstallerTemplate
 		if ($h) {
 			ob_start();
 			echo
-				"<?php\n",
+				"<?\n",
 				"return [\n",
 				"	'connectionString'=>'mysql:host=127.0.0.1;dbname={$this->getFieldValue('db_characters')}',\n",
 				"	'emulatePrepare'=>true,\n",
@@ -413,20 +422,44 @@ class InstallerTemplate
 	}
 
 	/**
-	 * @param boolean
-	 * @return string
+	 * @return boolean
 	 */
-	public function getAppConfigAbsoluteFilePath($default = false) {
-		return __DIR__ . '/..' . $this->getAppConfigRelativeFilePath($default);
+	protected function writeServiceConfig() {
+		$serviceFilePath = __DIR__ . '/../protected/config/service-local.php';
+		$h = fopen($serviceFilePath, 'w');
+		fwrite($h, "<?php return [];");
+		fclose($h);
+
+		return $h != false;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function writeTransferOptionsConfig() {
+		$serviceFilePath = __DIR__ . '/../protected/config/toptions-local.php';
+		$h = fopen($serviceFilePath, 'w');
+		fwrite($h, "<?php return [];");
+		fclose($h);
+
+		return $h != false;
 	}
 
 	/**
 	 * @param boolean
 	 * @return string
 	 */
-	public function getAppConfigRelativeFilePath($default = false) {
-		$useDefault = $default ? '' : '-local';
-		return $this->getAppConfigRelativeDir() . '/app' . $useDefault. '.php';
+	public function getAppConfigAbsoluteFilePath($local = false) {
+		return __DIR__ . '/..' . $this->getAppConfigRelativeFilePath($local);
+	}
+
+	/**
+	 * @param boolean
+	 * @return string
+	 */
+	public function getAppConfigRelativeFilePath($local = false) {
+		$useLocal = $local ? '-local' : '';
+		return $this->getAppConfigRelativeDir() . '/app' . $useLocal. '.php';
 	}
 
 	/**

@@ -1,7 +1,7 @@
-<?php
+<?
 /* @var $template InstallerTemplate */
 
-$fields = array('submit', 'back');
+$fields = ['submit', 'back'];
 
 if (isset($_POST['back'])) {
 	unset($_POST['back']);
@@ -31,25 +31,25 @@ if (isset($_POST['submit'])) {
 
 <form action="" method="post">
 
-	<?php $template->errorSummary(); ?>
+	<? $template->errorSummary() ?>
 
 	<p class="text-center">Название таблицы с заявками:
-		<span style="font-weight: bold;">
-			<?php echo $template->getFieldValue('db_transfer_table'); ?>
-		</span>
+		<b><?= $template->getFieldValue('db_transfer_table') ?></b>
 	</p>
 
 	<p class="text-center">Ядро WoW сервера:
-		<span style="font-weight: bold;">
-			<?php echo $template->getFieldValue('core'); ?>
-		</span>
+		<b><?= $template->getFieldValue('core') ?></b>
+	</p>
+
+	<p class="text-center">Директория с фреймворком yii:
+		<b><?= $template->getFieldValue('yii_dir') ?></b>
 	</p>
 
 	<div class="actions-panel">
 		<button class="btn btn-default" type="submit" name="back">Назад</button>
 		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
 
-		<?php $template->printHiddenFields($fields); ?>
+		<? $template->printHiddenFields($fields) ?>
 	</div>
 
 </form>
