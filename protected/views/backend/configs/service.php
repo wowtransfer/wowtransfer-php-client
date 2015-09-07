@@ -11,10 +11,6 @@ $this->breadcrumbs = [
 
 <h1><?= Yii::t('app', 'Service connection') ?></h1>
 
-<div class="alert alert-warning">
-	<?= Yii::t('app', 'Settings saves in the file') ?> <code>/protected/config/service-local.php</code>.
-</div>
-
 <? if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success'); ?></div>
 <? endif; ?>
@@ -45,18 +41,23 @@ $this->breadcrumbs = [
 	<div class="col-sm-3"></div>
 	<div class="col-sm-9">
 		<button type="submit" class="btn btn-primary">
-			Save
+			<?= Yii::t('app', 'Save') ?>
 		</button>
 		<a href="<?php echo $this->createUrl('/configs') ?>" class="btn btn-default">
-			<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+			<span class="glyphicon glyphicon-ban-circle"></span>
+			<?= Yii::t('app', 'Cancel') ?>
 		</a>
 		<a class="btn btn-default" href="?default=1"
 		   onclick="return confirm('Вы уверены?');"
 		   >
-			Default
+			<?= Yii::t('app', 'Default') ?>
 		</a>
 	</div>
 </div>
 
 <? $this->endWidget(); ?>
 <? unset($form); ?>
+
+<div class="alert alert-warning">
+	<?= Yii::t('app', 'Settings saves in the file') ?> <code>/protected/config/service-local.php</code>.
+</div>

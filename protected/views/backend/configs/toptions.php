@@ -43,13 +43,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <div class="form-actions">
 	<button type="submit" class="btn btn-primary">
-		Save
+		<?= Yii::t('app', 'Save') ?>
 	</button>
 	<a href="<?php echo $this->createUrl('/configs'); ?>" class="btn btn-default">
 		<span class="glyphicon glyphicon-ban-circle"></span>
-		Cancel
+		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 </div>
+
 <?php
 $this->endWidget();
 unset($form);
+?>
+
+<div class="alert alert-warning">
+	<?= Yii::t('app', 'Settings saves in the file') ?> <code>/protected/config/toptions-local.php</code>.
+</div>
