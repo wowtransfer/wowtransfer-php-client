@@ -98,16 +98,16 @@ class ConfigsController extends BackendController
 		if ($request->getQuery('default')) {
 			$model->loadDefaults();
 			if ($model->save(false)) {
-				$this->redirect($this->createUrl('/configs/service'));
+				$this->redirect(['/configs/service']);
 			}
 		}
 		if ($request->getPost('ServiceConfigForm')) {
 			$model->attributes = $request->getPost('ServiceConfigForm');
-			$model->save();
+			if ($model->save()) {
+				$this->redirect(['/configs/service']);
+			}
 		}
-		else {
-			$model->load();
-		}
+		$model->load();
 
 		$this->render('service', [
 			'model' => $model,

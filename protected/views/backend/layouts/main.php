@@ -52,7 +52,7 @@
 		)); ?><!-- breadcrumbs -->
 	<? endif?>
 
-	<? if ($this->isEmptyServiceParams()): ?>
+	<? if ($this->route !== 'configs/service' && $this->isEmptyServiceParams()): ?>
 		<div class="alert alert-danger">
 			<?= Yii::t('app', 'Service parameters not set up') ?>,
 			<?= CHtml::link(Yii::t('app', 'Set up'), $this->createUrl('/configs/service'), ['class' => 'lowercase']) ?>.
