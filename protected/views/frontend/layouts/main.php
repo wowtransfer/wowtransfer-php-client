@@ -65,7 +65,7 @@
 		<!-- Admin / Application switch -->
 		<?php if (Yii::app()->user->isAdmin()): ?>
 		<a href="<?php echo Yii::app()->request->baseUrl . '/admin.php/transfers/index'; ?>"
-		   class="right" id="admin-switch">
+		   id="admin-switch">
 			<span class="glyphicon glyphicon-cog"></span>
 			<?= Yii::t('app', 'Administration') ?>
 		</a>

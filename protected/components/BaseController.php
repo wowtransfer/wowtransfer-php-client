@@ -64,4 +64,13 @@ class BaseController extends CController
 	public function addAsideBlockToColumn2($block) {
 		$this->asideBlocks[] = $block;
 	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isEmptyServiceParams() {
+		$emptyUsername = empty(Yii::app()->params['serviceUsername']);
+		$emptyToken = empty(Yii::app()->params['accessToken']);
+		return  $emptyUsername || $emptyToken;
+	}
 }

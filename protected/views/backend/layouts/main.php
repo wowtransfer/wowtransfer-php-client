@@ -1,15 +1,15 @@
-<?php
+<?
 /* @var $this BackendController */
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="<?= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
 
-	<?php $this->registerCssAndJs(); ?>
+	<? $this->registerCssAndJs(); ?>
 
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+	<title><?= CHtml::encode($this->pageTitle); ?></title>
 </head>
 
 <body>
@@ -18,41 +18,48 @@
 
 	<div id="header">
 		<div id="login">
-			<? Yii::t('app', 'Welcome') ?> <b><?php echo Yii::app()->user->name; ?></b>
+			<? Yii::t('app', 'Welcome') ?> <b><?= Yii::app()->user->name; ?></b>
 			<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
-			<a href="<?php echo $this->createUrl('/site/logout') ?>" title="Logout">
+			<a href="<?= $this->createUrl('/site/logout') ?>" title="Logout">
 				<span class="glyphicon glyphicon-log-out"></span> <?= Yii::t('app', 'Logout') ?>
 			</a>
 		</div>
 	</div><!-- header -->
 
-	<?php $this->widget('bootstrap.widgets.TbNav', array(
+	<? $this->widget('bootstrap.widgets.TbNav', [
 		'type' => 'tabs',
 		'items' => [
 			['label' => Yii::t('app', 'Site'), 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'],
-			['label' => Yii::t('zii', 'Home'), 'url'=>array('/'), 'active' => $this->route == 'site/index'],
-			array('label' => Yii::t('app', 'Requests'), 'url'=>array('/transfers'), 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'),
+			['label' => Yii::t('zii', 'Home'), 'url'=>['/'], 'active' => $this->route == 'site/index'],
+			['label' => Yii::t('app', 'Requests'), 'url'=>['/transfers'], 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'],
 			['label' => Yii::t('app', 'Configurations'), 'url' => ['/tconfigs/index'], 'icon' => 'asterisk'],
 			['label' => Yii::t('app', 'Settings'), 'url' => ['/configs'], 'icon' => 'cog', 'active' => $this->id == 'configs'],
-			['label' => Yii::t('app', 'Update'), 'url'=>array('/updates'), 'icon' => 'ok-circle', 'active' => $this->id == 'updates'],
+			['label' => Yii::t('app', 'Update'), 'url' => ['/updates'], 'icon' => 'ok-circle', 'active' => $this->id == 'updates'],
 		],
-	)); ?><!-- mainmenu -->
+	]); ?><!-- mainmenu -->
 
 	<!-- Admin / Application switch -->
-	<a href="<?php echo Yii::app()->request->baseUrl . '/index.php/transfers/index'; ?>"
-	   class="right" id="admin-switch" title="<?= Yii::t('app', 'Application') ?>">
+	<a href="<?= Yii::app()->request->baseUrl . '/index.php/transfers/index'; ?>"
+	   id="admin-switch" title="<?= Yii::t('app', 'Application') ?>">
 		<span class="glyphicon glyphicon-arrow-left"></span>
 		<?= Yii::t('app', 'Application') ?>
 	</a>
 
-	<?php if (isset($this->breadcrumbs)):?>
-		<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
+	<? if (isset($this->breadcrumbs)):?>
+		<? $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 			'links' => $this->breadcrumbs,
 			'homeLabel' => CHtml::link(Yii::t('app', 'Administration'), Yii::app()->homeUrl),
 		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+	<? endif?>
 
-	<?php echo $content; ?>
+	<? if ($this->isEmptyServiceParams()): ?>
+		<div class="alert alert-danger">
+			<?= Yii::t('app', 'Service parameters not set up') ?>,
+			<?= CHtml::link(Yii::t('app', 'Set up'), $this->createUrl('/configs/service'), ['class' => 'lowercase']) ?>.
+		</div>
+	<? endif ?>
+
+	<?= $content; ?>
 
 	<div class="clear"></div>
 
@@ -62,9 +69,9 @@
 <div class="container">
 	<div class="navbar" id="footer">
 		<div class="pull-left" style="height: 3em;">
-			<?php if (!empty(Yii::app()->params['serviceUsername'])): ?>
-				Service username: <strong><a href="http://wowtransfer.com/cp/profile/"><?php echo Yii::app()->params['serviceUsername']; ?></a></strong>
-			<?php endif ?>
+			<? if (!empty(Yii::app()->params['serviceUsername'])): ?>
+				Service username: <strong><a href="http://wowtransfer.com/cp/profile/"><?= Yii::app()->params['serviceUsername']; ?></a></strong>
+			<? endif ?>
 		</div>
 		<div>
 			Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>

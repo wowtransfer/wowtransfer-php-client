@@ -124,3 +124,7 @@ h1 {
 .change-view-mode a:hover {
 	color: red;
 }
+
+.lowercase {
+	text-transform: lowercase;
+}
