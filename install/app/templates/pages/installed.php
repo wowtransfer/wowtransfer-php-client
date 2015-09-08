@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['remove_dir'])) {
-	$result = $template->removeDir();
-	if (!$template->hasErrors()) {
+	$result = $app->removeDir();
+	if (!$view->hasErrors()) {
 		header('Location: ' . getAppRelativeUrl());
 		exit;
 	}
@@ -14,7 +14,7 @@ if (isset($_POST['remove_dir'])) {
 </div>
 
 <div>
-	<?php $template->errorSummary() ?>
+	<?php $view->errorSummary() ?>
 </div>
 
 <div>

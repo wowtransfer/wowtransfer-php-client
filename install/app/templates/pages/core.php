@@ -4,16 +4,16 @@ $fields = ['core'];
 if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
-	$template->writeSubmitedFields();
-	header('Location: index.php?page=core');
+	$view->writeSubmitedFields();
+	header('Location: index.php?page=yii');
 	exit;
 }
 
 if (isset($_POST['submit'])) {
-	if (!$template->hasErrors()) {
+	if (!$view->hasErrors()) {
 		unset($_POST['back']);
 		unset($_POST['submit']);
-		$template->writeSubmitedFields();
+		$view->writeSubmitedFields();
 		header('Location: index.php?page=db');
 		exit;
 	}
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 		<button class="btn btn-default" type="submit" name="back">Назад</button>
 		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
 
-		<?php $template->printHiddenFields($fields); ?>
+		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

@@ -1,4 +1,5 @@
 <?php
+use Installer\DatabaseManager;
 
 $fields = array('db_type', 'db_host', 'db_port', 'db_user', 'db_password', 'db_auth', 'db_characters');
 
@@ -30,7 +31,7 @@ $dbCharacters = isset($_POST['db_characters']) ? trim($_POST['db_characters']) :
 if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
-	$template->writeSubmitedFields();
+	$view->writeSubmitedFields();
 	header('Location: index.php?page=core');
 	exit;
 }
@@ -42,25 +43,24 @@ if (isset($_POST['submit']))
 
 	// validate
 	if (empty($dbHost)) {
-		$template->addError("Введите сервер");
+		$view->addError("Введите сервер");
 	}
 	if (empty($dbUser)) {
-		$template->addError("Введите пользователя");
+		$view->addError("Введите пользователя");
 	}
 	if (empty($dbAuth)) {
-		$template->addError("Введите название базы данных с аккаунтами");
+		$view->addError("Введите название базы данных с аккаунтами");
 	}
 	if (empty($dbCharacters)) {
-		$template->addError("Введите название базы данных с персонажами");
+		$view->addError("Введите название базы данных с персонажами");
 	}
 
-	if (!$template->hasErrors()) {
-		$db = new InstallerDatabaseManager($template);
+	if (!$view->hasErrors()) {
+		$db = new DatabaseManager($view);
 		$db->checkConnection();
 	}
-	if (!$template->hasErrors())
-	{
-		$template->writeSubmitedFields();
+	if (!$view->hasErrors()) {
+		$view->writeSubmitedFields();
 		header('Location: index.php?page=user');
 		exit;
 	}
@@ -86,7 +86,7 @@ if (isset($_POST['submit']))
 
 <form action="" method="post">
 
-	<?php $template->errorSummary(); ?>
+	<?php $view->errorSummary(); ?>
 
 	<label for="db_type">Тип базы данных</label>
 	<select name="db_type" id="db_type" class="form-control">
@@ -136,7 +136,7 @@ if (isset($_POST['submit']))
 		<button class="btn btn-default" type="submit" name="back">Назад</button>
 		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
 
-		<?php $template->printHiddenFields($fields); ?>
+		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

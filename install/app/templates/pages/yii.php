@@ -6,19 +6,19 @@ $yiiDir = isset($_POST['yii_dir']) ? trim($_POST['yii_dir']) : '';
 
 if (isset($_POST['submit'])) {
 	if (empty($yiiDir)) {
-		$template->addError('Путь до фреймворка не введен');
+		$view->addError('Путь до фреймворка не введен');
 	}
 	else {
 		$yiiDir = $_POST['yii_dir'] = rtrim($yiiDir, "\\/");
 		$yiiFilePath = $yiiDir . DIRECTORY_SEPARATOR . 'yii.php';
 		if (!is_file($yiiFilePath)) {
-			$template->addError('Неверный путь: "' . $yiiDir . '", yii.php не найден');
+			$view->addError('Неверный путь: "' . $yiiDir . '", yii.php не найден');
 		}
 	}
 
-	if (!$template->hasErrors()) {
+	if (!$view->hasErrors()) {
 		unset($_POST['submit']);
-		$template->writeSubmitedFields();
+		$view->writeSubmitedFields();
 		header('Location: index.php?page=core');
 		exit;
 	}
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 
 <form action="" method="post">
 
-	<? $template->errorSummary() ?>
+	<? $view->errorSummary() ?>
 
 	<div class="form-group">
 		<label for="yii_dir" class="control-label">Директория до yii.php</label>
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 	<div class="actions-panel">
 		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
 
-		<? $template->printHiddenFields($excludeFields) ?>
+		<? $view->printHiddenFields($excludeFields) ?>
 	</div>
 
 </form>

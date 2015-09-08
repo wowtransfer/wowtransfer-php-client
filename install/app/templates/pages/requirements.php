@@ -1,7 +1,9 @@
 <?php
-/* @var $template InstallerTemplate */
+/* @var $view \Installer\View */
 
-$configAppFilePath = $template->getAppConfigAbsoluteFilePath();
+use Installer\App;
+
+$configAppFilePath = App::$app->getAppConfigAbsoluteFilePath();
 
 $requirements = array(
 	'php_version' => array(
@@ -35,20 +37,20 @@ $requirements = array(
 		'comment' => 'Необходимо для капчи',
 	),
 	'config_app' => array(
-		'value' => $template->getAppConfigRelativeDir(),
+		'value' => App::$app->getAppConfigRelativeDir(),
 		'result' => is_writable($configAppFilePath),
 		'comment' => 'Проверка на запись',
 	),
 );
 
 foreach ($requirements as $name => $item) {
-	$template->addCheckItem($name, $item);
+	$view->addCheckItem($name, $item);
 	if (!$item['result']) {
-		$template->addError('Предупреждение: ' . $item['value']);
+		$view->addError('Предупреждение: ' . $item['value']);
 	}
 }
 
-if (isset($_POST['submit']) && !$template->hasErrors()) {
+if (isset($_POST['submit']) && !$view->hasErrors()) {
 	header('Location: index.php?page=yii');
 	exit;
 }
@@ -57,9 +59,9 @@ if (isset($_POST['submit']) && !$template->hasErrors()) {
 
 <form action="" method="post">
 
-	<?php $template->errorSummary(); ?>
+	<?php $view->errorSummary(); ?>
 
-	<?php $template->printCheckTable(); ?>
+	<?php $view->printCheckTable (); ?>
 
 	<div class="actions-panel">
 		<button class="btn btn-primary" title="Next" type="submit" name="submit">Далее</button>

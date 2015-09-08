@@ -1,5 +1,5 @@
 <?php
-$template->clearSubmitedFields();
+$view->clearSubmitedFields();
 ?>
 
 <div class="form ">

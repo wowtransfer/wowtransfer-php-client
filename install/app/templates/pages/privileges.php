@@ -1,13 +1,15 @@
-<?php
+<?
+use Installer\App;
+use Installer\DatabaseManager;
 
-$fields = array('submit', 'back');
+$fields = ['submit', 'back'];
 
 if (isset($_POST['back']))
 {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
-	$template->writeSubmitedFields();
+	$view->writeSubmitedFields();
 	header('Location: index.php?page=procedures');
 	exit;
 }
@@ -17,10 +19,8 @@ if (isset($_POST['submit']))
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
-	$db = new InstallerDatabaseManager($template);
-
-	if ($db->applyPrivileges() && !$template->hasErrors())
-	{
+	$db = new DatabaseManager($view);
+	if ($db->applyPrivileges() && !$view->hasErrors()) {
 		header('Location: index.php?page=config');
 		exit;
 	}
@@ -34,22 +34,22 @@ if (isset($_POST['submit']))
 
 <form action="" method="post">
 
-	<?php $template->errorSummary(); ?>
+	<? $view->errorSummary(); ?>
 
 
 	<p class="text-center">Пользователь:
 		<span style="font-weight: bold;">
-		<?php echo "'" . $template->getFieldValue('db_transfer_user') . "'@'" . $template->getFieldValue('db_transfer_user_host') . "'"; ?>
+		<?= "'" . $view->getFieldValue('db_transfer_user') . "'@'" . $view->getFieldValue('db_transfer_user_host') . "'"; ?>
 		</span>
 	</p>
 
-	<pre class="sql-code" style="height: 400px;"><?php echo $template->loadDbPrivileges(); ?></pre>
+	<pre class="sql-code" style="height: 400px;"><?= App::$app->loadDbPrivileges (); ?></pre>
 
 	<div class="actions-panel">
 		<button class="btn btn-default" type="submit" name="back">Назад</button>
 		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
 
-		<?php $template->printHiddenFields($fields); ?>
+		<? $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

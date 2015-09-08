@@ -1,11 +1,12 @@
 <?php
+use Installer\App;
 
-$template->clearSubmitedFields();
+$view->clearSubmitedFields();
 
 if (isset($_POST['submit'])) {
-	$template->removeDir();
-	if (!$template->hasErrors()) {
-		header('Location: ' . getAppRelativeUrl());
+	App::$app->removeDir();
+	if (!$view->hasErrors()) {
+		header('Location: ' . App::$app->getRelativeUrl());
 		exit;
 	}
 }
@@ -20,7 +21,7 @@ if (isset($_POST['submit'])) {
 </div>
 
 <div class="alert alert-warning">
-	<?php $template->errorSummary(); ?>
+	<?php $view->errorSummary(); ?>
 
 	<p>Настройте файлы конфигурации приложения:</p>
 	<ul>

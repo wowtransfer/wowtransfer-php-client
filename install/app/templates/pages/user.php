@@ -1,4 +1,6 @@
 <?php
+use Installer\DatabaseManager;
+
 $dbTransferUser = isset($_POST['db_transfer_user']) ? trim($_POST['db_transfer_user']) : 'wowtransfer';
 $dbTransferUserHost = isset($_POST['db_transfer_user_host']) ? trim($_POST['db_transfer_user_host']) : 'localhost';
 $dbTransferPassword = isset($_POST['db_transfer_password']) ? trim($_POST['db_transfer_password']) : 'wowtransfer';
@@ -10,7 +12,7 @@ if (isset($_POST['back'])) {
 	unset($_POST['next']);
 	unset($_POST['back']);
 
-	$template->writeSubmitedFields();
+	$view->writeSubmitedFields();
 	header('Location: index.php?page=db');
 	exit;
 }
@@ -22,18 +24,16 @@ if (isset($_POST['submit'])) {
 
 	// simple checking...
 	if (empty($dbTransferUser)) {
-		$template->addError('Введите имя пользователя');
+		$view->addError('Введите имя пользователя');
 	}
 	elseif (empty($dbTransferPassword)) {
-		$template->addError('Введите пароль');
+		$view->addError('Введите пароль');
 	}
 	else {
-		$db = new InstallerDatabaseManager($template);
-
+		$db = new DatabaseManager($view);
 		$db->createUser($dbTransferUser, $dbTransferPassword, $dbTransferUserHost);
-
-		if (!$template->hasErrors()) {
-			$template->writeSubmitedFields();
+		if (!$view->hasErrors()) {
+			$view->writeSubmitedFields();
 			header('Location: index.php?page=struct');
 			exit;
 		}
@@ -46,10 +46,10 @@ if (isset($_POST['next'])) {
 	unset($_POST['back']);
 
 	if (empty($dbTransferUser)) {
-		$template->addError('Введите имя пользователя');
+		$view->addError('Введите имя пользователя');
 	}
 	else {
-		$template->writeSubmitedFields();
+		$view->writeSubmitedFields();
 		header('Location: index.php?page=struct');
 		exit;
 	}
@@ -73,7 +73,7 @@ if (isset($_POST['next'])) {
 
 <form action="" method="post">
 
-	<?php $template->errorSummary(); ?>
+	<?php $view->errorSummary(); ?>
 
 	<fieldset>
 		<legend>Пользователь</legend>
@@ -105,7 +105,7 @@ if (isset($_POST['next'])) {
 		<button class="btn btn-primary" title="Create" type="submit" name="submit">Создать</button>
 		<button class="btn btn-primary" title="Next" type="submit" name="next">Далее</button>
 
-		<?php $template->printHiddenFields($fields); ?>
+		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

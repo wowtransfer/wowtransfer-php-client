@@ -1,12 +1,15 @@
 <?php
+namespace Installer;
 
-class InstallerDatabaseManager
+use \Installer\App;
+
+class DatabaseManager
 {
-	private $_template;
+	protected $view;
 
-	public function InstallerDatabaseManager($template)
+	public function __construct($view)
 	{
-		$this->_template = $template;
+		$this->view = $view;
 	}
 
 	/**
@@ -14,30 +17,32 @@ class InstallerDatabaseManager
 	 *
 	 * @param $database string
 	 *
-	 * @throw PDOException
+	 * @throw \PDOException
 	 *
-	 * @return PDO
+	 * @return \PDO
 	 */
 	private function _connect($database = '')
 	{
-		$host     = $this->_template->getFieldValue('db_host');
-		$port     = $this->_template->getFieldValue('db_port');
-		$user     = $this->_template->getFieldValue('db_user');
-		$password = $this->_template->getFieldValue('db_password');
+		$host     = $this->view->getFieldValue('db_host');
+		$port     = $this->view->getFieldValue('db_port');
+		$user     = $this->view->getFieldValue('db_user');
+		$password = $this->view->getFieldValue('db_password');
 
-		if (empty($host))
+		if (empty($host)) {
 			$host = 'localhost';
-		if (empty($port))
+		}
+		if (empty($port)) {
 			$port = 3306;
+		}
 
 		$dsn = 'mysql:host=' . $host . ';dbname=' . $database; // . ';charset=utf8";
 
 		$options = array(
-			PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+			\PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+			\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
 		);
 
-		return new PDO($dsn, $user, $password, $options);
+		return new \PDO($dsn, $user, $password, $options);
 	}
 
 	/**
@@ -52,17 +57,17 @@ class InstallerDatabaseManager
 
 			// check auth database
 			$errorPrefix = 'Проверка базы данных с аккаунтами: ';
-			$pdo->query('USE `' . $this->_template->getFieldValue('db_auth') . '`');
+			$pdo->query('USE `' . $this->view->getFieldValue('db_auth') . '`');
 
 			// check characters database
 			$errorPrefix = 'Проверка базы данных с персонажами: ';
-			$pdo->query('USE `' . $this->_template->getFieldValue('db_characters') . '`');
+			$pdo->query('USE `' . $this->view->getFieldValue('db_characters') . '`');
 
 			unset($pdo);
 		}
 		catch (PDOException $ex)
 		{
-			$this->_template->addError($errorPrefix . $ex->getMessage());
+			$this->view->addError($errorPrefix . $ex->getMessage());
 			return false;
 		}
 
@@ -103,9 +108,9 @@ class InstallerDatabaseManager
 
 			unset($pdo);
 		}
-		catch (PDOException $ex)
+		catch (\PDOException $ex)
 		{
-			$this->_template->addError('Выполнение запроса: ' . $ex->getMessage());
+			$this->view->addError('Выполнение запроса: ' . $ex->getMessage());
 			return false;
 		}
 
@@ -117,15 +122,15 @@ class InstallerDatabaseManager
 	 */
 	public function createStructure()
 	{
-		$db = $this->_template->getFieldValue('db_characters');
-		$dbTransferTableName = $this->_template->getFieldValue('db_transfer_table');
+		$db = $this->view->getFieldValue('db_characters');
+		$dbTransferTableName = $this->view->getFieldValue('db_transfer_table');
 
 		try
 		{
 			$pdo = $this->_connect($db);
 
 			// SQL only with simple queries, separated by ';'
-			$sql = $this->_template->loadDbStructure();
+			$sql = App::$app->loadDbStructure();
 			$queries = explode(';', $sql);
 			foreach ($queries as $query)
 			{
@@ -137,9 +142,9 @@ class InstallerDatabaseManager
 
 			unset($pdo);
 		}
-		catch (PDOException $ex)
+		catch (\PDOException $ex)
 		{
-			$this->_template->addError('Выполнение запроса: ' . $ex->getMessage());
+			$this->view->addError('Выполнение запроса: ' . $ex->getMessage());
 			return false;
 		}
 
@@ -151,34 +156,34 @@ class InstallerDatabaseManager
 	 */
 	public function createProcedures()
 	{
-		$db = $this->_template->getFieldValue('db_characters');
+		$db = $this->view->getFieldValue('db_characters');
 
-		try
-		{
+		try {
 			$pdo = $this->_connect($db);
 
-			$sql = $this->_template->loadDbProcedures();
-			if (!$sql)
+			$sql = App::$app->loadDbProcedures();
+			if (!$sql) {
 				return false;
+			}
 
 			// first line always start with 'DELIMITER $$'
 			$queries = explode('$$', $sql);
-			if (substr(trim($queries[0]), 0, 9) === 'DELIMITER')
+			if (substr(trim($queries[0]), 0, 9) === 'DELIMITER') {
 				array_shift($queries);
+			}
 
-			foreach ($queries as $query)
-			{
+			foreach ($queries as $query) {
 				$query = trim($query);
 				// $query = removeComment($query);
-				if (!empty($query))
+				if (!empty($query)) {
 					$pdo->exec($query);
+				}
 			}
 
 			unset($pdo);
 		}
-		catch (PDOException $ex)
-		{
-			$this->_template->addError('Выполнение запроса: ' . $ex->getMessage());
+		catch (\PDOException $ex) {
+			$this->view->addError('Выполнение запроса: ' . $ex->getMessage());
 			return false;
 		}
 
@@ -190,30 +195,29 @@ class InstallerDatabaseManager
 	 */
 	public function applyPrivileges()
 	{
-		$db = $this->_template->getFieldValue('db_characters');
+		$db = $this->view->getFieldValue('db_characters');
 
-		try
-		{
+		try {
 			$pdo = $this->_connect($db);
 
-			$sql = $this->_template->loadDbPrivileges();
-			if (!$sql)
+			$sql = App::$app->loadDbPrivileges();
+			if (!$sql) {
 				return false;
+			}
 
 			$queries = explode(';', $sql);
-			foreach ($queries as $query)
-			{
+			foreach ($queries as $query) {
 				$query = trim($query);
 				// $query = removeComment($query);
-				if (!empty($query))
+				if (!empty($query)) {
 					$pdo->exec($query);
+				}
 			}
 
 			unset($pdo);
 		}
-		catch (PDOException $ex)
-		{
-			$this->_template->addError('Выполнение запроса: ' . $ex->getMessage());
+		catch (\PDOException $ex) {
+			$this->view->addError('Выполнение запроса: ' . $ex->getMessage());
 			return false;
 		}
 
