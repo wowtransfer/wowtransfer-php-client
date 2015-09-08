@@ -117,7 +117,7 @@ class PhpFileForm extends CFormModel {
 			fclose($h);
 		}
 		else {
-			$error = Yii::t('App', 'Could not open file {file}', ['{file}' => $this->filePath]);
+			$error = Yii::t('App', 'Could not open the file {file}', ['{file}' => $this->filePath]);
 		}
 
 		if (isset($error)) {

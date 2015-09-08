@@ -14,38 +14,34 @@ $this->breadcrumbs = array(
 	<thead>
 		<tr>
 			<th></th>
-			<th>Версия</th>
-			<th>Дата</th>
+			<th><?= Yii::t('app', 'Version') ?></th>
+			<th><?= Yii::t('app', 'Date') ?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>Текущее</td>
+			<td><?= Yii::t('app', 'Current') ?></td>
 			<td>
 				<?= $appVersion ?>
 			</td>
 			<td>
 				<?= $appDate ?>
 			</td>
-			<td></td>
 		</tr>
 		<tr>
-			<td>Новое</td>
+			<td><?= Yii::t('app', 'New') ?></td>
 			<td id="latest-version">
 				<span class="wait wait16-trans"></span>
 			</td>
 			<td id="latest-date">
 				<span class="wait wait16-trans"></span>
 			</td>
-			<td>
-				<button class="btn btn-default btn-sm disabled" id="get-lates-version">Проверить</button>
-			</td>
 		</tr>
 	</tbody>
 </table>
 
 
-<h3>Релиз</h3>
+<h3><?= Yii::t('app', 'Release') ?></h3>
 
 <? if (Yii::app()->user->hasFlash('error')): ?>
 <div class="alert alert-danger">
@@ -60,7 +56,7 @@ $this->breadcrumbs = array(
 
 <?= CHtml::fileField('archive', null, ['id' => 'archive', 'name' => 'archive']) ?>
 <div style="margin-top: 20px;">
-	<?= CHtml::submitButton('Загрузить', ['class' => 'btn btn-primary']) ?>
+	<?= CHtml::submitButton(Yii::t('app', 'Upload'), ['class' => 'btn btn-primary']) ?>
 </div>
 	
 <?= CHtml::endForm() ?>
@@ -79,28 +75,23 @@ $this->breadcrumbs = array(
 	</a>
 </div>
 
-<table>
-	<thead>
-		<tr>
-			<th>Размер</th>
-			<th>Версия</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
-				<?= isset($release['size']) ? round($release['size'] / 1024 / 1024, 3) : '0' ?> Mb
-			</td>
-			<td>
-				
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div>
+	Размер:
+	<?= isset($release['size']) ? round($release['size'] / 1024 / 1024, 3) : '0' ?> Mb
+</div>
+
+<? if (is_array($release['file_names'])): ?>
+<span>Файлы:</span>
+<ol id="release-file-list" data-count="<?= count($release['file_names']) ?>">
+	<? foreach ($release['file_names'] as $i => $name): ?>
+		<li><?= $name ?></li>
+	<? endforeach ?>
+</ol>
+<? endif ?>
 
 <? endif ?>
 
-
+<!--
 <hr>
 
 <h3>С помощью последнего релиза <span class="label label-success">безопасно</span></h3>
@@ -114,6 +105,7 @@ $this->breadcrumbs = array(
 	<li>Удаляем временные файлы</li>
 	<li>Конец</li>
 </ul>
+-->
 
 <!--
 <h3>С помощью последнего исходного кода</h3>

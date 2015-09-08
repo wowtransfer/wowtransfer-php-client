@@ -35,6 +35,15 @@ class UpdatesController extends BackEndController
 		$latestReleaseFilePath = $this->getTempReleaseFilePath();
 		if (is_file($latestReleaseFilePath)) {
 			$release['size'] = filesize($latestReleaseFilePath);
+			$zip = new \ZipArchive();
+			if ($zip->open($latestReleaseFilePath)) {
+				$names = [];
+				for ($i = 0; $i < $zip->numFiles; ++$i) {
+					$names[] = $zip->getNameIndex($i);
+				}
+				$release['file_names'] = $names;
+				$zip->close();
+			}
 		}
 		$this->render('index', [
 			'release'    => $release,
@@ -44,30 +53,25 @@ class UpdatesController extends BackEndController
 	}
 
 	public function actionLatestRelease() {
-		Yii::import('application.components.Github');
-		$github = new \Github();
-		$release = $github->getLatestRelease();
+		$service = new Wowtransfer();
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
+		$app = $service->getApplication('chdphp');
 		$result = [];
-		if ($release) {
-			// "tag_name": "v1.0.0",
-			// "created_at": "2013-02-27T19:35:32Z",
-			// "assets":
-			//   'browser_download_url' => 'https://github.com/wowtransfer/chdphp/releases/download/v1.1/chdphp-v1.1.zip'
-			//   'name' => 'chdphp-v1.1.zip'
-			// 'zipball_url' => 'https://api.github.com/repos/wowtransfer/chdphp/zipball/v1.1'
-			$result['tag_name'] = $release->tag_name;
-			$result['created_at'] = $release->created_at;
-			if (isset($release->assets)) {
-				$asset = $release->assets[0];
-				$result['download_url'] = $asset->browser_download_url;
-				$result['name'] = $asset->name;
-			}
+		if ($app) {
+			$result['name'] = $app->getName();
+			$result['version'] = $app->getVersion();
+			$result['updated_at'] = $app->getUpdatedAt();
+			$result['download_url'] = $app->getDownloadUrl();
 		}
 		echo CJSON::encode($result);
 	}
 
 	public function actionUploadRelease() {
 		try {
+			// TODO: check
+			// ...
 			$this->uploadArchive();
 		} catch (Exception $ex) {
 			Yii::app()->user->setFlash('error', $ex->getMessage());
@@ -109,14 +113,14 @@ class UpdatesController extends BackEndController
 	protected function uploadArchive() {
 		$file = CUploadedFile::getInstanceByName('archive');
 		if (!$file) {
-			throw new Exception('Файл не загружен');
+			throw new Exception(Yii::t('app', 'File not uploaded'));
 		}
 		if (strtolower($file->extensionName) !== 'zip') {
-			throw new Exception('Можно загружать только zip архив');
+			throw new Exception(Yii::t('app', 'The file cannot be uploaded. Only "zip" extension is allowed.'));
 		}
 		$archiveTempFilePath = $this->getTempReleaseFilePath();
 		if (!$file->saveAs($archiveTempFilePath)) {
-			throw new Exception('Не удалось скопировать загруженный файл');
+			throw new Exception(Yii::t('app', 'Could not copy the file') . $archiveTempFilePath);
 		}
 
 		// from source code: chdphp.zip => dir => target files
@@ -128,7 +132,7 @@ class UpdatesController extends BackEndController
 		$zip = new ZipArchive();
 		$openResult = $zip->open($archiveTempFilePath);
 		if ($openResult !== true) {
-			throw new Exception('Zip open failed, exit code ' . $openResult);
+			throw new Exception(Yii::t('app', 'Open of the zip archive are failed, exit code') . ' ' . $openResult);
 		}
 		$zip->extractTo($archiveDestDir);
 		$zip->close();

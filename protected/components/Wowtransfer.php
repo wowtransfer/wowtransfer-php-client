@@ -266,20 +266,6 @@ class Wowtransfer
 	}
 
 	/**
-	 * @return string Addon's version
-	 */
-	public function getAddonVersion() {
-		return '1.11';
-	}
-
-	/**
-	 * @return string PHP client version
-	 */
-	public function getChdphpVersion() {
-		return '1.0';
-	}
-
-	/**
 	 * @return array|false
 	 * @throws Exception
 	 */
@@ -452,5 +438,179 @@ class Wowtransfer
 		$url .= $params;
 
 		return $url;
+	}
+
+	/**
+	 * @return WowtransferApplication[]
+	 */
+	public function getApplications() {
+		$applications = [];
+
+
+		return $applications;
+	}
+
+	/**
+	 * @param string $name
+	 * @return WowtransferApplication
+	 */
+	public function getApplication($name) {
+		$app = new WowtransferApplication($name);
+
+		$ch = $this->_ch;
+		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/apps/' . $name));
+		$this->lastHttpResponse = curl_exec($ch);
+		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$result = json_decode($this->lastHttpResponse, true);
+
+		if ($result) {
+			$app->setName($result['name']);
+			$app->setDescription($result['descr']);
+			$app->setDownloadUrl($result['download_url']);
+			$app->setUpdatedAt($result['updated_at']);
+			$app->setVersion($result['version']);
+		}
+
+		return $app;
+	}
+}
+
+/**
+ * Available application of service
+ */
+class WowtransferApplication
+{
+	/**
+	 * @var string
+	 */
+	private $name;
+
+	/**
+	 *
+	 * @var string
+	 */
+	private $version;
+
+	/**
+	 * @var string
+	 */
+	private $description;
+
+	/**
+	 * @var string
+	 */
+	private $updatedAt;
+
+	/**
+	 * @var string
+	 */
+	private $downloadUrl;
+
+	/**
+	 * @var string
+	 */
+	private $docUrl;
+
+	/**
+	 * @param string $name
+	 */
+	public function __construct($name) {
+		$this->name = $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVersion() {
+		return $this->version;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUpdatedAt() {
+		return $this->updatedAt;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDownloadUrl() {
+		return $this->downloadUrl;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDocUrl() {
+		return $this->docUrl;
+	}
+
+	/**
+	 * @param string $name
+	 * @return \WowtransferApplication
+	 */
+	public function setName($name) {
+		$this->name = $name;
+		return $this;
+	}
+
+	/**
+	 * @param string $version
+	 * @return \WowtransferApplication
+	 */
+	public function setVersion($version) {
+		$this->version = $version;
+		return $this;
+	}
+
+	/**
+	 * @param string $description
+	 * @return \WowtransferApplication
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+		return $this;
+	}
+
+	/**
+	 * @param string $updatedAt
+	 * @return \WowtransferApplication
+	 */
+	public function setUpdatedAt($updatedAt) {
+		$this->updatedAt = $updatedAt;
+		return $this;
+	}
+
+	/**
+	 * @param string $downloadUrl
+	 * @return \WowtransferApplication
+	 */
+	public function setDownloadUrl($downloadUrl) {
+		$this->downloadUrl = $downloadUrl;
+		return $this;
+	}
+
+	/**
+	 * @param string $docUrl
+	 * @return \WowtransferApplication
+	 */
+	public function setDocUrl($docUrl) {
+		$this->docUrl = $docUrl;
+		return $this;
 	}
 }

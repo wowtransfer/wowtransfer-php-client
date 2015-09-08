@@ -109,3 +109,13 @@
 #version-table td, th {
 	padding: 2px 5px;
 }
+
+#release-file-list {
+	max-height: 400px;
+	overflow: auto;
+	border: 1px solid #ddd;
+	padding-left: 60px;
+}
+#release-file-list li {
+	font-family: monospace;
+}
