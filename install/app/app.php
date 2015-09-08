@@ -139,29 +139,30 @@ class App
 	 */
 	protected function writeDbConfig() {
 		$result = false;
-		$dbFilePath = __DIR__ . '/../protected/config/db-local.php';
+		$dbFilePath = __DIR__ . '/../../protected/config/db-local.php';
 
 		$h = fopen($dbFilePath, 'w');
-		if ($h) {
-			ob_start();
-			echo
-				"<?\n",
-				"return [\n",
-				"	'connectionString'=>'mysql:host=127.0.0.1;dbname={$this->view->getFieldValue('db_characters')}',\n",
-				"	'emulatePrepare'=>true,\n",
-				"	'username'=>'{$this->view->getFieldValue('db_transfer_user')}',\n",
-				"	'password'=>'{$this->view->getFieldValue('db_transfer_password')}',\n",
-				"	'charset'=>'utf8',\n",
-				"	'enableParamLogging'=>true,\n",
-				"];\n";
-			$content = ob_get_clean();
-			$writedSize = fwrite($h, $content);
-			fclose($h);
-
-			$result = $writedSize > 0;
+		if (!$h) {
+			$this->view->addError('Не удалось записать в файл: ' . $dbFilePath);
+			return false;
 		}
 
-		return $result;
+		ob_start();
+		echo
+			"<?\n",
+			"return [\n",
+			"	'connectionString'=>'mysql:host=127.0.0.1;dbname={$this->view->getFieldValue('db_characters')}',\n",
+			"	'emulatePrepare'=>true,\n",
+			"	'username'=>'{$this->view->getFieldValue('db_transfer_user')}',\n",
+			"	'password'=>'{$this->view->getFieldValue('db_transfer_password')}',\n",
+			"	'charset'=>'utf8',\n",
+			"	'enableParamLogging'=>true,\n",
+			"];\n";
+		$content = ob_get_clean();
+		$writedSize = fwrite($h, $content);
+		fclose($h);
+
+		return $writedSize > 0;
 	}
 
 	/**
@@ -173,7 +174,7 @@ class App
 		$localFilePath = $this->getAppConfigAbsoluteFilePath(true);
 		$lines = file($filePath);
 		if (!$lines) {
-			$this->addError("Не удалось прочитать файл конфигурации приложения\n" . $filePath);
+			$this->view->addError("Не удалось прочитать файл конфигурации приложения\n" . $filePath);
 			return false;
 		}
 
@@ -220,36 +221,40 @@ class App
 
 		$handle = fopen($localFilePath, 'w');
 		if (!$handle) {
-			$this->addError("Не удалось записать в файл $localFilePath\n");
+			$this->view->addError('Не удалось записать в файл: ' . $localFilePath);
 			return false;
 		}
-		fwrite($handle, $configContent);
+		$writedSize = fwrite($handle, $configContent);
 		fclose($handle);
 
 		$this->writeDbConfig();
 		$this->writeServiceConfig();
 		$this->writeTransferOptionsConfig();
 
-		return true;
+		return $writedSize > 0;
 	}
 
 	/**
 	 * @return boolean
 	 */
 	protected function writeServiceConfig() {
-		$serviceFilePath = __DIR__ . '/../protected/config/service-local.php';
+		$serviceFilePath = __DIR__ . '/../../protected/config/service-local.php';
 		$h = fopen($serviceFilePath, 'w');
-		fwrite($h, "<?php return [];");
+		if (!$h) {
+			$this->view->addError('Не удалось записать в файл: ' . $serviceFilePath);
+			return false;
+		}
+		$writedSize = fwrite($h, "<?php return [];");
 		fclose($h);
 
-		return $h != false;
+		return $writedSize > 0;
 	}
 
 	/**
 	 * @return boolean
 	 */
 	protected function writeTransferOptionsConfig() {
-		$serviceFilePath = __DIR__ . '/../protected/config/toptions-local.php';
+		$serviceFilePath = __DIR__ . '/../../protected/config/toptions-local.php';
 		$h = fopen($serviceFilePath, 'w');
 		fwrite($h, "<?php return [];");
 		fclose($h);
@@ -315,7 +320,7 @@ class App
 		$dir = realpath(__DIR__ . '/..');
 		$result = $this->_removeDir($dir);
 		if (!$result) {
-			$this->addError('Не удалось удалить директорию ' . $dir);
+			$this->view->addError('Не удалось удалить директорию ' . $dir);
 		}
 		return $result;
 	}
@@ -330,7 +335,7 @@ class App
 		$fileName = __DIR__ . '/../sql/chd_structure.sql';
 
 		if (!file_exists($fileName)) {
-			$this->addError('Файл ' . $fileName . ' не найден');
+			$this->view->addError('Файл ' . $fileName . ' не найден');
 			return false;
 		}
 
@@ -353,26 +358,26 @@ class App
 
 		$core = $this->view->getFieldValue('core');
 		if (empty($core)) {
-			$this->addError('Ядро WoW сервера не найдено');
+			$this->view->addError('Ядро WoW сервера не найдено');
 			return false;
 		}
 
 		$fileName = 'sql/chd_procedures_' . $core . '.sql';
 		if (!file_exists($fileName)) {
-			$this->addError('Файл ' . $fileName . ' не найден');
+			$this->view->addError('Файл ' . $fileName . ' не найден');
 			return false;
 		}
 
 		$sql = file_get_contents($fileName);
 		if (empty($sql)) {
-			$this->addError('Файл ' . $fileName . ' пустой');
+			$this->view->addError('Файл ' . $fileName . ' пустой');
 			return false;
 		}
 		/*
 		$dbWowtransferUser = $this->view->getFieldValue('db_wotransfer_user');
 		if (empty($dbWowtransferUser))
 		{
-			$this->addError('Пользователь, под которым должно работать приложение, не определен');
+			$this->view->addError('Пользователь, под которым должно работать приложение, не определен');
 			return false;
 		}
 		str_replace('%username%', $dbWowtransferUser, $sql);
@@ -392,19 +397,19 @@ class App
 
 		$core = $this->view->getFieldValue('core');
 		if (empty($core)) {
-			$this->addError('Ядро WoW сервера не найдено');
+			$this->view->addError('Ядро WoW сервера не найдено');
 			return false;
 		}
 
 		$fileName = 'sql/chd_privileges_' . $core . '.sql';
 		if (!file_exists($fileName)) {
-			$this->addError('Файл ' . $fileName . ' не найден');
+			$this->view->addError('Файл ' . $fileName . ' не найден');
 			return false;
 		}
 
 		$sql = file_get_contents($fileName);
 		if (empty($sql)) {
-			$this->addError('Файл ' . $fileName . ' пустой');
+			$this->view->addError('Файл ' . $fileName . ' пустой');
 			return false;
 		}
 
