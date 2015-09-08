@@ -1,4 +1,4 @@
-### 2015-09-7
+### 2015-09-08
 
 * Add multilanguage, en and ru.
 * Rewrite and update installer, add local dependencies
