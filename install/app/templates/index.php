@@ -9,11 +9,8 @@
 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-		<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-theme.min.css">
 
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
 		<script src="js/main.js"></script>
@@ -26,5 +23,8 @@
 		<? include_once __DIR__ . '/footer.php' ?>
 
 		</div>
+
+		<script src="vendor/jquery/jquery-2.1.4.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>
