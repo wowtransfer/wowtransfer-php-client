@@ -80,6 +80,59 @@ class UpdatesController extends BackEndController
 		$this->redirect('index');
 	}
 
+	public function actionDownloadLatestRelease() {
+		$response = [];
+		try {
+			$response['success'] = $this->downloadLatestRelease();
+			if ($response['success']) {
+				$response['success_message'] = Yii::t('app', 'The release has downloaded successfully');
+			}
+			else {
+				$response['error_message'] = Yii::t('app', 'Could not download the file');
+			}
+		} catch (Exception $ex) {
+			$response['error_message'] = $ex->getMessage();
+		}
+		if (Yii::app()->request->isAjaxRequest) {
+			echo json_encode($response);
+			Yii::app()->end();
+		}
+		$this->redirect('index');
+	}
+
+	/**
+	 * @return boolean
+	 * @throws \Exception
+	 */
+	private function downloadLatestRelease() {
+		$service = new Wowtransfer();
+		$service->setAccessToken(Yii::app()->params['accessToken']);
+		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+
+		$app = $service->getApplication('chdphp');
+		if (!$app || !$app->getDownloadUrl()) {
+			throw new \Exception(Yii::t('app', 'Could not download the file'));
+		}
+		$destFileHandle = fopen($this->getTempReleaseFilePath(), 'w');
+		if (!$destFileHandle) {
+			throw new \Exception(Yii::t('app', 'Could not open the file {file}', [
+				'{file}' => $this->getTempReleaseFilePath(),
+			]));
+		}
+		$ch = curl_init();
+		$options = [
+			CURLOPT_FILE => $destFileHandle,
+			CURLOPT_TIMEOUT => 60 * 60, // 1 minute
+			CURLOPT_URL => $app->getDownloadUrl()
+		];
+		curl_setopt_array($ch, $options);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		fclose($destFileHandle);
+
+		return $result;
+	}
+
 	public function actionDeleteRelease() {
 		$archiveTempFilePath = $this->getTempReleaseFilePath();
 		if (is_file($archiveTempFilePath)) {
@@ -182,10 +235,6 @@ class UpdatesController extends BackEndController
 
 	protected function getTempReleaseFilePath() {
 		return self::getTempReleaseDir() . DIRECTORY_SEPARATOR . 'release.zip';
-	}
-
-	protected function getReleaseFilePath() {
-		return self::getReleaseDir() . DIRECTORY_SEPARATOR . 'release';
 	}
 
 	/**

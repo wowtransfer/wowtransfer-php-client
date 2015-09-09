@@ -36,6 +36,12 @@ $this->breadcrumbs = array(
 			<td id="latest-date">
 				<span class="wait wait16-trans"></span>
 			</td>
+			<td>
+				<a href="<?= $this->createUrl('/updates/downloadLatestRelease') ?>"
+				   class="btn btn-success hidden" id="download-latest-version">
+					<?= Yii::t('app', 'Download') ?>
+				</a>
+			</td>
 		</tr>
 	</tbody>
 </table>
