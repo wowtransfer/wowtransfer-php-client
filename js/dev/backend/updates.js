@@ -8,18 +8,17 @@ var app = app || {};
 	var $latestVersion = $("#latest-version");
 	if ($latestVersion.length) {
 		$.get(app.getBaseUrl() + "/updates/latestRelease", function(response) {
-			console.debug(response);
 			$("#latest-version").html(response.version);
 			$("#latest-date").html(response.updated_at);
 			if (response.download_url) {
 				$("#download-latest-version").removeClass("hidden");
 			}
 		}, "json");
-		var $btnDonload = $("#download-latest-version");
-		$btnDonload.click(function() {
-			var $a = $(this);
-			$btnDonload.button("loading");
-			$.post($a.attr("href"), function(response) {
+		var $downloadBtn = $("#download-latest-version");
+		$downloadBtn.click(function() {
+			var $btn = $(this);
+			$downloadBtn.button("loading");
+			$.post($btn.attr("href"), function(response) {
 				if (response.error_message) {
 					var dialog = $("#chd-modal-info");
 					dialog.find(".modal-body").text(response.error_message);
@@ -30,10 +29,50 @@ var app = app || {};
 				else {
 					window.location.reload();
 				}
-				$btnDonload.button("reset");
+				$downloadBtn.button("reset");
 			}, "json");
 			return false;
 		});
+
+		var $updateBtn = $("#update-app");
+		var currentAction = "extract";
+		$updateBtn.click(function() {
+			$("#updating-process-block").removeClass("hidden");
+			updatingAction();
+			return false;
+		});
+	}
+
+	function updatingAction() {
+		var url = $updateBtn.attr("href");
+		var params = {action: currentAction};
+		var $li = $("#upading-actions").find("li[data-action='" + currentAction + "']");
+		$li.append('<span class="updating-action-status wait wait16"></span>');
+		$.post(url, params, function(response) {
+			$li.find(".updating-action-status")
+				.removeClass()
+				.addClass("updating-action-status glyphicon glyphicon-ok");
+			var statusClass = response.error_message ? "list-group-item-danger" : "list-group-item-success";
+			$li.addClass(statusClass);
+			updatingErrorHandle(response);
+			currentAction = response.next_action;
+			if (currentAction) {
+				updatingAction();
+			}
+			else {
+				updatingEnd();
+			}
+		}, "json");
+	}
+
+	function updatingEnd(response) {
+		$("#updating-total-message")
+			.removeClass("hidden")
+			.addClass("alert alert-success");
+	}
+
+	function updatingErrorHandle(response) {
+		
 	}
 
 })(window.jQuery);

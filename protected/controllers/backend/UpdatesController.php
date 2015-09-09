@@ -72,7 +72,17 @@ class UpdatesController extends BackEndController
 		try {
 			// TODO: check
 			// ...
-			$this->uploadArchive();
+			$file = CUploadedFile::getInstanceByName('archive');
+			if (!$file) {
+				throw new Exception(Yii::t('app', 'File not uploaded'));
+			}
+			if (strtolower($file->extensionName) !== 'zip') {
+				throw new Exception(Yii::t('app', 'The file cannot be uploaded. Only "zip" extension is allowed.'));
+			}
+			$archiveTempFilePath = $this->getTempReleaseFilePath();
+			if (!$file->saveAs($archiveTempFilePath)) {
+				throw new Exception(Yii::t('app', 'Could not copy the file') . $archiveTempFilePath);
+			}
 		} catch (Exception $ex) {
 			Yii::app()->user->setFlash('error', $ex->getMessage());
 		}
@@ -144,6 +154,41 @@ class UpdatesController extends BackEndController
 		$this->redirect('index');
 	}
 
+	public function actionUpdateApplication() {
+		$response = ['success' => true];
+
+		try {
+			$action = Yii::app()->request->getPost('action');
+			switch ($action) {
+				case 'extract':
+					$this->updatingExtractRelease();
+					$response['next_action'] = 'copy_files';
+					break;
+				case 'copy_files':
+					$response['next_action'] = 'delete_files';
+					break;
+				case 'delete_files':
+					$response['next_action'] = 'concat';
+					break;
+				case 'concat':
+					$response['next_action'] = 'minify';
+					break;
+				case 'minify':
+					$response['next_action'] = 'delete_temp_files';
+					break;
+				case 'delete_temp_files':
+					break;
+				default:
+					throw new \Exception("Unknown action for updating");
+			}
+		} catch (Exception $ex) {
+			unset($response['success']);
+			$response['error_message'] = $ex->getMessage();
+		}
+
+		echo json_encode($response);
+	}
+
 	public function actionReleaseFiles() {
 		$filePath = $this->getTempReleaseFilePath();
 		if (!is_file($filePath)) {
@@ -163,19 +208,7 @@ class UpdatesController extends BackEndController
 	/**
 	 * @throws Exception
 	 */
-	protected function uploadArchive() {
-		$file = CUploadedFile::getInstanceByName('archive');
-		if (!$file) {
-			throw new Exception(Yii::t('app', 'File not uploaded'));
-		}
-		if (strtolower($file->extensionName) !== 'zip') {
-			throw new Exception(Yii::t('app', 'The file cannot be uploaded. Only "zip" extension is allowed.'));
-		}
-		$archiveTempFilePath = $this->getTempReleaseFilePath();
-		if (!$file->saveAs($archiveTempFilePath)) {
-			throw new Exception(Yii::t('app', 'Could not copy the file') . $archiveTempFilePath);
-		}
-
+	protected function updatingExtractRelease() {
 		// from source code: chdphp.zip => dir => target files
 		// from release: chdphp-1.0.zip => chdphp => target files
 
@@ -183,12 +216,15 @@ class UpdatesController extends BackEndController
 		$this->clearDir($archiveDestDir);
 
 		$zip = new ZipArchive();
+		$archiveTempFilePath = $this->getTempReleaseFilePath();
 		$openResult = $zip->open($archiveTempFilePath);
 		if ($openResult !== true) {
 			throw new Exception(Yii::t('app', 'Open of the zip archive are failed, exit code') . ' ' . $openResult);
 		}
 		$zip->extractTo($archiveDestDir);
 		$zip->close();
+
+		return true;
 	}
 
 	/**
