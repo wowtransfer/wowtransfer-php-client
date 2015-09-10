@@ -62,7 +62,7 @@ class UpdatesController extends BackEndController
 		if ($app) {
 			$result['name'] = $app->getName();
 			$result['version'] = $app->getVersion();
-			$result['updated_at'] = $app->getUpdatedAt();
+			$result['updated_at'] = date('Y-m-d', strtotime($app->getUpdatedAt()));
 			$result['download_url'] = $app->getDownloadUrl();
 		}
 		echo CJSON::encode($result);
@@ -165,18 +165,23 @@ class UpdatesController extends BackEndController
 					$response['next_action'] = 'copy_files';
 					break;
 				case 'copy_files':
+					$this->updatingCopyFiles();
 					$response['next_action'] = 'delete_files';
 					break;
 				case 'delete_files':
+					$this->updatingDeleteFiles();
 					$response['next_action'] = 'concat';
 					break;
 				case 'concat':
+					$this->updatingConcatResource();
 					$response['next_action'] = 'minify';
 					break;
 				case 'minify':
+					$this->updatingMinifyResource();
 					$response['next_action'] = 'delete_temp_files';
 					break;
 				case 'delete_temp_files':
+					$this->updatingDeleteTempFiles();
 					break;
 				default:
 					throw new \Exception("Unknown action for updating");
@@ -210,7 +215,7 @@ class UpdatesController extends BackEndController
 	 */
 	protected function updatingExtractRelease() {
 		// from source code: chdphp.zip => dir => target files
-		// from release: chdphp-1.0.zip => chdphp => target files
+		// from release:updated_at chdphp-1.0.zip => chdphp => target files
 
 		$archiveDestDir = self::getReleaseDir();
 		$this->clearDir($archiveDestDir);
@@ -224,6 +229,55 @@ class UpdatesController extends BackEndController
 		$zip->extractTo($archiveDestDir);
 		$zip->close();
 
+		return true;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function updatingDeleteTempFiles() {
+		$archiveDestDir = self::getReleaseDir();
+		return $this->clearDir($archiveDestDir, true);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function updatingCopyFiles() {
+		$destDir = Yii::getPathOfAlias('webroot');
+		$sourceDir = self::getReleaseDir();
+
+		$result = true;
+		if (!YII_DEBUG) {
+			$fileHelper = new CFileHelper();
+			$result = $fileHelper->copyDirectory($sourceDir, $destDir, [
+				'exclude' => [
+					'/install',
+				]
+			]);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function updatingDeleteFiles() {
+		return true;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function updatingConcatResource() {
+		return true;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function updatingMinifyResource() {
 		return true;
 	}
 
@@ -249,24 +303,25 @@ class UpdatesController extends BackEndController
 		if (!$h) {
 			return false;
 		}
+		$result = true;
 		while ($file = readdir($h)) {
 			if ($file !== '.' && $file !== '..') {
 				$path = $dir . DIRECTORY_SEPARATOR . $file;
 				if (is_dir($path)) {
-					$this->clearDir($path, true);
+					$result &= $this->clearDir($path, true);
 				}
 				else {
-					unlink($path);
+					$result &= unlink($path);
 				}
 			}
 		}
 		closedir($h);
 
 		if ($delete) {
-			rmdir($dir);
+			$result &= rmdir($dir);
 		}
 
-		return true;
+		return $result;
 	}
 
 	protected function getTempReleaseFilePath() {

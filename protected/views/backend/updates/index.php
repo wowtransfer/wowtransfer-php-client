@@ -86,7 +86,7 @@ $this->breadcrumbs = array(
 	<div class="col-md-6">
 		<h3>Содержимое</h3>
 
-		<div style="margin: 15px;">
+		<p>
 			<a href="<?= $this->createUrl('updateApplication') ?>"
 			   id="update-app" class="btn btn-success">
 				<?= Yii::t('app', 'Update') ?>
@@ -94,6 +94,9 @@ $this->breadcrumbs = array(
 			<a href="<?= $this->createUrl('deleterelease') ?>" class="btn btn-danger">
 				<?= Yii::t('app', 'Delete') ?>
 			</a>
+		</p>
+		<div class="alert alert-danger">
+			Обновление перепишет все файлы.
 		</div>
 
 		<div>
@@ -138,7 +141,6 @@ $this->breadcrumbs = array(
 		<div id="updating-total-message">
 			Обновление прошло успешно.
 		</div>
-
 
 	</div>
 </div>
