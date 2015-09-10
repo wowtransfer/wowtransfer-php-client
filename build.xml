@@ -21,17 +21,19 @@
 		<mkdir dir="${release.dir}/js" />
 		<mkdir dir="${release.dir}/images" />
 		<mkdir dir="${release.dir}/protected" />
+		<mkdir dir="${release.dir}/protected/cache" />
+		<mkdir dir="${release.dir}/protected/runtime" />
 
 
 		<echo msg="Copy source files..." />
 
 		<copy overwrite="true" todir="${release.dir}/protected">
 			<fileset dir="${source.dir}/protected">
-				<exclude name="cache/*"/>
-				<exclude name="extensions/*"/>
-				<exclude name="runtime/*" />
-				<exclude name="vendor/*" />
+				<exclude name="cache/**"/>
+				<exclude name="runtime/**" />
 				<exclude name="config/*-local.php" />
+				<exclude name="extensions/*" />
+				<exclude name="vendor/*" />
 			</fileset>
 		</copy>
 		<copy overwrite="true" todir="${release.dir}/themes">
