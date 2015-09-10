@@ -37,8 +37,11 @@ var app = app || {};
 		var $updateBtn = $("#update-app");
 		var currentAction = "extract";
 		$updateBtn.click(function() {
-			$("#updating-process-block").removeClass("hidden");
-			updatingAction();
+			var message = $("#t-updating-danger-message").text();
+			app.dialogs.confirm(message, function() {
+				$("#updating-process-block").removeClass("hidden");
+				updatingAction();
+			});
 			return false;
 		});
 	}
@@ -60,15 +63,14 @@ var app = app || {};
 				updatingAction();
 			}
 			else {
-				updatingEnd();
+				updatingEnd(response);
 			}
 		}, "json");
 	}
 
 	function updatingEnd(response) {
-		$("#updating-total-message")
-			.removeClass("hidden")
-			.addClass("alert alert-success");
+		var target = response.error_message ? "failed" : "success";
+		$("#updating-total-message-" + target).removeClass("hidden");
 	}
 
 	function updatingErrorHandle(response) {

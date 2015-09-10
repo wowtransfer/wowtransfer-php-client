@@ -73,10 +73,10 @@ $this->breadcrumbs = [
 			<a class="btn btn-default btn-sm disabled btn-char-action" id="clear-by-guid-id"
 			   href="<?= Yii::t('app', 'clearchardata', ['id' => $model->id]) ?>">
 				<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
-			</a> <span class="label label-success"><?= Yii::t('app', 'safe') ?></span><br>
+			</a> <span class="label label-success lowercase"><?= Yii::t('app', 'Safe') ?></span><br>
 			<a class="btn btn-default btn-sm disabled btn-char-action" href="#" id="clear-by-guid">
 				<?= Yii::t('app', 'Clear character`s data by GUID') ?>
-			</a> <span class="label label-danger btn-char-action"><?= Yii::t('app', 'unsafe') ?></span><br>
+			</a> <span class="label label-danger btn-char-action lowercase"><?= Yii::t('app', 'Unsafe') ?></span><br>
 			<a class="btn btn-default btn-sm disabled btn-char-action" href="#" id="show-char-info">
 				<?= Yii::t('app', 'Show character`s info by GUID') ?>
 			</a><br>

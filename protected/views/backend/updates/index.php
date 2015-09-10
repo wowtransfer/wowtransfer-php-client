@@ -4,11 +4,11 @@
 /* @var $appVersion string */
 /* @var $appDate string */
 
-$this->breadcrumbs = array(
-	'Обновление',
-);
+$this->breadcrumbs = [
+	Yii::t('app', 'Updating')
+];
 ?>
-<h1>Обновление</h1>
+<h1><?= Yii::t('app', 'Updating') ?></h1>
 
 <div class="row">
 	<div class="col-md-6">
@@ -41,6 +41,7 @@ $this->breadcrumbs = array(
 					</td>
 					<td>
 						<a href="<?= $this->createUrl('/updates/downloadLatestRelease') ?>"
+						   title="<?= Yii::t('app', 'Download the archive of latest release from the service') ?>"
 						   class="btn btn-success hidden" id="download-latest-version">
 							<?= Yii::t('app', 'Download') ?>
 						</a>
@@ -72,6 +73,19 @@ $this->breadcrumbs = array(
 
 		<?= CHtml::endForm() ?>
 
+		<div>
+			<a href="https://github.com/wowtransfer/chdphp/releases" target="_blank">
+				https://github.com/wowtransfer/chdphp/releases
+			</a>
+			<span class="label label-success"><?= Yii::t('app', 'Safe') ?></span>
+		</div>
+		<div>
+			<a href="https://github.com/wowtransfer/chdphp/archive/master.zip">
+				https://github.com/wowtransfer/chdphp/archive/master.zip
+			</a>
+			<span class="label label-danger"><?= Yii::t('app', 'Unsafe') ?></span>
+		</div>
+
 	</div>
 </div>
 
@@ -84,7 +98,7 @@ $this->breadcrumbs = array(
 <div class="row">
 
 	<div class="col-md-6">
-		<h3>Содержимое</h3>
+		<h3><?= Yii::t('app', 'Content') ?></h3>
 
 		<p>
 			<a href="<?= $this->createUrl('updateApplication') ?>"
@@ -95,17 +109,16 @@ $this->breadcrumbs = array(
 				<?= Yii::t('app', 'Delete') ?>
 			</a>
 		</p>
-		<div class="alert alert-danger">
-			Обновление перепишет все файлы.
+		<div id="t-updating-danger-message" class="hidden">
+			<?= Yii::t('app', 'The updating will rewrite all files. Continue?') ?>
 		</div>
 
 		<div>
-			Размер:
+			<?= Yii::t('app', 'Size') ?>:
 			<?= isset($release['size']) ? round($release['size'] / 1024 / 1024, 3) : '0' ?> Mb
 		</div>
 
 		<? if (is_array($release['file_names'])): ?>
-		<span>Файлы:</span>
 		<ol id="release-file-list" style="height: 200px;" data-count="<?= count($release['file_names']) ?>">
 			<? foreach ($release['file_names'] as $i => $name): ?>
 				<li><?= $name ?></li>
@@ -115,31 +128,34 @@ $this->breadcrumbs = array(
 
 	</div>
 	<div class="col-md-6 hidden" id="updating-process-block">
-		<h3>Процесс обновления</h3>
+		<h3><?= Yii::t('app', 'Updating process') ?></h3>
 
 		<ul id="upading-actions" class="list-group">
 			<li data-action="extract" class="list-group-item">
-				Распаковка архива
+				<?= Yii::t('app', 'Extract the release') ?>
 			</li>
 			<li data-action="copy_files" class="list-group-item">
-				Копирование файлов
+				<?= Yii::t('app', 'Copy the files') ?>
 			</li>
 			<li data-action="delete_files" class="list-group-item">
-				Удаление файлов
+				<?= Yii::t('app', 'Delete the files') ?>
 			</li>
 			<li data-action="concat" class="list-group-item">
-				Сжатие ресурсов
+				<?= Yii::t('app', 'Concatenation of the resources') ?>
 			</li>
 			<li data-action="minify" class="list-group-item">
-				Минификация ресурсов
+				<?= Yii::t('app', 'Minify the resources') ?>
 			</li>
 			<li data-action="delete_temp_files" class="list-group-item">
-				Удаление временных файлов
+				<?= Yii::t('app', 'Delete the temporary files') ?>
 			</li>
 		</ul>
 
-		<div id="updating-total-message">
-			Обновление прошло успешно.
+		<div id="updating-total-message-success" class="alert alert-success hidden">
+			<?= Yii::t('app', 'Success the updating.') ?>
+		</div>
+		<div id="updating-total-message-failed" class="alert alert-danger hidden">
+			<?= Yii::t('app', 'Success the updating.') ?>
 		</div>
 
 	</div>

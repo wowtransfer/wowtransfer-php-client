@@ -182,6 +182,7 @@ class UpdatesController extends BackEndController
 					break;
 				case 'delete_temp_files':
 					$this->updatingDeleteTempFiles();
+					$response['success'] = true;
 					break;
 				default:
 					throw new \Exception("Unknown action for updating");
