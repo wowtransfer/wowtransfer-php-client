@@ -3,3 +3,5 @@
 - internationalizations, parted (80%)
 - use normal translate js code
 - remove dependence from the "chdphp" application name, uses in the css.
+- use only bootstrap, remove yii styles
+- add CRUD of remote servers 
