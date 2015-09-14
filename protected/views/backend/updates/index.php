@@ -24,10 +24,10 @@ $this->breadcrumbs = [
 			<tbody>
 				<tr>
 					<td><?= Yii::t('app', 'Current') ?></td>
-					<td>
+					<td id="current-version">
 						<?= $appVersion ?>
 					</td>
-					<td>
+					<td id="current-date">
 						<?= $appDate ?>
 					</td>
 				</tr>
@@ -49,6 +49,9 @@ $this->breadcrumbs = [
 				</tr>
 			</tbody>
 		</table>
+		<div class="alert alert-success hidden" id="current-version-installed">
+			<?= Yii::t('app', 'The latest version alredy has installed') ?>
+		</div>
 
 	</div>
 	<div class="col-md-6">
@@ -73,18 +76,20 @@ $this->breadcrumbs = [
 
 		<?= CHtml::endForm() ?>
 
-		<div>
-			<a href="https://github.com/wowtransfer/chdphp/releases" target="_blank">
-				https://github.com/wowtransfer/chdphp/releases
-			</a>
-			<span class="label label-success"><?= Yii::t('app', 'Safe') ?></span>
-		</div>
-		<div>
-			<a href="https://github.com/wowtransfer/chdphp/archive/master.zip">
-				https://github.com/wowtransfer/chdphp/archive/master.zip
-			</a>
-			<span class="label label-danger"><?= Yii::t('app', 'Unsafe') ?></span>
-		</div>
+		<ol>
+			<li>
+				<a href="https://github.com/wowtransfer/chdphp/releases" target="_blank">
+					https://github.com/wowtransfer/chdphp/releases
+				</a>
+				<span class="label label-success"><?= Yii::t('app', 'Safe') ?></span>
+			</li>
+			<li>
+				<a href="https://github.com/wowtransfer/chdphp/archive/master.zip">
+					https://github.com/wowtransfer/chdphp/archive/master.zip
+				</a>
+				<span class="label label-danger"><?= Yii::t('app', 'Unsafe') ?></span>
+			</li>
+		</ol>
 
 	</div>
 </div>

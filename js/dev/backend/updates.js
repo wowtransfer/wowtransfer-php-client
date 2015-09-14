@@ -8,10 +8,16 @@ var app = app || {};
 	var $latestVersion = $("#latest-version");
 	if ($latestVersion.length) {
 		$.get(app.getBaseUrl() + "/updates/latestRelease", function(response) {
-			$("#latest-version").html(response.version);
+			$latestVersion.html(response.version);
 			$("#latest-date").html(response.updated_at);
 			if (response.download_url) {
 				$("#download-latest-version").removeClass("hidden");
+			}
+			var currentVersion = $.trim($("#current-version").text());
+			var latestVersion = $.trim($latestVersion.text());
+			if (currentVersion === latestVersion) {
+				$("#current-version-installed").removeClass("hidden");
+				$downloadBtn.hide();
 			}
 		}, "json");
 		var $downloadBtn = $("#download-latest-version");

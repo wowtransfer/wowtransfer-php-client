@@ -167,6 +167,7 @@ return [
 	'Table' => 'Таблица',
 	'Talents' => 'Таланты',
 	'Taxi' => 'Перелеты',
+	'The latest version alredy has installed' => 'Установлена последняя версия приложения',
 	'The file cannot be uploaded. Only "zip" extension is allowed.' => 'Можно загружать только zip архив',
 	'The release has downloaded successfully' => 'Релиз успешно скачан',
 	'The updating will rewrite all files. Continue?' => 'Обновление перепишет все файлы. Продолжить?',
