@@ -2,7 +2,7 @@
 /* @var $this FrontEndController */
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?= Yii::app()->language ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
