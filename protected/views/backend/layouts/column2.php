@@ -1,15 +1,15 @@
-<?php /* @var $this Controller */ ?>
-<?php $this->beginContent('//layouts/main'); ?>
+<? /* @var $this Controller */ ?>
+<? $this->beginContent('//layouts/main'); ?>
 
 <div class="col-md-9" style="margin: 0; padding: 0;">
 	<main id="content">
-		<?php echo $content; ?>
+		<?= $content; ?>
 	</main><!-- content -->
 </div>
 
 <div class="col-md-3">
 	<aside>
-	<?php
+	<?
 		if (!empty($this->menu)) {
 			array_unshift($this->menu, array(
 				'label' => 'Операции',
@@ -19,12 +19,12 @@
 	?>
 	</aside>
 
-	<?php foreach ($this->asideBlocks as $block): ?>
+	<? foreach ($this->asideBlocks as $block): ?>
 	<aside>
-		<?php echo $block ?>
+		<?= $block ?>
 	</aside>
-	<?php endforeach; ?>
+	<? endforeach; ?>
 
 </div>
 
-<?php $this->endContent(); ?>
+<? $this->endContent(); ?>

@@ -1,6 +1,6 @@
-<?php /* @var $this Controller */ ?>
-<?php $this->beginContent('//layouts/main'); ?>
+<? /* @var $this Controller */ ?>
+<? $this->beginContent('//layouts/main'); ?>
 <div id="content">
-	<?php echo $content; ?>
+	<?= $content; ?>
 </div><!-- content -->
-<?php $this->endContent(); ?>
+<? $this->endContent(); ?>

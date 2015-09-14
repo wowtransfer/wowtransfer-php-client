@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this ConfigsController */
 
 $this->breadcrumbs = [

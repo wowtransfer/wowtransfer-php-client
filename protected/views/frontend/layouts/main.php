@@ -1,19 +1,19 @@
-<?php
+<?
 /* @var $this FrontEndController */
 ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::app()->language ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="<?php echo Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="<?= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
 
-	<?php $this->registerCssAndJs(); ?>
+	<? $this->registerCssAndJs(); ?>
 
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+	<title><?= CHtml::encode($this->pageTitle); ?></title>
 
 	<script>
 		window.config = [];
-		window.config.homeUrl = "<?php echo Yii::app()->homeUrl; ?>";
+		window.config.homeUrl = "<?= Yii::app()->homeUrl; ?>";
 	</script>
 </head>
 
@@ -22,66 +22,65 @@
 <div class="container" id="page">
 
 	<div class="row">
-	<div class="col-md-12">
-		<!-- TODO: make widget -->
-		<div id="header">
-			<div id="login">
-				<?php if (Yii::app()->user->isGuest): ?>
-					<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
-					<?php if ($this->route != 'site/login'): ?>
-						<a href="<?php echo $this->createUrl('/site/login'); ?>">
-							<span class="glyphicon glyphicon-log-in"></span>
-							<?= Yii::t('app', 'Login') ?>
+		<div class="col-md-12">
+			<div id="header">
+				<div id="login">
+					<? if (Yii::app()->user->isGuest): ?>
+						<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
+						<? if ($this->route != 'site/login'): ?>
+							<a href="<?= $this->createUrl('/site/login'); ?>">
+								<span class="glyphicon glyphicon-log-in"></span>
+								<?= Yii::t('app', 'Login') ?>
+							</a>
+						<? endif; ?>
+					<? else: ?>
+						<div><?= Yii::t('app', 'Welcome') ?> <b><?= Yii::app()->user->name; ?></b></div>
+						<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
+						<a href="<?= Yii::app()->createUrl('site/logout') ?>">
+							<span class="glyphicon glyphicon-log-out"></span>
+							<?= Yii::t('app', 'Logout') ?>
 						</a>
-					<?php endif; ?>
-				<?php else: ?>
-					<div><?= Yii::t('app', 'Welcome') ?> <b><?php echo Yii::app()->user->name; ?></b></div>
-					<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
-					<a href="<?php echo Yii::app()->createUrl('site/logout') ?>">
-						<span class="glyphicon glyphicon-log-out"></span>
-						<?= Yii::t('app', 'Logout') ?>
-					</a>
-				<?php endif; ?>
-			</div>
-			<div id="logo">
-				<img alt="" src="<?php echo Yii::app()->request->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
-				<?= Yii::t('app', 'Characters transfer') ?>
-			</div>
-		</div><!-- header -->
-	</div>
+					<? endif; ?>
+				</div>
+				<div id="logo">
+					<img alt="" src="<?= Yii::app()->request->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
+					<?= Yii::t('app', 'Characters transfer') ?>
+				</div>
+			</div><!-- header -->
+		</div>
 	</div>
 
 	<div class="row">
-	<div class="col-md-12">
-		<?php $this->widget('bootstrap.widgets.TbNav',array(
-			'type' => 'tabs',
-			'items' => $this->getMenu(),
-		)); ?><!-- mainmenu -->
-	</div>
-	</div>
-
-	<div class="row">
-	<div class="col-md-12">
-		<!-- Admin / Application switch -->
-		<?php if (Yii::app()->user->isAdmin()): ?>
-		<a href="<?php echo Yii::app()->request->baseUrl . '/admin.php/transfers/index'; ?>"
-		   id="admin-switch">
-			<span class="glyphicon glyphicon-cog"></span>
-			<?= Yii::t('app', 'Administration') ?>
-		</a>
-		<?php endif; ?>
-
-		<?php if (!empty($this->breadcrumbs)): ?>
-			<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
-				'links' => $this->breadcrumbs,
-				'homeLabel' => Yii::t('app', 'Characters transfer'),
-			)); ?><!-- breadcrumbs -->
-		<?php endif; ?>
-	</div>
+		<div class="col-md-12">
+			<? $this->widget('bootstrap.widgets.TbNav',array(
+				'type' => 'tabs',
+				'items' => $this->getMenu(),
+			)); ?><!-- mainmenu -->
+		</div>
 	</div>
 
 	<div class="row">
-		<?php echo $content; ?>
+		<div class="col-md-12">
+			<!-- Admin / Application switch -->
+			<? if (Yii::app()->user->isAdmin()): ?>
+			<a href="<?= Yii::app()->request->baseUrl . '/admin.php/transfers/index'; ?>"
+			   id="admin-switch">
+				<span class="glyphicon glyphicon-cog"></span>
+				<?= Yii::t('app', 'Administration') ?>
+			</a>
+			<? endif; ?>
+
+			<? if (!empty($this->breadcrumbs)): ?>
+				<? $this->widget('bootstrap.widgets.TbBreadcrumb', array(
+					'links' => $this->breadcrumbs,
+					'homeLabel' => Yii::t('app', 'Characters transfer'),
+				)); ?><!-- breadcrumbs -->
+			<? endif; ?>
+		</div>
+	</div>
+
+	<div class="row">
+		<?= $content; ?>
 	</div>
 
 	<div class="clearfix"></div>
@@ -91,10 +90,8 @@
 <div class="container">
 	<div class="col-md-12">
 		<footer id="footer">
-			<div class="navbar">
-				Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br/>
-				All Rights Reserved.<br/>
-			</div>
+			Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>
+			All Rights Reserved.
 		</footer>
 	</div>
 </div>

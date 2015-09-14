@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
@@ -11,14 +11,14 @@ $this->breadcrumbs = [
 
 <h1 class="text-center"><?= Yii::t('app', 'Autorization') ?></h1>
 
-<?php if ($model->hasErrors()): ?>
+<? if ($model->hasErrors()): ?>
 	<div class="flash-error">
-		<?php echo CHtml::errorSummary($model); ?>
+		<?= CHtml::errorSummary($model); ?>
 	</div>
-<?php endif; ?>
+<? endif; ?>
 
 <div class="form auth-form">
-<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_VERTICAL,
 	'htmlOptions' => array(
 		'id' => 'create-char-from',
@@ -26,9 +26,9 @@ $this->breadcrumbs = [
 	),
 )); ?>
 
-	<?php echo $form->textFieldControlGroup($model, 'username', array('size' => 20)); ?>
-	<?php echo $form->passwordFieldControlGroup($model, 'password', array('size' => 20)); ?>
-	<?php //echo $form->checkBoxControlGroup($model, 'remember'); ?>
+	<?= $form->textFieldControlGroup($model, 'username', array('size' => 20)); ?>
+	<?= $form->passwordFieldControlGroup($model, 'password', array('size' => 20)); ?>
+	<? //echo $form->checkBoxControlGroup($model, 'remember'); ?>
 
 	<button type="submit" class="btn btn-primary">
 		<span class="glyphicon glyphicon-log-in"></span>
@@ -40,5 +40,5 @@ $this->breadcrumbs = [
 		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 
-<?php $this->endWidget(); ?>
+<? $this->endWidget(); ?>
 </div>

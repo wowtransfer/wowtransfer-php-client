@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this ConfigsController */
 /* @var $model AppConfigForm */
 /* @var $cores array */
@@ -12,10 +12,10 @@ $this->breadcrumbs = [
 <h1><?= Yii::t('app', 'Application settings') ?></h1>
 
 <? if (Yii::app()->user->hasFlash('success')): ?>
-	<div class="alert alert-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
+	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success'); ?></div>
 <? endif; ?>
 
-<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableClientValidation' => true,
 	'htmlOptions' => array(
@@ -25,7 +25,7 @@ $this->breadcrumbs = [
 
 <fieldset>
 	<legend><?= Yii::t('app', 'Server') ?></legend>
-<?php
+<?
 	echo $form->textFieldControlGroup($model, 'siteUrl');
 	echo $form->emailFieldControlGroup($model, 'emailAdmin');
 	echo $form->dropDownListControlGroup($model, 'core', $cores);
@@ -65,7 +65,7 @@ $this->breadcrumbs = [
 		<button type="submit" class="btn btn-primary" name="server">
 			<?= Yii::t('app', 'Save') ?>
 		</button>
-		<a href="<?php echo $this->createUrl('/configs') ?>" class="btn btn-default">
+		<a href="<?= $this->createUrl('/configs') ?>" class="btn btn-default">
 			<span class="glyphicon glyphicon-ban-circle"></span>
 			<?= Yii::t('app', 'Cancel') ?>
 		</a>
@@ -77,8 +77,8 @@ $this->breadcrumbs = [
 	</div>
 </div>
 
-<?php $this->endWidget(); ?>
-<?php unset($form); ?>
+<? $this->endWidget(); ?>
+<? unset($form); ?>
 
 <div class="alert alert-warning">
 	<?= Yii::t('app', 'Settings saves in the file') ?> <code>/protected/config/app-local.php</code>.

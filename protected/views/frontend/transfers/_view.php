@@ -1,9 +1,9 @@
-<?php
+<?
 /* @var $this TransfersController */
 /* @var $data ChdTransfer */
 ?>
 
-<div class="view" data-id="<?php echo $data->id ?>">
+<div class="view" data-id="<?= $data->id ?>">
 
 	<div class="toptions-view-actions">
 		<div class="toptions-view-top toptions-view-id">
@@ -13,7 +13,7 @@
 
 		<div class="toptions-view-top">
 			<b><?= $data->getAttributeLabel('status') ?></b>
-			<span class="tstatus tstatus-<?php echo $data->status ?>">
+			<span class="tstatus tstatus-<?= $data->status ?>">
 				<?= ChdTransfer::getStatusTitle($data->status) ?>
 			</span>
 		</div>

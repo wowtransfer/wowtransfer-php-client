@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this BackendController */
 /* @var $dataProvider CActiveDataProvider */
 /* @var $viewMode string */

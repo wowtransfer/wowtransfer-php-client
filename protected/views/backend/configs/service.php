@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this ConfigsController */
 /* @var $model ServiceConfigForm */
 
@@ -25,16 +25,16 @@ $this->breadcrumbs = [
 
 <fieldset>
 	<legend><?= Yii::t('app', 'Service') ?></legend>
-	<?php echo $form->textFieldControlGroup($model, 'serviceUsername', array(
+	<?= $form->textFieldControlGroup($model, 'serviceUsername', array(
 		'maxlength' => 32,
 	)); ?>
-	<?php echo $form->textFieldControlGroup($model, 'accessToken', array(
+	<?= $form->textFieldControlGroup($model, 'accessToken', array(
 		'maxlength' => 32,
 	)); ?>
 
-	<?php if (YII_DEBUG): ?>
-		<?php echo $form->textFieldControlGroup($model, 'apiBaseUrl'); ?>
-	<?php endif ?>
+	<? if (YII_DEBUG): ?>
+		<?= $form->textFieldControlGroup($model, 'apiBaseUrl'); ?>
+	<? endif ?>
 </fieldset>
 
 <div class="form-group">
@@ -43,7 +43,7 @@ $this->breadcrumbs = [
 		<button type="submit" class="btn btn-primary">
 			<?= Yii::t('app', 'Save') ?>
 		</button>
-		<a href="<?php echo $this->createUrl('/configs') ?>" class="btn btn-default">
+		<a href="<?= $this->createUrl('/configs') ?>" class="btn btn-default">
 			<span class="glyphicon glyphicon-ban-circle"></span>
 			<?= Yii::t('app', 'Cancel') ?>
 		</a>

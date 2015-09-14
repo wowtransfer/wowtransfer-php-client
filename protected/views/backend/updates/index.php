@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this UpdatesController */
 /* @var $release array */
 /* @var $appVersion string */

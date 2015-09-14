@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this TransfersController */
 /* @var $dataProvider CActiveDataProvider */
 /* @var $viewMode string */
@@ -32,12 +32,12 @@ $this->breadcrumbs = [
 
 <h1><?= Yii::t('app', 'Transfer requests') ?></h1>
 
-<?php if (Yii::app()->user->hasFlash('success')): ?>
-	<div class="alert alert-success"><?php echo Yii::app()->user->getFlash('success'); ?></div>
-<?php endif; ?>
+<? if (Yii::app()->user->hasFlash('success')): ?>
+	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success'); ?></div>
+<? endif; ?>
 
 <div id="transfers-listview-block">
-	<?php $this->renderPartial('_index_data', [
+	<? $this->renderPartial('_index_data', [
 		'dataProvider' => $dataProvider,
 		'viewMode' => $viewMode,
 	]) ?>
@@ -46,9 +46,9 @@ $this->breadcrumbs = [
 <script><!--
 
 window.statuses = [];
-<?php foreach (ChdTransfer::getStatuses() as $name => $title): ?>
-	window.statuses["<?php echo $name; ?>"] = "<?php echo $title; ?>";
-<?php endforeach; ?>
+<? foreach (ChdTransfer::getStatuses() as $name => $title): ?>
+	window.statuses["<?= $name; ?>"] = "<?= $title; ?>";
+<? endforeach; ?>
 
 --></script>
 

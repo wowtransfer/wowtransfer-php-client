@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 
@@ -14,6 +14,6 @@ $this->menu = [
 
 <h1><?= Yii::t('app', 'Create request') ?></h1>
 
-<?php $this->renderPartial('_form', array(
+<? $this->renderPartial('_form', array(
 	'model' => $model,
 )); ?>

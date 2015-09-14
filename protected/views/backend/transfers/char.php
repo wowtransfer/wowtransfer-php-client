@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 /* @var $errors string */
@@ -22,7 +22,7 @@ $this->breadcrumbs = [
 </div>
 
 
-<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'htmlOptions' => array(
 		'id' => 'create-char-from',
@@ -92,7 +92,7 @@ $this->breadcrumbs = [
 </div>
 
 <div>
-	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
+	<? $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $model,
 		'form' => $form,
 		'options' => $model->getTransferOptionsToUser(),
@@ -137,8 +137,8 @@ $this->breadcrumbs = [
 
 </div>
 
-<?php $this->endWidget(); ?>
-<?php unset($form); ?>
+<? $this->endWidget(); ?>
+<? unset($form); ?>
 
 <hr>
 
@@ -175,10 +175,10 @@ $this->breadcrumbs = [
 	<div class="tab-pane active" id="tab-queries">
 		<h3><?= Yii::t('app', 'Result of the queries runing') ?></h3>
 
-		<?php if ($queriesCount > 0): ?>
+		<? if ($queriesCount > 0): ?>
 			<div id="run-queries-table">
-			<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
-<?php
+			<? for ($i = 0; $i < $queriesCount; ++$i): ?>
+<?
 				if (isset($queries[$i])) {
 					$query = $queries[$i];
 					$classStatus = 'query-res-success';
@@ -189,11 +189,11 @@ $this->breadcrumbs = [
 				}
 ?>
 				<span class="query-res <?= $classStatus; ?>" title="<?= $query['query']; ?>"><?= $query['status'] ?></span>
-			<?php endfor; ?>
+			<? endfor; ?>
 			</div>
-		<?php else: ?>
+		<? else: ?>
 			<div id="run-queries-table"></div>
-		<?php endif; ?>
+		<? endif; ?>
 
 	</div>
 

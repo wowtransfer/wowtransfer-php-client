@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this ConfigsController */
 
 $this->breadcrumbs = [
@@ -15,7 +15,7 @@ $this->breadcrumbs = [
 </div>
 <? endif ?>
 
-<?php
+<?
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'htmlOptions' => array(
@@ -32,12 +32,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($options as $name => $option): ?>
+	<? foreach ($options as $name => $option): ?>
 	<tr class="toptions-row">
-		<td><?php echo CHtml::checkBox('toptions[' . $name . '][disabled]', !isset($option['disabled']), ['id' => 'opt-' . $name]); ?></td>
+		<td><?= CHtml::checkBox('toptions[' . $name . '][disabled]', !isset($option['disabled']), ['id' => 'opt-' . $name]); ?></td>
 		<td><label for="<?= 'opt-' . $name ?>"><?= $option['label']; ?></label></td>
 	</tr>
-	<?php endforeach; ?>
+	<? endforeach; ?>
 	</tbody>
 </table>
 
@@ -45,13 +45,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	<button type="submit" class="btn btn-primary">
 		<?= Yii::t('app', 'Save') ?>
 	</button>
-	<a href="<?php echo $this->createUrl('/configs'); ?>" class="btn btn-default">
+	<a href="<?= $this->createUrl('/configs'); ?>" class="btn btn-default">
 		<span class="glyphicon glyphicon-ban-circle"></span>
 		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 </div>
 
-<?php
+<?
 $this->endWidget();
 unset($form);
 ?>

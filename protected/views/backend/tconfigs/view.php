@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var BackendController $this */
 /* @var array $tconfig */
 
@@ -10,4 +10,4 @@ $this->breadcrumbs = [
 
 <h1><?= Yii::t('app', 'Configuration') ?> #<?= $tconfig['id'] ?></h1>
 
-<?php $this->renderPartial('_form', array('tconfig' => $tconfig)); ?>
+<? $this->renderPartial('_form', array('tconfig' => $tconfig)); ?>

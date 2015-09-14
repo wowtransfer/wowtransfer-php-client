@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 
@@ -14,9 +14,9 @@ $this->menu = [
 ];
 ?>
 
-<h1><?= Yii::t('app', 'Request view') ?> #<?php echo $model->id; ?></h1>
+<h1><?= Yii::t('app', 'Request view') ?> #<?= $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<? $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'create_transfer_date',
@@ -33,7 +33,7 @@ $this->menu = [
 
 <div style="margin: 10px 0;">
 
-	<a href="<?php echo $this->createUrl('/transfers'); ?>" class="btn btn-default">
+	<a href="<?= $this->createUrl('/transfers'); ?>" class="btn btn-default">
 		<span class="glyphicon glyphicon-arrow-left"></span>
 		<?= Yii::t('app', 'Cancel') ?>
 	</a>

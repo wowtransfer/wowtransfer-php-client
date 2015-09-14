@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 /* @var $wowServers array */
@@ -16,9 +16,9 @@ $this->menu = [
 ];
 ?>
 
-<h1><?= Yii::t('app', 'Update request') ?> #<?php echo $model->id; ?></h1>
+<h1><?= Yii::t('app', 'Update request') ?> #<?= $model->id; ?></h1>
 
-<?php $this->renderPartial('_form', array(
+<? $this->renderPartial('_form', array(
 	'model' => $model,
 	'wowServers' => $wowServers,
 )); ?>

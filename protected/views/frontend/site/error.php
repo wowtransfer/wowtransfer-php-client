@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this SiteController */
 /* @var $error array */
 
@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h2>Error <?php echo $code; ?></h2>
+<h2>Error <?= $code; ?></h2>
 
 <div class="error">
-<?php echo CHtml::encode($message); ?>
+<?= CHtml::encode($message); ?>
 </div>

@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this SiteController */
 ?>
 <h1><?= Yii::t('app', 'Administration') ?></h1>

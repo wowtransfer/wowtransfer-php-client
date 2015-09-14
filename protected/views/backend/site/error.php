@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this SiteController */
 /* @var $error array */
 

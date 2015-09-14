@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this ConfigsController */
 /* @var $whiteServers array */
 /* @var $blackServers array */
@@ -30,27 +30,27 @@ $this->breadcrumbs = [
 <div class="row">
 	<div class="col-md-6">
 		<h3>Черный список</h3>
-		<?php if (empty($blackServers)): ?>
+		<? if (empty($blackServers)): ?>
 			<div class="alert alert-info">Нет данных</div>
-		<?php else: ?>
+		<? else: ?>
 			<ul>
-			<?php foreach ($blackServers as $server): ?>
-				<li><?php echo $server['title'] ?></li>
-			<?php endforeach; ?>
+			<? foreach ($blackServers as $server): ?>
+				<li><?= $server['title'] ?></li>
+			<? endforeach; ?>
 			</ul>
-		<?php endif ?>
+		<? endif ?>
 	</div>
 	<div class="col-md-6">
 		<h3>Белый список</h3>
-		<?php if (empty($whiteServers)): ?>
+		<? if (empty($whiteServers)): ?>
 			<div class="alert alert-info">Нет данных</div>
-		<?php else: ?>
+		<? else: ?>
 		<ul>
-			<?php foreach ($blackServers as $server): ?>
+			<? foreach ($blackServers as $server): ?>
 				<li></li>
-			<?php endforeach; ?>
+			<? endforeach; ?>
 		</ul>
-		<?php endif ?>
+		<? endif ?>
 	</div>
 </div>
 

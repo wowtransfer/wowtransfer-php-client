@@ -1,4 +1,4 @@
-<?php
+<?
 /* @var $this TconfigsController */
 /* @var $tconfigs array */
 
@@ -35,21 +35,21 @@ $this->breadcrumbs = [
 	</tr>
 </thead>
 <tbody>
-<?php foreach ($tconfigs as $i => $config): ?>
-	<tr data-id="<?php echo $config['id']; ?>">
-		<td><?php echo $i + 1; ?></td>
-		<td><?php echo CHtml::encode($config['name']); ?></td>
-		<td><?php echo CHtml::encode($config['title']); ?></td>
-		<td><?php echo CHtml::encode($config['update_date']); ?></td>
-		<td><?php echo WowtransferUI::getTransferConfigType($config['type']); ?></td>
+<? foreach ($tconfigs as $i => $config): ?>
+	<tr data-id="<?= $config['id']; ?>">
+		<td><?= $i + 1; ?></td>
+		<td><?= CHtml::encode($config['name']); ?></td>
+		<td><?= CHtml::encode($config['title']); ?></td>
+		<td><?= CHtml::encode($config['update_date']); ?></td>
+		<td><?= WowtransferUI::getTransferConfigType($config['type']); ?></td>
 	</tr>
-<?php endforeach; ?>
+<? endforeach; ?>
 </tbody>
 </table>
 
 <? endif ?>
 
-<?php
+<?
 $url = $this->createUrl("/tconfigs/view");
 Yii::app()->clientScript->registerScript('goto_tconfig', '
 $("#tconfigs-table").on("click", "td", function() {
