@@ -26,3 +26,9 @@
 #transfer-list-view .btn {
 	margin-left: 5px;
 }
+
+#to-backend {
+	color: #d00;
+	font-weight: bold;
+	font-size: 1.2em;
+}

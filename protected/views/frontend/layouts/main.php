@@ -19,57 +19,31 @@
 
 <body>
 
+<? $this->widget('bootstrap.widgets.TbNavbar', [
+	'brandLabel' => TbHtml::tag('img', [
+		'alt' => '',
+		'src' => Yii::app()->request->baseUrl . '/images/wowtransfer-icon-24.png',
+	]),
+	'brandUrl' => $this->createUrl('/'),
+	'collapse' => false,
+	'items' => [
+		[
+			'class' => 'bootstrap.widgets.TbNav',
+			'items' => $this->getMainMenuItems(),
+		],
+		[
+			'class' => 'bootstrap.widgets.TbNav',
+			'htmlOptions' => ['class' => 'navbar-right'],
+			'encodeLabel' => false,
+			'items' => $this->getRightMenuItems(),
+		]
+	],
+]) ?>
+
 <div class="container" id="page">
 
 	<div class="row">
 		<div class="col-md-12">
-			<div id="header">
-				<div id="login">
-					<? if (Yii::app()->user->isGuest): ?>
-						<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
-						<? if ($this->route != 'site/login'): ?>
-							<a href="<?= $this->createUrl('/site/login'); ?>">
-								<span class="glyphicon glyphicon-log-in"></span>
-								<?= Yii::t('app', 'Login') ?>
-							</a>
-						<? endif; ?>
-					<? else: ?>
-						<div><?= Yii::t('app', 'Welcome') ?> <b><?= Yii::app()->user->name; ?></b></div>
-						<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
-						<a href="<?= Yii::app()->createUrl('site/logout') ?>">
-							<span class="glyphicon glyphicon-log-out"></span>
-							<?= Yii::t('app', 'Logout') ?>
-						</a>
-					<? endif; ?>
-				</div>
-				<div id="logo">
-					<img alt="" src="<?= Yii::app()->request->baseUrl; ?>/images/wowtransfer-icon-48.png" title="wowtransfer icon">
-					<?= Yii::t('app', 'Characters transfer') ?>
-				</div>
-			</div><!-- header -->
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<? $this->widget('bootstrap.widgets.TbNav',array(
-				'type' => 'tabs',
-				'items' => $this->getMenu(),
-			)); ?><!-- mainmenu -->
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<!-- Admin / Application switch -->
-			<? if (Yii::app()->user->isAdmin()): ?>
-			<a href="<?= Yii::app()->request->baseUrl . '/admin.php/transfers/index'; ?>"
-			   id="admin-switch">
-				<span class="glyphicon glyphicon-cog"></span>
-				<?= Yii::t('app', 'Administration') ?>
-			</a>
-			<? endif; ?>
-
 			<? if (!empty($this->breadcrumbs)): ?>
 				<? $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 					'links' => $this->breadcrumbs,

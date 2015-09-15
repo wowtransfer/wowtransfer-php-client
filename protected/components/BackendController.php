@@ -47,16 +47,17 @@ class BackendController extends BaseController
 
 	public function actionError()
 	{
-		if ($error = Yii::app()->errorHandler->error)
-		{
-			if (Yii::app()->request->isAjaxRequest)
+		if ($error = Yii::app()->errorHandler->error) {
+			if (Yii::app()->request->isAjaxRequest) {
 				echo $error['message'];
-			else
-			{
-				if (Yii::app()->user->isAdmin())
+			}
+			else {
+				if (Yii::app()->user->isAdmin()) {
 					$this->render('error', $error);
-				else
-					echo 'hi';
+				}
+				else {
+					$this->redirect(Yii::app()->request->baseUrl);
+				}
 			}
 		}
 	}

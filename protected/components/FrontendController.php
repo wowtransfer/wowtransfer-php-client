@@ -13,22 +13,67 @@ class FrontEndController extends BaseController
 	 *
 	 * @return array
 	 */
-	public function getMenu() {
-		$menu = array();
+	public function getMainMenuItems() {
+		$menu = [];
 
-		$menu[] = array('label' => Yii::t('app', 'Site'), 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home');
-		if (Yii::app()->user->isGuest) {
-			$menu[] = array('label' => Yii::t('app', 'Login'), 'url' => array('/site/login'), 'icon' => 'login');
-		}
-		else {
-			$menu[] = array(
-				'label' => Yii::t('app', 'Requests'), 'url' => array('/transfers'),
+		$menu[] = ['label' => Yii::t('app', 'Site'), 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home'];
+		if (!Yii::app()->user->isGuest) {
+			$menu[] = [
+				'label' => Yii::t('app', 'Requests'), 'url' => ['/transfers'],
 				'icon' => 'list', 'active' => $this->id == 'transfers',
-			);
+			];
 		}
-		$menu[] = array('label' => Yii::t('app', 'Help'), 'url' => array('/site/page'), 'icon' => 'info-sign');
+		$menu[] = ['label' => Yii::t('app', 'Help'), 'url' => ['/site/page'], 'icon' => 'info-sign'];
 
 		return $menu;
+	}
+
+	public function getRightMenuItems() {
+		$lang = Yii::app()->user->lang;
+		$items = [
+			[
+				'label' => 'A',
+				'url' => Yii::app()->request->baseUrl . '/admin.php/transfers/index',
+				'visible' => Yii::app()->user->isAdmin(),
+				'icon' => 'cog',
+				'htmlOptions' => ['title' => Yii::t('app', 'Administration')],
+				'linkOptions' => ['id' => 'to-backend'],
+			],
+			[
+				'label' => $lang,
+				'items' => [
+					[
+						'url' => ['/site/lang', 'lang' => 'ru'],
+						'label' => 'ru',
+						'active' => $lang === 'ru',
+					],
+					[
+						'url' => ['/site/lang', 'lang' => 'en'],
+						'label' => 'en',
+						'active' => $lang === 'en',
+					],
+				]
+			],
+			[
+				'label' => Yii::app()->user->name,
+				'visible' => !Yii::app()->user->isGuest,
+				'items' => [
+					[
+						'url' => ['/site/logout'],
+						'label' => Yii::t('app', 'Logout'),
+						'icon' => 'log-out',
+					],
+				]
+			],
+			[
+				'url' => ['/site/login'],
+				'label' => Yii::t('app', 'Login'),
+				'visible' => Yii::app()->user->isGuest && $this->route !== 'site/login',
+				'icon' => 'log-in',
+			],
+		];
+
+		return $items;
 	}
 
 	public function registerCssAndJs() {

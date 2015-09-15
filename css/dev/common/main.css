@@ -9,10 +9,12 @@ body
 
 #page
 {
-	margin: 5px auto;
+	margin: 51px auto 0 auto;
 	padding-bottom: 20px;
 	background: white;
-	border: 1px solid #C9E0ED;
+	border-left: 1px solid #C9E0ED;
+	border-right: 1px solid #C9E0ED;
+	border-bottom: 1px solid #C9E0ED;
 }
 
 #header
