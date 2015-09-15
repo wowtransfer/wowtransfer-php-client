@@ -18,9 +18,25 @@ class App
 	 */
 	public static $app;
 
+	/**
+	 * @var array
+	 */
+	private static $messages = [];
+
+	/**
+	 * @var string
+	 */
+	protected $language = 'ru';
+
 	public function __construct()
 	{
 		$this->view = new View();
+		$this->language = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'ru';
+		// default source language is `EN`
+		if ($this->language !== 'en') {
+			self::$messages = require __DIR__ . '/messages/' . $this->language . '/app.php';
+		}
+
 		self::$app = $this;
 	}
 
@@ -31,6 +47,11 @@ class App
 			$pages = $this->getPages();
 
 			$pageName = isset($_GET['page']) ? $_GET['page'] : 'hello';
+
+			$controller = isset($_GET['controller']) ? $_GET['controller'] : '';
+			$action = isset($_GET['action']) ? $_GET['action'] : '';
+
+			$this->handleAction($controller, $action);
 
 			if ($this->isInstalled()) {
 				$layout = 'installed';
@@ -64,6 +85,46 @@ class App
 	}
 
 	/**
+	 * @param string $controller
+	 * @param string $action
+	 * @return boolean
+	 */
+	protected function handleAction($controller, $action) {
+		if (empty($controller) || empty($action)) {
+			return false;
+		}
+		switch ($controller) {
+			case 'app':
+				$this->handleAppController($action);
+				break;
+		}
+
+		return true;
+	}
+
+	/**
+	 *
+	 * @param string $action
+	 */
+	protected function handleAppController($action) {
+		switch ($action) {
+			case 'lang':
+				$this->actionAppLang();
+				break;
+		}
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function actionAppLang() {
+		$lang = isset($_GET['value']) ? $_GET['value'] : '';
+		setcookie('lang', $lang, time() + 24 * 3600, $this->getRelativeUrl());
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
+		exit;
+	}
+
+	/**
 	 * @param \Exception $ex
 	 */
 	protected function onError($ex) {
@@ -83,7 +144,7 @@ class App
 	protected function getPages() {
 		$pages = [
 			'hello' => [
-				'title' => 'Добро пожаловать',
+				'title' => App::t('Welcome'),
 			],
 			'requirements' => [
 				'title' => 'Проверка системных тербований',
@@ -435,5 +496,23 @@ class App
 	 */
 	public function getRelativeUrl() {
 		return '/chdphp';
+	}
+
+	/**
+	 * @param string $message
+	 * @return string
+	 */
+	public static function t($message) {
+		if (isset(self::$messages[$message])) {
+			return self::$messages[$message];
+		}
+		return $message;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage() {
+		return $this->language;
 	}
 }
