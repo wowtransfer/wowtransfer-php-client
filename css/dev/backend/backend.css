@@ -115,3 +115,9 @@
 #release-file-list li {
 	font-family: monospace;
 }
+
+#to-frontend {
+	color: #00d;
+	font-weight: bold;
+	font-size: 1.2em;
+}

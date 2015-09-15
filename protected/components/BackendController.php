@@ -62,6 +62,102 @@ class BackendController extends BaseController
 		}
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getMainMenuItems() {
+		$items = [
+			[
+				'label' => Yii::t('app', 'Site'),
+				'url'=>Yii::app()->params['siteUrl'],
+				'icon' => 'home'
+			],
+			[
+				'label' => Yii::t('zii', 'Home'),
+				'url'=>['/'],
+				'active' => $this->route == 'site/index'
+			],
+			[
+				'label' => Yii::t('app', 'Requests'),
+				'url'=>['/transfers'],
+				'visible' => !Yii::app()->user->isGuest,
+				'active' => $this->id == 'transfers', 'icon' => 'list'
+			],
+			[
+				'label' => Yii::t('app', 'Configurations'),
+				'url' => ['/tconfigs/index'],
+				'icon' => 'asterisk'],
+			[
+				'label' => Yii::t('app', 'Settings'),
+				'url' => ['/configs'],
+				'icon' => 'cog',
+				'active' => $this->id == 'configs'],
+			[
+				'label' => Yii::t('app', 'Update'),
+				'url' => ['/updates'],
+				'icon' => 'ok-circle',
+				'active' => $this->id == 'updates'
+			],
+		];
+
+		return $items;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getRightMenuItems() {
+		$lang = Yii::app()->language;
+		$items = [
+			[
+				'label' => 'F',
+				'url' => Yii::app()->request->baseUrl . '/index.php/transfers/index',
+				'visible' => Yii::app()->user->isAdmin(),
+				'icon' => 'share-alt',
+				'htmlOptions' => ['title' => Yii::t('app', 'Application')],
+				'linkOptions' => ['id' => 'to-frontend'],
+			],
+			[
+				'label' => $lang,
+				'items' => [
+					[
+						'url' => ['/site/lang', 'lang' => 'ru'],
+						'label' => 'ru',
+						'active' => $lang === 'ru',
+					],
+					[
+						'url' => ['/site/lang', 'lang' => 'en'],
+						'label' => 'en',
+						'active' => $lang === 'en',
+					],
+				]
+			],
+			[
+				'label' => Yii::app()->user->name,
+				'visible' => !Yii::app()->user->isGuest,
+				'items' => [
+					[
+						'url' => ['/site/logout'],
+						'label' => Yii::t('app', 'Logout'),
+						'icon' => 'log-out',
+					],
+				]
+			],
+			[
+				'url' => ['/site/login'],
+				'label' => Yii::t('app', 'Login'),
+				'visible' => Yii::app()->user->isGuest && $this->route !== 'site/login',
+				'icon' => 'log-in',
+			],
+		];
+
+		return $items;
+	}
+
+
+	/**
+	 * @todo minify
+	 */
 	public function registerCssAndJs() {
 		$cs = Yii::app()->clientScript;
 		$baseUrl = Yii::app()->request->baseUrl;

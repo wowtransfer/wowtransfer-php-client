@@ -2,7 +2,7 @@
 /* @var $this BackendController */
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?= Yii::app()->language ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
@@ -16,34 +16,26 @@
 
 <div class="container" id="page">
 
-	<div id="header">
-		<div id="login">
-			<? Yii::t('app', 'Welcome') ?> <b><?= Yii::app()->user->name; ?></b>
-			<? $this->renderFile(Yii::getPathOfAlias('common-views') . '/layouts/change_lang.php') ?>
-			<a href="<?= $this->createUrl('/site/logout') ?>" title="Logout">
-				<span class="glyphicon glyphicon-log-out"></span> <?= Yii::t('app', 'Logout') ?>
-			</a>
-		</div>
-	</div><!-- header -->
-
-	<? $this->widget('bootstrap.widgets.TbNav', [
-		'type' => 'tabs',
+	<? $this->widget('bootstrap.widgets.TbNavbar', [
+		'brandLabel' => TbHtml::tag('img', [
+			'alt' => '',
+			'src' => Yii::app()->request->baseUrl . '/images/wowtransfer-icon-24.png',
+		]),
+		'brandUrl' => $this->createUrl('/'),
+		'collapse' => false,
 		'items' => [
-			['label' => Yii::t('app', 'Site'), 'url'=>Yii::app()->params['siteUrl'], 'icon' => 'home'],
-			['label' => Yii::t('zii', 'Home'), 'url'=>['/'], 'active' => $this->route == 'site/index'],
-			['label' => Yii::t('app', 'Requests'), 'url'=>['/transfers'], 'visible' => !Yii::app()->user->isGuest, 'active' => $this->id == 'transfers', 'icon' => 'list'],
-			['label' => Yii::t('app', 'Configurations'), 'url' => ['/tconfigs/index'], 'icon' => 'asterisk'],
-			['label' => Yii::t('app', 'Settings'), 'url' => ['/configs'], 'icon' => 'cog', 'active' => $this->id == 'configs'],
-			['label' => Yii::t('app', 'Update'), 'url' => ['/updates'], 'icon' => 'ok-circle', 'active' => $this->id == 'updates'],
+			[
+				'class' => 'bootstrap.widgets.TbNav',
+				'items' =>  $this->getMainMenuItems()
+			],
+			[
+				'class' => 'bootstrap.widgets.TbNav',
+				'htmlOptions' => ['class' => 'navbar-right'],
+				'encodeLabel' => false,
+				'items' => $this->getRightMenuItems()
+			]
 		],
-	]); ?><!-- mainmenu -->
-
-	<!-- Admin / Application switch -->
-	<a href="<?= Yii::app()->request->baseUrl . '/index.php/transfers/index'; ?>"
-	   id="admin-switch" title="<?= Yii::t('app', 'Application') ?>">
-		<span class="glyphicon glyphicon-arrow-left"></span>
-		<?= Yii::t('app', 'Application') ?>
-	</a>
+	]) ?>
 
 	<? if (isset($this->breadcrumbs)):?>
 		<? $this->widget('bootstrap.widgets.TbBreadcrumb', array(
