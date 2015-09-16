@@ -76,7 +76,7 @@ if (isset($_POST['next'])) {
 	<?php $view->errorSummary(); ?>
 
 	<fieldset>
-		<legend>Пользователь</legend>
+		<legend><?= App::t('User') ?></legend>
 
 		<label for="db_transfer_user">Имя</label>
 		<input type="text" name="db_transfer_user" id="db_transfer_user"
@@ -88,7 +88,7 @@ if (isset($_POST['next'])) {
 			<option>wowtransfer</option>
 		</datalist>
 
-		<label for="db_transfer_user_host">Хост</label>
+		<label for="db_transfer_user_host"><?= App::t('Host') ?></label>
 		<input type="text" name="db_transfer_user_host" id="db_transfer_user_host"
 			   value="<?php echo $dbTransferUserHost; ?>" class="form-control"
 			   list="db_transfer_user_host_list">
@@ -96,14 +96,14 @@ if (isset($_POST['next'])) {
 			<option>localhost</option>
 		</datalist>
 
-		<label for="db_transfer_user">Пароль</label>
+		<label for="db_transfer_user"><?= App::t('User') ?></label>
 		<input type="password" name="db_transfer_password" id="db_transfer_password" value="<?php echo $dbTransferPassword; ?>" class="form-control">
 	</fieldset>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" title="Back" type="submit" name="back">Назад</button>
-		<button class="btn btn-primary" title="Create" type="submit" name="submit">Создать</button>
-		<button class="btn btn-primary" title="Next" type="submit" name="next">Далее</button>
+		<button class="btn btn-default" title="Back" type="submit" name="back"><?= App::t('Back') ?></button>
+		<button class="btn btn-primary" title="Create" type="submit" name="submit"><?= App::t('Create') ?></button>
+		<button class="btn btn-primary" title="Next" type="submit" name="next"><?= App::t('Next') ?></button>
 
 		<?php $view->printHiddenFields($fields); ?>
 	</div>

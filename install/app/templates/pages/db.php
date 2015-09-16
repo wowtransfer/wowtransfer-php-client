@@ -1,4 +1,5 @@
 <?php
+use Installer\App;
 use Installer\DatabaseManager;
 
 $fields = array('db_type', 'db_host', 'db_port', 'db_user', 'db_password', 'db_auth', 'db_characters');
@@ -43,16 +44,16 @@ if (isset($_POST['submit']))
 
 	// validate
 	if (empty($dbHost)) {
-		$view->addError("Введите сервер");
+		$view->addError(App::t('Put the server'));
 	}
 	if (empty($dbUser)) {
-		$view->addError("Введите пользователя");
+		$view->addError(App::t('Put the user'));
 	}
 	if (empty($dbAuth)) {
-		$view->addError("Введите название базы данных с аккаунтами");
+		$view->addError(App::t('Put the name of database with accounts'));
 	}
 	if (empty($dbCharacters)) {
-		$view->addError("Введите название базы данных с персонажами");
+		$view->addError(App::t('Put the name of database with characters'));
 	}
 
 	if (!$view->hasErrors()) {
@@ -68,8 +69,8 @@ if (isset($_POST['submit']))
 ?>
 
 <div class="alert alert-info">
-	<p>На этом шаге вводится информация о пользователе, под которым будет устанавливаться приложение.</p>
-	Пользователь должен иметь права на
+	<p><?= App::t('This step writes user information, which will have been installed application') ?>.</p>
+	<?= App::t('User must have the privileges on') ?>
 	<ul>
 		<li>CREATE USER, опционально.</li>
 		<li>CREATE, DROP таблиц базы данных с персонажами.</li>
@@ -88,43 +89,43 @@ if (isset($_POST['submit']))
 
 	<?php $view->errorSummary(); ?>
 
-	<label for="db_type">Тип базы данных</label>
+	<label for="db_type"><?= App::t('Database type') ?></label>
 	<select name="db_type" id="db_type" class="form-control">
 		<option value="mysql" selected="selected">MySQL</option>
 	</select>
 
 
-	<label for="db_host">Сервер</label>
+	<label for="db_host"><?= App::t('Host') ?></label>
 	<input type="text" name="db_host" id="db_host" value="<?php echo $dbHost; ?>" class="form-control" list="db_host_list">
 	<datalist id="db_host_list">
 		<option>localhost</option>
 		<option>127.0.0.1</option>
 	</datalist>
 
-	<label for="db_port">Порт</label>
+	<label for="db_port"><?= App::t('Port') ?></label>
 	<input type="text" name="db_port" id="db_port" value="<?php echo $dbPort; ?>" class="form-control">
 	<datalist id="db_port_list">
 		<option>3306</option>
 	</datalist>
 
-	<label for="db_port">Пользователь</label>
+	<label for="db_port"><?= App::t('User') ?></label>
 	<input type="text" name="db_user" id="db_user" value="<?php echo $dbUser; ?>" class="form-control" list="db_user_list">
 	<datalist id="db_user_list">
 		<option>trinity</option>
 		<option>mangos</option>
 	</datalist>
 
-	<label for="db_port">Пароль</label>
+	<label for="db_port"><?= App::t('Password') ?></label>
 	<input type="password" name="db_password" id="db_password" value="<?php echo $dbPassword; ?>" class="form-control">
 
 
-	<label for="db_port">База даннах с персонажами</label>
+	<label for="db_port"><?= App::t('Database with characters') ?></label>
 	<input type="text" name="db_characters" id="db_character" value="<?php echo $dbCharacters; ?>" class="form-control" list="db_character_list">
 	<datalist id="db_character_list">
 		<option>characters</option>
 	</datalist>
 
-	<label for="db_port">База данных с аккаунтами</label>
+	<label for="db_port"><?= App::t('Database with an accounts') ?></label>
 	<input type="text" name="db_auth" id="db_auth" value="<?php echo $dbAuth; ?>" class="form-control" list="db_auth_list">
 	<datalist id="db_auth_list">
 		<option>auth</option>
@@ -133,8 +134,8 @@ if (isset($_POST['submit']))
 
 
 	<div class="actions-panel">
-		<button class="btn btn-default" type="submit" name="back">Назад</button>
-		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
+		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
+		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
 		<?php $view->printHiddenFields($fields); ?>
 	</div>

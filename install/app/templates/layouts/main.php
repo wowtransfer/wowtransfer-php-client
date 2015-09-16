@@ -3,6 +3,7 @@
  * @var $page array
  * @var $stepCount int
  */
+use Installer\App;
 ?>
 
 <div id="header">
@@ -16,7 +17,7 @@
 		</div>
 	</div>
 	<div style="font-size: large;">
-		Шаг <?= $page['step']; ?> из <?= $stepCount; ?>: <?= $view->getPageTitle() ?>.
+		<?= App::t('Step') ?> <?= $page['step']; ?> / <?= $stepCount; ?>: <?= $view->getPageTitle() ?>.
 	</div>
 </div>
 
@@ -57,9 +58,13 @@
 <div class="clearfix"></div>
 <? if ($page['step']): ?>
 	<div class="alert alert-warning">
-		При возникновении проблем с установкой, пожалуйста, посетите наш
-		<a href="http://forum.wowtransfer.com?from=install" title="wowtransfer.com forum">форум</a>
-		или
-		<a href="http://wowtransfer.com/contact/?from=install" title="wowtransfer.com - Contact us">напишите нам</a>!
+		<?= App::t('If the errors was shown, please, visit our') ?>
+		<a href="http://forum.wowtransfer.com?from=install" title="wowtransfer.com forum">
+			<span class="lowercase"><?= App::t('Forum') ?></span>
+		</a>
+		<span class="lowercase"><?= App::t('Or') ?></span>
+		<a href="http://wowtransfer.com/contact/?from=install" title="wowtransfer.com - Contact us">
+			<span class="lowercase"><?= App::t('Contact us') ?></span>!
+		</a>
 	</div>
-<? endif; ?>
+<? endif ?>

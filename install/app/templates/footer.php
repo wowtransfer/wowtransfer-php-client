@@ -23,13 +23,21 @@ use Installer\App;
 			</ul>
 		</div>
 
-		Copyright © 2014, <a href="http://wowtransfer.com?from=install" title="wowtransfer.com">wowtransfer.com</a> <span class="label label-info">1.0</span> <br>
-		<span class="glyphicon glyphicon-comment"></span> <a href="http://forum.wowtransfer.com?from=install" title="Форум wowtransfer.com">Форум</a> <br>
+		Copyright © 2014,
+		<a href="http://wowtransfer.com?from=install" title="wowtransfer.com">wowtransfer.com</a>
+		<span class="label label-info">1.0</span> <br>
+		<span class="glyphicon glyphicon-comment"></span>
+		<a href="http://forum.wowtransfer.com?from=install" title="Форум wowtransfer.com">
+			<?= App::t('Forum') ?>
+		</a><br>
 		<!--<a href="http://forum.wowtransfer.com" title="Форум wowtransfer.com">Документация</a>-->
 
 		<img src="images/GitHub-Mark-32px.png" alt="" title="">
-		<span class="glyphicon glyphicon-github"></span> <a href="https://github.com/wowtransfer" title="wowtransfer on github">Сообщество на github</a>,
-		<span class="glyphicon glyphicon-github"></span> <a href="https://github.com/wowtransfer/chdphp" title="wowtransfer.com application">chdphp project</a>.
+		<span class="glyphicon glyphicon-github"></span>
+		<a href="https://github.com/wowtransfer" title="wowtransfer on github">
+			<?= App::t('Github comunity') ?></a>,
+		<span class="glyphicon glyphicon-github"></span>
+		<a href="https://github.com/wowtransfer/chdphp" title="wowtransfer.com application">chdphp project</a>.
 
 	</div>
 </div>

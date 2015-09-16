@@ -1,13 +1,19 @@
 <?php
+use Installer\App;
+
 $view->clearSubmitedFields();
 ?>
 
 <div class="form ">
 
-<div class="alert alert-info">Вас приветсвует установщик приложения <strong>клиент wowtransfer.com</strong>.</div>
+<div class="alert alert-info">
+	<?= App::t('Welcome to installer') ?>.
+</div>
 
 <div class="actions-panel">
-	<a class="btn btn-primary" href="index.php?page=requirements" title="Install">Начать установку</a>
+	<a class="btn btn-primary" href="index.php?page=requirements" title="Install">
+		<?= App::t('Begin install') ?>
+	</a>
 </div>
 
 </div>

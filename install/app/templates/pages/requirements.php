@@ -5,43 +5,43 @@ use Installer\App;
 
 $configAppFilePath = App::$app->getAppConfigAbsoluteFilePath();
 
-$requirements = array(
-	'php_version' => array(
-		'value' => 'Версия РНР',
+$requirements = [
+	'php_version' => [
+		'value' => App::t('PHP version'),
 		'result' => version_compare(phpversion(), '5.4', '>=') > 0,
-		'comment' => 'Версия должна быть больше 5.4',
-	),
-	'ext_json' => array(
-		'value' => 'Расширение <strong>json</strong>',
+		'comment' => App::t('The version must be >= 5.4'),
+	],
+	'ext_json' => [
+		'value' => App::t('Extension') . ' <strong>json</strong>',
 		'result' => extension_loaded('json'),
-		'comment' => 'Функции для работы с json данными',
-	),
-	'ext_pdo' => array(
-		'value' => 'Расширение <strong>PDO</strong>',
+		'comment' => App::t('The functions for the json data work'),
+	],
+	'ext_pdo' => [
+		'value' => App::t('Extension') . ' <strong>PDO</strong>',
 		'result' => extension_loaded('pdo'),
-		'comment' => 'Необходимо для PDO MySQL',
-	),
-	'ext_pdo_mysql' => array(
-		'value' => 'Расширение <strong>PDO MySQL</strong>',
+		'comment' => App::t('Need for the PDO MySQL'),
+	],
+	'ext_pdo_mysql' => [
+		'value' => App::t('Extension') . ' <strong>PDO MySQL</strong>',
 		'result' => extension_loaded('pdo_mysql'),
-		'comment' => 'Необходимо для работы с MySQL',
-	),
-	'ext_zlib' => array(
-		'value' => 'Расширение <strong>zlib</strong>',
+		'comment' => App::t('Need for the MySQL work'),
+	],
+	'ext_zlib' => [
+		'value' => App::t('Extension') . ' <strong>zlib</strong>',
 		'result' => extension_loaded('zlib'),
-		'comment' => 'Необходимо для сжатия',
-	),
-	'ext_gd' => array(
-		'value' => 'Расширение <strong>gd</strong>',
+		'comment' => App::t('Need for the compressing'),
+	],
+	'ext_gd' => [
+		'value' => App::t('Extension') . ' <strong>gd</strong>',
 		'result' => extension_loaded('gd'),
-		'comment' => 'Необходимо для капчи',
-	),
-	'config_app' => array(
+		'comment' => App::t('Need for the captcha'),
+	],
+	'config_app' => [
 		'value' => App::$app->getAppConfigRelativeDir(),
 		'result' => is_writable($configAppFilePath),
-		'comment' => 'Проверка на запись',
-	),
-);
+		'comment' => App::t('Write check'),
+	],
+];
 
 foreach ($requirements as $name => $item) {
 	$view->addCheckItem($name, $item);
@@ -64,7 +64,7 @@ if (isset($_POST['submit']) && !$view->hasErrors()) {
 	<?php $view->printCheckTable (); ?>
 
 	<div class="actions-panel">
-		<button class="btn btn-primary" title="Next" type="submit" name="submit">Далее</button>
+		<button class="btn btn-primary" title="Next" type="submit" name="submit"><?= App::t('Next') ?></button>
 	</div>
 
 </form>

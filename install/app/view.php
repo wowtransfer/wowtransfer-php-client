@@ -1,6 +1,8 @@
 <?
 namespace Installer;
 
+use Installer\App;
+
 class View
 {
 	/**
@@ -194,7 +196,7 @@ class View
 		}
 
 		echo '<div class="alert alert-danger">';
-		echo '<p>Необходимо исправить следующие ошибки:</p>';
+		echo '<p>' . App::t('Correct the next errors') . ':</p>';
 		echo '<ul>';
 		foreach ($this->_errors as $error) {
 			echo '<li>' . $error . '</li>';
@@ -220,9 +222,9 @@ class View
 		<table class="table">
 		<thead>
 			<tr>
-				<th>Значение</th>
-				<th>Результат</th>
-				<th>Комментарий</th>
+				<th><?= App::t('Value') ?></th>
+				<th><?= App::t('Result') ?></th>
+				<th><?= App::t('Comment') ?></th>
 			</tr>
 		</thead>
 		<tbody>

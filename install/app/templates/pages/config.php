@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 		<b><?= $view->getFieldValue('db_transfer_table') ?></b>
 	</p>
 
-	<p class="text-center">Ядро WoW сервера:
+	<p class="text-center"><?= App::t('Core of the WoW server') ?>:
 		<b><?= $view->getFieldValue('core') ?></b>
 	</p>
 
@@ -48,8 +48,8 @@ if (isset($_POST['submit'])) {
 	</p>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" type="submit" name="back">Назад</button>
-		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
+		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
+		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
 		<? $view->printHiddenFields($fields) ?>
 	</div>

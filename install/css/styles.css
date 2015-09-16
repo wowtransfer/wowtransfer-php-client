@@ -84,3 +84,7 @@ body
 	word-break: normal;
 	word-wrap: normal;
 }
+
+.lowercase {
+	text-transform: lowercase;
+}

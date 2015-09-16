@@ -46,8 +46,8 @@ if (isset($_POST['submit']))
 	<pre class="sql-code" style="height: 400px;"><?= App::$app->loadDbPrivileges (); ?></pre>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" type="submit" name="back">Назад</button>
-		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
+		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
+		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
 		<? $view->printHiddenFields($fields); ?>
 	</div>

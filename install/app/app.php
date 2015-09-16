@@ -147,34 +147,34 @@ class App
 				'title' => App::t('Welcome'),
 			],
 			'requirements' => [
-				'title' => 'Проверка системных тербований',
+				'title' => App::t('Check of the system requirement'),
 			],
 			'yii' => [
-				'title' => 'Путь к фреймворку',
+				'title' => App::t('Framework path'),
 			],
 			'core' => [
-				'title' => 'Выбор ядра WoW сервера',
+				'title' => App::t('Select of the WoW core'),
 			],
 			'db' => [
-				'title' => 'Подключение к базе',
+				'title' => App::t('Database settings'),
 			],
 			'user' => [
-				'title' => 'Выбор пользователя',
+				'title' => App::t('Select of the user'),
 			],
 			'struct' => [
-				'title' => 'Создание таблиц',
+				'title' => App::t('Creation of the tables'),
 			],
 			'procedures' => [
-				'title' => 'Хранимые процедуры',
+				'title' => App::t('Stored procedures'),
 			],
 			'privileges' => [
-				'title' => 'Права',
+				'title' => App::t('Privileges'),
 			],
 			'config' => [
-				'title' => 'Конфигурация',
+				'title' => App::t('Configuration writing'),
 			],
 			'finish' => [
-				'title' => 'Заключение',
+				'title' => App::t('Finish'),
 			],
 		];
 
@@ -419,7 +419,7 @@ class App
 
 		$core = $this->view->getFieldValue('core');
 		if (empty($core)) {
-			$this->view->addError('Ядро WoW сервера не найдено');
+			$this->view->addError(App::t('Core of the WoW server not found'));
 			return false;
 		}
 
@@ -458,7 +458,7 @@ class App
 
 		$core = $this->view->getFieldValue('core');
 		if (empty($core)) {
-			$this->view->addError('Ядро WoW сервера не найдено');
+			$this->view->addError(App::t('Core of the WoW server not found'));
 			return false;
 		}
 

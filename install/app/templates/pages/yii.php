@@ -1,4 +1,5 @@
 <?php
+use Installer\App;
 
 $excludeFields = ['yii_dir', 'submit'];
 
@@ -30,7 +31,7 @@ if (isset($_POST['submit'])) {
 	<? $view->errorSummary() ?>
 
 	<div class="form-group">
-		<label for="yii_dir" class="control-label">Директория до yii.php</label>
+		<label for="yii_dir" class="control-label"><?= App::t('Directory for') ?> yii.php</label>
 		<input type="text" name="yii_dir" value="<?= $yiiDir ?>" id="yii_dir" class="form-control">
 	</div>
 
@@ -43,7 +44,7 @@ if (isset($_POST['submit'])) {
 	
 
 	<div class="actions-panel">
-		<button class="btn btn-primary" type="submit" name="submit">Далее</button>
+		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
 		<? $view->printHiddenFields($excludeFields) ?>
 	</div>
