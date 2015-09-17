@@ -7,7 +7,7 @@ $yiiDir = isset($_POST['yii_dir']) ? trim($_POST['yii_dir']) : '';
 
 if (isset($_POST['submit'])) {
 	if (empty($yiiDir)) {
-		$view->addError('Путь до фреймворка не введен');
+		$view->addError(App::t('Bad framework path'));
 	}
 	else {
 		$yiiDir = $_POST['yii_dir'] = rtrim($yiiDir, "\\/");

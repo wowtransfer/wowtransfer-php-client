@@ -13,27 +13,19 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="alert alert-success">
-	Установка успешно завершена.
+	<?= App::t('The installing has completed success') ?>.
 </div>
 
 <div class="alert alert-danger">
-	Необходимо удалить папку <code><b>install</b></code>.
+	<?= App::t('Remove the directory necessary') ?> <code><b>install</b></code>.
 </div>
 
-<div class="alert alert-warning">
-	<?php $view->errorSummary(); ?>
-
-	<p>Настройте файлы конфигурации приложения:</p>
-	<ul>
-		<li>/protected/config/main.php - общая конфигурация.</li>
-		<li>/protected/config/backend.php - конфигурация для пользовательской части.</li>
-		<li>/protected/config/frontend.php - конфигурация для админской части.</li>
-	</ul>
-</div>
+<?php $view->errorSummary(); ?>
 
 <form action="" method="post">
 
-
-	<button class="btn btn-primary" type="submit" name="submit">Удалить папку <i>install</i> и перейти к авторизации</button>
+	<button class="btn btn-primary" type="submit" name="submit">
+		<?= App::t('Remove the directory "install" and go to the authorization') ?>
+	</button>
 
 </form>

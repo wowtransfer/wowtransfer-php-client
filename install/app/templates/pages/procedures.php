@@ -4,8 +4,7 @@ use Installer\DatabaseManager;
 
 $fields = array('submit', 'back');
 
-if (isset($_POST['back']))
-{
+if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
@@ -14,8 +13,7 @@ if (isset($_POST['back']))
 	exit;
 }
 
-if (isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 

@@ -20,10 +20,10 @@ if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 
 	if (empty($dbTransferTableName)) {
-		$view->addError('Введите название таблицы');
+		$view->addError(App::t('Put the table name'));
 	}
 	elseif (!preg_match('/^[a-z_]+$/', $dbTransferTableName)) {
-		$view->addError('Название таблицы может состоять из [a-z, _] символов');
+		$view->addError(App::t('The table name can consist of') . ' [a-z, _]');
 	}
 	else {
 		$db = new DatabaseManager($view);
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 	<?php $view->errorSummary(); ?>
 
 	<div class="alert alert-info">
-		This step have a creating of the tables in the characters database.
+		<?= App::t('This step have a creating of the tables in the characters database') ?>.
 	</div>
 
 	<label for="db_transfer_table">

@@ -24,11 +24,10 @@ if (isset($_POST['submit'])) {
 
 <form action="" method="post">
 
-	<!-- TODO: take this values from service -->
 	<label for="core" class="control-label"><?= App::t('Core of the WoW server') ?></label>
 	<select name="core" id="core" class="form-control">
-		<option value="trinity_335a" <?php ?> >trinity_335a</option>
-		<!--<option value="cmangos_335a" <?php ?> >cmangos_335a</option>-->
+		<option value="trinity_335a">trinity_335a</option>
+		<!--<option value="cmangos_335a">cmangos_335a</option>-->
 	</select>
 
 	<div class="actions-panel">

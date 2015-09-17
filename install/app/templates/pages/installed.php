@@ -6,22 +6,21 @@ if (isset($_POST['remove_dir'])) {
 		exit;
 	}
 }
-
 ?>
 
 <div class="alert alert-success">
-	Приложение уже установлено
+	<?= App::t('The application has installed alredy') ?>
 </div>
 
-<div>
-	<?php $view->errorSummary() ?>
-</div>
+<?php $view->errorSummary() ?>
 
 <div>
 	<p>
-		Для продолжения необходимо удалить директорию <code>/install</code>.
+		<?= App::t('Remove the directory necessary') ?> "install".
 	</p>
 	<form action="" method="post">
-		<button type="submit" name="remove_dir" class="btn btn-primary" id="remove-install-dir">Удалить</button>
+		<button type="submit" name="remove_dir" class="btn btn-primary" id="remove-install-dir">
+			<?= App::t('Delete') ?>
+		</button>
 	</form>
 </div>

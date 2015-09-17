@@ -2,23 +2,22 @@
 use Installer\App;
 use Installer\DatabaseManager;
 
-$fields = array('db_type', 'db_host', 'db_port', 'db_user', 'db_password', 'db_auth', 'db_characters');
+$fields = ['db_type', 'db_host', 'db_port', 'db_user', 'db_password', 'db_auth', 'db_characters'];
 
-// TODO: take this values from service
-$defaultValues = array(
-	'trinity_335a' => array(
+$defaultValues = [
+	'trinity_335a' => [
 		'user' => 'trinity',
 		'password' => 'trinity',
 		'auth' => 'auth',
 		'characters' => 'characters',
-	),
-	'cmangos_335a' => array(
+	],
+	/*'cmangos_335a' => [
 		'user' => 'mangos',
 		'password' => 'mangos',
 		'auth' => 'realmd',
 		'characters' => 'characters',	
-	)
-);
+	]*/
+];
 $default = isset($defaultValues[$_POST['core']]) ? $defaultValues[$_POST['core']] : reset($defaultValues);
 
 $dbHost = isset($_POST['db_host']) ? trim($_POST['db_host']) : 'localhost';

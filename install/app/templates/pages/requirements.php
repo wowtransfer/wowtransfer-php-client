@@ -46,7 +46,7 @@ $requirements = [
 foreach ($requirements as $name => $item) {
 	$view->addCheckItem($name, $item);
 	if (!$item['result']) {
-		$view->addError('Предупреждение: ' . $item['value']);
+		$view->addError(App::t('Warning') . ': ' . $item['value']);
 	}
 }
 
