@@ -29,7 +29,7 @@ if (isset($_POST['submit']))
 ?>
 
 <div class="alert alert-info">
-	На этом шаге пользователю будут даны права на объекты базы данных.
+	<?= App::t('This step have a privileges of the database objects') ?>.
 </div>
 
 <form action="" method="post">

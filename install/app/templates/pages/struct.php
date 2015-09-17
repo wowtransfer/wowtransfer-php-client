@@ -6,8 +6,7 @@ $fields = array('back', 'submit', 'db_transfer_table');
 
 $dbTransferTableName = isset($_POST['db_transfer_table']) ? trim($_POST['db_transfer_table']) : 'chd_transfer';
 
-if (isset($_POST['back']))
-{
+if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
@@ -16,23 +15,22 @@ if (isset($_POST['back']))
 	exit;
 }
 
-if (isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
-	if (empty($dbTransferTableName))
+	if (empty($dbTransferTableName)) {
 		$view->addError('Введите название таблицы');
-	elseif (!preg_match('/^[a-z_]+$/', $dbTransferTableName))
+	}
+	elseif (!preg_match('/^[a-z_]+$/', $dbTransferTableName)) {
 		$view->addError('Название таблицы может состоять из [a-z, _] символов');
-	else
-	{
+	}
+	else {
 		$db = new DatabaseManager($view);
 
 		$db->createStructure();
 
-		if (!$view->hasErrors())
-		{
+		if (!$view->hasErrors()) {
 			$view->writeSubmitedFields();
 			header('Location: index.php?page=procedures');
 			exit;
@@ -47,10 +45,12 @@ if (isset($_POST['submit']))
 	<?php $view->errorSummary(); ?>
 
 	<div class="alert alert-info">
-		На этом шаге будут созданы таблицы в базе данных с персонажами.
+		This step have a creating of the tables in the characters database.
 	</div>
 
-	<label for="db_transfer_table">Таблица для заявок на перенос</label>
+	<label for="db_transfer_table">
+		<?= App::t('The table for the transfer requests') ?>
+	</label>
 	<input type="text" name="db_transfer_table" id="db_transfer_table"
 		   value="<?= $dbTransferTableName;?>" class="form-control"
 		   list="db_transfer_table_list">

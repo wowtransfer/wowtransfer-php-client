@@ -1,4 +1,5 @@
 <?php
+use Installer\App;
 use Installer\DatabaseManager;
 
 $dbTransferUser = isset($_POST['db_transfer_user']) ? trim($_POST['db_transfer_user']) : 'wowtransfer';
@@ -24,10 +25,10 @@ if (isset($_POST['submit'])) {
 
 	// simple checking...
 	if (empty($dbTransferUser)) {
-		$view->addError('Введите имя пользователя');
+		$view->addError(App::t('Put the user name'));
 	}
 	elseif (empty($dbTransferPassword)) {
-		$view->addError('Введите пароль');
+		$view->addError(App::t('Put the password'));
 	}
 	else {
 		$db = new DatabaseManager($view);
@@ -46,7 +47,7 @@ if (isset($_POST['next'])) {
 	unset($_POST['back']);
 
 	if (empty($dbTransferUser)) {
-		$view->addError('Введите имя пользователя');
+		$view->addError(App::t('Put the user name'));
 	}
 	else {
 		$view->writeSubmitedFields();
@@ -58,17 +59,23 @@ if (isset($_POST['next'])) {
 ?>
 
 <p>
-	Выбор или создание пользователя базы данных под которым будет работать приложение.
+	<?= App::t('Select or create of the application`s user') ?>
 </p>
 
 <div class="alert alert-info">
-По-умолчанию пользователь и пароль равны <code>wowtransfer</code>.
+	<?= App::t('Default the user and the password equal') ?> <code>wowtransfer</code>.
 </div>
 
 <ul>
-	<li>Для создания нового пользователя введите <i>имя</i> и <i>пароль</i>, нажмите кнопку "<strong>Создать</strong>".</li>
-	<li>Если пользователь уже существует то введите только его <i>имя</i>, пароль не будет учитывается, нажмите кнопку "<strong>Далее</strong>".</li>
-	<li>Хост, как правило, имеет значение <i>localhost</i>.</li>
+	<li>
+		<?= App::t('For the creating of new user put the name and password, press the "Create" button') ?>.
+	</li>
+	<li>
+		<?= App::t('If the user alredy exists then put only name, the password will have skiped, press the "Next" button') ?>
+	</li>
+	<li>
+		<?= App::t('The host usually have value "localhost"') ?>.
+	</li>
 </ul>
 
 <form action="" method="post">
@@ -76,9 +83,8 @@ if (isset($_POST['next'])) {
 	<?php $view->errorSummary(); ?>
 
 	<fieldset>
-		<legend><?= App::t('User') ?></legend>
 
-		<label for="db_transfer_user">Имя</label>
+		<label for="db_transfer_user"><?= App::t('User') ?></label>
 		<input type="text" name="db_transfer_user" id="db_transfer_user"
 			   value="<?php echo $dbTransferUser; ?>" class="form-control"
 			   list="db_transfer_user_list">
@@ -96,7 +102,7 @@ if (isset($_POST['next'])) {
 			<option>localhost</option>
 		</datalist>
 
-		<label for="db_transfer_user"><?= App::t('User') ?></label>
+		<label for="db_transfer_user"><?= App::t('Password') ?></label>
 		<input type="password" name="db_transfer_password" id="db_transfer_password" value="<?php echo $dbTransferPassword; ?>" class="form-control">
 	</fieldset>
 

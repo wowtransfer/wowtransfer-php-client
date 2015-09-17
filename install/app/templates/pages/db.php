@@ -72,17 +72,26 @@ if (isset($_POST['submit']))
 	<p><?= App::t('This step writes user information, which will have been installed application') ?>.</p>
 	<?= App::t('User must have the privileges on') ?>
 	<ul>
-		<li>CREATE USER, опционально.</li>
-		<li>CREATE, DROP таблиц базы данных с персонажами.</li>
-		<li>CREATE ROUTINE базы данных с персонажами.</li>
-		<li>GRANT OPTION (SELECT, INSERT, UPDATE, EXECUTE) базы данных с персонажами.</li>
-		<li>GRANT OPTION (SELECT) базы данных с аккаунтами.</li>
+		<li>
+			CREATE USER, <span class="lowercase"><?= App::t('Optional') ?></span>.
+		</li>
+		<li>CREATE, DROP <span class="lowercase"></span>
+			<?= App::t('for a tables with the characters database') ?>.
+		</li>
+		<li>CREATE ROUTINE <span class="lowercase">
+			<?= App::t('for the characters database') ?></span>.
+		</li>
+		<li>GRANT OPTION (SELECT, INSERT, UPDATE, EXECUTE)
+			<span class="lowercase"><?= App::t('for the characters database') ?></span>.
+		</li>
+		<li>
+			GRANT OPTION (SELECT) <?= App::t('for the accounts database') ?>.
+		</li>
 	</ul>
 </div>
 
 <div class="alert alert-warning">
-Важно! Пользователь, под которым происходит установка, не является пользоваетелем,
-под которым будет работать приложение!
+	<?= App::t('Warning! User of the insalling is not user of the application') ?>.
 </div>
 
 <form action="" method="post">

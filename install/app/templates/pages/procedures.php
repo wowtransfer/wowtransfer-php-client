@@ -34,7 +34,7 @@ if (isset($_POST['submit']))
 	<? $view->errorSummary(); ?>
 
 	<div class="alert alert-info">
-		На этом шаге будут созданы хранимые процедуры в базе данных с персонажами.
+		<?= App::t('This step have a creating of the stored procedures in the characters database') ?>.
 	</div>
 
 	<pre class="sql-code" style="height: 400px;"><?= App::$app->loadDbProcedures() ?></pre>

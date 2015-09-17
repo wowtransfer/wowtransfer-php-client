@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="alert alert-info">
-	<p>На этом шаге запишутся некоторые параметры в конфигурационный файл приложения</p>
+	<p><?= App::t('This step have a writing of the params to configuration file') ?></p>
 	<p><code><?= App::$app->getAppConfigRelativeFilePath() ?></code></p>
 </div>
 
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 
 	<? $view->errorSummary() ?>
 
-	<p class="text-center">Название таблицы с заявками:
+	<p class="text-center"><?= App::t('The table for the transfer requests') ?>:
 		<b><?= $view->getFieldValue('db_transfer_table') ?></b>
 	</p>
 
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 		<b><?= $view->getFieldValue('core') ?></b>
 	</p>
 
-	<p class="text-center">Директория с фреймворком yii:
+	<p class="text-center"><?= App::t('Framework path') ?>:
 		<b><?= $view->getFieldValue('yii_dir') ?></b>
 	</p>
 
