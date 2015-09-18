@@ -1,3 +1,22 @@
+@media (max-width: 768px) {
+	nav.navbar-fixed-top {
+		display: block;
+		position: static;
+		margin-bottom: 0;
+	}
+	#page {
+		margin-top: 0;
+	}
+	.breadcrumb {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+.navbar-fixed-top {
+	border-color: #ddd;
+}
+
 #login
 {
 	float: right;
@@ -104,9 +123,8 @@
 	cursor: pointer;
 }
 
-ol.breadcrumb {
-	margin-top: 5px;
-	margin-bottom: 5px;
+.breadcrumb {
+	margin: 2px -15px 5px -15px;
 }
 
 h1 {
