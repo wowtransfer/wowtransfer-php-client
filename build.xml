@@ -36,9 +36,6 @@
 				<exclude name="vendor/*" />
 			</fileset>
 		</copy>
-		<copy overwrite="true" todir="${release.dir}/themes">
-			<fileset dir="themes" />
-		</copy>
 		<copy overwrite="true" file="${source.dir}/favicon.ico" tofile="${release.dir}/favicon.ico" />
 		<copy overwrite="true" file="${source.dir}/LICENSE.txt" tofile="${release.dir}/LICENSE.txt" />
 		<copy overwrite="true" file="${source.dir}/README.md" tofile="${release.dir}/README.md" />
