@@ -1,7 +1,7 @@
 <?php
 return [
-	'version'              => 'v1.2',
-	'date'                 => '2015-09-08',
+	'version'              => 'v1.3',
+	'date'                 => '2015-09-18',
 	'admins'               => ['admin'],
 	'core'                 => 'trinity_335a',
 	'emailAdmin'           => '',
