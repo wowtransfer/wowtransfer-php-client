@@ -35,3 +35,15 @@
     height: 16px;
     background-position: 0 -17px;
 }
+
+.flag-en {
+	width: 20px;
+	height: 16px;
+	background-position: -22px -49px;
+}
+
+.flag-ru {
+	width: 20px;
+	height: 16px;
+	background-position: 0 -49px;
+}

@@ -147,3 +147,7 @@ h1 {
 .lowercase {
 	text-transform: lowercase;
 }
+
+.flag-ru, .flag-en {
+	outline: 1px solid black;
+}

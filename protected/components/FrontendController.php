@@ -40,16 +40,16 @@ class FrontEndController extends BaseController
 				'linkOptions' => ['id' => 'to-backend'],
 			],
 			[
-				'label' => $lang,
+				'label' => '<span class="spr flag-' . $lang . '"></span>',
 				'items' => [
 					[
 						'url' => ['/site/lang', 'lang' => 'ru'],
-						'label' => 'ru',
+						'label' => '<span class="spr flag-ru"></span>',
 						'active' => $lang === 'ru',
 					],
 					[
 						'url' => ['/site/lang', 'lang' => 'en'],
-						'label' => 'en',
+						'label' => '<span class="spr flag-en"></span>',
 						'active' => $lang === 'en',
 					],
 				]

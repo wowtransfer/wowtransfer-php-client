@@ -8,10 +8,14 @@
 	</button>
 	<ul class="dropdown-menu" aria-labelledby="change-lang">
 		<li class="<?= $lang === 'ru' ? 'active' : '' ?>">
-			<a href="<?= $this->createUrl('/site/lang', ['lang' => 'ru']) ?>">RU</a>
+			<a href="<?= $this->createUrl('/site/lang', ['lang' => 'ru']) ?>">
+				<span class="spr flag-ru"></span>
+			</a>
 		</li>
 		<li class="<?= $lang === 'en' ? 'active' : '' ?>">
-			<a href="<?= $this->createUrl('/site/lang', ['lang' => 'en']) ?>">EN</a>
+			<a href="<?= $this->createUrl('/site/lang', ['lang' => 'en']) ?>">
+				<span class="spr flag-en"></span>
+			</a>
 		</li>
 	</ul>
 </div>
