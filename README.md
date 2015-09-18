@@ -59,12 +59,3 @@ download the Phar archive (phing-latest.phar) to `/protected/vendor` directory
 ## Code style ##
 
 * Yes, we are use tabs!
-
-
-## TODO ##
-
-* Defence from infinite login: give 5 attempts on 15 minutes
-* Apply cache
-* Add multilanguages for an installer
-* Concat and minify css, js files
-* Move the dumps to service
