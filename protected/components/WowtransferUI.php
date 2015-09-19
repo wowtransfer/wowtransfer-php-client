@@ -3,14 +3,19 @@
 class WowtransferUI extends Wowtransfer
 {
 	/**
-	 * @var array
+	 * @var array Name => Title
 	 */
-	private static $_cores;
+	protected $coresPair;
 
 	/**
 	 * @var array Id => Name
 	 */
 	protected static $tconfigsPair;
+
+	/**
+	 * @var array Url => Name
+	 */
+	protected $wowServersPair;
 
 	public function __construct() {
 		parent::__construct();
@@ -49,19 +54,14 @@ class WowtransferUI extends Wowtransfer
 	/**
 	 * @return array Associative array kind of 'name' => 'title'
 	 */
-	public function getCores() {
-		$cores = array();
-
-		if (self::$_cores === null) {
-			self::$_cores = parent::getCores();
-		}
-		if (is_array(self::$_cores)) {
-			foreach (self::$_cores as $core) {
-				$cores[$core['name']] = $core['title'];
+	public function getCoresPair() {
+		if ($this->coresPair === null) {
+			$this->coresPair = [];
+			foreach (parent::getCores() as $core) {
+				$this->coresPair[$core['name']] = $core['title'];
 			}
 		}
-
-		return $cores;
+		return $this->coresPair;
 	}
 
 	/**
@@ -69,18 +69,14 @@ class WowtransferUI extends Wowtransfer
 	 *
 	 * incluing empty item [''] = ''
 	 */
-	public function getWowServers() {
-		$serversSource = parent::getWowServers();
-
-		$servers = array('' => '');
-		if (is_array($serversSource)) {
-			for ($i = 0; $i < count($serversSource); ++$i) {
-				$server = $serversSource[$i];
-				$servers[$server['site_url']] = $server['title'];
+	public function getWowServersPair() {
+		if ($this->wowServersPair === null) {
+			$this->wowServersPair = [];
+			foreach (parent::getWowServers() as $server) {
+				$this->wowServersPair[$server['site_url']] = $server['title'];
 			}
+			asort($this->wowServersPair);
 		}
-		asort($servers);
-
-		return $servers;
+		return $this->wowServersPair;
 	}
 }

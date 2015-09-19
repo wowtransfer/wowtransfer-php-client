@@ -58,7 +58,7 @@ class ConfigsController extends BackendController
 
 		$this->render('app', array(
 			'model' => $model,
-			'cores' => $service->getCores(),
+			'cores' => $service->getCoresPair(),
 		));
 	}
 

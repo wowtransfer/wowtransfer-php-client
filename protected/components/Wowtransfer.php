@@ -56,6 +56,16 @@ class Wowtransfer
 	 */
 	protected $transferConfigs;
 
+	/**
+	 * @var array
+	 */
+	protected $cores;
+
+	/**
+	 * @var array
+	 */
+	protected $wowServers;
+
 	public function __construct()
 	{
 		$this->_ch = curl_init();
@@ -275,22 +285,26 @@ class Wowtransfer
 	 * @throws Exception
 	 */
 	public function getCores() {
-		$defaultValue = [];
-		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/cores'));
-		$this->lastHttpResponse = curl_exec($ch);
-		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$cores = json_decode($this->lastHttpResponse, true);
-		if (!$cores) {
-			$this->lastError = "Could't get cores from service";
-			return $defaultValue;
-		}
-		if ($this->lastHttpStatus !== 200) {
-			$this->lastError = isset($cores['error_message']) ? $cores['error_message'] : 'Error ' . $this->lastHttpStatus;
-			return $defaultValue;
-		}
+		if ($this->cores === null) {
+			$defaultValue = [];
+			$ch = $this->_ch;
+			curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/cores'));
+			$this->lastHttpResponse = curl_exec($ch);
+			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		return $cores;
+			$this->cores = [];
+			$cores = json_decode($this->lastHttpResponse, true);
+			if (!$cores) {
+				$this->lastError = "Could't get cores from service";
+			}
+			elseif ($this->lastHttpStatus !== 200) {
+				$this->lastError = isset($cores['error_message']) ? $cores['error_message'] : 'Error ' . $this->lastHttpStatus;
+			}
+			else {
+				$this->cores = $cores;
+			}
+		}
+		return $this->cores;
 	}
 
 	/**
@@ -404,22 +418,25 @@ class Wowtransfer
 	 * @return array
 	 */
 	public function getWowServers() {
-		$defaultValue = [];
-		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/wowservers'));
-		$this->lastHttpResponse = curl_exec($ch);
-		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$result = json_decode($this->lastHttpResponse, true);
-		if (!$this->lastHttpResponse) {
-			$this->lastError = "Couldn't get wowservers from service";
-			return $defaultValue;
-		}
-		if ($this->lastHttpStatus !== 200) {
-			$this->lastError = isset($result['error_message']) ? $result['error_message'] : 'Error ' . $this->lastHttpStatus;
-			return $defaultValue;
-		}
+		if ($this->wowServers === null) {
+			$ch = $this->_ch;
+			curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/wowservers'));
+			$this->lastHttpResponse = curl_exec($ch);
+			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		return $result;
+			$this->wowServers = [];
+			$servers = json_decode($this->lastHttpResponse, true);
+			if (!$this->lastHttpResponse) {
+				$this->lastError = "Couldn't get wowservers from service";
+			}
+			if ($this->lastHttpStatus !== 200) {
+				$this->lastError = isset($servers['error_message']) ? $servers['error_message'] : 'Error ' . $this->lastHttpStatus;
+			}
+			else {
+				$this->wowServers = $servers;
+			}
+		}
+		return $servers;
 	}
 
 	/**
