@@ -212,9 +212,6 @@ class TransfersController extends BackendController
 		}
 
 		$service = new WowtransferUI();
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-		$tconfigs = $service->getTransferConfigs();
 
 		$this->render('char', array(
 			'model'           => $model,
@@ -223,7 +220,7 @@ class TransfersController extends BackendController
 			'sql'             => $result['sql'],
 			'queries'         => $result['queries'],
 			'queriesCount'    => count($result['queries']),
-			'tconfigs'        => $tconfigs,
+			'tconfigs'        => $service->getTransferConfigs(),
 		));
 	}
 

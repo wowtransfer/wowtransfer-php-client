@@ -51,6 +51,11 @@ class Wowtransfer
 	 */
 	protected $lang;
 
+	/**
+	 * @var array
+	 */
+	protected $transferConfigs;
+
 	public function __construct()
 	{
 		$this->_ch = curl_init();
@@ -292,24 +297,26 @@ class Wowtransfer
 	 * @return array
 	 */
 	public function getTransferConfigs() {
-		$defaultValue = [];
-		$ch = $this->_ch;
-		$url = $this->getApiUrl('/tconfigs' . '?access_token=' . $this->getAccessToken());
-		curl_setopt($ch, CURLOPT_URL, $url);
-		$this->lastHttpResponse = curl_exec($ch);
-		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		if ($this->transferConfigs === null) {
+			$ch = $this->_ch;
+			$url = $this->getApiUrl('/tconfigs' . '?access_token=' . $this->getAccessToken());
+			curl_setopt($ch, CURLOPT_URL, $url);
+			$this->lastHttpResponse = curl_exec($ch);
+			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		$tconfigs = json_decode($this->lastHttpResponse, true);
-		if (!$tconfigs) {
-			$this->lastError = "Couldn't get transfer configurations from service";
-			return $defaultValue;
+			$this->transferConfigs = [];
+			$tconfigs = json_decode($this->lastHttpResponse, true);
+			if (!is_array($tconfigs)) {
+				$this->lastError = "Couldn't get transfer configurations from service";
+			}
+			elseif ($this->lastHttpStatus !== 200) {
+				$this->lastError = isset($tconfigs['error_message']) ? $tconfigs['error_message'] : 'Error ' . $this->lastHttpStatus;
+			}
+			else {
+				$this->transferConfigs = $tconfigs;
+			}
 		}
-		if ($this->lastHttpStatus !== 200) {
-			$this->lastError = isset($tconfigs['error_message']) ? $tconfigs['error_message'] : 'Error ' . $this->lastHttpStatus;
-			return $defaultValue;
-		}
-
-		return $tconfigs;
+		return $this->transferConfigs;
 	}
 
 	/**

@@ -53,10 +53,7 @@ class UpdatesController extends BackEndController
 	}
 
 	public function actionLatestRelease() {
-		$service = new Wowtransfer();
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-
+		$service = new WowtransferUI();
 		$app = $service->getApplication('chdphp');
 		$result = [];
 		if ($app) {
@@ -115,9 +112,7 @@ class UpdatesController extends BackEndController
 	 * @throws \Exception
 	 */
 	private function downloadLatestRelease() {
-		$service = new Wowtransfer();
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+		$service = new WowtransferUI();
 
 		$app = $service->getApplication('chdphp');
 		if (!$app || !$app->getDownloadUrl()) {

@@ -2,26 +2,34 @@
 
 class WowtransferUI extends Wowtransfer
 {
-	private static $_cores = null;
-	private static $_tconfigs = null;
+	/**
+	 * @var array
+	 */
+	private static $_cores;
+
+	/**
+	 * @var array Id => Name
+	 */
+	protected static $tconfigsPair;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->setAccessToken(Yii::app()->params['accessToken']);
+		$this->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+	}
 
 	/**
 	 * @return array Associative array kind of 'id' => 'name'
 	 */
-	public function getTransferConfigs() {
-		$transferConfigs = array();
-
-		if (self::$_tconfigs === null) {
-			self::$_tconfigs = parent::getTransferConfigs();
-		}
-
-		if (is_array(self::$_tconfigs)) {
-			foreach (self::$_tconfigs as $config) {
-				$transferConfigs[$config['id']] = $config['name'];
+	public function getTransferConfigsPair() {
+		if ($this->tconfigsPair === null) {
+			$this->tconfigsPair = [];
+			foreach (parent::getTransferConfigs() as $config) {
+				$this->tconfigsPair[$config['id']] = $config['name'];
 			}
 		}
-
-		return $transferConfigs;
+		return $this->tconfigsPair;
 	}
 
 	/**
@@ -30,7 +38,7 @@ class WowtransferUI extends Wowtransfer
 	 */
 	public static function getTransferConfigType($type) {
 		if ($type === self::TCONFIG_TYPE_PRIVATE) {
-			return 'Private';
+			return 'private';
 		}
 		if ($type === self::TCONFIG_TYPE_PUBLIC) {
 			return 'public';

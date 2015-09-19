@@ -65,10 +65,6 @@ class TransfersController extends FrontendController
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		$service = new Wowtransfer();
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-
 		$request = Yii::app()->request;
 		if ($request->getPost('ChdTransfer')) {
 			// TODO: exclode 'realmlist', 'realm' and 'username_old'
@@ -101,9 +97,7 @@ class TransfersController extends FrontendController
 	public function actionGetCommonFields() {
 		$result = [];
 
-		$service = new \Wowtransfer();
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+		$service = new \WowtransferUI();
 
 		try {
 			$fileLua = CUploadedFile::getInstanceByName('fileLua');

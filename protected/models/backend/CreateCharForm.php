@@ -148,9 +148,7 @@ class CreateCharForm
 
 		$dumpLua = $this->_transfer->luaDumpFromDb();
 		$toptions = $this->_transfer->getTransferOptionsFromDb();
-		$service = new Wowtransfer();
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+		$service = new WowtransferUI();
 
 		try {
 			// TODO: service will be return a queries
@@ -190,9 +188,7 @@ class CreateCharForm
 	public function getSql() {
 		$dumpLua = $this->_transfer->luaDumpFromDb();
 		$toptions = $this->_transfer->getTransferOptionsFromDb();
-		$service = new Wowtransfer();
-		$service->setAccessToken(Yii::app()->params['accessToken']);
-		$service->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+		$service = new WowtransferUI();
 
 		$sql = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $this->transferConfig, $toptions);
 

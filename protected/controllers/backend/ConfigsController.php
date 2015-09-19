@@ -54,14 +54,11 @@ class ConfigsController extends BackendController
 			$model->load();
 		}
 
-		$serviceUI = new WowtransferUI();
-		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
-		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-		$cores = $serviceUI->getCores();
+		$service = new WowtransferUI();
 
 		$this->render('app', array(
 			'model' => $model,
-			'cores' => $cores,
+			'cores' => $service->getCores(),
 		));
 	}
 
