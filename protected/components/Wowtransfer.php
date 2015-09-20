@@ -66,6 +66,11 @@ class Wowtransfer
 	 */
 	protected $wowServers;
 
+	/**
+	 * @var WowtransferApplication[]
+	 */
+	protected $applications;
+
 	public function __construct()
 	{
 		$this->_ch = curl_init();
@@ -468,32 +473,60 @@ class Wowtransfer
 	 * @return WowtransferApplication[]
 	 */
 	public function getApplications() {
-		$applications = [];
-
-
-		return $applications;
+		if ($this->applications === null) {
+			$this->applications = [];
+			$ch = $this->_ch;
+			curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/apps'));
+			$this->lastHttpResponse = curl_exec($ch);
+			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			$result = json_decode($this->lastHttpResponse, true);
+			if ($result && $this->lastHttpStatus == 200) {
+				foreach ($result as $appItem) {
+					$app = new WowtransferApplication($appItem['id_name']);
+					$app
+						->setId($appItem['id'])
+						->setName($appItem['name'])
+						->setDescription($appItem['descr'])
+						->setDownloadUrl($appItem['download_url'])
+						->setUpdatedAt($appItem['updated_at'])
+						->setVersion($appItem['version']);
+					$this->applications[$appItem['id_name']] = $app;
+				}
+			}
+		}
+		return $this->applications;
 	}
 
 	/**
-	 * @param string $name
-	 * @return WowtransferApplication
+	 * @param string $idName
+	 * @return WowtransferApplication|false
 	 */
-	public function getApplication($name) {
-		$app = new WowtransferApplication($name);
-
+	public function getApplication($idName) {
+		if (isset($this->applications[$idName])) {
+			return $this->applications[$idName];
+		}
 		$ch = $this->_ch;
-		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/apps/' . $name));
+		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/apps/' . $idName));
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$result = json_decode($this->lastHttpResponse, true);
 
-		if ($result) {
-			$app->setName($result['name']);
-			$app->setDescription($result['descr']);
-			$app->setDownloadUrl($result['download_url']);
-			$app->setUpdatedAt($result['updated_at']);
-			$app->setVersion($result['version']);
+		if (!$result || $this->lastHttpStatus !== 200) {
+			return false;
 		}
+		$app = new WowtransferApplication($idName);
+		$app
+			->setId($result['id'])
+			->setName($result['name'])
+			->setDescription($result['descr'])
+			->setDownloadUrl($result['download_url'])
+			->setUpdatedAt($result['updated_at'])
+			->setVersion($result['version']);
+
+		if (!is_array($this->applications)) {
+			$this->applications = [];
+		}
+		$this->applications[$idName] = $app;
 
 		return $app;
 	}
@@ -504,6 +537,16 @@ class Wowtransfer
  */
 class WowtransferApplication
 {
+	/**
+	 * @var int
+	 */
+	private $id;
+
+	/**
+	 * @var string
+	 */
+	private $idName;
+
 	/**
 	 * @var string
 	 */
@@ -536,10 +579,10 @@ class WowtransferApplication
 	private $docUrl;
 
 	/**
-	 * @param string $name
+	 * @param string $idName
 	 */
-	public function __construct($name) {
-		$this->name = $name;
+	public function __construct($idName) {
+		$this->idName = $idName;
 	}
 
 	/**
@@ -635,6 +678,38 @@ class WowtransferApplication
 	 */
 	public function setDocUrl($docUrl) {
 		$this->docUrl = $docUrl;
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getIdName() {
+		return $this->idName;
+	}
+
+	/**
+	 * @param int $id
+	 * @return \WowtransferApplication
+	 */
+	public function setId($id) {
+		$this->id = $id;
+		return $this;
+	}
+
+	/**
+	 * @param string $idName
+	 * @return \WowtransferApplication
+	 */
+	public function setIdName($idName) {
+		$this->idName = $idName;
 		return $this;
 	}
 }
