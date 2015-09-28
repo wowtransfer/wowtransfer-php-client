@@ -138,7 +138,7 @@ return [
 	'Request creating date' => 'Дата создания заявки',
 	'Result of the queries runing' => 'Результат выполнения запросов',
 	'Remote server' => 'Удаленный сервер',
-	'Remote servers' => 'Удаленные сервера',
+	'Remote servers' => 'Внешние сервера',
 	'Query' => 'Запрос',
 	'Save' => 'Сохранить',
 	'Save comment' => 'Сохранить комментарий',

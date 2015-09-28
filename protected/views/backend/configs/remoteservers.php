@@ -14,8 +14,8 @@ $this->breadcrumbs = [
 <p>Удаленные сервера World of Warcraft с которых можно переносить персонажей.</p>
 
 <p>
-	По-умолчанию все сервера, зарегистрированные на сервисе, находятся в черном списке,
-	то есть переносить с них персонажей нельзя.
+	По-умолчанию все сервера, зарегистрированные на сервисе, находятся в общем списке,
+	то есть с них можно переносить персонажей.
 </p>
 
 <p>Данные синхронизируются с сервисом раз в сутки.
@@ -29,7 +29,43 @@ $this->breadcrumbs = [
 
 <div class="row">
 	<div class="col-md-6">
-		<h3>Черный список</h3>
+		<h3>Общее</h3>
+		<? if (empty($whiteServers)): ?>
+			<div class="alert alert-info">Нет данных</div>
+		<? else: ?>
+			<table class="table table-bordered">
+			<tbody>
+			<? foreach ($whiteServers as $server): ?>
+				<tr data-type="server">
+					<th colspan="4">
+						<?= $server['name'] ?>
+					</th>
+					<td>
+						<button class="btn btn-default">
+							<span class="glyphicon glyphicon-menu-right"></span>
+						</button>
+					</td>
+				</tr>
+				<? foreach ($server['realms'] as $realm): ?>
+				<tr data-type="realm" data-id="<?= $realm['id'] ?>">
+					<td><?= $realm['name'] ?></td>
+					<td><?= $realm['rate'] ?></td>
+					<td><?= $realm['online_count'] ?></td>
+					<td><?= $realm['wow_version'] ?></td>
+					<td>
+						<button class="btn btn-default">
+							<span class="glyphicon glyphicon-menu-right"></span>
+						</button>
+					</td>
+				</tr>
+				<? endforeach ?>
+			<? endforeach; ?>
+			</tbody>
+		</table>
+		<? endif ?>
+	</div>
+	<div class="col-md-6">
+		<h3>Исключить</h3>
 		<? if (empty($blackServers)): ?>
 			<div class="alert alert-info">Нет данных</div>
 		<? else: ?>
@@ -40,17 +76,4 @@ $this->breadcrumbs = [
 			</ul>
 		<? endif ?>
 	</div>
-	<div class="col-md-6">
-		<h3>Белый список</h3>
-		<? if (empty($whiteServers)): ?>
-			<div class="alert alert-info">Нет данных</div>
-		<? else: ?>
-		<ul>
-			<? foreach ($blackServers as $server): ?>
-				<li></li>
-			<? endforeach; ?>
-		</ul>
-		<? endif ?>
-	</div>
 </div>
-
