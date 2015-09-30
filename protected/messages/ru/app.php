@@ -79,6 +79,7 @@ return [
 	'Empty transfer configuration' => 'Пустая конфигурация переноса',
 	'Error' => 'Ошибка',
 	'Errors' => 'Ошибки',
+	'Exclude' => 'Исключить',
 	'Help' => 'Помощь',
 	'Email' => 'Почта',
 	'Email of administrator' => 'Почта администратора',

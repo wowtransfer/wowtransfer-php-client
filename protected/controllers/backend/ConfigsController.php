@@ -80,11 +80,27 @@ class ConfigsController extends BackendController
 		$wowtransfer = new \Wowtransfer();
 		$wowtransfer->setBaseUrl(Yii::app()->params['apiBaseUrl']);
 		$whiteServers = $wowtransfer->getWowServers();
-		$blackServers = array();
+		$remoteServersForm = new RemoteServersForm();
+		$remoteServersForm->load();
+		$blackRealms = $remoteServersForm->getRealmsIds();
+
+		$request = Yii::app()->request;
+		if ($request->isPostRequest) {
+			if ($request->getPost('realms')) {
+				$blackRealms = $ids = array_keys($request->getPost('realms'));
+				$remoteServersForm->setRealmsIds($ids);
+			}
+			if ($remoteServersForm->save()) {
+				Yii::app()->user->setFlash('success', Yii::t('app', 'Success changed'));
+			}
+			else {
+				Yii::app()->user->setFlash('error', Yii::t('app', 'Saving failed'));
+			}
+		}
 
 		$this->render('remoteservers', array(
 			'whiteServers' => $whiteServers,
-			'blackServers' => $blackServers,
+			'blackRealms' => $blackRealms,
 		));
 	}
 

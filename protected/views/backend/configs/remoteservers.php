@@ -1,7 +1,7 @@
 <?
 /* @var $this ConfigsController */
 /* @var $whiteServers array */
-/* @var $blackServers array */
+/* @var $blackRealms int[] */
 
 $this->breadcrumbs = [
 	Yii::t('app', 'Settings') => ['/configs'],
@@ -18,6 +18,7 @@ $this->breadcrumbs = [
 	то есть с них можно переносить персонажей.
 </p>
 
+<!--
 <p>Данные синхронизируются с сервисом раз в сутки.
 	Для ручной синхронизации нужно нажать кнопку <i>Синхронизация</i>.
 </p>
@@ -25,55 +26,61 @@ $this->breadcrumbs = [
 <div>
 	<a class="btn btn-success pull-right">Синхронизация</a>
 </div>
+-->
+
 <div class="clearfix"></div>
 
-<div class="row">
-	<div class="col-md-6">
-		<h3>Общее</h3>
-		<? if (empty($whiteServers)): ?>
-			<div class="alert alert-info">Нет данных</div>
-		<? else: ?>
-			<table class="table table-bordered">
-			<tbody>
-			<? foreach ($whiteServers as $server): ?>
-				<tr data-type="server">
-					<th colspan="4">
-						<?= $server['name'] ?>
-					</th>
-					<td>
-						<button class="btn btn-default">
-							<span class="glyphicon glyphicon-menu-right"></span>
-						</button>
-					</td>
-				</tr>
-				<? foreach ($server['realms'] as $realm): ?>
-				<tr data-type="realm" data-id="<?= $realm['id'] ?>">
-					<td><?= $realm['name'] ?></td>
-					<td><?= $realm['rate'] ?></td>
-					<td><?= $realm['online_count'] ?></td>
-					<td><?= $realm['wow_version'] ?></td>
-					<td>
-						<button class="btn btn-default">
-							<span class="glyphicon glyphicon-menu-right"></span>
-						</button>
-					</td>
-				</tr>
-				<? endforeach ?>
-			<? endforeach; ?>
-			</tbody>
-		</table>
-		<? endif ?>
+<? if (empty($whiteServers)): ?>
+	<div class="alert alert-info">Нет данных</div>
+<? else: ?>
+<?= CHtml::beginForm() ?>
+
+	<? if (Yii::app()->user->hasFlash('success')): ?>
+	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success') ?></div>
+	<? endif ?>
+	<? if (Yii::app()->user->hasFlash('error')): ?>
+	<div class="alert alert-danger"><?= Yii::app()->user->getFlash('error') ?></div>
+	<? endif ?>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th colspan="4"></th>
+				<th><?= Yii::t('app', 'Exclude') ?></th>
+			</tr>
+		</thead>
+	<tbody>
+	<? foreach ($whiteServers as $server): ?>
+		<tr data-type="server">
+			<th colspan="4">
+				<?= $server['name'] ?>
+			</th>
+			<td></td>
+		</tr>
+		<? foreach ($server['realms'] as $realm): ?>
+		<tr data-type="realm" data-id="<?= $realm['id'] ?>">
+			<td><?= $realm['name'] ?></td>
+			<td><?= $realm['rate'] ?></td>
+			<td><?= $realm['online_count'] ?></td>
+			<td><?= $realm['wow_version'] ?></td>
+			<td style="width: 40px;">
+				<input type="checkbox" name="realms[<?= $realm['id'] ?>]"
+					   <?= in_array($realm['id'], $blackRealms) ? ' checked ' : '' ?> >
+			</td>
+		</tr>
+		<? endforeach ?>
+	<? endforeach; ?>
+	</tbody>
+	</table>
+
+	<div>
+		<button class="btn btn-primary">
+			<?= Yii::t('app', 'Save') ?>
+		</button>
+		<a class="btn btn-default" href="<?= $this->createUrl('/configs') ?>">
+			<?= Yii::t('app', 'Cancel') ?>
+		</a>
 	</div>
-	<div class="col-md-6">
-		<h3>Исключить</h3>
-		<? if (empty($blackServers)): ?>
-			<div class="alert alert-info">Нет данных</div>
-		<? else: ?>
-			<ul>
-			<? foreach ($blackServers as $server): ?>
-				<li><?= $server['title'] ?></li>
-			<? endforeach; ?>
-			</ul>
-		<? endif ?>
-	</div>
-</div>
+
+<? CHtml::endForm() ?>
+<? endif ?>
