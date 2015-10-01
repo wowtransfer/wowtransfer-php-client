@@ -73,7 +73,7 @@ class WowtransferUI extends Wowtransfer
 		if ($this->wowServersPair === null) {
 			$this->wowServersPair = [];
 			foreach (parent::getWowServers() as $server) {
-				$this->wowServersPair[$server['site_url']] = $server['title'];
+				$this->wowServersPair[$server->getSite()] = $server->getName();
 			}
 			asort($this->wowServersPair);
 		}

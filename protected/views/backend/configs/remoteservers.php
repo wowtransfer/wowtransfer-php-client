@@ -1,6 +1,6 @@
 <?
 /* @var $this ConfigsController */
-/* @var $whiteServers array */
+/* @var $wowServers Wowserver[] */
 /* @var $blackRealms int[] */
 
 $this->breadcrumbs = [
@@ -30,7 +30,7 @@ $this->breadcrumbs = [
 
 <div class="clearfix"></div>
 
-<? if (empty($whiteServers)): ?>
+<? if (empty($wowServers)): ?>
 	<div class="alert alert-info">Нет данных</div>
 <? else: ?>
 <?= CHtml::beginForm() ?>
@@ -50,22 +50,22 @@ $this->breadcrumbs = [
 			</tr>
 		</thead>
 	<tbody>
-	<? foreach ($whiteServers as $server): ?>
+	<? foreach ($wowServers as $server): ?>
 		<tr data-type="server">
 			<th colspan="4">
-				<?= $server['name'] ?>
+				<?= $server->getName() ?>
 			</th>
 			<td></td>
 		</tr>
-		<? foreach ($server['realms'] as $realm): ?>
-		<tr data-type="realm" data-id="<?= $realm['id'] ?>">
-			<td><?= $realm['name'] ?></td>
-			<td><?= $realm['rate'] ?></td>
-			<td><?= $realm['online_count'] ?></td>
-			<td><?= $realm['wow_version'] ?></td>
+		<? foreach ((array)$server->getRealms() as $realm): ?>
+		<tr data-type="realm" data-id="<?= $realm->getId() ?>">
+			<td><?= $realm->getName() ?></td>
+			<td><?= $realm->getRate() ?></td>
+			<td><?= $realm->getOnlineCount() ?></td>
+			<td><?= $realm->getWowVersion() ?></td>
 			<td style="width: 40px;">
-				<input type="checkbox" name="realms[<?= $realm['id'] ?>]"
-					   <?= in_array($realm['id'], $blackRealms) ? ' checked ' : '' ?> >
+				<input type="checkbox" name="realms[<?= $realm->getId() ?>]"
+					   <?= in_array($realm->getId(), $blackRealms) ? ' checked ' : '' ?> >
 			</td>
 		</tr>
 		<? endforeach ?>
