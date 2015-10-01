@@ -420,7 +420,7 @@ class Wowtransfer
 	}
 
 	/**
-	 * @return array
+	 * @return Wowserver[]
 	 */
 	public function getWowServers() {
 		if ($this->wowServers === null) {
@@ -429,7 +429,7 @@ class Wowtransfer
 			$this->lastHttpResponse = curl_exec($ch);
 			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-			$this->wowServers = [];
+			$wowServers = [];
 			$servers = json_decode($this->lastHttpResponse, true);
 			if (!$this->lastHttpResponse) {
 				$this->lastError = "Couldn't get wowservers from service";
@@ -438,10 +438,27 @@ class Wowtransfer
 				$this->lastError = isset($servers['error_message']) ? $servers['error_message'] : 'Error ' . $this->lastHttpStatus;
 			}
 			else {
-				$this->wowServers = $servers;
+				foreach ($servers as $server) {
+					$wowserver = new Wowserver();
+					$wowserver
+						->setId($server['id'])
+						->setName($server['name'])
+						->setDescription($server['description'])
+						->setSite($server['site_url']);
+					foreach ($server['realms'] as $serverRealm) {
+						$realm = new Realm();
+						$realm
+							->setId($serverRealm['id'])
+							->setName($serverRealm['name'])
+							->setRate($serverRealm['rate'])
+							->setOnlineCount($serverRealm['online_count']);
+						$wowserver->addRealm($realm);
+					}
+					$wowServers[] = $wowserver;
+				}
 			}
 		}
-		return $servers;
+		return $wowServers;
 	}
 
 	/**
@@ -710,6 +727,220 @@ class WowtransferApplication
 	 */
 	public function setIdName($idName) {
 		$this->idName = $idName;
+		return $this;
+	}
+}
+
+class Wowserver
+{
+	/**
+	 * @var int
+	 */
+	protected $id;
+
+	/**
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * @var string
+	 */
+	protected $description;
+
+	/**
+	 * @var string
+	 */
+	protected $site;
+
+	/**
+	 * @var Realm[]
+	 */
+	protected $realms;
+
+	/**
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSite() {
+		return $this->site;
+	}
+
+	/**
+	 * @param int $id
+	 * @return \Wowserver
+	 */
+	public function setId($id) {
+		$this->id = $id;
+		return $this;
+	}
+
+	/**
+	 * @param string $name
+	 * @return \Wowserver
+	 */
+	public function setName($name) {
+		$this->name = $name;
+		return $this;
+	}
+
+	/**
+	 * @param string $description
+	 * @return \Wowserver
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+		return $this;
+	}
+
+	/**
+	 * @param string $site
+	 * @return \Wowserver
+	 */
+	public function setSite($site) {
+		$this->site = $site;
+		return $this;
+	}
+
+	/**
+	 * @return Realm[]
+	 */
+	public function getRealms() {
+		return $this->realms;
+	}
+
+	/**
+	 * @param Realm $realm
+	 */
+	public function addRealm($realm) {
+		$this->realms[] = $realm;
+	}
+}
+
+class Realm
+{
+	/**
+	 * @var int
+	 */
+	protected $id;
+
+	/**
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * @var int
+	 */
+	protected $onlineCount;
+
+	/**
+	 * @var int
+	 */
+	protected $rate;
+
+	/**
+	 * @var string
+	 */
+	protected $wowVersion;
+
+	/**
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getOnlineCount() {
+		return $this->onlineCount;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getRate() {
+		return $this->rate;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getWowVersion() {
+		return $this->wowVersion;
+	}
+
+	/**
+	 * @param int $id
+	 * @return \Realm
+	 */
+	public function setId($id) {
+		$this->id = $id;
+		return $this;
+	}
+
+	/**
+	 * @param string $name
+	 * @return \Realm
+	 */
+	public function setName($name) {
+		$this->name = $name;
+		return $this;
+	}
+
+	/**
+	 * @param int $onlineCount
+	 * @return \Realm
+	 */
+	public function setOnlineCount($onlineCount) {
+		$this->onlineCount = $onlineCount;
+		return $this;
+	}
+
+	/**
+	 * @param string $rate
+	 * @return \Realm
+	 */
+	public function setRate($rate) {
+		$this->rate = $rate;
+		return $this;
+	}
+
+	/**
+	 * @param string $wowVersion
+	 * @return \Realm
+	 */
+	public function setWowVersion($wowVersion) {
+		$this->wowVersion = $wowVersion;
 		return $this;
 	}
 }
