@@ -27,7 +27,7 @@ class ChdTransfer extends CActiveRecord
 	// virtual attributes
 	// TODO: rename `$options` to optionsStr?
 	// TODO: rename `$transferOptions` to optionsArr?
-	public $transferOptions = array();
+	public $transferOptions = [];
 	public $fileLua;
 	public $pass2;
 
@@ -53,37 +53,35 @@ class ChdTransfer extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-			array('account_id, char_guid, file_lua_crypt', 'numerical', 'integerOnly'=>true),
-			//array('account_id, char_guid', 'length', 'max'=>10),
-			array('account_id', 'compare', 'allowEmpty'=>false, 'compareValue'=>0, 'operator'=>'>', 'strict'=>true),
-			array('server', 'length', 'max'=>100),
-			array('status', 'in', 'range' => array_keys(self::getStatuses())),
+		return [
+			['account_id, char_guid, file_lua_crypt', 'numerical', 'integerOnly'=>true],
+			['account_id', 'compare', 'allowEmpty'=>false, 'compareValue'=>0, 'operator'=>'>', 'strict'=>true],
+			['server', 'length', 'max'=>100],
+			['status', 'in', 'range' => array_keys(self::getStatuses())],
 
-			array('server', 'match', 'pattern' => '/^[a-zA-Z0-9\-\.]+$/S'),
 			['realmlist', 'match', 'pattern' => '/^[a-zA-Z0-9\-\.]+$/S'],
 			['realm', 'match', 'pattern' => '/^[a-zA-Z0-9\-\. ]+$/S'],
-			array('account', 'match', 'pattern' => '/^[a-z0-9_\-]+$/S'),
-			array('comment', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
+			['account', 'match', 'pattern' => '/^[a-z0-9_\-]+$/S'],
+			['comment', 'filter', 'filter' => [$obj = new CHtmlPurifier(), 'purify']],
 
-			array('account', 'length', 'max'=>32),
-			array('file_lua', 'length', 'allowEmpty'=>false),
-			array('realmlist, realm, pass', 'length', 'max'=>40),
-			array('username_old, username_new', 'length', 'max'=>12),
-			array('options, comment', 'length', 'max'=>255),
-			array('create_char_date, pass2', 'safe'),
+			['account', 'length', 'max'=>32],
+			['file_lua', 'length', 'allowEmpty'=>false],
+			['realmlist, realm, pass', 'length', 'max'=>40],
+			['username_old, username_new', 'length', 'max'=>12],
+			['options, comment', 'length', 'max'=>255],
+			['create_char_date, pass2', 'safe'],
 
-			array('server, realmlist, realm, account, pass, username_old, transferOptions', 'required'),
-			array('transferOptions', 'type', 'type' => 'array', 'allowEmpty' => false),
+			['server, realmlist, realm, account, pass, username_old, transferOptions', 'required'],
+			['transferOptions', 'type', 'type' => 'array', 'allowEmpty' => false],
 
-			array('pass2', 'required', 'on' => 'create, update'),
-			array('fileLua', 'file', 'types' => 'lua', 'allowEmpty' => true, 'maxFiles' => 1, 'maxSize' => 1024 * 600, 'on' => 'create'),
-			array('pass', 'compare', 'compareAttribute' => 'pass2', 'operator' => '=', 'on'=>'create, update'),
+			['pass2', 'required', 'on' => 'create, update'],
+			['fileLua', 'file', 'types' => 'lua', 'allowEmpty' => true, 'maxFiles' => 1, 'maxSize' => 1024 * 600, 'on' => 'create'],
+			['pass', 'compare', 'compareAttribute' => 'pass2', 'operator' => '=', 'on'=>'create, update'],
 
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, account_id, server, realmlist, realm, username_old, username_new, char_guid, create_char_date, create_transfer_date, status, account, pass, file_lua_crypt, file_lua, options, comment', 'safe', 'on'=>'search'),
-		);
+			['id, account_id, server, realmlist, realm, username_old, username_new, char_guid, create_char_date, create_transfer_date, status, account, pass, file_lua_crypt, file_lua, options, comment', 'safe', 'on'=>'search'],
+		];
 	}
 
 	/**
@@ -93,8 +91,8 @@ class ChdTransfer extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-		);
+		return [
+		];
 	}
 
 	/**
@@ -102,7 +100,7 @@ class ChdTransfer extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
-		return array(
+		return [
 			'id' => 'ID',
 			'account_id' => Yii::t('app', 'Account ID'),
 			'server' => Yii::t('app', 'Site'),
@@ -124,7 +122,7 @@ class ChdTransfer extends CActiveRecord
 			// virtual
 			'transferOptions' => Yii::t('app', 'Transfer options'),
 			'fileLua' => Yii::t('app', 'Lua dump'),
-		);
+		];
 	}
 
 	/**
@@ -163,9 +161,9 @@ class ChdTransfer extends CActiveRecord
 		$criteria->compare('options',$this->options,true);
 		$criteria->compare('comment',$this->comment,true);
 
-		return new CActiveDataProvider($this, array(
+		return new CActiveDataProvider($this, [
 			'criteria'=>$criteria,
-		));
+		]);
 	}
 
 	/**
@@ -218,6 +216,13 @@ class ChdTransfer extends CActiveRecord
 				$this->addError('fileLua', Yii::t('yii', '{attribute} cannot be blank.', [
 					'{attribute}' => $this->getAttributeLabel('fileLua')
 				]));
+			}
+		}
+		if (Yii::app()->params['onlyCheckedServers']) {
+			$service = new WowtransferUI();
+			if (!in_array($this->server, $service->getWowServersSites())) {
+				$this->addError('server', Yii::t('app', 'Select the site from list'));
+				return false;
 			}
 		}
 
@@ -280,7 +285,7 @@ class ChdTransfer extends CActiveRecord
 	 */
 	public function getTransferOptionsToUser()
 	{
-		$trasnferOptions = array();
+		$trasnferOptions = [];
 		$options = \ToptionsConfigForm::getTransferOptions();
 
 		foreach ($options as $name => $option) {
@@ -293,7 +298,7 @@ class ChdTransfer extends CActiveRecord
 	public function getTransferOptionsFromDb()
 	{
 		if (empty($this->options)) {
-			return array();
+			return [];
 		}
 
 		return explode(';', $this->options);

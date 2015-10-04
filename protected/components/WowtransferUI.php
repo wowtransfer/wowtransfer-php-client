@@ -74,7 +74,7 @@ class WowtransferUI extends Wowtransfer
 			$this->wowServersPair = [];
 			//$excludeServers = require Yii::getPathOfAlias('application') . '/' . '';
 			foreach (parent::getWowServers() as $server) {
-				$this->wowServersPair[$server->getSite()] = $server->getName();
+				$this->wowServersPair[$server->getSite()] = $server->getSite();
 			}
 			asort($this->wowServersPair);
 		}

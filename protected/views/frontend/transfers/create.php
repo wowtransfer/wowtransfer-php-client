@@ -2,6 +2,7 @@
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 /* @var array $wowserversSites */
+/* @var array $wowserversPair */
 
 $this->breadcrumbs = [
 	Yii::t('app', 'Transfer requests') => ['index'],
@@ -18,4 +19,5 @@ $this->menu = [
 <? $this->renderPartial('_form', array(
 	'model' => $model,
 	'wowserversSites' => $wowserversSites,
+	'wowserversPair' => $wowserversPair,
 )); ?>

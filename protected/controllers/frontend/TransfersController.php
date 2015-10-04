@@ -61,7 +61,7 @@ class TransfersController extends FrontendController
 	{
 		$model = new ChdTransfer;
 		$model->setScenario('create');
-		$wowServers = new WowtransferUI();
+		$service = new WowtransferUI();
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
@@ -71,12 +71,6 @@ class TransfersController extends FrontendController
 			// TODO: exclode 'realmlist', 'realm' and 'username_old'
 			$model->attributes = $request->getPost('ChdTransfer');
 			$model->fileLua = CUploadedFile::getInstance($model, 'fileLua');
-
-			/* TODO: move to model validation
-			 * if (!in_array($model->server, $wowServers->getWowServersPair())) {
-				$model->addError('server', Yii::t('app', 'Wrong server'));
-			}*/
-
 			if ($model->save()) {
 				$this->redirect(['view', 'id' => $model->id]);
 			}
@@ -93,7 +87,8 @@ class TransfersController extends FrontendController
 
 		$this->render('create', array(
 			'model' => $model,
-			'wowserversSites' => $wowServers->getWowServersSites(),
+			'wowserversSites' => $service->getWowServersSites(),
+			'wowserversPair' => $service->getWowServersPair(),
 		));
 	}
 
@@ -156,6 +151,7 @@ class TransfersController extends FrontendController
 		$this->render('update', array(
 			'model' => $model,
 			'wowserversSites' => $service->getWowServersSites(),
+			'wowserversPair' => $service->getWowServersPair(),
 		));
 	}
 

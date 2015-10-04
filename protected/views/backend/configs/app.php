@@ -51,6 +51,9 @@ $this->breadcrumbs = [
 		Yii::t('app', 'Disable on prdaction server') .
 		'</div>'
 	]) ?>
+	<?= $form->checkboxControlGroup($model, 'onlyCheckedServers', [
+		'help' => Yii::t('app', 'Use only checked servers on creating of the request'),
+	]) ?>
 	<?= $form->dropDownListControlGroup($model, 'yiiTraceLevel', [0, 1, 2, 3, 4, 5], [
 		'help' => '<div class="alert alert-info">' .
 		Yii::t('app', '0 - disable. Works only on debug mode.') .

@@ -21,4 +21,5 @@ $this->menu = [
 <? $this->renderPartial('_form', array(
 	'model' => $model,
 	'wowserversSites' => $wowserversSites,
+	'wowserversPair' => $wowserversPair,
 )); ?>

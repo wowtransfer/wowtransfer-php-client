@@ -66,6 +66,11 @@ class AppConfigForm extends PhpFileForm
 	 */
 	public $yiiTraceLevel;
 
+	/**
+	 * @var boolean
+	 */
+	public $onlyCheckedServers;
+
 	public function __construct($scenario = '') {
 		parent::__construct($scenario);
 		$this->loadDefaults();
@@ -81,7 +86,7 @@ class AppConfigForm extends PhpFileForm
 			['transferTable', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false],
 			['adminsStr', 'required'], // adminsStr and modersStr have a pattern '\w, \w, \w, \w'
 			['admins, moders, modersStr', 'safe'],
-			['yiiDebug', 'boolean'],
+			['yiiDebug, onlyCheckedServers', 'boolean'],
 			['yiiTraceLevel', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 5],
 		];
 	}
@@ -98,6 +103,7 @@ class AppConfigForm extends PhpFileForm
 			'modersStr'            => Yii::t('app', 'Moderators'),
 			'transferTable'        => Yii::t('app', 'Requests table'),
 			'yiiDebug'             => Yii::t('app', 'Debug mode'),
+			'onlyCheckedServers'   => Yii::t('app', 'Only checked servers'),
 			'yiiTraceLevel'        => 'YII_TRACE_LEVEL',
 		];
 	}
@@ -119,6 +125,7 @@ class AppConfigForm extends PhpFileForm
 
 	protected function beforeValidate() {
 		settype($this->yiiDebug, 'boolean');
+		settype($this->onlyCheckedServers, 'boolean');
 		settype($this->yiiTraceLevel, 'int');
 		settype($this->maxAccountCharsCount, 'int');
 		settype($this->maxTransfersCount, 'int');
@@ -141,7 +148,7 @@ class AppConfigForm extends PhpFileForm
 		$attributes = [
 			'siteUrl', 'emailAdmin', 'core', 'maxTransfersCount',
 			'maxAccountCharsCount', 'admins', 'moders', 'transferTable',
-			'yiiDebug', 'yiiTraceLevel',
+			'yiiDebug', 'yiiTraceLevel', 'onlyCheckedServers',
 		];
 		$this->setFilePath($filePath);
 		$this->setWorkAttributes($attributes);

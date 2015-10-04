@@ -27,15 +27,25 @@
 	<fieldset>
 		<legend><?= Yii::t('app', 'Remote server') ?></legend>
 
-		<?= $form->textFieldControlGroup($model, 'server', [
-			'class' => 'col-sm-4', 'list' => 'servers-list',
-		]); ?>
+		<? if (Yii::app()->params['onlyCheckedServers']): ?>
 
-		<datalist id="servers-list">
-			<? foreach ($wowserversSites as $server): ?>
-				<option value="<?= $server ?>">
-			<? endforeach; ?>
-		</datalist>
+			<?= $form->dropDownListControlGroup($model, 'server', $wowserversPair, [
+				'class' => 'col-sm-4', 'list' => 'servers-list',
+			]); ?>
+
+		<? else: ?>
+
+			<?= $form->textFieldControlGroup($model, 'server', [
+				'class' => 'col-sm-4', 'list' => 'servers-list',
+			]); ?>
+
+			<datalist id="servers-list">
+				<? foreach ($wowserversSites as $server): ?>
+					<option value="<?= $server ?>">
+				<? endforeach; ?>
+			</datalist>
+
+		<? endif ?>
 
 		<?= $form->textFieldControlGroup($model, 'realmlist', array(
 			'class' => 'col-sm-4', 'readonly' => 1,
