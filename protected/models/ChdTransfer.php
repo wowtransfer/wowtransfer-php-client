@@ -105,7 +105,7 @@ class ChdTransfer extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'account_id' => Yii::t('app', 'Account ID'),
-			'server' => Yii::t('app', 'Name'),
+			'server' => Yii::t('app', 'Site'),
 			'realmlist' => Yii::t('app', 'Realmlist'),
 			'realm' => Yii::t('app', 'Realm'),
 			'account' => Yii::t('app', 'Account'),

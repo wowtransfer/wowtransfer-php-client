@@ -23,6 +23,7 @@ return [
 	'Canceled' => 'Отменено',
 	'Change' => 'Изменить',
 	'Success changed' => 'Успешное изменение',
+	'Success deleting' => 'Успешное удаление',
 	'Change date' => 'Дата изменения',
 	'Character' => 'Персонаж',
 	'Characters transfer' => 'Перенос персонажей',
@@ -138,7 +139,7 @@ return [
 	'Request view' => 'Просмотр заявки',
 	'Request creating date' => 'Дата создания заявки',
 	'Result of the queries runing' => 'Результат выполнения запросов',
-	'Remote server' => 'Удаленный сервер',
+	'Remote server' => 'Внешний сервер',
 	'Remote servers' => 'Внешние сервера',
 	'Query' => 'Запрос',
 	'Save' => 'Сохранить',
@@ -194,5 +195,6 @@ return [
 	'Warnings' => 'Предупреждения',
 	'Without a protocol (http://), for example, mysqrver.ru or mysqrver.com' => 'Без протокола (http://), например, myserver.ru или myserver.com',
 	'Welcome' => 'Добро пожаловать',
+	'Wrong server' => 'Неверный сервер',
 	'0 - disable. Works only on debug mode.' => '0 - отключить. Работает только в режиме отладки.',
 ];

@@ -1,6 +1,7 @@
 <?
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
+/* @var array $wowserversSites */
 
 ?>
 
@@ -8,10 +9,10 @@
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableAjaxValidation' => false,
 	'enableClientValidation' => false,
-	'htmlOptions' => array(
+	'htmlOptions' => [
 		'enctype' => 'multipart/form-data',
 		'id' => 'chd-transfer-form',
-	),
+	],
 )); ?>
 
 	<?= $form->errorSummary($model); ?>
@@ -26,10 +27,15 @@
 	<fieldset>
 		<legend><?= Yii::t('app', 'Remote server') ?></legend>
 
-		<?= $form->textFieldControlGroup($model, 'server', array(
-			'help' => Yii::t('app', 'Without a protocol (http://), for example, mysqrver.ru or mysqrver.com'),
-			'class' => 'col-sm-4',
-		)); ?>
+		<?= $form->textFieldControlGroup($model, 'server', [
+			'class' => 'col-sm-4', 'list' => 'servers-list',
+		]); ?>
+
+		<datalist id="servers-list">
+			<? foreach ($wowserversSites as $server): ?>
+				<option value="<?= $server ?>">
+			<? endforeach; ?>
+		</datalist>
 
 		<?= $form->textFieldControlGroup($model, 'realmlist', array(
 			'class' => 'col-sm-4', 'readonly' => 1,

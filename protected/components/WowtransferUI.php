@@ -72,11 +72,29 @@ class WowtransferUI extends Wowtransfer
 	public function getWowServersPair() {
 		if ($this->wowServersPair === null) {
 			$this->wowServersPair = [];
+			//$excludeServers = require Yii::getPathOfAlias('application') . '/' . '';
 			foreach (parent::getWowServers() as $server) {
 				$this->wowServersPair[$server->getSite()] = $server->getName();
 			}
 			asort($this->wowServersPair);
 		}
 		return $this->wowServersPair;
+	}
+
+	/**
+	 * @var string[]
+	 */
+	protected $wowserversSites;
+
+	/**
+	 * @return array
+	 */
+	public function getWowServersSites() {
+		if ($this->wowserversSites === null) {
+			foreach (parent::getWowServers() as $server) {
+				$this->wowserversSites[] = $server->getSite();
+			}
+		}
+		return $this->wowserversSites;
 	}
 }

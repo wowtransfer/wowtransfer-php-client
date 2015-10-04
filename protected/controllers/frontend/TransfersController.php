@@ -13,10 +13,10 @@ class TransfersController extends FrontendController
 	 */
 	public function filters()
 	{
-		return array(
+		return [
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
-		);
+		];
 	}
 
 	/**
@@ -31,10 +31,10 @@ class TransfersController extends FrontendController
 				'actions' => ['index','view','create','update','delete',
 					'getCommonFields'
 				],
-				'users' => array('@'),
+				'users' => ['@'],
 			],
 			['deny',  // deny all users
-				'users'=>array('*'),
+				'users' => ['*'],
 			],
 		];
 	}
@@ -61,6 +61,7 @@ class TransfersController extends FrontendController
 	{
 		$model = new ChdTransfer;
 		$model->setScenario('create');
+		$wowServers = new WowtransferUI();
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
@@ -70,6 +71,12 @@ class TransfersController extends FrontendController
 			// TODO: exclode 'realmlist', 'realm' and 'username_old'
 			$model->attributes = $request->getPost('ChdTransfer');
 			$model->fileLua = CUploadedFile::getInstance($model, 'fileLua');
+
+			/* TODO: move to model validation
+			 * if (!in_array($model->server, $wowServers->getWowServersPair())) {
+				$model->addError('server', Yii::t('app', 'Wrong server'));
+			}*/
+
 			if ($model->save()) {
 				$this->redirect(['view', 'id' => $model->id]);
 			}
@@ -84,13 +91,9 @@ class TransfersController extends FrontendController
 		$model->pass = '';
 		$model->pass2 = '';
 
-		if (defined('YII_DEBUG') && YII_DEBUG) {
-			$model->server = 'server';
-			$model->account = 'account';
-		}
-
 		$this->render('create', array(
 			'model' => $model,
+			'wowserversSites' => $wowServers->getWowServersSites(),
 		));
 	}
 
@@ -132,32 +135,27 @@ class TransfersController extends FrontendController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if (isset($_POST['ChdTransfer']))
-		{
-			if (empty($_POST['ChdTransfer']['transferOptions']))
+		if (isset($_POST['ChdTransfer'])) {
+			if (empty($_POST['ChdTransfer']['transferOptions'])) {
 				$model->addError('transferOptions', Yii::t('app', 'Fill the transfer options'));
-			elseif ($model->status !== 'process')
+			}
+			elseif ($model->status !== 'process') {
 				$model->addError('status', Yii::t('app', 'No change of the request by status'));
-			else
-			{
+			}
+			else {
 				$model->attributes = $_POST['ChdTransfer'];
-				//CVarDumper::dump($_POST['ChdTransfer'], 10, true);
-				//return;
-
-				if ($model->save())
+				if ($model->save()) {
 					$this->redirect(array('index'));
+				}
 			}
 		}
 
-		$serviceUI = new WowtransferUI();
-		$serviceUI->setAccessToken(Yii::app()->params['accessToken']);
-		$serviceUI->setBaseUrl(Yii::app()->params['apiBaseUrl']);
-		$wowServers = $serviceUI->getWowServers();
+		$service = new WowtransferUI();
 
 		$model->pass2 = $model->pass;
 		$this->render('update', array(
 			'model' => $model,
-			'wowServers' => $wowServers,
+			'wowserversSites' => $service->getWowServersSites(),
 		));
 	}
 
@@ -183,7 +181,7 @@ class TransfersController extends FrontendController
 				$result['error'] = $error[0];
 			}
 			else {
-				$result['message'] = 'Заявка успешно удалена';
+				$result['message'] = Yii::t('app', 'Success deleting');
 			}
 
 			echo json_encode($result);

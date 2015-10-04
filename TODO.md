@@ -1,6 +1,7 @@
 ## TODO ##
 
 - Defence from infinite login: give 5 attempts on 15 minutes
+- Add parameter to settings, "only server from drop down list"
 - Icons: set, unset, invert.
 - Use only bootstrap, remove yii styles
 - Use normal translate js code
