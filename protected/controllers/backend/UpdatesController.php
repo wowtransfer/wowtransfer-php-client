@@ -47,8 +47,8 @@ class UpdatesController extends BackEndController
 		}
 		$this->render('index', [
 			'release'    => $release,
-			'appVersion' => Yii::app()->params['version'],
-			'appDate'    => Yii::app()->params['date'],
+			'appVersion' => Config::getInstance()->getVersion(),
+			'appDate'    => Config::getInstance()->getDate(),
 		]);
 	}
 

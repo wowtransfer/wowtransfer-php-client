@@ -61,7 +61,7 @@
 <div class="container">
 	<div class="navbar" id="footer">
 		<div class="pull-left" style="height: 3em;">
-			<? if (!empty(Yii::app()->params['serviceUsername'])): ?>
+			<? if (Config::getInstance()->getServiceUsername()): ?>
 				Service username: <strong><a href="http://wowtransfer.com/cp/profile/"><?= Yii::app()->params['serviceUsername']; ?></a></strong>
 			<? endif ?>
 		</div>

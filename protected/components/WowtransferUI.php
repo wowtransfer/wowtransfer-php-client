@@ -20,8 +20,8 @@ class WowtransferUI extends Wowtransfer
 	public function __construct() {
 		parent::__construct();
 
-		$this->setAccessToken(Yii::app()->params['accessToken']);
-		$this->setBaseUrl(Yii::app()->params['apiBaseUrl']);
+		$this->setAccessToken(Config::getInstance()->getAccessToken());
+		$this->setBaseUrl(Config::getInstance()->getApiBaseUrl());
 	}
 
 	/**
@@ -72,7 +72,7 @@ class WowtransferUI extends Wowtransfer
 	public function getWowServersPair() {
 		if ($this->wowServersPair === null) {
 			$this->wowServersPair = [];
-			//$excludeServers = require Yii::getPathOfAlias('application') . '/' . '';
+			// $excludeServers = require Yii::getPathOfAlias('application') . '/' . '';
 			foreach (parent::getWowServers() as $server) {
 				$this->wowServersPair[$server->getSite()] = $server->getSite();
 			}

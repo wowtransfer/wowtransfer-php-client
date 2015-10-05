@@ -43,7 +43,7 @@ class ChdTransfer extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return Yii::app()->params['transferTable'];
+		return Config::getInstance()->getTransferTable();
 	}
 
 	/**
@@ -218,7 +218,7 @@ class ChdTransfer extends CActiveRecord
 				]));
 			}
 		}
-		if (Yii::app()->params['onlyCheckedServers']) {
+		if (Config::getInstance()->getOnlyCheckedServers()) {
 			$service = new WowtransferUI();
 			if (!in_array($this->server, $service->getWowServersSites())) {
 				$this->addError('server', Yii::t('app', 'Select the site from list'));

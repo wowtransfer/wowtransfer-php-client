@@ -21,7 +21,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		switch (Yii::app()->params['core']) // TODO: use pattern
+		switch (Config::getInstance()->getCore()) // TODO: use pattern
 		{
 			case 'trinity_335a':
 				$account = new AccountTrinity();

@@ -27,7 +27,7 @@
 	<fieldset>
 		<legend><?= Yii::t('app', 'Remote server') ?></legend>
 
-		<? if (Yii::app()->params['onlyCheckedServers']): ?>
+		<? if (Config::getInstance()->getOnlyCheckedServers()): ?>
 
 			<?= $form->dropDownListControlGroup($model, 'server', $wowserversPair, [
 				'class' => 'col-sm-4', 'list' => 'servers-list',

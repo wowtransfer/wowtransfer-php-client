@@ -72,10 +72,10 @@ class LoginForm extends CFormModel
 		}
 		if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
 			Yii::app()->user->login($this->_identity, 0);
-			if (in_array($this->username, Yii::app()->params['admins'])) {
+			if (in_array($this->username, Config::getInstance()->getAdmins())) {
 				Yii::app()->user->setState('role', 'admin');
 			}
-			elseif (in_array($this->username, Yii::app()->params['moders'])) {
+			elseif (in_array($this->username, Config::getInstance()->getModers())) {
 				Yii::app()->user->setState('role', 'moderator');
 			}
 			else {

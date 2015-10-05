@@ -16,7 +16,7 @@ class FrontEndController extends BaseController
 	public function getMainMenuItems() {
 		$menu = [];
 
-		$menu[] = ['label' => Yii::t('app', 'Site'), 'url' => Yii::app()->params['siteUrl'], 'icon' => 'home'];
+		$menu[] = ['label' => Yii::t('app', 'Site'), 'url' => Config::getInstance()->getSiteUrl(), 'icon' => 'home'];
 		if (!Yii::app()->user->isGuest) {
 			$menu[] = [
 				'label' => Yii::t('app', 'Requests'), 'url' => ['/transfers'],

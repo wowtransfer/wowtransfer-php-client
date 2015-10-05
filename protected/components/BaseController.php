@@ -69,8 +69,8 @@ class BaseController extends CController
 	 * @return boolean
 	 */
 	public function isEmptyServiceParams() {
-		$emptyUsername = empty(Yii::app()->params['serviceUsername']);
-		$emptyToken = empty(Yii::app()->params['accessToken']);
-		return  $emptyUsername || $emptyToken;
+		$username = Config::getInstance()->getServiceUsername();
+		$accessToken = Config::getInstance()->getAccessToken();
+		return  empty($username) || empty($accessToken);
 	}
 }

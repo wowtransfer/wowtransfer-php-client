@@ -69,7 +69,7 @@ class BackendController extends BaseController
 		$items = [
 			[
 				'label' => Yii::t('app', 'Site'),
-				'url'=>Yii::app()->params['siteUrl'],
+				'url' => Config::getInstance()->getSiteUrl(),
 				'icon' => 'home'
 			],
 			[
