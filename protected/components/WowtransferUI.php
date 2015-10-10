@@ -72,9 +72,18 @@ class WowtransferUI extends Wowtransfer
 	public function getWowServersPair() {
 		if ($this->wowServersPair === null) {
 			$this->wowServersPair = [];
-			// $excludeServers = require Yii::getPathOfAlias('application') . '/' . '';
+			$realmIds = Config::getInstance()->getExcludeRealms();
 			foreach (parent::getWowServers() as $server) {
-				$this->wowServersPair[$server->getSite()] = $server->getSite();
+				$include = false;
+				foreach ($server->getRealms() as $realm) {
+					if (!in_array($realm->getId(), $realmIds)) {
+						$include = true;
+						break;
+					}
+				}
+				if ($include) {
+					$this->wowServersPair[$server->getSite()] = $server->getSite();
+				}
 			}
 			asort($this->wowServersPair);
 		}

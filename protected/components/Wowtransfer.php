@@ -756,7 +756,7 @@ class Wowserver
 	/**
 	 * @var Realm[]
 	 */
-	protected $realms;
+	protected $realms = [];
 
 	/**
 	 * @return int

@@ -85,10 +85,8 @@ class ConfigsController extends BackendController
 
 		$request = Yii::app()->request;
 		if ($request->isPostRequest) {
-			if ($request->getPost('realms')) {
-				$blackRealms = array_keys($request->getPost('realms'));
-				$remoteServersForm->setRealmsIds($blackRealms);
-			}
+			$blackRealms = array_keys((array)$request->getPost('realms'));
+			$remoteServersForm->setRealmsIds($blackRealms);
 			if ($remoteServersForm->save()) {
 				Yii::app()->user->setFlash('success', Yii::t('app', 'Success changed'));
 			}
