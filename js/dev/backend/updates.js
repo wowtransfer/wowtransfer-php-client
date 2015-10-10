@@ -15,7 +15,7 @@ var app = app || {};
 			}
 			var currentVersion = $.trim($("#current-version").text());
 			var latestVersion = $.trim($latestVersion.text());
-			if (currentVersion === latestVersion) {
+			if (compareVersions(latestVersion, currentVersion) <= 0) {
 				$("#current-version-installed").removeClass("hidden");
 				$downloadBtn.hide();
 			}
@@ -50,6 +50,38 @@ var app = app || {};
 			});
 			return false;
 		});
+	}
+
+	/**
+	 * @param {String} newVersion
+	 * @param {String} oldVersion
+	 * @returns {Number}
+	 */
+	function compareVersions(newVersion, oldVersion) {
+		if (newVersion.charAt(0) === "v") {
+			newVersion = newVersion.substr(1);
+		}
+		if (oldVersion.charAt(0) === "v") {
+			oldVersion = oldVersion.substr(1);
+		}
+		var newNumbers = newVersion.split(".");
+		var oldNumbers = oldVersion.split(".");
+		while (newNumbers.length < 4) {
+			newNumbers.push("0");
+		}
+		while (oldNumbers.length < 4) {
+			oldNumbers.push("0");
+		}
+
+		// 4 numbers, not more
+		// ex: 1.2.3.4 vs 2.2.3.4
+		for (var i = 0; i < 4; ++i) {
+			var result = newNumbers[i] - oldNumbers[i];
+			if (result) {
+				return result;
+			}
+		}
+		return 0;
 	}
 
 	function updatingAction() {
