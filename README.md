@@ -15,7 +15,7 @@ And third simple part is an installer!
 
 ## Requirements
 
-* PHP 5.3+
+* PHP 5.5+
 * MySQL 5.1+
 
 
