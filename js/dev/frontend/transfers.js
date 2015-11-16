@@ -74,7 +74,6 @@
 			contentType: false,
 			dataType: "json",
 			success: function(response) {
-				console.log(response);
 				var $formGroup = $(e).closest(".form-group");
 				var $helpBlock = $formGroup.find(".help-block");
 				if (response.error_message) {

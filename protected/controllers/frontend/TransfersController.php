@@ -48,9 +48,9 @@ class TransfersController extends FrontendController
 		$model = $this->loadModel($id);
 		$model->options = str_replace(';', '; ', $model->options); // TODO: hack
 
-		$this->render('view', array(
+		$this->render('view', [
 			'model' => $model,
-		));
+		]);
 	}
 
 	/**
@@ -85,14 +85,15 @@ class TransfersController extends FrontendController
 		$model->pass = '';
 		$model->pass2 = '';
 
-		$this->render('create', array(
+		$this->render('create', [
 			'model' => $model,
 			'wowserversSites' => $service->getWowServersSites(),
 			'wowserversPair' => $service->getWowServersPair(),
-		));
+		]);
 	}
 
-	public function actionGetCommonFields() {
+	public function actionGetCommonFields()
+	{
 		$result = [];
 
 		$service = new \WowtransferUI();
@@ -140,7 +141,7 @@ class TransfersController extends FrontendController
 			else {
 				$model->attributes = $_POST['ChdTransfer'];
 				if ($model->save()) {
-					$this->redirect(array('index'));
+					$this->redirect(['index']);
 				}
 			}
 		}
@@ -148,11 +149,11 @@ class TransfersController extends FrontendController
 		$service = new WowtransferUI();
 
 		$model->pass2 = $model->pass;
-		$this->render('update', array(
+		$this->render('update', [
 			'model' => $model,
 			'wowserversSites' => $service->getWowServersSites(),
 			'wowserversPair' => $service->getWowServersPair(),
-		));
+		]);
 	}
 
 	/**
@@ -170,7 +171,7 @@ class TransfersController extends FrontendController
 			$model->delete();
 		}
 		if (Yii::app()->request->isAjaxRequest) {
-			$result = array();
+			$result = [];
 			if ($model->hasErrors()) {
 				$errors = $model->getErrors(); // TODO: this is hard way to get an error
 				$error = reset($errors);
@@ -186,7 +187,7 @@ class TransfersController extends FrontendController
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if (!isset($_GET['ajax'])) {
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : ['index']);
 		}
 	}
 
@@ -195,21 +196,21 @@ class TransfersController extends FrontendController
 	 */
 	public function actionIndex()
 	{
-		$dataProvider = new CActiveDataProvider('ChdTransfer', array(
-			'criteria' => array(
+		$dataProvider = new CActiveDataProvider('ChdTransfer', [
+			'criteria' => [
 				'condition' => 'account_id=' . Yii::app()->user->id . " AND status <> 'cart'",
-			),
-		));
+			],
+		]);
 		if (Yii::app()->request->isAjaxRequest) {
-			$this->renderPartial('_list', array(
+			$this->renderPartial('_list', [
 				'dataProvider'=>$dataProvider,
-			));
+			]);
 			Yii::app()->end();
 		}
 
-		$this->render('index', array(
+		$this->render('index', [
 			'dataProvider'=>$dataProvider,
-		));
+		]);
 	}
 
 	/**
