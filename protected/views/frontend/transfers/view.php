@@ -16,20 +16,7 @@ $this->menu = [
 
 <h1><?= Yii::t('app', 'Request view') ?> #<?= $model->id; ?></h1>
 
-<? $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'create_transfer_date',
-		'status',
-		'server',
-		'realmlist',
-		'realm',
-		'username_old',
-		'account',
-		'options',
-		'comment',
-	),
-)); ?>
+<? $this->renderPartial('_view', ['data' => $model]) ?>
 
 <div style="margin: 10px 0;">
 

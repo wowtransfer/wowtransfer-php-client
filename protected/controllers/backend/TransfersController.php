@@ -45,7 +45,6 @@ class TransfersController extends BackendController
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
-		$model->options = str_replace(';', ', ', $model->options);
 
 		$this->render('view', array(
 			'model' => $model,

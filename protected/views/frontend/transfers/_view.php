@@ -33,10 +33,12 @@
 			<span class="glyphicon glyphicon-pencil"></span>
 		</a>
 
-		<a href="<?= $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
-		   class="btn btn-default btn-sm pull-right" title="<?= Yii::t('app', 'View') ?>">
-			<span class="glyphicon glyphicon-eye-open"></span>
-		</a>
+		<? if ($this->action->id !== 'view'): ?>
+			<a href="<?= $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
+			   class="btn btn-default btn-sm pull-right" title="<?= Yii::t('app', 'View') ?>">
+				<span class="glyphicon glyphicon-eye-open"></span>
+			</a>
+		<? endif ?>
 	</div>
 
 	<div class="row" style="margin-bottom: 10px;">

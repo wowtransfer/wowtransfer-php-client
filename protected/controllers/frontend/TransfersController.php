@@ -46,7 +46,6 @@ class TransfersController extends FrontendController
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
-		$model->options = str_replace(';', '; ', $model->options); // TODO: hack
 
 		$this->render('view', [
 			'model' => $model,
@@ -225,10 +224,10 @@ class TransfersController extends FrontendController
 		$model = ChdTransfer::model()->findByPk($id,
 			'account_id=' . Yii::app()->user->id . " AND status <> 'cart'"
 		);
-		if ($model === null)
+		if ($model === null) {
 			throw new CHttpException(404,'The requested page does not exist.');
-		if (!empty($model->options))
-		{
+		}
+		if (!empty($model->options)) {
 			$model->transferOptions = explode(';', $model->options);
 		}
 
@@ -241,7 +240,7 @@ class TransfersController extends FrontendController
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if (isset($_POST['ajax']) && $_POST['ajax'] === 'chd-transfer-form') {
+		if (Yii::app()->request->getPost('ajax') === 'chd-transfer-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
