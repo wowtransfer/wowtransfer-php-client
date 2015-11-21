@@ -10,7 +10,7 @@ class WowtransferUI extends Wowtransfer
 	/**
 	 * @var array Id => Name
 	 */
-	protected static $tconfigsPair;
+	protected $tconfigsPair;
 
 	/**
 	 * @var array Url => Name
