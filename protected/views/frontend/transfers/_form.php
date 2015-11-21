@@ -5,7 +5,7 @@
 
 ?>
 
-<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableAjaxValidation' => false,
 	'enableClientValidation' => false,
@@ -13,7 +13,7 @@
 		'enctype' => 'multipart/form-data',
 		'id' => 'chd-transfer-form',
 	],
-)); ?>
+]); ?>
 
 	<?= $form->errorSummary($model); ?>
 
@@ -47,55 +47,54 @@
 
 		<? endif ?>
 
-		<?= $form->textFieldControlGroup($model, 'realmlist', array(
+		<?= $form->textFieldControlGroup($model, 'realmlist', [
 			'class' => 'col-sm-4', 'readonly' => 1,
-		)); ?>
+		]); ?>
 
-		<? /*echo CHtml::dropDownList('wowserver-realm', null, array(), array(
+		<? /*echo CHtml::dropDownList('wowserver-realm', null, [], [
 			'onchange' => '$("#ChdTransfer_realm").val(this.value);',
 			'class' => 'pull-right',
 			'style' => 'width: 180px;',
-		)); */ ?>
-		<?= $form->textFieldControlGroup($model, 'realm', array(
+		]); */ ?>
+		<?= $form->textFieldControlGroup($model, 'realm', [
 			'class' => 'col-sm-4', 'readonly' => 1,
-		)); ?>
+		]); ?>
 
-		<?= $form->textFieldControlGroup($model, 'account', array(
+		<?= $form->textFieldControlGroup($model, 'account', [
 			'class' => 'col-sm-4'
-		)); ?>
-		<?= $form->passwordFieldControlGroup($model, 'pass', array(
+		]); ?>
+		<?= $form->passwordFieldControlGroup($model, 'pass', [
 			'class' => 'col-sm-4'
-		)); ?>
-		<?= $form->passwordFieldControlGroup($model, 'pass2', array(
+		]); ?>
+		<?= $form->passwordFieldControlGroup($model, 'pass2', [
 			'class' => 'col-sm-4'
-		)); ?>
-		<?= $form->textFieldControlGroup($model, 'username_old', array(
+		]); ?>
+		<?= $form->textFieldControlGroup($model, 'username_old', [
 			'class' => 'col-sm-4', 'readonly' => 1,
-		)); ?>
-		<?= $form->textAreaControlGroup($model, 'comment', array(
-			'span' => 8, 'rows' => 4, 'class' => 'col-sm-12',
-		)); ?>
+		]); ?>
+		<?= $form->textAreaControlGroup($model, 'comment', [
+			'rows' => 4, 'class' => 'col-sm-12',
+		]); ?>
 	</fieldset>
 
 	<fieldset>
 		<legend><?= Yii::t('app', 'Transfer options') ?></legend>
 		<?= $form->error($model, 'transferOptions'); ?>
 
-		<? $this->widget('application.components.widgets.TransferOptionsWidget', array(
-				'model' => $model,
-				'form' => $form,
-				'options' => $model->getTransferOptionsToUser(),
-				'readonly' => false,
-			));
-		?>
+		<? $this->widget('application.components.widgets.TransferOptionsWidget', [
+			'model' => $model,
+			'form' => $form,
+			'options' => $model->getTransferOptionsToUser(),
+			'readonly' => false,
+		]); ?>
 	</fieldset>
 
 	<div class="form-actions">
-		
+
 		<button type="submit" class="btn btn-primary">
-			<?= $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'); ?>
+			<?= Yii::t('app', $model->isNewRecord ? 'Create' : 'Update') ?>
 		</button>
-		
+
 		<a href="<?= $this->createUrl('/transfers'); ?>" class="btn btn-default">
 			<span class="glyphicon glyphicon-ban-circle"></span>
 			<?= Yii::t('app', 'Cancel') ?>

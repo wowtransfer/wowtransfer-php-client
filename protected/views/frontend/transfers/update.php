@@ -11,15 +11,15 @@ $this->breadcrumbs = [
 
 $this->menu = [
 	['label' => Yii::t('app', 'Requests list'), 'url' => ['index'], 'icon' => 'list'],
-	['label' => Yii::t('app', 'Create request'), 'url'=>['create'], 'icon' => 'plus'],
-	['label' => Yii::t('app', 'Request view'), 'url'=>array('view', 'id'=>$model->id), 'icon' => 'eye-open'],
+	['label' => Yii::t('app', 'Create request'), 'url' => ['create'], 'icon' => 'plus'],
+	['label' => Yii::t('app', 'Request view'), 'url' => ['view', 'id' => $model->id], 'icon' => 'eye-open'],
 ];
 ?>
 
 <h1><?= Yii::t('app', 'Update request') ?> #<?= $model->id; ?></h1>
 
-<? $this->renderPartial('_form', array(
+<? $this->renderPartial('_form', [
 	'model' => $model,
 	'wowserversSites' => $wowserversSites,
 	'wowserversPair' => $wowserversPair,
-)); ?>
+]); ?>

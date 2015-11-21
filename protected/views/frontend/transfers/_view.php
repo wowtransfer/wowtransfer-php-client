@@ -31,13 +31,13 @@
 			<span class="glyphicon glyphicon-remove"></span>
 		</a>
 
-		<a href="<?= $this->createUrl('/transfers/update', array('id' => $data->id)); ?>"
+		<a href="<?= $this->createUrl('/transfers/update', ['id' => $data->id]); ?>"
 		   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'Change') ?>">
 			<span class="glyphicon glyphicon-pencil"></span>
 		</a>
 
 		<? if ($this->action->id !== 'view'): ?>
-			<a href="<?= $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
+			<a href="<?= $this->createUrl('/transfers/view', ['id' => $data->id]); ?>"
 			   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'View') ?>">
 				<span class="glyphicon glyphicon-eye-open"></span>
 			</a>
@@ -78,10 +78,10 @@
 	</div>
 
 	<div>
-	<? $this->widget('application.components.widgets.TransferOptionsWidget', array(
+	<? $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $data,
 		'options' => $data->getTransferOptionsToUser()
-	));	?>
+	]);	?>
 	</div>
 
 </div>

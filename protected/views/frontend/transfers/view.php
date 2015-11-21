@@ -10,7 +10,7 @@ $this->breadcrumbs = [
 $this->menu = [
 	['label' => Yii::t('app', 'Requests list'), 'url' => ['index'], 'icon' => 'list'],
 	['label' => Yii::t('app', 'Create request'), 'url' => ['create'], 'icon' => 'plus'],
-	['label' => Yii::t('app', 'Update request'), 'url' => array('update', 'id' => $model->id), 'icon' => 'pencil'],
+	['label' => Yii::t('app', 'Update request'), 'url' => ['update', 'id' => $model->id], 'icon' => 'pencil'],
 ];
 ?>
 
