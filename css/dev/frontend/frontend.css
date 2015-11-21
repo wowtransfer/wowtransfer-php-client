@@ -23,8 +23,9 @@
 	font-weight: bold;
 }
 
-#transfer-list-view .btn {
+.view .right-btn {
 	margin-left: 5px;
+	float: right;
 }
 
 #to-backend {

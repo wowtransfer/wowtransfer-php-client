@@ -42,14 +42,29 @@
 	 */
 	function initTransfersListview() {
 		$("#transfer-list-view-block").on("click", ".transfer-delete", function() {
-			var id = $(this).closest(".view").data("id");
-			var message = $("#t-configrm-request-delete").text() + " #" + id;
-			app.dialogs.confirm(message, function() {
-				$.post(app.getBaseUrl() + "/transfers/delete/" + id, {}, function (data) {
-					updateTransfersListview(data);
-				}, "json");
-			});
+			deleteTransfer(this);
 			return false;
+		});
+	}
+
+	/**
+	 * @param {Object} btn The button element
+	 * @returns {Boolean}
+	 */
+	function deleteTransfer(btn) {
+		var $view = $(btn).closest(".view");
+		var id = $view.data("id");
+		var where = $view.data("where");
+		var message = $("#t-configrm-request-delete").text() + " #" + id;
+		app.dialogs.confirm(message, function() {
+			$.post(app.getBaseUrl() + "/transfers/delete/" + id, {}, function (response) {
+				if (where === "card") {
+					window.location.href = response.returnUrl;
+				}
+				else {
+					updateTransfersListview(response);
+				}
+			}, "json");
 		});
 	}
 

@@ -3,7 +3,10 @@
 /* @var $data ChdTransfer */
 ?>
 
-<div class="view" data-id="<?= $data->id ?>">
+<div class="view"
+	 data-id="<?= $data->id ?>"
+	 data-where="<?= isset($where) ? $where : 'listing' ?>"
+	 >
 
 	<div class="toptions-view-actions">
 		<div class="toptions-view-top toptions-view-id">
@@ -24,18 +27,18 @@
 	</div>
 
 	<div>
-		<a href="#" class="btn btn-default btn-sm pull-right transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
+		<a href="#" class="btn btn-default btn-sm right-btn transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
 			<span class="glyphicon glyphicon-remove"></span>
 		</a>
 
 		<a href="<?= $this->createUrl('/transfers/update', array('id' => $data->id)); ?>"
-		   class="btn btn-default btn-sm pull-right" title="<?= Yii::t('app', 'Change') ?>">
+		   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'Change') ?>">
 			<span class="glyphicon glyphicon-pencil"></span>
 		</a>
 
 		<? if ($this->action->id !== 'view'): ?>
 			<a href="<?= $this->createUrl('/transfers/view', array('id' => $data->id)); ?>"
-			   class="btn btn-default btn-sm pull-right" title="<?= Yii::t('app', 'View') ?>">
+			   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'View') ?>">
 				<span class="glyphicon glyphicon-eye-open"></span>
 			</a>
 		<? endif ?>

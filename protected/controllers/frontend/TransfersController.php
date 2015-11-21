@@ -169,6 +169,10 @@ class TransfersController extends FrontendController
 		else {
 			$model->delete();
 		}
+
+		$request = Yii::app()->request;
+		$returnUrl = $request->getPost('returnUrl') ? $request->getPost('returnUrl') : $this->createUrl('/transfers/index');
+
 		if (Yii::app()->request->isAjaxRequest) {
 			$result = [];
 			if ($model->hasErrors()) {
@@ -178,6 +182,7 @@ class TransfersController extends FrontendController
 			}
 			else {
 				$result['message'] = Yii::t('app', 'Success deleting');
+				$result['returnUrl'] = $returnUrl;
 			}
 
 			echo json_encode($result);
@@ -186,7 +191,7 @@ class TransfersController extends FrontendController
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if (!isset($_GET['ajax'])) {
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : ['index']);
+			$this->redirect($returnUrl);
 		}
 	}
 

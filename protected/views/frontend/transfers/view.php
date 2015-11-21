@@ -16,7 +16,9 @@ $this->menu = [
 
 <h1><?= Yii::t('app', 'Request view') ?> #<?= $model->id; ?></h1>
 
-<? $this->renderPartial('_view', ['data' => $model]) ?>
+<div id="transfer-list-view-block">
+	<? $this->renderPartial('_view', ['data' => $model, 'where' => 'card']) ?>
+</div>
 
 <div style="margin: 10px 0;">
 
@@ -26,3 +28,5 @@ $this->menu = [
 	</a>
 
 </div>
+
+<div id="t-configrm-request-delete" class="hidden"><?= Yii::t('app', 'Confirm delete request') ?></div>
