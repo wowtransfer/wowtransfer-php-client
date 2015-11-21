@@ -11,6 +11,8 @@ class Wowtransfer
 	const LANG_RU = 'ru';
 	const LANG_EN = 'en';
 
+	const LUA_MIME_TYPE = 'application/x-lua';
+
 	/**
 	 * @var resource Curl handle
 	 */
@@ -242,7 +244,7 @@ class Wowtransfer
 		fwrite($file, $dumpLua);
 		fclose($file);
 
-		$dumpFile = new CURLFile($filePath, null, 'dump_lua');
+		$dumpFile = new CURLFile($filePath, self::LUA_MIME_TYPE, 'chardumps.lua');
 
 		$ch = $this->_ch;
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/dumps/fields/'));
@@ -386,7 +388,7 @@ class Wowtransfer
 		fwrite($file, gzencode($dumpLua));
 		fclose($file);
 
-		$dumpFile = new CURLFile($filePath, null, 'dump_lua');
+		$dumpFile = new CURLFile($filePath, self::LUA_MIME_TYPE, 'chardumps.lua');
 
 		$ch = $this->_ch;
 		$postfields = [
