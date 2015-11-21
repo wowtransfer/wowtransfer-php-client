@@ -151,3 +151,20 @@ h1 {
 .flag-ru, .flag-en {
 	outline: 1px solid black;
 }
+
+.chd-row {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.chd-row-sm {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.chd-row-xs {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.chd-row-lg {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}

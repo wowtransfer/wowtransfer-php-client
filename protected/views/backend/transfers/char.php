@@ -22,12 +22,12 @@ $this->breadcrumbs = [
 </div>
 
 
-<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
-	'htmlOptions' => array(
+	'htmlOptions' => [
 		'id' => 'create-char-from',
-	),
-)); ?>
+	],
+]); ?>
 
 
 <div class="row create-char-top">
@@ -62,10 +62,10 @@ $this->breadcrumbs = [
 	</div>
 	<div class="col-md-2">
 		<label for="tconfig"><?= Yii::t('app', 'Configuration') ?></label>
-		<?= CHtml::dropDownList('tconfig', '', $tconfigs, array( // Store active element in the cookie, TODO
+		<?= CHtml::dropDownList('tconfig', '', $tconfigs, [ // Store active element in the cookie, TODO
 			'style' => 'width: 100%;',
 			'id' => 'tconfig'
-		)); ?>
+		]); ?>
 	</div>
 	<div class="col-md-4">
 
@@ -184,7 +184,7 @@ $this->breadcrumbs = [
 					$classStatus = 'query-res-success';
 				}
 				else {
-					$query = array('query'=>'', 'status'=>'&nbsp;');
+					$query = ['query'=>'', 'status'=>'&nbsp;'];
 					$classStatus = '';
 				}
 ?>

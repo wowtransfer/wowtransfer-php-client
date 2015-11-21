@@ -13,8 +13,10 @@ $statuses = ChdTransfer::getStatusLabels();
 			<tbody>
 				<tr>
 					<td colspan="2">
-						<b style="font-size: large;"><?= CHtml::link('#' . $data->id, array('view', 'id' => $data->id)); ?></b>
-						<span title="<?= $data->getAttributeLabel('create_transfer_date'); ?>"><?= $data->create_transfer_date; ?></span>
+						<b style="font-size: large;"><?= CHtml::link('#' . $data->id, ['view', 'id' => $data->id]); ?></b>
+						<span title="<?= $data->getAttributeLabel('create_transfer_date'); ?>">
+							<?= $data->create_transfer_date; ?>
+						</span>
 					</td>
 				</tr>
 				<tr>
@@ -79,18 +81,18 @@ $statuses = ChdTransfer::getStatusLabels();
 
 		<div class="clearfix"></div>
 		<div class="transfer-actions">
-			<a href="<?= $this->createUrl('char', array('id' => $data->id)); ?>"
+			<a href="<?= $this->createUrl('char', ['id' => $data->id]); ?>"
 			   class="btn btn-success" title="<?= Yii::t('app', 'Character') ?>">
 				<span class="spr create-char"></span>
 				<?= Yii::t('app', 'Character') ?>...
 			</a>
 			<a class="btn btn-danger delete-char"
-			   href="<?= $this->createUrl('deletechar', array('id' => $data->id)); ?>"
+			   href="<?= $this->createUrl('deletechar', ['id' => $data->id]); ?>"
 			   style="display: <?= $data->char_guid ? 'inline-block' : 'none'; ?>">
 				<span class="spr delete-char"></span>
 				<?= Yii::t('app', 'Delete') ?>
 			</a>
-			<a href="<?= $this->createUrl('luadump', array('id' => $data->id)); ?>" class="btn btn-default">
+			<a href="<?= $this->createUrl('luadump', ['id' => $data->id]); ?>" class="btn btn-default">
 				<span class="spr lua-dump"></span>
 				<?= Yii::t('app', 'Dump') ?>...
 			</a>

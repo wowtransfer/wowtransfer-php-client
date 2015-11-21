@@ -8,21 +8,32 @@ $this->breadcrumbs = [
 ];
 
 $this->menu = [
-	array('label' => Yii::t('app', 'Requests list'), 'url'=>array('index'), 'icon' => 'list'),
-	($model->char_guid > 0) ?
-		array('label'=>'Удалить персонажа', 'url'=>'#', 'icon' => 'remove',
-			'linkOptions'=>array('submit'=>array('deletechar','id'=>$model->id),'confirm'=>'Вы действительно хотите удалить персонажа?'))
+	['label' => Yii::t('app', 'Requests list'), 'url' => ['index'], 'icon' => 'list'],
+	$model->char_guid > 0 ?
+		[
+			'label' => Yii::t('app', 'Delete the character'),
+			'url'=>'#',
+			'icon' => 'remove',
+			'linkOptions' => ['submit' => ['deletechar', 'id' => $model->id],
+			'confirm' => Yii::t('app', 'Confirm delete the character')]
+		]
 	:
-		['label' => Yii::t('app', 'Create the character'), 'url'=>array('/transfers/char/' . $model->id), 'icon' => 'plane'],
-	array('label'=>'Lua-dump', 'url'=>array('luadump', 'id'=>$model->id), 'icon' => 'file'),
+		[
+			'label' => Yii::t('app', 'Create the character'),
+			'url' => ['/transfers/char/' . $model->id],
+			'icon' => 'plane'
+		],
+	['label'=>'Lua-dump', 'url' => ['luadump', 'id' => $model->id], 'icon' => 'file'],
 ];
+
+
 ?>
 
 <h1><?= Yii::t('app', 'Request view') ?> #<?= $model->id; ?></h1>
 
-<? $this->widget('zii.widgets.CDetailView', array(
+<? $this->widget('zii.widgets.CDetailView', [
 	'data' => $model,
-	'attributes' => array(
+	'attributes' => [
 		'id',
 		'account_id',
 		'server',
@@ -37,10 +48,18 @@ $this->menu = [
 		'account',
 		'pass',
 		'file_lua_crypt',
-		'options',
 		'comment',
-	),
-)); ?>
+	],
+]); ?>
+
+<div class="chd-row">
+	<? $this->widget('application.components.widgets.TransferOptionsWidget', [
+		'model' => $model,
+		//'form' => $form,
+		'options' => $model->getTransferOptionsToUser(),
+		'readonly' => true,
+	]); ?>
+</div>
 
 <div class="form-actions">
 

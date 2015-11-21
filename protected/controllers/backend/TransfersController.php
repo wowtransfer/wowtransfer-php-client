@@ -46,9 +46,9 @@ class TransfersController extends BackendController
 	{
 		$model = $this->loadModel($id);
 
-		$this->render('view', array(
+		$this->render('view', [
 			'model' => $model,
-		));
+		]);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class TransfersController extends BackendController
 			}
 			Yii::app()->end();
 		}
-		$this->redirect(array('index'));
+		$this->redirect(['index']);
 	}
 
 	/**
@@ -83,14 +83,14 @@ class TransfersController extends BackendController
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : ['admin']);
 	}
 
 	/**
 	 * Lists all models.
 	 */
 	public function actionIndex() {
-		$filter = array();
+		$filter = [];
 		$request = Yii::app()->request;
 
 		if ($request->isAjaxRequest) {
@@ -105,7 +105,7 @@ class TransfersController extends BackendController
 		if ($statuses) {
 			$statusesOrigin = ChdTransfer::getStatuses();
 			if (count($statusesOrigin) === count($statuses)) {
-				$statuses = array();
+				$statuses = [];
 				$filter['statuses'] = $statuses;
 			}
 		}
@@ -123,12 +123,12 @@ class TransfersController extends BackendController
 			$where .= " AND `status` IN (" . implode(',', $statuses) . ")";
 		}
 
-		$dataProvider = new CActiveDataProvider('ChdTransfer', array(
-			'criteria' => array(
+		$dataProvider = new CActiveDataProvider('ChdTransfer', [
+			'criteria' => [
 				'select' => '*',
 				'condition' => $where,
-			),
-		));
+			],
+		]);
 
 		$filterBlock = $this->renderPartial('_filter_form', null, true);
 		$this->addAsideBlockToColumn2($filterBlock);
@@ -140,10 +140,10 @@ class TransfersController extends BackendController
 		];
 
 		if (Yii::app()->request->isAjaxRequest) {
-			$filterStore = array(
+			$filterStore = [
 				'statuses' => $filter['statuses'],
 				'dt_range' => $dtRange,
-			);
+			];
 			setcookie('chd_transfer_filter', serialize($filterStore), time() + 3600 * 24 * 30, Yii::app()->request->baseUrl);
 			$this->renderPartial('_index_data', $viewParams);
 		}
@@ -212,7 +212,7 @@ class TransfersController extends BackendController
 
 		$service = new WowtransferUI();
 
-		$this->render('char', array(
+		$this->render('char', [
 			'model'           => $model,
 			'errors'          => $result['errors'],
 			'warnings'        => $result['warnings'],
@@ -220,12 +220,12 @@ class TransfersController extends BackendController
 			'queries'         => $result['queries'],
 			'queriesCount'    => count($result['queries']),
 			'tconfigs'        => $service->getTransferConfigs(),
-		));
+		]);
 	}
 
 	public function actionDeletechar($id)
 	{
-		$result = array();
+		$result = [];
 
 		$model = $this->loadModel($id);
 		try {
@@ -269,11 +269,11 @@ class TransfersController extends BackendController
 			Yii::app()->end();
 		}
 
-		$this->render('luadump', array(
+		$this->render('luadump', [
 			'model' => $model,
 			'luaDumpContentZip' => $model->file_lua,
 			'luaDumpContent' => $model->luaDumpFromDb(),
-		));
+		]);
 	}
 
 	/**
