@@ -27,14 +27,14 @@ class ToptionsConfigForm extends PhpFileForm
 	 */
 	public static function getConfigFilePath()
 	{
-		return Yii::getPathOfAlias('application.config') . '/toptions-local.php';
+		return Yii::getPathOfAlias('application.config') . DIRECTORY_SEPARATOR . 'toptions-local.php';
 	}
 
 	/**
 	 * @return string
 	 */
 	public static function getDefaultConfigFilePath() {
-		return Yii::getPathOfAlias('application.config') . '/toptions.php';
+		return Yii::getPathOfAlias('application.config') . DIRECTORY_SEPARATOR . 'toptions.php';
 	}
 
 	/**

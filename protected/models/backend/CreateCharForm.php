@@ -23,20 +23,20 @@ class CreateCharForm
 	 * @return array
 	 */
 	public static function getDefaultResult() {
-		return array(
-			'errors'   => array(),
-			'warnings' => array(),
+		return [
+			'errors'   => [],
+			'warnings' => [],
 			'sql'      => '',
-			'queries'  => array(),
-		);
+			'queries'  => [],
+		];
 	}
 
 	/**
-	 * @param string $transferConfig
+	 * @param string $config
 	 * @return \CreateCharForm
 	 */
-	public function setTransferConfig($transferConfig) {
-		$this->transferConfig = $transferConfig;
+	public function setTransferConfig($config) {
+		$this->transferConfig = $config;
 		return $this;
 	}
 
@@ -47,14 +47,14 @@ class CreateCharForm
 	 * @param integer $accountGuid
 	 *
 	 * @return array
-	 *    index => array(
+	 *    index => [
 	 *      ['query'] => string,
 	 *      ['status'] => count of updated rows,
-	 *    ),
+	 *    ],
 	 *    ['errors'] => array of string,
 	 */
 	private function runSql($sql, $accountGuid) {
-		$result = array();
+		$result = [];
 
 		if (empty($sql)) {
 			$result['error'] = 'Empty SQL script';
@@ -108,19 +108,11 @@ class CreateCharForm
 	/**
 	 * @return integer GUID of character, 0 on error
 	 */
-	private function getCharacterGuid()
+	private function fetchCharacterGuid()
 	{
-		$guid = 0;
-
-		$connection = Yii::app()->db;
-
-		$command = $connection->createCommand('SELECT @CHAR_GUID');
-		$result = $command->queryScalar();
-		if ($result) {
-			$guid = intval($result);
-		}
-
-		return $guid;
+		$sql = 'SELECT @CHAR_GUID';
+		$command = Yii::app()->db->createCommand($sql);
+		return (int)$command->queryScalar();
 	}
 
 	/**
@@ -168,11 +160,11 @@ class CreateCharForm
 			unset($queries['error']);
 		}
 		else {
-			$guid = $this->getCharacterGuid();
+			$guid = $this->fetchCharacterGuid();
 			$result['guid'] = $guid;
 			$this->_transfer->char_guid = $guid;
 			$this->_transfer->create_char_date = date('Y-m-d h:i:s');
-			if (!$this->_transfer->save(false, array('char_guid', 'create_char_date'))) {
+			if (!$this->_transfer->save(false, ['char_guid', 'create_char_date'])) {
 				$result['errors'][] = Yii::t('app', 'Saving failed');
 			}
 		}

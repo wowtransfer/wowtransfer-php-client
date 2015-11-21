@@ -46,7 +46,7 @@ $this->breadcrumbs = [
 <script><!--
 
 window.statuses = [];
-<? foreach (ChdTransfer::getStatuses() as $name => $title): ?>
+<? foreach (ChdTransfer::getStatusLabels() as $name => $title): ?>
 	window.statuses["<?= $name; ?>"] = "<?= $title; ?>";
 <? endforeach; ?>
 

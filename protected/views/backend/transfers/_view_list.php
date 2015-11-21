@@ -2,7 +2,7 @@
 /* @var $this TransfersController */
 /* @var $data ChdTransfer */
 
-$statuses = ChdTransfer::getStatuses();
+$statuses = ChdTransfer::getStatusLabels();
 ?>
 
 <div class="view" id="view_<?= $data->id ?>" data-id="<?= $data->id ?>">

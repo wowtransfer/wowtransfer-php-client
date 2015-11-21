@@ -113,16 +113,19 @@ class AppConfigForm extends PhpFileForm
 	 */
 	protected function getConfigFilePath()
 	{
-		return Yii::getPathOfAlias('application') . '/config/app-local.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . 'config/app-local.php';
 	}
 
 	/**
 	 * @return string
 	 */
 	protected function getDefaultConfigFilePath() {
-		return Yii::getPathOfAlias('application') . '/config/app.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . 'config/app.php';
 	}
 
+	/**
+	 * @return boolean
+	 */
 	protected function beforeValidate() {
 		settype($this->yiiDebug, 'boolean');
 		settype($this->onlyCheckedServers, 'boolean');
@@ -154,7 +157,8 @@ class AppConfigForm extends PhpFileForm
 		$this->setWorkAttributes($attributes);
 		$result = parent::save();
 		if ($result) {
-			Yii::app()->user->setFlash('success', Yii::t('app', 'Configuration of application was changed success.'));
+			$message = Yii::t('app', 'Configuration of application was changed success.');
+			Yii::app()->user->setFlash('success', $message);
 		}
 		return $result;
 	}

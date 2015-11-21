@@ -64,7 +64,6 @@
 		}
 		var formData = new FormData();
 		formData.append("fileLua", file);
-		console.log(file);
 
 		$.ajax('getCommonFields', {
 			type: "POST",

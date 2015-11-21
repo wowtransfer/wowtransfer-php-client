@@ -27,8 +27,20 @@ class ChdTransfer extends CActiveRecord
 	// virtual attributes
 	// TODO: rename `$options` to optionsStr?
 	// TODO: rename `$transferOptions` to optionsArr?
+
+	/**
+	 * @var array
+	 */
 	public $transferOptions = [];
+
+	/**
+	 * @var CUploadedFile
+	 */
 	public $fileLua;
+
+	/**
+	 * @var string
+	 */
 	public $pass2;
 
 	const STATUS_PROCESS = 'process';
@@ -57,17 +69,19 @@ class ChdTransfer extends CActiveRecord
 			['account_id, char_guid, file_lua_crypt', 'numerical', 'integerOnly'=>true],
 			['account_id', 'compare', 'allowEmpty'=>false, 'compareValue'=>0, 'operator'=>'>', 'strict'=>true],
 			['server', 'length', 'max'=>100],
-			['status', 'in', 'range' => array_keys(self::getStatuses())],
+			['status', 'in', 'range' => self::getStatuses()],
 
 			['realmlist', 'match', 'pattern' => '/^[a-zA-Z0-9\-\.]+$/S'],
 			['realm', 'match', 'pattern' => '/^[a-zA-Z0-9\-\. ]+$/S'],
+			['username_old, username_new', 'length', 'max'=>12],
+
 			['account', 'match', 'pattern' => '/^[a-z0-9_\-]+$/S'],
+
 			['comment', 'filter', 'filter' => [$obj = new CHtmlPurifier(), 'purify']],
 
 			['account', 'length', 'max'=>32],
 			['file_lua', 'length', 'allowEmpty'=>false],
-			['realmlist, realm, pass', 'length', 'max'=>40],
-			['username_old, username_new', 'length', 'max'=>12],
+
 			['options, comment', 'length', 'max'=>255],
 			['create_char_date, pass2', 'safe'],
 
@@ -167,9 +181,9 @@ class ChdTransfer extends CActiveRecord
 	}
 
 	/**
-	 * @return array
+	 * @return string[]
 	 */
-	public static function getStatuses()
+	public static function getStatusLabels()
 	{
 		$statuses = [
 			self::STATUS_PROCESS => Yii::t('app', 'In process'),
@@ -184,13 +198,22 @@ class ChdTransfer extends CActiveRecord
 	}
 
 	/**
+	 * @return string[]
+	 */
+	public static function getStatuses()
+	{
+		return array_keys(self::getStatusLabels());
+	}
+
+	/**
 	 * @param string $name
 	 * @return string
 	 */
-	public static function getStatusTitle($name) {
-		$statuses = self::getStatuses();
-		if (isset($statuses[$name])) {
-			return $statuses[$name];
+	public static function getStatusTitle($name)
+	{
+		$labels = self::getStatusLabels();
+		if (isset($labels[$name])) {
+			return $labels[$name];
 		}
 		return 'undefined';
 	}
@@ -230,6 +253,10 @@ class ChdTransfer extends CActiveRecord
 			$this->account_id = Yii::app()->user->id;
 			$this->status = self::STATUS_PROCESS;
 
+			// TODO: if a user has old brouser
+			// username_old, realmlist, realm
+			// load this fields from the dump...servers-list
+
 			/* TODO: add limit parameter to application's configuration
 			if (isLimit)
 			{
@@ -247,8 +274,9 @@ class ChdTransfer extends CActiveRecord
 			*/
 
 			//$this->create_transfer_date = date('Y-m-d h:i:s'); // fills by MySQL
-			if (is_object($this->fileLua) && $this->fileLua instanceof CUploadedFile)
+			if ($this->fileLua instanceof CUploadedFile) {
 				$this->file_lua = $this->luaDumpToDb(file_get_contents($this->fileLua->tempName));
+			}
 			// check *.lua files by hash
 			// ...
 		}
@@ -325,10 +353,14 @@ class ChdTransfer extends CActiveRecord
 		return $result;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function delete()
 	{
 		if ($this->char_guid > 0) {
-			$this->addError('error', Yii::t('app', 'Try to delete the request failed, then a character has created.'));
+			$message = Yii::t('app', 'Try to delete the request failed, then a character has created.');
+			$this->addError('error', $message);
 			return false;
 		}
 

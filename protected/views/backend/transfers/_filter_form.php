@@ -5,7 +5,7 @@
 	<form method="post" action="" onsubmit="return false;" id="frm-filter">
 		<div class="portlet-content">
 		<div class="portlet-title"><?= Yii::t('app', 'Statuses') ?></div>
-		<? foreach (ChdTransfer::getStatuses() as $name => $value): ?>
+		<? foreach (ChdTransfer::getStatusLabels() as $name => $value): ?>
 		<label class="tstatus-<?= $name; ?>">
 			<input type="checkbox" name="statuses[]"
 				   value="<?= $name ?>"

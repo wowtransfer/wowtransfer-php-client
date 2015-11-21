@@ -7,9 +7,19 @@
  */
 class LoginForm extends CFormModel
 {
+	/**
+	 * @var string
+	 */
 	public $username;
+
+	/**
+	 * @var string
+	 */
 	public $password;
 
+	/**
+	 * @var UserIdentity|null
+	 */
 	private $_identity;
 
 	/**
@@ -19,13 +29,13 @@ class LoginForm extends CFormModel
 	 */
 	public function rules()
 	{
-		return array(
+		return [
 			// username and password are required
-			array('username, password', 'required'),
-			array('username', 'length', 'min' => 1, 'max' => 32),
+			['username, password', 'required'],
+			['username', 'length', 'min' => 1, 'max' => 32],
 			// password needs to be authenticated
-			array('password', 'authenticate'),
-		);
+			['password', 'authenticate'],
+		];
 	}
 
 	/**
