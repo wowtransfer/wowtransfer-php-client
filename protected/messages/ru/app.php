@@ -22,6 +22,8 @@ return [
 	'Cancel' => 'Отмена',
 	'Canceled' => 'Отменено',
 	'Change' => 'Изменить',
+	'Character' => 'Персонаж',
+	'Characters' => 'Персонажи',
 	'Success changed' => 'Успешное изменение',
 	'Success deleting' => 'Успешное удаление',
 	'Change date' => 'Дата изменения',

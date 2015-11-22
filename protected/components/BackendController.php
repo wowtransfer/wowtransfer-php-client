@@ -84,6 +84,10 @@ class BackendController extends BaseController
 				'active' => $this->id == 'transfers', 'icon' => 'list'
 			],
 			[
+				'label' => Yii::t('app', 'Characters'),
+				'url' => ['/characters'],
+			],
+			[
 				'label' => Yii::t('app', 'Configurations'),
 				'url' => ['/tconfigs/index'],
 				'icon' => 'asterisk'],

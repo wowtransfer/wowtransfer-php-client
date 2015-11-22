@@ -73,13 +73,13 @@ $this->breadcrumbs = [
 		<div id="create-char-subactions">
 			<a class="btn btn-default btn-sm disabled btn-char-action" id="clear-by-guid-id"
 			   href="<?= Yii::t('app', 'clearchardata', ['id' => $model->id]) ?>">
-				<?= Yii::t('app', 'Clear character`s data by GUID and ID') ?>
+				<?= Yii::t('app', 'Clear character`s data by ID') ?>
 			</a> <span class="label label-success lowercase"><?= Yii::t('app', 'Safe') ?></span><br>
 			<a class="btn btn-default btn-sm disabled btn-char-action" href="#" id="clear-by-guid">
 				<?= Yii::t('app', 'Clear character`s data by GUID') ?>
 			</a> <span class="label label-danger btn-char-action lowercase"><?= Yii::t('app', 'Unsafe') ?></span><br>
 			<a class="btn btn-default btn-sm disabled btn-char-action" href="#" id="show-char-info">
-				<?= Yii::t('app', 'Show character`s info by GUID') ?>
+				<?= Yii::t('app', 'Show character`s info') ?>
 			</a><br>
 			<a class="btn btn-default btn-sm" href="#" id="view-luadump" data-toggle="modal">
 				<?= Yii::t('app', 'Lua dump') ?>

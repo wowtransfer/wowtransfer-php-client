@@ -20,12 +20,14 @@
 		</ul>
 	</li>
 
-	<li><a href="<?= $this->createUrl('/tconfigs/index'); ?>">
+	<li>
+		<a href="<?= $this->createUrl('/characters') ?>"><?= Yii::t('app', 'Characters') ?></a>
+	</li>
+
+	<li>
+		<a href="<?= $this->createUrl('/tconfigs/index'); ?>">
 			<?= Yii::t('app', 'Transfer configurations') ?>
 		</a>
-		<ul>
-			<li><?= Yii::t('app', 'View') ?></li>
-		</ul>
 	</li>
 
 	<li><a href="<?= $this->createUrl('/configs'); ?>"><?= Yii::t('app', 'Settings') ?></a>
