@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this ConfigsController */
 /* @var $wowServers Wowserver[] */
 /* @var $blackRealms int[] */

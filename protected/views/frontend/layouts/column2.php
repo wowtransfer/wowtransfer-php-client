@@ -9,9 +9,7 @@
 
 <div class="col-md-3">
 	<aside>
-	<?
-		//array_unshift($this->menu, array('label' => 'Операции'));
-		echo TbHtml::stackedPills($this->menu); ?>
+		<?= TbHtml::stackedPills($this->menu) ?>
 	</aside>
 </div>
 

@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this TransfersController frontend */
 /* @var $model ChdTransfer model */
 ?>

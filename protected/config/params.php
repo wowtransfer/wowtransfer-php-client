@@ -1,4 +1,5 @@
-<?
+<?php
+
 return array_merge(
 	require __DIR__ . '/app.php',
 	require __DIR__ . '/app-local.php',

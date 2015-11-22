@@ -1,4 +1,5 @@
-<?
+<?php
+
 return array_merge(
 	[
 		'connectionString'=>'mysql:host=127.0.0.1;dbname=characters',

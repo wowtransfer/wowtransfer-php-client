@@ -9,7 +9,7 @@
 
 <div class="col-md-3">
 	<aside>
-	<?
+	<?php
 		if (!empty($this->menu)) {
 			array_unshift($this->menu, array(
 				'label' => 'Операции',

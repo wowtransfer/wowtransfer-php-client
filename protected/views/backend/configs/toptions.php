@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this ConfigsController */
 
 $this->breadcrumbs = [
@@ -15,7 +16,8 @@ $this->breadcrumbs = [
 </div>
 <?php endif ?>
 
-<?
+<?php
+
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'htmlOptions' => array(
@@ -51,7 +53,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	</a>
 </div>
 
-<?
+<?php
+
 $this->endWidget();
 unset($form);
 ?>

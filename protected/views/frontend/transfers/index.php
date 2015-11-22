@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this TransfersController */
 /* @var $dataProvider CActiveDataProvider */
 

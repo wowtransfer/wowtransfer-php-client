@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var BackendController $this */
 /* @var array $tconfig */
 

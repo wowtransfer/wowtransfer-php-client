@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this TconfigsController */
 /* @var $tconfigs array */
 
@@ -49,7 +50,8 @@ $this->breadcrumbs = [
 
 <?php endif ?>
 
-<?
+<?php
+
 $url = $this->createUrl("/tconfigs/view");
 Yii::app()->clientScript->registerScript('goto_tconfig', '
 $("#tconfigs-table").on("click", "td", function() {

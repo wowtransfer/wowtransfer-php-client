@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 /* @var $errors string */
@@ -180,7 +181,8 @@ $this->breadcrumbs = [
 		<?php if ($queriesCount > 0): ?>
 			<div id="run-queries-table">
 			<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
-<?
+<?php
+
 				if (isset($queries[$i])) {
 					$query = $queries[$i];
 					$classStatus = 'query-res-success';

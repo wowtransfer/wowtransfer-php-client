@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this ConfigsController */
 /* @var $model ServiceConfigForm */
 

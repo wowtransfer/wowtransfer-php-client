@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this ConfigsController */
 /* @var $model AppConfigForm */
 /* @var $cores array */
@@ -25,7 +26,8 @@ $this->breadcrumbs = [
 
 <fieldset>
 	<legend><?= Yii::t('app', 'Server') ?></legend>
-<?
+<?php
+
 	echo $form->textFieldControlGroup($model, 'siteUrl');
 	echo $form->emailFieldControlGroup($model, 'emailAdmin');
 	echo $form->dropDownListControlGroup($model, 'core', $cores);

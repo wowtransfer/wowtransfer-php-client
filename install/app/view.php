@@ -1,4 +1,5 @@
-<?
+<?php
+
 namespace Installer;
 
 use Installer\App;
@@ -232,7 +233,8 @@ class View
 			<tr>
 				<td><?= $item['value']; ?></td>
 				<td>
-<?
+<?php
+
 					$resultClass = 'danger';
 					$resultTitle = 'Ошибка';
 					if (!empty($item['result'])) {
@@ -248,7 +250,8 @@ class View
 
 		</tbody>
 		</table>
-<?
+<?php
+
 	}
 
 	/**

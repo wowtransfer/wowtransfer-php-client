@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $view \Installer\View */
 
 use Installer\App;

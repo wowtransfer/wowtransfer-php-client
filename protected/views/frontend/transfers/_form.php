@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 /* @var array $wowserversSites */
@@ -102,7 +103,8 @@
 
 	</div>
 
-<?
+<?php
+
 $this->endWidget();
 unset($form);
 ?>

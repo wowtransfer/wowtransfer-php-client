@@ -1,4 +1,5 @@
-<?
+<?php
+
 /* @var $this FrontEndController */
 ?>
 <!DOCTYPE html>

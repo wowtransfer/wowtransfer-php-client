@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Installer;
 
 include_once __DIR__ . '/view.php';

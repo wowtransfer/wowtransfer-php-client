@@ -1,4 +1,5 @@
-<?
+<?php
+
 /**
  * @var $page array
  * @var $stepCount int
@@ -22,13 +23,15 @@ use Installer\App;
 </div>
 
 <!-- menu -->
-<?
+<?php
+
 	$glyphicon = 'glyphicon-ok';
 ?>
 <div id="menu">
 	<ul>
 	<?php foreach ($pages as $name => $menuPage): ?>
-<?
+<?php
+
 		$current = $name === $pageName;
 		if ($current) {
 			$glyphicon = 'glyphicon-arrow-right';
@@ -38,7 +41,8 @@ use Installer\App;
 			<span class="glyphicon <?= $glyphicon; ?>"></span>
 			<?= $menuPage['title']; ?>
 		</li>
-<?
+<?php
+
 		if ($current) {
 			$glyphicon = 'glyphicon-remove';
 		}
