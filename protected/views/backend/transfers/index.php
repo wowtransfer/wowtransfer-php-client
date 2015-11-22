@@ -1,4 +1,4 @@
-<?
+<?php
 /* @var $this TransfersController */
 /* @var $dataProvider CActiveDataProvider */
 /* @var $viewMode string */
@@ -9,35 +9,35 @@ $this->breadcrumbs = [
 ?>
 
 <div class="change-view-mode pull-right">
-	<? if ($viewMode === 'list'): ?>
+	<?php if ($viewMode === 'list'): ?>
 		<span title="<?= Yii::t('app', 'List') ?>" class="selected">
 			<span class="glyphicon glyphicon-th"></span>
 		</span>
-	<? else: ?>
+	<?php else: ?>
 		<a href="<?= $this->createUrl('changeview', ['mode' => 'list']) ?>"
 			title="<?= Yii::t('app', 'List') ?>">
 			 <span class="glyphicon glyphicon-th"></span></a>
-	<? endif ?>
+	<?php endif ?>
 
-	<? if ($viewMode === 'table'): ?>
+	<?php if ($viewMode === 'table'): ?>
 		<span title="<?= Yii::t('app', 'Table') ?>" class="selected">
 			<span class="glyphicon glyphicon-th-list"></span>
 		</span>
-	<? else: ?>
+	<?php else: ?>
 		<a href="<?= $this->createUrl('changeview', ['mode' => 'table']) ?>"
 			title="<?= Yii::t('app', 'Table') ?>">
 			 <span class="glyphicon glyphicon-th-list"></span></a>
-	<? endif ?>
+	<?php endif ?>
 </div>
 
 <h1><?= Yii::t('app', 'Transfer requests') ?></h1>
 
-<? if (Yii::app()->user->hasFlash('success')): ?>
+<?php if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success'); ?></div>
-<? endif; ?>
+<?php endif; ?>
 
 <div id="transfers-listview-block">
-	<? $this->renderPartial('_index_data', [
+	<?php $this->renderPartial('_index_data', [
 		'dataProvider' => $dataProvider,
 		'viewMode' => $viewMode,
 	]) ?>
@@ -46,9 +46,9 @@ $this->breadcrumbs = [
 <script><!--
 
 window.statuses = [];
-<? foreach (ChdTransfer::getStatusLabels() as $name => $title): ?>
+<?php foreach (ChdTransfer::getStatusLabels() as $name => $title): ?>
 	window.statuses["<?= $name; ?>"] = "<?= $title; ?>";
-<? endforeach; ?>
+<?php endforeach; ?>
 
 --></script>
 

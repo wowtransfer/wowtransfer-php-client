@@ -22,7 +22,7 @@ $this->breadcrumbs = [
 </div>
 
 
-<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'htmlOptions' => [
 		'id' => 'create-char-from',
@@ -33,12 +33,12 @@ $this->breadcrumbs = [
 <div class="row create-char-top">
 	<div class="col-md-6">
 
-		<div style="float: left; padding: 3px;">
+		<div class="request-part">
 			<b><?= Yii::t('app', 'Created at') ?></b><br><?= $model->create_transfer_date; ?><br>
 			<b><?= Yii::t('app', 'Status') ?></b><br> <?= $model->status; ?>
 		</div>
 
-		<div style="float: left; padding: 3px;">
+		<div class="request-part">
 			<b><?= Yii::t('app', 'Server') ?></b><br>
 			<?= $model->server; ?><br>
 			<b><?= Yii::t('app', 'Realmlist') ?></b><br>
@@ -47,7 +47,7 @@ $this->breadcrumbs = [
 			<?= $model->realm; ?>
 		</div>
 
-		<div style="float: left; padding: 3px;">
+		<div class="request-part">
 			<b><?= Yii::t('app', 'Account') ?></b><br>
 			<?= $model->account; ?><br>
 			<b><?= Yii::t('app', 'Password') ?></b><br>
@@ -91,8 +91,8 @@ $this->breadcrumbs = [
 	</div>
 </div>
 
-<div>
-	<? $this->widget('application.components.widgets.TransferOptionsWidget', [
+<div class="chd-row">
+	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $model,
 		'form' => $form,
 		'options' => $model->getTransferOptionsToUser(),
@@ -100,45 +100,46 @@ $this->breadcrumbs = [
 	]); ?>
 </div>
 
-<div class="pull-right" style="height: 1em;">
-	<a href="<?= Yii::app()->createUrl('/configs/toptions') ?>">
-		<?= Yii::t('app', 'If the option are disabled then she not sets in global settings') ?>
-	</a>
+<div class="row">
+	<div class="col-md-6">
+		<img id="create-char-wait" src="<?= Yii::app()->request->baseUrl ?>/images/wait30.gif" style="visibility: hidden;">
+
+		<a href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
+		   class="btn btn-primary" id="btn-create-char" autocomplete="off"
+		   style="display: <?= $model->char_guid ? 'none' : 'inline-block' ?>">
+			<span class="glyphicon glyphicon-plane"></span>
+			<?= Yii::t('app', 'Create') ?>
+		</a>
+
+		<a href="<?= $this->createUrl('deletechar', ['id' => $model->id]); ?>"
+		   class="btn btn-danger" id="btn-delete-char" autocomplete="off"
+		   style="display: <?= $model->char_guid ? 'inline-block' : 'none' ?>">
+			<span class="spr delete-char"></span>
+			<?= Yii::t('app', 'Delete') ?>
+		</a>
+
+		<a class="btn btn-primary" href="<?= $this->createUrl('onlysql', ['id' => $model->id]) ?>"
+			id="btn-only-sql">
+			<span class="glyphicon"></span>
+			SQL
+		</a>
+
+		<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
+		   id="btn-create-char-cancel">
+			<span class="glyphicon glyphicon-ban-circle"></span>
+			<?= Yii::t('app', 'Cancel') ?>
+		</a>
+
+	</div>
+	<div class="col-md-6">
+		<a href="<?= Yii::app()->createUrl('/configs/toptions') ?>">
+			<?= Yii::t('app', 'If the option are disabled then she not sets in global settings') ?>
+		</a>
+	</div>
 </div>
 
-<div class="form-actions">
-	<img id="create-char-wait" src="<?= Yii::app()->request->baseUrl ?>/images/wait30.gif" style="visibility: hidden;">
-
-	<a href="<?= $this->createUrl('char', ['id' => $model->id]) ?>"
-	   class="btn btn-primary" id="btn-create-char" autocomplete="off"
-	   style="display: <?= $model->char_guid ? 'none' : 'inline-block' ?>">
-		<span class="glyphicon glyphicon-plane"></span>
-		<?= Yii::t('app', 'Create') ?>
-	</a>
-
-	<a href="<?= $this->createUrl('deletechar', ['id' => $model->id]); ?>"
-	   class="btn btn-danger" id="btn-delete-char" autocomplete="off"
-	   style="display: <?= $model->char_guid ? 'inline-block' : 'none' ?>">
-		<span class="spr delete-char"></span>
-		<?= Yii::t('app', 'Delete') ?>
-	</a>
-
-	<a class="btn btn-primary" href="<?= $this->createUrl('onlysql', ['id' => $model->id]) ?>"
-		id="btn-only-sql">
-		<span class="glyphicon"></span>
-		SQL
-	</a>
-
-	<a href="<?= $this->createUrl('/transfers') ?>" class="btn btn-default"
-	   id="btn-create-char-cancel">
-		<span class="glyphicon glyphicon-ban-circle"></span>
-		<?= Yii::t('app', 'Cancel') ?>
-	</a>
-
-</div>
-
-<? $this->endWidget(); ?>
-<? unset($form); ?>
+<?php $this->endWidget(); ?>
+<?php unset($form); ?>
 
 <hr>
 
@@ -150,7 +151,8 @@ $this->breadcrumbs = [
 	</li>
 	<li class="active">
 		<a href="#tab-queries" data-toggle="tab">
-			Queries <span class="badge" title="<?= Yii::t('app', 'Count of queries') ?>">0</span>
+			<?= Yii::t('app', 'Queries') ?>
+			<span class="badge" title="<?= Yii::t('app', 'Count of queries') ?>">0</span>
 		</a>
 	</li>
 	<li>
@@ -160,7 +162,7 @@ $this->breadcrumbs = [
 	</li>
 	<li>
 		<a href="#tab-errors" data-toggle="tab">
-		<?= Yii::t('app', 'Errors') ?> <span class="badge" title="<?= Yii::t('app', 'Count of errors') ?>">0</span>
+			<?= Yii::t('app', 'Errors') ?> <span class="badge" title="<?= Yii::t('app', 'Count of errors') ?>">0</span>
 		</a>
 	</li>
 </ul>
@@ -175,25 +177,25 @@ $this->breadcrumbs = [
 	<div class="tab-pane active" id="tab-queries">
 		<h3><?= Yii::t('app', 'Result of the queries runing') ?></h3>
 
-		<? if ($queriesCount > 0): ?>
+		<?php if ($queriesCount > 0): ?>
 			<div id="run-queries-table">
-			<? for ($i = 0; $i < $queriesCount; ++$i): ?>
+			<?php for ($i = 0; $i < $queriesCount; ++$i): ?>
 <?
 				if (isset($queries[$i])) {
 					$query = $queries[$i];
 					$classStatus = 'query-res-success';
 				}
 				else {
-					$query = ['query'=>'', 'status'=>'&nbsp;'];
+					$query = ['query' => '', 'status' => '&nbsp;'];
 					$classStatus = '';
 				}
 ?>
 				<span class="query-res <?= $classStatus; ?>" title="<?= $query['query']; ?>"><?= $query['status'] ?></span>
-			<? endfor; ?>
+			<?php endfor; ?>
 			</div>
-		<? else: ?>
+		<?php else: ?>
 			<div id="run-queries-table"></div>
-		<? endif; ?>
+		<?php endif; ?>
 
 	</div>
 

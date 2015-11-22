@@ -1,4 +1,4 @@
-<?
+<?php
 /* @var $model ChdTransfer */
 /* @var $this TransfersController */
 /* @var $luaDumpContent string Source content */

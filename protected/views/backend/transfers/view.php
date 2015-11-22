@@ -1,4 +1,4 @@
-<?
+<?php
 /* @var $this TransfersController */
 /* @var $model ChdTransfer */
 
@@ -31,7 +31,7 @@ $this->menu = [
 
 <h1><?= Yii::t('app', 'Request view') ?> #<?= $model->id; ?></h1>
 
-<? $this->widget('zii.widgets.CDetailView', [
+<?php $this->widget('zii.widgets.CDetailView', [
 	'data' => $model,
 	'attributes' => [
 		'id',
@@ -53,9 +53,8 @@ $this->menu = [
 ]); ?>
 
 <div class="chd-row">
-	<? $this->widget('application.components.widgets.TransferOptionsWidget', [
+	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $model,
-		//'form' => $form,
 		'options' => $model->getTransferOptionsToUser(),
 		'readonly' => true,
 	]); ?>

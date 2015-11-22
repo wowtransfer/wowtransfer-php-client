@@ -95,6 +95,10 @@
 .create-char-top {
 	margin-bottom: 10px;
 }
+.create-char-top .request-part {
+	float: left;
+	padding: 3px;
+}
 
 .t-request-item {
 	border: 1px solid #C9E0ED;

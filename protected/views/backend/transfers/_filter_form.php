@@ -1,11 +1,11 @@
-<?
+<?php
 /* @var $this BackendController */
 ?>
 <div class="portlet" style="margin-top: 10px;">
 	<form method="post" action="" onsubmit="return false;" id="frm-filter">
 		<div class="portlet-content">
 		<div class="portlet-title"><?= Yii::t('app', 'Statuses') ?></div>
-		<? foreach (ChdTransfer::getStatusLabels() as $name => $value): ?>
+		<?php foreach (ChdTransfer::getStatusLabels() as $name => $value): ?>
 		<label class="tstatus-<?= $name; ?>">
 			<input type="checkbox" name="statuses[]"
 				   value="<?= $name ?>"
@@ -14,7 +14,7 @@
 			>
 			<?= $value ?>
 		</label><br>
-		<? endforeach; ?>
+		<?php endforeach; ?>
 
 		<div class="portlet-title"><?= Yii::t('app', 'Date/Time') ?></div>
 		<label><input type="radio" name="dt_range" <?= $this->filterDtRange == 0 ? 'checked="checked"' : '' ?> value="0">

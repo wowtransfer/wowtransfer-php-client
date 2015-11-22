@@ -1,4 +1,4 @@
-<?
+<?php
 /* @var $this TransfersController */
 /* @var $data ChdTransfer */
 
@@ -39,11 +39,11 @@ $statuses = ChdTransfer::getStatusLabels();
 							</span> <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu transfer-statuses" role="menu">
-							<? foreach ($statuses as $name => $title): ?>
+							<?php foreach ($statuses as $name => $title): ?>
 								<li><a href="#" data-name="<?= $name ?>">
 									<?= $title ?></a>
 								</li>
-							<? endforeach ?>
+							<?php endforeach ?>
 						</ul>
 					</div>
 					</td>
