@@ -12,6 +12,7 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'defaultController'=>'site',
 	'name'=>'Перенос персонажей WoW',
+	'timeZone' => 'Europe/Moscow',
 
 	'behaviors'=>array(
 		'runEnd'=>array(
