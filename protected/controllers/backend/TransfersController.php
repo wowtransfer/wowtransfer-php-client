@@ -198,16 +198,14 @@ class TransfersController extends BackendController
 
 		$result = CreateCharForm::getDefaultResult();
 		if ($request->isAjaxRequest && $request->isPostRequest) {
-			if ($request->isAjaxRequest) {
-				$transferConfig = $request->getPost('tconfig');
-				$createCharForm = new CreateCharForm($model);
-				$result = $createCharForm
-					->setTransferConfig($transferConfig)
-					->createChar();
-				header('Content-Type: application/json; charset utf-8');
-				echo json_encode($result);
-				Yii::app()->end();
-			}
+			$transferConfig = $request->getPost('tconfig');
+			$createCharForm = new CreateCharForm($model);
+			$result = $createCharForm
+				->setTransferConfig($transferConfig)
+				->createChar();
+			header('Content-Type: application/json; charset utf-8');
+			echo json_encode($result);
+			Yii::app()->end();
 		}
 
 		$service = new WowtransferUI();
@@ -219,7 +217,7 @@ class TransfersController extends BackendController
 			'sql'             => $result['sql'],
 			'queries'         => $result['queries'],
 			'queriesCount'    => count($result['queries']),
-			'tconfigs'        => $service->getTransferConfigs(),
+			'tconfigs'        => $service->getTransferConfigsPair(),
 		]);
 	}
 
