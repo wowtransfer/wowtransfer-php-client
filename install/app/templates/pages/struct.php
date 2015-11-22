@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 		if (!$view->hasErrors()) {
 			$view->writeSubmitedFields();
-			header('Location: index.php?page=procedures');
+			header('Location: index.php?page=privileges');
 			exit;
 		}
 	}

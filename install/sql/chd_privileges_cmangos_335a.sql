@@ -1,10 +1,6 @@
 -- on `transfer` table
 GRANT SELECT, INSERT, UPDATE, DELETE ON `%db_characters%`.`%transfer_table%` TO '%username%'@'%host%';
 
--- on stored procedures
-GRANT EXECUTE ON PROCEDURE `%db_characters%`.`chd_char_del` TO '%username%'@'%host%';
-GRANT EXECUTE ON PROCEDURE `%db_characters%`.`chd_char_del_debug` TO '%username%'@'%host%';
-
 -- on `characters` database
 GRANT SELECT, INSERT ON `%db_characters%`.`character_action` TO '%username%'@'%host%';
 GRANT SELECT, INSERT ON `%db_characters%`.`character_account_data` TO '%username%'@'%host%';

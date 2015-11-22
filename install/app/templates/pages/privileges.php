@@ -10,7 +10,7 @@ if (isset($_POST['back'])) {
 	unset($_POST['submit']);
 
 	$view->writeSubmitedFields();
-	header('Location: index.php?page=procedures');
+	header('Location: index.php?page=struct');
 	exit;
 }
 

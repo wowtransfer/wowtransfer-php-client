@@ -164,9 +164,6 @@ class App
 			'struct' => [
 				'title' => App::t('Creation of the tables'),
 			],
-			'procedures' => [
-				'title' => App::t('Stored procedures'),
-			],
 			'privileges' => [
 				'title' => App::t('Privileges'),
 			],
@@ -404,45 +401,6 @@ class App
 		if (!$sql) {
 			$fileName->addError($fileName . ' не найден или пуст');
 		}
-
-		return $sql;
-	}
-
-	/**
-	 * Load database procedures
-	 *
-	 * @return mixed SQL of false
-	 */
-	public function loadDbProcedures()
-	{
-		// TODO: make function (filePrefix)
-
-		$core = $this->view->getFieldValue('core');
-		if (empty($core)) {
-			$this->view->addError(App::t('Core of the WoW server not found'));
-			return false;
-		}
-
-		$fileName = 'sql/chd_procedures_' . $core . '.sql';
-		if (!file_exists($fileName)) {
-			$this->view->addError('Файл ' . $fileName . ' не найден');
-			return false;
-		}
-
-		$sql = file_get_contents($fileName);
-		if (empty($sql)) {
-			$this->view->addError('Файл ' . $fileName . ' пустой');
-			return false;
-		}
-		/*
-		$dbWowtransferUser = $this->view->getFieldValue('db_wotransfer_user');
-		if (empty($dbWowtransferUser))
-		{
-			$this->view->addError('Пользователь, под которым должно работать приложение, не определен');
-			return false;
-		}
-		str_replace('%username%', $dbWowtransferUser, $sql);
-		*/
 
 		return $sql;
 	}

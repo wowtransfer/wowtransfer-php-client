@@ -345,15 +345,6 @@ class ChdTransfer extends CActiveRecord
 		$characterHelper = new CharacterDatabase(Yii::app()->db);
 		$characterHelper->deleteCharacter($this->id);
 
-		/*$connection = Yii::app()->db;
-		$command = $connection->createCommand('CALL chd_char_del(:id, :table_name)');
-		$command->bindValue(':id', $this->id);
-		$command->bindValue(':table_name', $this->tableName());
-		$command->execute();
-
-		$command = $connection->createCommand('SELECT @CHD_RES');
-		$result = $command->queryScalar() > 0;*/
-
 		return true;
 	}
 

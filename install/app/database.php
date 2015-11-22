@@ -154,45 +154,6 @@ class DatabaseManager
 	/**
 	 *
 	 */
-	public function createProcedures()
-	{
-		$db = $this->view->getFieldValue('db_characters');
-
-		try {
-			$pdo = $this->_connect($db);
-
-			$sql = App::$app->loadDbProcedures();
-			if (!$sql) {
-				return false;
-			}
-
-			// first line always start with 'DELIMITER $$'
-			$queries = explode('$$', $sql);
-			if (substr(trim($queries[0]), 0, 9) === 'DELIMITER') {
-				array_shift($queries);
-			}
-
-			foreach ($queries as $query) {
-				$query = trim($query);
-				// $query = removeComment($query);
-				if (!empty($query)) {
-					$pdo->exec($query);
-				}
-			}
-
-			unset($pdo);
-		}
-		catch (\PDOException $ex) {
-			$this->view->addError('Выполнение запроса: ' . $ex->getMessage());
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 *
-	 */
 	public function applyPrivileges()
 	{
 		$db = $this->view->getFieldValue('db_characters');

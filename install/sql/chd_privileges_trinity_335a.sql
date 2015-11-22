@@ -1,8 +1,5 @@
 GRANT SELECT, INSERT, UPDATE, DELETE ON `characters`.`chd_transfer` TO '%username%'@'%host%';
 
-GRANT EXECUTE ON PROCEDURE `characters`.`chd_char_del` TO '%username%'@'%host%';
-GRANT EXECUTE ON PROCEDURE `characters`.`chd_char_del_debug` TO '%username%'@'%host%';
-
 GRANT SELECT, INSERT ON `characters`.`character_account_data` TO '%username%'@'%host%';
 GRANT SELECT, INSERT ON `characters`.`character_achievement` TO '%username%'@'%host%';
 GRANT SELECT, INSERT ON `characters`.`character_achievement_progress` TO '%username%'@'%host%';
