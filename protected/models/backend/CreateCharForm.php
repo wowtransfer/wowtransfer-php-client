@@ -57,7 +57,7 @@ class CreateCharForm
 		$result = [];
 
 		if (empty($sql)) {
-			$result['error'] = 'Empty SQL script';
+			$result['error'] = Yii::t('app', 'Empty SQL script');
 			return $result;
 		}
 
@@ -66,40 +66,40 @@ class CreateCharForm
 
 		$transaction = $db->beginTransaction();
 
+		$queryNumber = 1;
 		try {
-			$query1 = [
+			$queryItem = [
 				'query' => '',
 				'status' => 0
 			];
 
 			$command = $db->createCommand();
 
-			$query1['query'] = 'SET @ACC_GUID = ' . $accountGuid;
-			$command->text = $query1['query'];
-			$query1['status'] = $command->execute();
-			$result[] = $query1;
+			$queryItem['query'] = 'SET @ACC_GUID = ' . $accountGuid;
+			$command->text = $queryItem['query'];
+			$queryItem['status'] = $command->execute();
+			$result[] = $queryItem;
 
-			$i = 1;
 			foreach ($queries as $query) {
-				++$i;
+				++$queryNumber;
 				$query = trim($query);
 				if (empty($query)) {
 					continue;
 				}
 
-				$query1['query'] = substr($query, 0, 255);
+				$queryItem['query'] = substr($query, 0, 255);
 				$command->text = $query;
-				$query1['status'] =  $command->execute();
-				$result[] = $query1;
+				$queryItem['status'] =  $command->execute();
+				$result[] = $queryItem;
 			}
 
 			$transaction->commit();
 		}
 		catch (\Exception $ex) {
-			$query1['status'] = 'failed';
-			$result[] = $query1;
+			$queryItem['status'] = 'failed';
+			$result[] = $queryItem;
 			$transaction->rollback();
-			$result['error'] = Yii::t('app', 'Query') . ' #' . $i . ' ' . $ex->getMessage();
+			$result['error'] = Yii::t('app', 'Query') . ' #' . $queryNumber . ' ' . $ex->getMessage();
 		}
 
 		return $result;

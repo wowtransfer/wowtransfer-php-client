@@ -223,17 +223,17 @@ class TransfersController extends BackendController
 
 	public function actionDeletechar($id)
 	{
-		$result = [];
+		$result = ['success' => false];
 
 		$model = $this->loadModel($id);
 		try {
-			if ($model->deleteChar()) {
-				$result['success'] = true;
-				$result['message'] = Yii::t('app', 'Character GUID = {n} has deleted successful', $model->char_guid);
-			}
-			else {
-				$result['error'] = 'Delete the character failed';
-			}
+			$model->deleteChar();
+
+			$result['message'] = Yii::t('app', 'Character GUID = {n} has deleted successful', $model->char_guid);
+			$result['success'] = true;
+		}
+		catch (CharacterDeletionException $ex) {
+			$result['error'] = Yii::t('app', 'Couldn`t delete the character') . ': ' . $ex->getMessage();
 		} catch (Exception $ex) {
 			$result['error'] = $ex->getMessage();
 		}
