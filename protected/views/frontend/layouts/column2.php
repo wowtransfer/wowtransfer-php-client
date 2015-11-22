@@ -1,5 +1,5 @@
-<? /* @var $this Controller */ ?>
-<? $this->beginContent('//layouts/main'); ?>
+<?php /* @var $this Controller */ ?>
+<?php $this->beginContent('//layouts/main'); ?>
 
 <div class="col-md-9">
 	<main>
@@ -15,4 +15,4 @@
 	</aside>
 </div>
 
-<? $this->endContent(); ?>
+<?php $this->endContent(); ?>

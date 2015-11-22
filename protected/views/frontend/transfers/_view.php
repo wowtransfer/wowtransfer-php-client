@@ -36,12 +36,12 @@
 			<span class="glyphicon glyphicon-pencil"></span>
 		</a>
 
-		<? if ($this->action->id !== 'view'): ?>
+		<?php if ($this->action->id !== 'view'): ?>
 			<a href="<?= $this->createUrl('/transfers/view', ['id' => $data->id]); ?>"
 			   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'View') ?>">
 				<span class="glyphicon glyphicon-eye-open"></span>
 			</a>
-		<? endif ?>
+		<?php endif ?>
 	</div>
 
 	<div class="row" style="margin-bottom: 10px;">
@@ -78,7 +78,7 @@
 	</div>
 
 	<div>
-	<? $this->widget('application.components.widgets.TransferOptionsWidget', [
+	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $data,
 		'options' => $data->getTransferOptionsToUser()
 	]);	?>

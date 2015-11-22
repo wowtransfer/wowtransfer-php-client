@@ -11,11 +11,11 @@ $this->breadcrumbs = [
 ?>
 <h1><?= Yii::t('app', 'Application settings') ?></h1>
 
-<? if (Yii::app()->user->hasFlash('success')): ?>
+<?php if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success'); ?></div>
-<? endif; ?>
+<?php endif; ?>
 
-<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableClientValidation' => true,
 	'htmlOptions' => array(
@@ -80,8 +80,8 @@ $this->breadcrumbs = [
 	</div>
 </div>
 
-<? $this->endWidget(); ?>
-<? unset($form); ?>
+<?php $this->endWidget(); ?>
+<?php unset($form); ?>
 
 <div class="alert alert-warning">
 	<?= Yii::t('app', 'Settings saves in the file') ?> <code>/protected/config/app-local.php</code>.

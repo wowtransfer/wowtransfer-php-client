@@ -1,5 +1,5 @@
-<? /* @var $this Controller */ ?>
-<? $this->beginContent('//layouts/main'); ?>
+<?php /* @var $this Controller */ ?>
+<?php $this->beginContent('//layouts/main'); ?>
 
 <div class="col-md-9" style="margin: 0; padding: 0;">
 	<main id="content">
@@ -19,12 +19,12 @@
 	?>
 	</aside>
 
-	<? foreach ($this->asideBlocks as $block): ?>
+	<?php foreach ($this->asideBlocks as $block): ?>
 	<aside>
 		<?= $block ?>
 	</aside>
-	<? endforeach; ?>
+	<?php endforeach; ?>
 
 </div>
 
-<? $this->endContent(); ?>
+<?php $this->endContent(); ?>

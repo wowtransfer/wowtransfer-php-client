@@ -17,7 +17,7 @@ $this->menu = [
 <h1><?= Yii::t('app', 'Request view') ?> #<?= $model->id; ?></h1>
 
 <div id="transfer-list-view-block">
-	<? $this->renderPartial('_view', ['data' => $model, 'where' => 'card']) ?>
+	<?php $this->renderPartial('_view', ['data' => $model, 'where' => 'card']) ?>
 </div>
 
 <div style="margin: 10px 0;">

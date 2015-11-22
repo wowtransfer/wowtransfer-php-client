@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 <form action="" method="post">
 
-	<? $view->errorSummary(); ?>
+	<?php $view->errorSummary(); ?>
 
 
 	<p class="text-center">Пользователь:
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
 		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
-		<? $view->printHiddenFields($fields); ?>
+		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

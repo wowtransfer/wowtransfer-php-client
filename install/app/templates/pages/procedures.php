@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 
 <form action="" method="post">
 
-	<? $view->errorSummary(); ?>
+	<?php $view->errorSummary(); ?>
 
 	<div class="alert alert-info">
 		<?= App::t('This step have a creating of the stored procedures in the characters database') ?>.
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
 		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
-		<? $view->printHiddenFields($fields); ?>
+		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

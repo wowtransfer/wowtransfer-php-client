@@ -30,17 +30,17 @@ $this->breadcrumbs = [
 
 <div class="clearfix"></div>
 
-<? if (empty($wowServers)): ?>
+<?php if (empty($wowServers)): ?>
 	<div class="alert alert-info">Нет данных</div>
-<? else: ?>
+<?php else: ?>
 <?= CHtml::beginForm() ?>
 
-	<? if (Yii::app()->user->hasFlash('success')): ?>
+	<?php if (Yii::app()->user->hasFlash('success')): ?>
 	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success') ?></div>
-	<? endif ?>
-	<? if (Yii::app()->user->hasFlash('error')): ?>
+	<?php endif ?>
+	<?php if (Yii::app()->user->hasFlash('error')): ?>
 	<div class="alert alert-danger"><?= Yii::app()->user->getFlash('error') ?></div>
-	<? endif ?>
+	<?php endif ?>
 
 	<table class="table table-bordered">
 		<thead>
@@ -50,14 +50,14 @@ $this->breadcrumbs = [
 			</tr>
 		</thead>
 	<tbody>
-	<? foreach ($wowServers as $server): ?>
+	<?php foreach ($wowServers as $server): ?>
 		<tr data-type="server">
 			<th colspan="4">
 				<?= $server->getName() ?>
 			</th>
 			<td></td>
 		</tr>
-		<? foreach ((array)$server->getRealms() as $realm): ?>
+		<?php foreach ((array)$server->getRealms() as $realm): ?>
 		<tr data-type="realm" data-id="<?= $realm->getId() ?>">
 			<td><?= $realm->getName() ?></td>
 			<td><?= $realm->getRate() ?></td>
@@ -68,8 +68,8 @@ $this->breadcrumbs = [
 					   <?= in_array($realm->getId(), $blackRealms) ? ' checked ' : '' ?> >
 			</td>
 		</tr>
-		<? endforeach ?>
-	<? endforeach; ?>
+		<?php endforeach ?>
+	<?php endforeach; ?>
 	</tbody>
 	</table>
 
@@ -82,5 +82,5 @@ $this->breadcrumbs = [
 		</a>
 	</div>
 
-<? CHtml::endForm() ?>
-<? endif ?>
+<?php CHtml::endForm() ?>
+<?php endif ?>

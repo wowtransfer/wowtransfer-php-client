@@ -1,5 +1,5 @@
 <div class="dropdown" style="display: inline-block;" id="change-lang-block">
-	<? $lang = Yii::app()->user->lang ?>
+	<?php $lang = Yii::app()->user->lang ?>
 	<button class="btn btn-default btn-sm dropdown-toggle" type="button"
 			id="change-lang" data-toggle="dropdown"
 			aria-haspopup="true" aria-expanded="true">

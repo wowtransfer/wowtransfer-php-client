@@ -1,4 +1,4 @@
-<? return [
+<?php return [
 	'Back' => 'Назад',
 	'Bad framework path' => 'Путь до фреймворка не введен',
 	'Begin install' => 'Начать установку',

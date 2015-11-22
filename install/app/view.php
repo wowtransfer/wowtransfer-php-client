@@ -228,7 +228,7 @@ class View
 			</tr>
 		</thead>
 		<tbody>
-			<? foreach ($this->_checkItems as $name => $item): ?>
+			<?php foreach ($this->_checkItems as $name => $item): ?>
 			<tr>
 				<td><?= $item['value']; ?></td>
 				<td>
@@ -244,7 +244,7 @@ class View
 				</td>
 				<td><?= isset($item['comment']) ? $item['comment'] : ''; ?></td>
 			</tr>
-			<? endforeach ?>
+			<?php endforeach ?>
 
 		</tbody>
 		</table>

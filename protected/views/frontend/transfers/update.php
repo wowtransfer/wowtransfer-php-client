@@ -18,7 +18,7 @@ $this->menu = [
 
 <h1><?= Yii::t('app', 'Update request') ?> #<?= $model->id; ?></h1>
 
-<? $this->renderPartial('_form', [
+<?php $this->renderPartial('_form', [
 	'model' => $model,
 	'wowserversSites' => $wowserversSites,
 	'wowserversPair' => $wowserversPair,

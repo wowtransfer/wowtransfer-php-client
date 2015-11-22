@@ -5,7 +5,7 @@
 
 ?>
 
-<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableAjaxValidation' => false,
 	'enableClientValidation' => false,
@@ -17,41 +17,41 @@
 
 	<?= $form->errorSummary($model); ?>
 
-	<? if ($model->isNewRecord): ?>
+	<?php if ($model->isNewRecord): ?>
 		<fieldset>
 			<legend><?= Yii::t('app', 'Select Lua dump') ?></legend>
 			<?= $form->fileFieldControlGroup($model, 'fileLua', ['help' => ' ']); ?>
 		</fieldset>
-	<? endif; ?>
+	<?php endif; ?>
 
 	<fieldset>
 		<legend><?= Yii::t('app', 'Remote server') ?></legend>
 
-		<? if (Config::getInstance()->getOnlyCheckedServers()): ?>
+		<?php if (Config::getInstance()->getOnlyCheckedServers()): ?>
 
 			<?= $form->dropDownListControlGroup($model, 'server', $wowserversPair, [
 				'class' => 'col-sm-4', 'list' => 'servers-list',
 			]); ?>
 
-		<? else: ?>
+		<?php else: ?>
 
 			<?= $form->textFieldControlGroup($model, 'server', [
 				'class' => 'col-sm-4', 'list' => 'servers-list',
 			]); ?>
 
 			<datalist id="servers-list">
-				<? foreach ($wowserversSites as $server): ?>
+				<?php foreach ($wowserversSites as $server): ?>
 					<option value="<?= $server ?>">
-				<? endforeach; ?>
+				<?php endforeach; ?>
 			</datalist>
 
-		<? endif ?>
+		<?php endif ?>
 
 		<?= $form->textFieldControlGroup($model, 'realmlist', [
 			'class' => 'col-sm-4', 'readonly' => 1,
 		]); ?>
 
-		<? /*echo CHtml::dropDownList('wowserver-realm', null, [], [
+		<?php /*echo CHtml::dropDownList('wowserver-realm', null, [], [
 			'onchange' => '$("#ChdTransfer_realm").val(this.value);',
 			'class' => 'pull-right',
 			'style' => 'width: 180px;',
@@ -81,7 +81,7 @@
 		<legend><?= Yii::t('app', 'Transfer options') ?></legend>
 		<?= $form->error($model, 'transferOptions'); ?>
 
-		<? $this->widget('application.components.widgets.TransferOptionsWidget', [
+		<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
 			'model' => $model,
 			'form' => $form,
 			'options' => $model->getTransferOptionsToUser(),

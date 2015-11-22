@@ -9,11 +9,11 @@ $this->breadcrumbs = [
 
 <h1 class="text-center"><?= Yii::t('app', 'Transfer options') ?></h1>
 
-<? if (Yii::app()->user->hasFlash('success')): ?>
+<?php if (Yii::app()->user->hasFlash('success')): ?>
 <div class="alert alert-success">
 	<?= Yii::app()->user->getFlash('success') ?>
 </div>
-<? endif ?>
+<?php endif ?>
 
 <?
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -32,12 +32,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	</tr>
 	</thead>
 	<tbody>
-	<? foreach ($options as $name => $option): ?>
+	<?php foreach ($options as $name => $option): ?>
 	<tr class="toptions-row">
 		<td><?= CHtml::checkBox('toptions[' . $name . '][disabled]', !isset($option['disabled']), ['id' => 'opt-' . $name]); ?></td>
 		<td><label for="<?= 'opt-' . $name ?>"><?= $option['label']; ?></label></td>
 	</tr>
-	<? endforeach; ?>
+	<?php endforeach; ?>
 	</tbody>
 </table>
 

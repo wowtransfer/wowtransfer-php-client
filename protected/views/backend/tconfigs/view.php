@@ -10,4 +10,4 @@ $this->breadcrumbs = [
 
 <h1><?= Yii::t('app', 'Configuration') ?> #<?= $tconfig['id'] ?></h1>
 
-<? $this->renderPartial('_form', array('tconfig' => $tconfig)); ?>
+<?php $this->renderPartial('_form', array('tconfig' => $tconfig)); ?>

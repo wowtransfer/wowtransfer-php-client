@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
 
-	<? $this->registerCssAndJs(); ?>
+	<?php $this->registerCssAndJs(); ?>
 
 	<title><?= CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -16,7 +16,7 @@
 
 <div class="container" id="page">
 
-	<? $this->widget('bootstrap.widgets.TbNavbar', [
+	<?php $this->widget('bootstrap.widgets.TbNavbar', [
 		'brandLabel' => TbHtml::tag('img', [
 			'alt' => '',
 			'src' => Yii::app()->request->baseUrl . '/images/wowtransfer-icon-24.png',
@@ -37,19 +37,19 @@
 		],
 	]) ?>
 
-	<? if (isset($this->breadcrumbs)):?>
-		<? $this->widget('bootstrap.widgets.TbBreadcrumb', array(
+	<?php if (isset($this->breadcrumbs)):?>
+		<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 			'links' => $this->breadcrumbs,
 			'homeLabel' => CHtml::link(Yii::t('app', 'Administration'), Yii::app()->homeUrl),
 		)); ?><!-- breadcrumbs -->
-	<? endif?>
+	<?php endif?>
 
-	<? if ($this->route !== 'configs/service' && $this->isEmptyServiceParams()): ?>
+	<?php if ($this->route !== 'configs/service' && $this->isEmptyServiceParams()): ?>
 		<div class="alert alert-danger">
 			<?= Yii::t('app', 'Service parameters not set up') ?>,
 			<?= CHtml::link(Yii::t('app', 'Set up'), $this->createUrl('/configs/service'), ['class' => 'lowercase']) ?>.
 		</div>
-	<? endif ?>
+	<?php endif ?>
 
 	<?= $content; ?>
 
@@ -61,9 +61,9 @@
 <div class="container">
 	<div class="navbar" id="footer">
 		<div class="pull-left" style="height: 3em;">
-			<? if (Config::getInstance()->getServiceUsername()): ?>
+			<?php if (Config::getInstance()->getServiceUsername()): ?>
 				Service username: <strong><a href="http://wowtransfer.com/cp/profile/"><?= Yii::app()->params['serviceUsername']; ?></a></strong>
-			<? endif ?>
+			<?php endif ?>
 		</div>
 		<div>
 			Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>
@@ -90,7 +90,7 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<? $this->renderFile(Yii::getPathOfAlias('application.views.common.blocks') . '/main_dialogs.php') ?>
+<?php $this->renderFile(Yii::getPathOfAlias('application.views.common.blocks') . '/main_dialogs.php') ?>
 
 </body>
 </html>

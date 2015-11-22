@@ -11,14 +11,14 @@ $this->breadcrumbs = [
 
 <h1 class="text-center"><?= Yii::t('app', 'Autorization') ?></h1>
 
-<? if ($model->hasErrors()): ?>
+<?php if ($model->hasErrors()): ?>
 	<div class="flash-error">
 		<?= CHtml::errorSummary($model); ?>
 	</div>
-<? endif; ?>
+<?php endif; ?>
 
 <div class="form auth-form">
-<? $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'layout' => TbHtml::FORM_LAYOUT_VERTICAL,
 	'htmlOptions' => array(
 		'id' => 'create-char-from',
@@ -28,7 +28,7 @@ $this->breadcrumbs = [
 
 	<?= $form->textFieldControlGroup($model, 'username', array('size' => 20)); ?>
 	<?= $form->passwordFieldControlGroup($model, 'password', array('size' => 20)); ?>
-	<? //echo $form->checkBoxControlGroup($model, 'remember'); ?>
+	<?php //echo $form->checkBoxControlGroup($model, 'remember'); ?>
 
 	<button type="submit" class="btn btn-primary">
 		<span class="glyphicon glyphicon-log-in"></span>
@@ -40,5 +40,5 @@ $this->breadcrumbs = [
 		<?= Yii::t('app', 'Cancel') ?>
 	</a>
 
-<? $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 </div>

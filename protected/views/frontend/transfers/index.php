@@ -14,7 +14,7 @@ $this->menu = [
 <h1><?= Yii::t('app', 'Transfer requests') ?></h1>
 
 <div id="transfer-list-view-block">
-<? $this->renderPartial('_list', [
+<?php $this->renderPartial('_list', [
 	'dataProvider' => $dataProvider
 ]); ?>
 </div>

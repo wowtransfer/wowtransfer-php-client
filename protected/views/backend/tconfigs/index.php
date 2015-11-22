@@ -13,11 +13,11 @@ $this->breadcrumbs = [
 	</a>
 </div>
 
-<? if (empty($tconfigs)): ?>
+<?php if (empty($tconfigs)): ?>
 
 <div class="alert alert-info"><?= Yii::t('app', 'No data') ?></div>
 
-<? else: ?>
+<?php else: ?>
 
 <table class="table table-hover table-cursored" id="tconfigs-table">
 	<col style="width: 40px;">
@@ -35,7 +35,7 @@ $this->breadcrumbs = [
 	</tr>
 </thead>
 <tbody>
-<? foreach ($tconfigs as $i => $config): ?>
+<?php foreach ($tconfigs as $i => $config): ?>
 	<tr data-id="<?= $config['id']; ?>">
 		<td><?= $i + 1; ?></td>
 		<td><?= CHtml::encode($config['name']); ?></td>
@@ -43,11 +43,11 @@ $this->breadcrumbs = [
 		<td><?= CHtml::encode($config['update_date']); ?></td>
 		<td><?= WowtransferUI::getTransferConfigType($config['type']); ?></td>
 	</tr>
-<? endforeach; ?>
+<?php endforeach; ?>
 </tbody>
 </table>
 
-<? endif ?>
+<?php endif ?>
 
 <?
 $url = $this->createUrl("/tconfigs/view");

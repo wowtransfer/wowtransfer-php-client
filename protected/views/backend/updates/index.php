@@ -58,12 +58,12 @@ $this->breadcrumbs = [
 
 		<h3><?= Yii::t('app', 'Release') ?></h3>
 
-		<? if (Yii::app()->user->hasFlash('error')): ?>
+		<?php if (Yii::app()->user->hasFlash('error')): ?>
 		<div class="alert alert-danger">
 			<?= Yii::t('app', 'Error') ?>:
 			<?= Yii::app()->user->getFlash('error') ?>
 		</div>
-		<? endif ?>
+		<?php endif ?>
 
 		<?= CHtml::beginForm($this->createUrl('uploadrelease'), 'POST', [
 			'enctype' => 'multipart/form-data',
@@ -98,7 +98,7 @@ $this->breadcrumbs = [
 
 
 
-<? if (isset($release['size'])): ?>
+<?php if (isset($release['size'])): ?>
 
 <div class="row">
 
@@ -123,13 +123,13 @@ $this->breadcrumbs = [
 			<?= isset($release['size']) ? round($release['size'] / 1024 / 1024, 3) : '0' ?> Mb
 		</div>
 
-		<? if (is_array($release['file_names'])): ?>
+		<?php if (is_array($release['file_names'])): ?>
 		<ol id="release-file-list" style="height: 200px;" data-count="<?= count($release['file_names']) ?>">
-			<? foreach ($release['file_names'] as $i => $name): ?>
+			<?php foreach ($release['file_names'] as $i => $name): ?>
 				<li><?= $name ?></li>
-			<? endforeach ?>
+			<?php endforeach ?>
 		</ol>
-		<? endif ?>
+		<?php endif ?>
 
 	</div>
 	<div class="col-md-6 hidden" id="updating-process-block">
@@ -167,4 +167,4 @@ $this->breadcrumbs = [
 </div>
 
 
-<? endif ?>
+<?php endif ?>

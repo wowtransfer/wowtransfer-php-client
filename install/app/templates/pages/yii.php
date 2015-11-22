@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 
 <form action="" method="post">
 
-	<? $view->errorSummary() ?>
+	<?php $view->errorSummary() ?>
 
 	<div class="form-group">
 		<label for="yii_dir" class="control-label"><?= App::t('Directory for') ?> yii.php</label>
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 	<div class="actions-panel">
 		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
-		<? $view->printHiddenFields($excludeFields) ?>
+		<?php $view->printHiddenFields($excludeFields) ?>
 	</div>
 
 </form>

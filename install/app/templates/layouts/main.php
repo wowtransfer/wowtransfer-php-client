@@ -27,14 +27,14 @@ use Installer\App;
 ?>
 <div id="menu">
 	<ul>
-	<? foreach ($pages as $name => $menuPage): ?>
+	<?php foreach ($pages as $name => $menuPage): ?>
 <?
 		$current = $name === $pageName;
 		if ($current) {
 			$glyphicon = 'glyphicon-arrow-right';
 		}
 ?>
-		<li class="<? if ($name === $pageName) echo 'active'; ?>">
+		<li class="<?php if ($name === $pageName) echo 'active'; ?>">
 			<span class="glyphicon <?= $glyphicon; ?>"></span>
 			<?= $menuPage['title']; ?>
 		</li>
@@ -43,7 +43,7 @@ use Installer\App;
 			$glyphicon = 'glyphicon-remove';
 		}
 ?>
-	<? endforeach ?>
+	<?php endforeach ?>
 	</ul>
 </div><!-- menu -->
 
@@ -56,7 +56,7 @@ use Installer\App;
 </div>
 
 <div class="clearfix"></div>
-<? if ($page['step']): ?>
+<?php if ($page['step']): ?>
 	<div class="alert alert-warning">
 		<?= App::t('If the errors was shown, please, visit our') ?>
 		<a href="http://forum.wowtransfer.com?from=install" title="wowtransfer.com forum">
@@ -67,4 +67,4 @@ use Installer\App;
 			<span class="lowercase"><?= App::t('Contact us') ?></span>!
 		</a>
 	</div>
-<? endif ?>
+<?php endif ?>

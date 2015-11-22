@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon">
 
-	<? $this->registerCssAndJs(); ?>
+	<?php $this->registerCssAndJs(); ?>
 
 	<title><?= CHtml::encode($this->pageTitle); ?></title>
 
@@ -19,7 +19,7 @@
 
 <body>
 
-<? $this->widget('bootstrap.widgets.TbNavbar', [
+<?php $this->widget('bootstrap.widgets.TbNavbar', [
 	'brandLabel' => TbHtml::tag('img', [
 		'alt' => '',
 		'src' => Yii::app()->request->baseUrl . '/images/wowtransfer-icon-24.png',
@@ -44,12 +44,12 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<? if (!empty($this->breadcrumbs)): ?>
-				<? $this->widget('bootstrap.widgets.TbBreadcrumb', array(
+			<?php if (!empty($this->breadcrumbs)): ?>
+				<?php $this->widget('bootstrap.widgets.TbBreadcrumb', array(
 					'links' => $this->breadcrumbs,
 					'homeLabel' => Yii::t('app', 'Characters transfer'),
 				)); ?><!-- breadcrumbs -->
-			<? endif; ?>
+			<?php endif; ?>
 		</div>
 	</div>
 
@@ -70,7 +70,7 @@
 	</div>
 </div>
 
-<? $this->renderFile(Yii::getPathOfAlias('application.views.common.blocks') . '/main_dialogs.php') ?>
+<?php $this->renderFile(Yii::getPathOfAlias('application.views.common.blocks') . '/main_dialogs.php') ?>
 
 </body>
 </html>

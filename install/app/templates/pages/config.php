@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 
 <form action="" method="post">
 
-	<? $view->errorSummary() ?>
+	<?php $view->errorSummary() ?>
 
 	<p class="text-center"><?= App::t('The table for the transfer requests') ?>:
 		<b><?= $view->getFieldValue('db_transfer_table') ?></b>
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
 		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
-		<? $view->printHiddenFields($fields) ?>
+		<?php $view->printHiddenFields($fields) ?>
 	</div>
 
 </form>
