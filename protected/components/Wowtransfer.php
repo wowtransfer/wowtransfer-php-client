@@ -16,7 +16,7 @@ class Wowtransfer
 	/**
 	 * @var resource Curl handle
 	 */
-	private $_ch;
+	private $ch;
 
 	/**
 	 * @var string API Base url, without / on end
@@ -73,16 +73,25 @@ class Wowtransfer
 	 */
 	protected $applications;
 
-	public function __construct()
-	{
-		$this->_ch = curl_init();
-		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($this->_ch, CURLOPT_FOLLOWLOCATION, 1);
-	}
+	public function __construct() {}
 
 	public function __destruct()
 	{
-		curl_close($this->_ch);
+		if ($this->getCurlHandle()) {
+			curl_close($this->getCurlHandle());
+		}
+	}
+
+	/**
+	 * @return resource
+	 */
+	protected function getCurlHandle() {
+		if ($this->ch === null) {
+			$this->ch = curl_init();
+			curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, 1);
+		}
+		return $this->ch;
 	}
 
 	/**
@@ -176,7 +185,7 @@ class Wowtransfer
 	 */
 	public function setBaseUrl($url) {
 		if (empty($url)) {
-			throw new \exception('Empty base url');
+			throw new \WowtransferException('Empty base url');
 		}
 
 		if ($url[strlen($url) - 1] === '/') {
@@ -246,7 +255,7 @@ class Wowtransfer
 
 		$dumpFile = new CURLFile($filePath, self::LUA_MIME_TYPE, 'chardumps.lua');
 
-		$ch = $this->_ch;
+		$ch = $this->getCurlHandle();
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/dumps/fields/'));
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: multipart/form-data']);
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -296,7 +305,7 @@ class Wowtransfer
 	public function getCores() {
 		if ($this->cores === null) {
 			$defaultValue = [];
-			$ch = $this->_ch;
+			$ch = $this->getCurlHandle();
 			curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/cores'));
 			$this->lastHttpResponse = curl_exec($ch);
 			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -321,7 +330,7 @@ class Wowtransfer
 	 */
 	public function getTransferConfigs() {
 		if ($this->transferConfigs === null) {
-			$ch = $this->_ch;
+			$ch = $this->getCurlHandle();
 			$url = $this->getApiUrl('/tconfigs' . '?access_token=' . $this->getAccessToken());
 			curl_setopt($ch, CURLOPT_URL, $url);
 			$this->lastHttpResponse = curl_exec($ch);
@@ -349,7 +358,7 @@ class Wowtransfer
 	public function getTransferConfig($id) {
 		$defaultValue = false;
 		$tconfigId = (int)$id;
-		$ch = $this->_ch;
+		$ch = $this->getCurlHandle();
 		$url = $this->getApiUrl('/user/tconfigs/' . $tconfigId . '?access_token=' . $this->getAccessToken());
 		curl_setopt($ch, CURLOPT_URL, $url);
 		$this->lastHttpResponse = curl_exec($ch);
@@ -390,7 +399,7 @@ class Wowtransfer
 
 		$dumpFile = new CURLFile($filePath, self::LUA_MIME_TYPE, 'chardumps.lua');
 
-		$ch = $this->_ch;
+		$ch = $this->getCurlHandle();
 		$postfields = [
 			'dump_lua'         => $dumpFile,
 			'dump_encode'      => 'gzip',
@@ -430,7 +439,7 @@ class Wowtransfer
 	 */
 	public function getWowServers() {
 		if ($this->wowServers === null) {
-			$ch = $this->_ch;
+			$ch = $this->getCurlHandle();
 			curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/wowservers'));
 			$this->lastHttpResponse = curl_exec($ch);
 			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -468,11 +477,9 @@ class Wowtransfer
 	}
 
 	/**
-	 * for example, http://wowtransfer.com/api/v1/dumps/
-	 *
 	 * @param string $uri Example '/dumps', '/dumps/', 'dumps'
-	 *
 	 * @return string
+	 * @example http://wowtransfer.com/api/v1/dumps/
 	 */
 	protected function getApiUrl($uri) {
 		if ($uri{0} !== '/') {
@@ -498,13 +505,13 @@ class Wowtransfer
 	public function getApplications() {
 		if ($this->applications === null) {
 			$this->applications = [];
-			$ch = $this->_ch;
+			$ch = $this->getCurlHandle();
 			curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/apps'));
 			$this->lastHttpResponse = curl_exec($ch);
 			$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			$result = json_decode($this->lastHttpResponse, true);
-			if ($result && $this->lastHttpStatus == 200) {
-				foreach ($result as $appItem) {
+			$applicationsSource = json_decode($this->lastHttpResponse, true);
+			if ($applicationsSource && $this->lastHttpStatus == 200) {
+				foreach ($applicationsSource as $appItem) {
 					$app = new WowtransferApplication($appItem['id_name']);
 					$app
 						->setId($appItem['id'])
@@ -528,7 +535,7 @@ class Wowtransfer
 		if (isset($this->applications[$idName])) {
 			return $this->applications[$idName];
 		}
-		$ch = $this->_ch;
+		$ch = $this->getCurlHandle();
 		curl_setopt($ch, CURLOPT_URL, $this->getApiUrl('/apps/' . $idName));
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -556,7 +563,7 @@ class Wowtransfer
 }
 
 /**
- * Available application of service
+ * The available application of the service
  */
 class WowtransferApplication
 {
@@ -737,6 +744,9 @@ class WowtransferApplication
 	}
 }
 
+/**
+ * The World of Warcraft server entity
+ */
 class Wowserver
 {
 	/**
@@ -843,6 +853,9 @@ class Wowserver
 	}
 }
 
+/**
+ * The realm entity
+ */
 class Realm
 {
 	/**
@@ -950,3 +963,5 @@ class Realm
 		return $this;
 	}
 }
+
+class WowtransferException extends \Exception {}
