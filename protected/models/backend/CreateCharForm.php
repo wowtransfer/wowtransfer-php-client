@@ -163,7 +163,7 @@ class CreateCharForm
 			$guid = $this->fetchCharacterGuid();
 			$result['guid'] = $guid;
 			$this->_transfer->char_guid = $guid;
-			$this->_transfer->create_char_date = date('Y-m-d h:i:s');
+			$this->_transfer->create_char_date = new CDbExpression('NOW()');
 			if (!$this->_transfer->save(false, ['char_guid', 'create_char_date'])) {
 				$result['errors'][] = Yii::t('app', 'Saving failed');
 			}
