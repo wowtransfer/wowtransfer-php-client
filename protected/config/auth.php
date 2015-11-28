@@ -1,22 +1,22 @@
 <?php
 
-return array(
-	'guest' => array(
+return [
+	'guest' => [
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'Guest',
 		'bizRule' => null,
 		'data' => null
-	),
-	'user' => array(
+	],
+	'user' => [
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'User',
-		'children' => array(
+		'children' => [
 			'guest',
-		),
+		],
 		'bizRule' => null,
 		'data' => null
-	),
-	'moderator' => array(
+	],
+	'moderator' => [
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'Moderator',
 		'children' => array(
@@ -24,14 +24,14 @@ return array(
 		),
 		'bizRule' => null,
 		'data' => null
-	),
-	'admin' => array(
+	],
+	'admin' => [
 		'type' => CAuthItem::TYPE_ROLE,
 		'description' => 'Administrator',
-		'children' => array(
+		'children' => [
 			'moderator',
-		),
+		],
 		'bizRule' => null,
 		'data' => null
-	),
-);
+	],
+];

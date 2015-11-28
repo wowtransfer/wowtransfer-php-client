@@ -2,24 +2,25 @@
 
 return CMap::mergeArray(
 
-require __DIR__ . '/main.php',
+	require __DIR__ . '/main.php',
 
-array(
-	'components' => array(
-		'log'=>array(
-			'class'=>'CLogRouter',
-			'routes'=>array(
-				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
-				),
-				// uncomment the following to show log messages on web pages
-				/*array(
-					'class'=>'CWebLogRoute',
-					'levels'=>'error, trace',
-					//'categories'=>'system.db.*',
-				),//*/
-			),
-		),
-	),
-));
+	[
+		'components' => [
+			'log' => [
+				'class' => 'CLogRouter',
+				'routes' => [
+					[
+						'class'=>'CFileLogRoute',
+						'levels'=>'error, warning',
+					],
+					// uncomment the following to show log messages on web pages
+					/*array(
+						'class'=>'CWebLogRoute',
+						'levels'=>'error, trace',
+						//'categories'=>'system.db.*',
+					),//*/
+				],
+			],
+		],
+	]
+);

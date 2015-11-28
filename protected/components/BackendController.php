@@ -5,14 +5,14 @@ class BackendController extends BaseController
 	public $layout = '//layouts/column1';
 
 	/**
-	 * FIlters
+	 * @return array
 	 */
 	public function filters()
 	{
-		return array(
+		return [
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
-		);
+		];
 	}
 
 	/**
