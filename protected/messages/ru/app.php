@@ -67,6 +67,7 @@ return [
 	'Current server' => 'Текущий сервер',
 	'Currency' => 'Валюта',
 	'Database' => 'База данных',
+	'Database connection failed' => 'Соединение с базой данных не установлено',
 	'Database options' => 'Настройка базы данных',
 	'Database name' => 'Название базы',
 	'Date' => 'Дата',

@@ -129,7 +129,15 @@ class ConfigsController extends BackendController
 
 		if ($request->getPost('DbConfigForm')) {
 			$model->attributes = $request->getPost('DbConfigForm');
-			$model->save();
+			try {
+				if ($model->validate()) {
+					$this->checkDbConnection($model);
+					$model->save();
+				}
+			} catch (CDbException $ex) {
+				$message = Yii::t('app', 'Database connection failed') . ': ' . $ex->getMessage();
+				$model->addError('error', $message);
+			}
 		}
 
 		$this->render('db', [
@@ -137,7 +145,12 @@ class ConfigsController extends BackendController
 		]);
 	}
 
-	public function actionCheckDbConnection() {
-
+	/**
+	 * @param DbConfigForm $model
+	 */
+	private function checkDbConnection($model) {
+		$db = new CDbConnection($model->connectionString, $model->username, $model->password);
+		$db->active = true;
+		unset($db);
 	}
 }

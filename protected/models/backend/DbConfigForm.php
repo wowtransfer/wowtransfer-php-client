@@ -83,6 +83,11 @@ class DbConfigForm extends PhpFileForm
 		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
 	}
 
+	public function beforeValidate() {
+		$this->connectionString = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName;
+		return parent::beforeValidate();
+	}
+
 	public function save($validate = true) {
 		if ($validate && !$this->validate()) {
 			return false;
@@ -96,7 +101,6 @@ class DbConfigForm extends PhpFileForm
 		$attributes = [
 			'connectionString', 'username', 'password', 'charset',
 		];
-		$this->connectionString = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName;
 		$this->setFilePath($filePath);
 		$this->setWorkAttributes($attributes);
 		$result = parent::save();

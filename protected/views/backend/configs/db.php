@@ -23,6 +23,7 @@ $this->breadcrumbs = [
 		'id' => 'config-db-form',
 	],
 ]);
+	echo $form->errorSummary($model);
 
 	echo $form->textFieldControlGroup($model, 'host');
 	echo $form->textFieldControlGroup($model, 'dbName');
@@ -37,9 +38,6 @@ $this->breadcrumbs = [
 		<div class="col-sm-10">
 			<button type="submit" class="btn btn-primary" name="server">
 				<?= Yii::t('app', 'Save') ?>
-			</button>
-			<button type="submit" class="btn btn-warning" name="check_connection" disabled="">
-				<?= Yii::t('app', 'Check connection') ?>
 			</button>
 			<a href="<?= $this->createUrl('/configs') ?>" class="btn btn-default">
 				<span class="glyphicon glyphicon-ban-circle"></span>
