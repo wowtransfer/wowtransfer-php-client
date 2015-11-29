@@ -16,13 +16,13 @@ $this->breadcrumbs = [
 	<div class="alert alert-success"><?= Yii::app()->user->getFlash('success'); ?></div>
 <?php endif; ?>
 
-<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
 	'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'enableClientValidation' => true,
-	'htmlOptions' => array(
+	'htmlOptions' => [
 		'id' => 'config-app-form',
-	),
-)); ?>
+	],
+]); ?>
 
 <fieldset>
 	<legend><?= Yii::t('app', 'Server') ?></legend>
@@ -66,7 +66,7 @@ $this->breadcrumbs = [
 
 <div class="form-group">
 	<div class="col-sm-3"></div>
-	<div class="col-sm-9">
+	<div class="col-sm-10">
 		<button type="submit" class="btn btn-primary" name="server">
 			<?= Yii::t('app', 'Save') ?>
 		</button>

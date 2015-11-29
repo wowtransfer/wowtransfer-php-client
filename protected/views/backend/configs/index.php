@@ -19,6 +19,11 @@ $this->breadcrumbs = [
 		</a>
 	</li>
 	<li>
+		<a href="<?= $this->createUrl('/configs/db'); ?>">
+			<?= Yii::t('app', 'Database') ?>
+		</a>
+	</li>
+	<li>
 		<a href="<?= $this->createUrl('/configs/toptions'); ?>">
 			<?= Yii::t('app', 'Transfer options') ?>
 		</a>

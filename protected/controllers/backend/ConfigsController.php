@@ -65,7 +65,7 @@ class ConfigsController extends BackendController
 	public function actionToptions()
 	{
 		$request = Yii::app()->request;
-		$model = new ToptionsConfigForm;
+		$model = new ToptionsConfigForm();
 
 		if ($request->getPost('toptions')) {
 			$options = $request->getPost('toptions');
@@ -125,7 +125,7 @@ class ConfigsController extends BackendController
 	public function actionDb() {
 		$request = Yii::app()->request;
 		$model = new DbConfigForm();
-
+		$model->load();
 
 		if ($request->getPost('DbConfigForm')) {
 			$model->attributes = $request->getPost('DbConfigForm');
@@ -135,5 +135,9 @@ class ConfigsController extends BackendController
 		$this->render('db', [
 			'model' => $model,
 		]);
+	}
+
+	public function actionCheckDbConnection() {
+
 	}
 }
