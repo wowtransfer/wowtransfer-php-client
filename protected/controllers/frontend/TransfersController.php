@@ -39,6 +39,23 @@ class TransfersController extends FrontendController
 		];
 	}
 
+	public function beforeAction($action) {
+		try {
+			$query = "SELECT id FROM chd_transfer ct LIMIT 1";
+			$command = Yii::app()->db->createCommand($query);
+			$command->queryScalar();
+		} catch (CDbException $ex) {
+			if (preg_match("/Table(.+)doesn't exist/i", $ex->getMessage())) {
+				$message = 'The application is not set up. The transfer table is not found.';
+				throw new \Exception(Yii::t('app', $message));
+			}
+			else {
+				throw $ex;
+			}
+		}
+		return parent::beforeAction($action);
+	}
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed

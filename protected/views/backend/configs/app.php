@@ -34,11 +34,11 @@ $this->breadcrumbs = [
 	echo $form->numberFieldControlGroup($model, 'maxTransfersCount');
 	echo $form->numberFieldControlGroup($model, 'maxAccountCharsCount');
 	echo $form->textFieldControlGroup($model, 'adminsStr', [
-		'help' => Yii::t('app', 'Administrator`s names separated by semicolon'),
+		'help' => Yii::t('app', 'Administrator`s account names separated by semicolon'),
 		'autocomplete' => 'off',
 	]);
 	echo $form->textFieldControlGroup($model, 'modersStr', [
-		'help' => Yii::t('app', 'Moderator`s names separated by semicolon'),
+		'help' => Yii::t('app', 'Moderator`s account names separated by semicolon'),
 		'autocomplete' => 'off',
 	]);
 	echo $form->textFieldControlGroup($model, 'transferTable');
