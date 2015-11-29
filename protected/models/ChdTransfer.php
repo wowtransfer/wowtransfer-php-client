@@ -309,26 +309,13 @@ class ChdTransfer extends CActiveRecord
 	}
 
 	/**
-	 * @return array Key - option's name, Value - option's title
+	 * @return array
 	 */
-	public function getTransferOptionsToUser()
-	{
-		$trasnferOptions = [];
-		$options = \ToptionsConfigForm::getTransferOptions();
-
-		foreach ($options as $name => $option) {
-			$trasnferOptions[$name] = $option['label'];
-		}
-
-		return $trasnferOptions;
-	}
-
 	public function getTransferOptionsFromDb()
 	{
 		if (empty($this->options)) {
 			return [];
 		}
-
 		return explode(';', $this->options);
 	}
 

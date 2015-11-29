@@ -3,7 +3,7 @@
 /**
  * Stores options in the files
  */
-class PhpFileForm extends CFormModel {
+abstract class PhpFileForm extends CFormModel {
 
 	/**
 	 * @var array
@@ -31,6 +31,16 @@ class PhpFileForm extends CFormModel {
 	public function __construct($scenario = '') {
 		parent::__construct($scenario);
 	}
+
+	/**
+	 * @return string
+	 */
+	abstract protected function getConfigFilePath();
+
+	/**
+	 * @return string
+	 */
+	abstract protected function getDefaultConfigFilePath();
 
 	/**
 	 * @return boolean

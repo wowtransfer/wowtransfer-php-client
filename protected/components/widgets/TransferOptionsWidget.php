@@ -14,12 +14,12 @@ class TransferOptionsWidget extends CWidget
 
 	public function run()
 	{
-		$this->render('TransferOptionsWidget', array(
+		$this->render('TransferOptionsWidget', [
 			'model'         => $this->model,
 			'options'       => $this->options,
 			'form'          => $this->form,
 			'readonly'      => $this->readonly,
-			'optionsGlobal' => \ToptionsConfigForm::getTransferOptions(),
-		));
+			'optionsGlobal' => TransferOptions::getOptions(),
+		]);
 	}
 }

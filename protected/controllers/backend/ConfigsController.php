@@ -71,9 +71,9 @@ class ConfigsController extends BackendController
 			$options = $request->getPost('toptions');
 			$model->saveParams($options);
 		}
-		$this->render('toptions', array(
-			'options' => $model->getTransferOptions(),
-		));
+		$this->render('toptions', [
+			'options' => TransferOptions::getOptions(),
+		]);
 	}
 
 	public function actionRemoteServers() {
@@ -113,13 +113,26 @@ class ConfigsController extends BackendController
 		}
 		if ($request->getPost('ServiceConfigForm')) {
 			$model->attributes = $request->getPost('ServiceConfigForm');
-			if ($model->save()) {
-				$this->redirect(['/configs/service']);
-			}
+			$model->save();
 		}
 		$model->load();
 
 		$this->render('service', [
+			'model' => $model,
+		]);
+	}
+
+	public function actionDb() {
+		$request = Yii::app()->request;
+		$model = new DbConfigForm();
+
+
+		if ($request->getPost('DbConfigForm')) {
+			$model->attributes = $request->getPost('DbConfigForm');
+			$model->save();
+		}
+
+		$this->render('db', [
 			'model' => $model,
 		]);
 	}

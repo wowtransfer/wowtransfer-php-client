@@ -81,7 +81,7 @@
 	<div>
 	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $data,
-		'options' => $data->getTransferOptionsToUser()
+		'options' => TransferOptions::getOptionsPair()
 	]);	?>
 	</div>
 

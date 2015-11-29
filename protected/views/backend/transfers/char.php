@@ -96,7 +96,7 @@ $this->breadcrumbs = [
 	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $model,
 		'form' => $form,
-		'options' => $model->getTransferOptionsToUser(),
+		'options' => TransferOptions::getOptionsPair(),
 		'readonly' => true,
 	]); ?>
 </div>

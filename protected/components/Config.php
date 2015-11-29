@@ -97,17 +97,23 @@ class Config
 	protected $accessToken;
 
 	/**
+	 * @var array
+	 */
+	protected $transferOptions;
+
+	/**
 	 * @var int[]
 	 */
 	protected $excludeRealms;
 
 	private function __construct() {
-		$this->configDir = Yii::getPathOfAlias('application') . '/config';
+		$this->configDir = Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . 'config';
 
 		// app
-		$appSettins = require $this->configDir . '/app.php';
-		if (file_exists($this->configDir . '/app-local.php')) {
-			$appSettins = array_merge($appSettins, require $this->configDir . '/app-local.php');
+		$appSettins = require $this->configDir . DIRECTORY_SEPARATOR . 'app.php';
+		$appLocalFilePath = $this->configDir . DIRECTORY_SEPARATOR . 'app-local.php';
+		if (file_exists($appLocalFilePath)) {
+			$appSettins = array_merge($appSettins, require $appLocalFilePath);
 		}
 		$this->version = $appSettins['version'];
 		$this->date = $appSettins['date'];
@@ -124,19 +130,25 @@ class Config
 		$this->yiiTraceLevel = $appSettins['yiiTraceLevel'];
 
 		// remote servers
-		$this->excludeRealms = require $this->configDir . '/remote-servers-local.php';
+		$remoteServerLocalFileFile = $this->configDir . DIRECTORY_SEPARATOR . 'remote-servers-local.php';
+		$this->excludeRealms = require $remoteServerLocalFileFile;
 
 		// service
-		$serviceSettins = require $this->configDir . '/service.php';
-		if (file_exists($this->configDir . '/service-local.php')) {
-			$serviceSettins = array_merge($serviceSettins, require $this->configDir . '/service-local.php');
+		$serviceSettins = require $this->configDir . DIRECTORY_SEPARATOR . 'service.php';
+		$serviceLocalFilePath = $this->configDir . DIRECTORY_SEPARATOR . 'service-local.php';
+		if (file_exists($serviceLocalFilePath)) {
+			$serviceSettins = array_merge($serviceSettins, require $serviceLocalFilePath);
 		}
 		$this->apiBaseUrl = $serviceSettins['apiBaseUrl'];
 		$this->accessToken = $serviceSettins['accessToken'];
 		$this->serviceUsername = $serviceSettins['serviceUsername'];
 
 		// toptions
-
+		$this->transferOptions = require $this->configDir . DIRECTORY_SEPARATOR . 'toptions.php';
+		$transferOptionsLocalFilePath = $this->configDir . DIRECTORY_SEPARATOR . 'toptions-local.php';
+		if (file_exists($transferOptionsLocalFilePath)) {
+			$this->transferOptions = array_merge($this->transferOptions, require $transferOptionsLocalFilePath);
+		}
 	}
 
 	/**
@@ -266,5 +278,12 @@ class Config
 	 */
 	public function getExcludeRealms() {
 		return $this->excludeRealms;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getTransferOptions() {
+		return $this->transferOptions;
 	}
 }

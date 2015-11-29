@@ -10,13 +10,11 @@ option item has:
 - large image (optionally, depends of icon's name)
 
 */
+
+$options = explode(';', $model->options);
 ?>
 
 <div class="well well-small toptions-block">
-
-<?php
-$options = explode(';', $model->options);
-?>
 
 <?php if (!$readonly): ?>
 	<div>
@@ -32,12 +30,12 @@ $options = explode(';', $model->options);
 		$id = "ChdTransfer_transferOptions_$i";
 ?>
 		<span class="toptions">
-			<span class="tdata-icon icon-<?php echo $name; ?>"></span>
+			<span class="tdata-icon icon-<?= $name; ?>"></span>
 		<?php if (isset($option['disabled'])): ?>
-			<?php echo CHtml::label($option['label'], $id, array('style' => 'margin-left: 18px; color: gray;')); ?>
+			<?= CHtml::label($option['label'], $id, array('style' => 'margin-left: 18px; color: gray;')); ?>
 		<?php else: ?>
-			<?php echo CHtml::checkBox("ChdTransfer[transferOptions][]", in_array($name, $options), array('id' => $id, 'value' => $name)) ?>
-			<?php echo CHtml::label($option['label'], $id); ?>
+			<?= CHtml::checkBox("ChdTransfer[transferOptions][]", in_array($name, $options), array('id' => $id, 'value' => $name)) ?>
+			<?= CHtml::label($option['label'], $id); ?>
 		<?php endif; ?>
 		</span>
 
@@ -50,12 +48,12 @@ $options = explode(';', $model->options);
 	<div>
 	<?php foreach ($optionsGlobal as $name => $option): ?>
 		<span class="toptions">
-			<span class="tdata-icon icon-<?php echo $name; ?>"></span>
+			<span class="tdata-icon icon-<?= $name; ?>"></span>
 			<?php if (isset($option['disabled'])): ?>
-				<?php echo CHtml::label($option['label'], false, array('style' => 'margin-left: 20px; color: gray;')); ?>
+				<?= CHtml::label($option['label'], false, array('style' => 'margin-left: 20px; color: gray;')); ?>
 			<?php else: ?>
-				<span class="spr <?php echo in_array($name, $options) ? 'checked' : 'unchecked'; ?>"></span>
-				<?php echo CHtml::label($option['label'], false); ?>
+				<span class="spr <?= in_array($name, $options) ? 'checked' : 'unchecked'; ?>"></span>
+				<?= CHtml::label($option['label'], false); ?>
 			<?php endif; ?>
 		</span>
 	<?php endforeach; ?>

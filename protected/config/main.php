@@ -85,7 +85,6 @@ return [
 		),*/
 		// uncomment the following to use a MySQL database
 
-		// to app.php
 		'db' => require __DIR__ . '/db.php',
 
 		'errorHandler' => [

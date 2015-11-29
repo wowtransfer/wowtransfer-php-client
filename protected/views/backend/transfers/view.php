@@ -55,7 +55,7 @@ $this->menu = [
 <div class="chd-row">
 	<?php $this->widget('application.components.widgets.TransferOptionsWidget', [
 		'model' => $model,
-		'options' => $model->getTransferOptionsToUser(),
+		'options' => TransferOptions::getOptionsPair(),
 		'readonly' => true,
 	]); ?>
 </div>
