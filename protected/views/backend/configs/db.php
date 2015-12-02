@@ -26,7 +26,7 @@ $this->breadcrumbs = [
 	echo $form->errorSummary($model);
 
 	echo $form->textFieldControlGroup($model, 'host');
-	echo $form->textFieldControlGroup($model, 'dbName');
+	echo $form->textFieldControlGroup($model, 'charactersDb');
 	echo $form->textFieldControlGroup($model, 'username');
 	echo $form->passwordFieldControlGroup($model, 'password');
 	echo $form->passwordFieldControlGroup($model, 'password2');

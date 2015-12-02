@@ -106,6 +106,16 @@ class Config
 	 */
 	protected $excludeRealms;
 
+	/**
+	 * @var string
+	 */
+	protected $authDb;
+
+	/**
+	 * @var string
+	 */
+	protected $worldDb;
+
 	private function __construct() {
 		$this->configDir = Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . 'config';
 
@@ -128,6 +138,8 @@ class Config
 		$this->transferTable = $appSettins['transferTable'];
 		$this->yiiDebug = $appSettins['yiiDebug'];
 		$this->yiiTraceLevel = $appSettins['yiiTraceLevel'];
+		$this->authDb = $appSettins['authDb'];
+		$this->worldDb = $appSettins['worldDb'];
 
 		// remote servers
 		$remoteServerLocalFileFile = $this->configDir . DIRECTORY_SEPARATOR . 'remote-servers-local.php';
@@ -285,5 +297,19 @@ class Config
 	 */
 	public function getTransferOptions() {
 		return $this->transferOptions;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAuthDb() {
+		return $this->authDb;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getWorldDb() {
+		return $this->worldDb;
 	}
 }

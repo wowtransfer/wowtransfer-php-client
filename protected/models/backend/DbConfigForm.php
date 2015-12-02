@@ -10,7 +10,7 @@ class DbConfigForm extends PhpFileForm
 	/**
 	 * @var string
 	 */
-	public $dbName;
+	public $charactersDb;
 
 	/**
 	 * @var string
@@ -43,11 +43,11 @@ class DbConfigForm extends PhpFileForm
 	public function rules()
 	{
 		return [
-			['host, dbName, username, password', 'required'],
+			['host, charactersDb, username, password', 'required'],
 			['charset', 'default', 'value' => 'utf8'],
 			['password2', 'safe'],
 			['password', 'compare', 'compareAttribute' => 'password2', 'operator' => '='],
-			['host, dbName, username, password, password2, charset', 'filter', 'filter' => 'trim'],
+			['host, charactersDb, username, password, password2, charset', 'filter', 'filter' => 'trim'],
 		];
 	}
 
@@ -58,7 +58,7 @@ class DbConfigForm extends PhpFileForm
 	{
 		return [
 			'host' => Yii::t('app', 'Host'),
-			'dbName' => Yii::t('app', 'Database name'),
+			'charactersDb' => Yii::t('app', 'Characters database'),
 			'username' => Yii::t('app', 'User'),
 			'password' => Yii::t('app', 'Password'),
 			'password2' => Yii::t('app', 'Password confirmation'),
@@ -84,7 +84,7 @@ class DbConfigForm extends PhpFileForm
 	}
 
 	public function beforeValidate() {
-		$this->connectionString = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName;
+		$this->connectionString = 'mysql:host=' . $this->host . ';dbname=' . $this->charactersDb;
 		return parent::beforeValidate();
 	}
 
@@ -108,7 +108,8 @@ class DbConfigForm extends PhpFileForm
 			$message = Yii::t('app', 'Configuration of databse was changed success.');
 			Yii::app()->user->setFlash('success', $message);
 		}
-		return $result;	}
+		return $result;
+	}
 
 	public function load() {
 		$filePathDefault = $this->getDefaultConfigFilePath();
@@ -121,12 +122,17 @@ class DbConfigForm extends PhpFileForm
 		// mysql:host=127.0.0.1;dbname=characters
 		$params = $this->getConnectionStringArr($config['connectionString']);
 
-		$this->dbName = isset($params['dbname']) ? $params['dbname'] : '';
+		$this->charactersDb = isset($params['dbname']) ? $params['dbname'] : '';
 		$this->charset = $config['charset'];
 		$this->host = isset($params['host']) ? $params['host'] : '';
 		$this->username = $config['username'];
 		$this->password = ''; //$config['password'];
 		$this->password2 = '';
+
+		// auth db
+		// ...
+		// world db
+		// ...
 	}
 
 	/**

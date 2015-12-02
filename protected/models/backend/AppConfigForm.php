@@ -71,6 +71,16 @@ class AppConfigForm extends PhpFileForm
 	 */
 	public $onlyCheckedServers;
 
+	/**
+	 * @var string
+	 */
+	public $authDb;
+
+	/**
+	 * @var string
+	 */
+	public $worldDb;
+
 	public function __construct($scenario = '') {
 		parent::__construct($scenario);
 		$this->loadDefaults();
@@ -79,8 +89,9 @@ class AppConfigForm extends PhpFileForm
 	public function rules()
 	{
 		return [
-			['core, siteUrl, transferTable', 'required'],
+			['core, siteUrl, transferTable, authDb', 'required'],
 			['core', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false],
+			['authDb, worldDb', 'match', 'pattern' => '/^[a-z0-9_]+$/'],
 			['maxTransfersCount, maxAccountCharsCount', 'numerical', 'integerOnly' => true, 'min' => 0, 'max' => 1000],
 			['emailAdmin', 'email', 'allowEmpty' => false],
 			['transferTable', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false],
@@ -104,6 +115,8 @@ class AppConfigForm extends PhpFileForm
 			'transferTable'        => Yii::t('app', 'Requests table'),
 			'yiiDebug'             => Yii::t('app', 'Debug mode'),
 			'onlyCheckedServers'   => Yii::t('app', 'Only checked servers'),
+			'authDb'               => Yii::t('app', 'Authentication databse'),
+			'worldDb'              => Yii::t('app', 'World databse'),
 			'yiiTraceLevel'        => 'YII_TRACE_LEVEL',
 		];
 	}
@@ -152,6 +165,7 @@ class AppConfigForm extends PhpFileForm
 			'siteUrl', 'emailAdmin', 'core', 'maxTransfersCount',
 			'maxAccountCharsCount', 'admins', 'moders', 'transferTable',
 			'yiiDebug', 'yiiTraceLevel', 'onlyCheckedServers',
+			'worldDb', 'authDb',
 		];
 		$this->setFilePath($filePath);
 		$this->setWorkAttributes($attributes);

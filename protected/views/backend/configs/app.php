@@ -64,6 +64,13 @@ $this->breadcrumbs = [
 
 </fieldset>
 
+<fieldset>
+	<legend><?= Yii::t('app', 'Database') ?></legend>
+
+	<?= $form->textFieldControlGroup($model, 'authDb') ?>
+	<?= $form->textFieldControlGroup($model, 'worldDb') ?>
+</fieldset>
+
 <div class="form-group">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-10">

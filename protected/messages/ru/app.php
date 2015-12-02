@@ -16,6 +16,7 @@ return [
 	'Are you sure you want to delete this transfer #{id}?' => 'Вы уверены, что хотите удалить заявку #{id}?',
 	'Autorization' => 'Авторизация',
 	'Authorize for transfer request handle' => 'Авторизуйтесь для управления заявками',
+	'Authentication databse' => 'База данных с аккаунтами',
 	'Bag`s items' => 'Вещи в сумках',
 	'Bank`s items' => 'Вещи в банке',
 	'Binds' => 'Бинды',
@@ -25,6 +26,7 @@ return [
 	'Charset' => 'Кодировка',
 	'Character' => 'Персонаж',
 	'Characters' => 'Персонажи',
+	'Characters database' => 'База с персонажами',
 	'Success changed' => 'Успешное изменение',
 	'Success deleting' => 'Успешное удаление',
 	'Change date' => 'Дата изменения',
@@ -216,6 +218,7 @@ return [
 	'Warnings' => 'Предупреждения',
 	'Without a protocol (http://), for example, mysqrver.ru or mysqrver.com' => 'Без протокола (http://), например, myserver.ru или myserver.com',
 	'Welcome' => 'Добро пожаловать',
+	'World databse' => 'База данных мира',
 	'Wrong server' => 'Неверный сервер',
 	'0 - disable. Works only on debug mode.' => '0 - отключить. Работает только в режиме отладки.',
 ];

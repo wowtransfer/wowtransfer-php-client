@@ -978,6 +978,9 @@ class DumpToSqlParams
 
 	/** @var string The transfer options separated by semicolon */
 	public $transferOptions;
+
+	/** @var string */
+	public $charactersDb;
 }
 
 class WowtransferException extends \Exception {}

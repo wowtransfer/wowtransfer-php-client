@@ -1,5 +1,7 @@
 <?php
 return [
+	'authDb'               => '',
+	'worldDb'              => '',
 	'version'              => 'v1.3',
 	'date'                 => '2015-09-18',
 	'admins'               => ['admin'],
