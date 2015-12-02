@@ -379,14 +379,12 @@ class Wowtransfer
 	/**
 	 * Convert lua-dump to sql script
 	 *
-	 * @param string  $dumpLua        Lua dump
-	 * @param integer $accountId      Accounts' identifier
-	 * @param strign  $configuration  Name of configuration
-	 * @param array   $toptions
+	 * @param DumpToSqlParams $params
 	 *
 	 * @return string Sql script (200) or error message (501)
 	 */
-	public function dumpToSql($dumpLua, $accountId, $configuration, $toptions) {
+	public function dumpToSql($params) {
+		// $dumpLua, $accountId, $configuration, $toptions
 		$defaultValue = '';
 		$filePath = sys_get_temp_dir() . '/' . uniqid() . '.lua';
 		$file = fopen($filePath, 'w');
@@ -394,7 +392,7 @@ class Wowtransfer
 			$this->lastError = 'fopen() failed! file: ' . $filePath;
 			return $defaultValue;
 		}
-		fwrite($file, gzencode($dumpLua));
+		fwrite($file, gzencode($params->dumpLua));
 		fclose($file);
 
 		$dumpFile = new CURLFile($filePath, self::LUA_MIME_TYPE, 'chardumps.lua');
@@ -403,10 +401,10 @@ class Wowtransfer
 		$postfields = [
 			'dump_lua'         => $dumpFile,
 			'dump_encode'      => 'gzip',
-			'configuration_id' => $configuration,
-			'account_id'       => $accountId,
+			'configuration_id' => $params->transferConfigName,
+			'account_id'       => $params->accountId,
 			'access_token'     => $this->getAccessToken(),
-			'transfer_options' => implode(';', $toptions),
+			'transfer_options' => implode(';', $params->transferOptions),
 		];
 		curl_setopt_array($ch, [
 			CURLOPT_URL         => $this->getApiUrl('/dumps/sql'),
@@ -962,6 +960,24 @@ class Realm
 		$this->wowVersion = $wowVersion;
 		return $this;
 	}
+}
+
+/**
+ * Helper to Wowtransfer::dumpToSql method
+ */
+class DumpToSqlParams
+{
+	/** @var string */
+	public $dumpLua;
+
+	/** @var int */
+	public $accountId;
+
+	/** @var string */
+	public $transferConfigName;
+
+	/** @var string The transfer options separated by semicolon */
+	public $transferOptions;
 }
 
 class WowtransferException extends \Exception {}

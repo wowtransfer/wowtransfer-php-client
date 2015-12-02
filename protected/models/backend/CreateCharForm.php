@@ -138,13 +138,16 @@ class CreateCharForm
 			return $result;
 		}
 
-		$dumpLua = $this->_transfer->luaDumpFromDb();
-		$toptions = $this->_transfer->getTransferOptionsFromDb();
 		$service = new WowtransferUI();
+		$params = new DumpToSqlParams();
 
 		try {
+			$params->accountId = $this->_transfer->account_id;
+			$params->dumpLua = $this->_transfer->luaDumpFromDb();
+			$params->transferConfigName = $this->transferConfig;
+			$params->transferOptions = $this->_transfer->getTransferOptionsFromDb();;
 			// TODO: service will be return a queries
-			$result['sql'] = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $this->transferConfig, $toptions);
+			$result['sql'] = $service->dumpToSql($params);
 			if ($service->getLastError()) {
 				$result['errors'][] = Yii::t('app', 'From the service') . ': ' . $service->getLastError();
 			}
@@ -178,11 +181,15 @@ class CreateCharForm
 	 * @throws Exception
 	 */
 	public function getSql() {
-		$dumpLua = $this->_transfer->luaDumpFromDb();
-		$toptions = $this->_transfer->getTransferOptionsFromDb();
 		$service = new WowtransferUI();
+		$params = new DumpToSqlParams();
 
-		$sql = $service->dumpToSql($dumpLua, $this->_transfer->account_id, $this->transferConfig, $toptions);
+		$params->accountId = $this->_transfer->account_id;
+		$params->transferConfigName = $this->transferConfig;
+		$params->transferOptions = $this->_transfer->getTransferOptionsFromDb();
+		$params->dumpLua = $this->_transfer->luaDumpFromDb();
+
+		$sql = $service->dumpToSql($params);
 
 		if ($service->getLastError()) {
 			throw new \Exception(Yii::t('app', 'From the service') . ': ' . $service->getLastError());
