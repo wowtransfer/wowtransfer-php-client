@@ -312,7 +312,7 @@ class Wowtransfer
 
 			$this->cores = [];
 			$cores = json_decode($this->lastHttpResponse, true);
-			if (!$cores) {
+			if (!is_array($cores)) {
 				$this->lastError = "Could't get cores from service";
 			}
 			elseif ($this->lastHttpStatus !== 200) {
@@ -364,7 +364,7 @@ class Wowtransfer
 		$this->lastHttpResponse = curl_exec($ch);
 		$this->lastHttpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$result = json_decode($this->lastHttpResponse, true);
-		if (!$result) {
+		if (!is_array($result)) {
 			$this->lastError = "Could't get transfer configuration #$tconfigId from service";
 			return $defaultValue;
 		}
@@ -444,7 +444,7 @@ class Wowtransfer
 
 			$wowServers = [];
 			$servers = json_decode($this->lastHttpResponse, true);
-			if (!$this->lastHttpResponse) {
+			if (!is_array($servers)) {
 				$this->lastError = "Couldn't get wowservers from service";
 			}
 			if ($this->lastHttpStatus !== 200) {
