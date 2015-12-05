@@ -161,6 +161,9 @@ class Config
 		if (file_exists($transferOptionsLocalFilePath)) {
 			$this->transferOptions = array_merge($this->transferOptions, require $transferOptionsLocalFilePath);
 		}
+
+		// db
+		// parse connecting string...
 	}
 
 	/**

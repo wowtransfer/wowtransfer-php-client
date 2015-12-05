@@ -45,7 +45,8 @@ abstract class PhpFileForm extends CFormModel {
 	/**
 	 * @return boolean
 	 */
-	public function getSafeStore() {
+	public function getSafeStore()
+	{
 		return $this->safeStore;
 	}
 
@@ -53,7 +54,8 @@ abstract class PhpFileForm extends CFormModel {
 	 * @param boolean $safeStore
 	 * @return \PhpFileForm
 	 */
-	public function setSafeStore($safeStore) {
+	public function setSafeStore($safeStore)
+	{
 		$this->safeStore = $safeStore;
 		return $this;
 	}
@@ -61,7 +63,8 @@ abstract class PhpFileForm extends CFormModel {
 	/**
 	 * @return string
 	 */
-	public function getFilePath() {
+	public function getFilePath()
+	{
 		return $this->filePath;
 	}
 
@@ -69,7 +72,8 @@ abstract class PhpFileForm extends CFormModel {
 	 * @param string $filePath
 	 * @return \PhpFileForm
 	 */
-	public function setFilePath($filePath) {
+	public function setFilePath($filePath)
+	{
 		$this->filePath = $filePath;
 		return $this;
 	}
@@ -77,7 +81,8 @@ abstract class PhpFileForm extends CFormModel {
 	/**
 	 * @return array
 	 */
-	public function getWorkAttributes($names = null) {
+	public function getWorkAttributes($names = null)
+	{
 		return $this->workAttributes;
 	}
 
@@ -85,7 +90,8 @@ abstract class PhpFileForm extends CFormModel {
 	 * @param array $attributes
 	 * @return \PhpFileForm
 	 */
-	public function setWorkAttributes($attributes) {
+	public function setWorkAttributes($attributes)
+	{
 		$this->workAttributes = $attributes;
 		return $this;
 	}
@@ -94,7 +100,8 @@ abstract class PhpFileForm extends CFormModel {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public function save() {
+	public function save()
+	{
 		if ($this->safeStore) { // TODO:
 			// try write
 
@@ -116,7 +123,8 @@ abstract class PhpFileForm extends CFormModel {
 	 * @return boolean
 	 * @throws \Exception
 	 */
-	public function saveParams($params) {
+	public function saveParams($params)
+	{
 		if (!is_array($params)) {
 			throw new \Exception(Yii::t('app', 'Params is not an array'));
 		}
@@ -141,7 +149,8 @@ abstract class PhpFileForm extends CFormModel {
 	 * @param array $params
 	 * @return \PhpFileForm
 	 */
-	public function loadFromArray($params) {
+	public function loadFromArray($params)
+	{
 		foreach ($params as $name => $value) {
 			if (property_exists($this, $name)) {
 				$this->$name = $value;

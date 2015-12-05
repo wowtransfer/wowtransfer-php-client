@@ -7,14 +7,16 @@ class RemoteServersForm extends PhpFileForm
 	 */
 	protected $realmsExcludeIds = [];
 
-	public function load() {
+	public function load()
+	{
 		$filePath = $this->getConfigFilePath();
 		if (file_exists($filePath)) {
 			$this->realmsExcludeIds = require $filePath;
 		}
 	}
 
-	public function save() {
+	public function save()
+	{
 		$filePath = $this->getConfigFilePath();
 
 		$result = 0;
@@ -34,14 +36,25 @@ class RemoteServersForm extends PhpFileForm
 	 */
 	protected function getConfigFilePath()
 	{
-		return Yii::getPathOfAlias('application') . '/config/remote-servers-local.php';
+		$filePath =  'config' . DIRECTORY_SEPARATOR . 'remote-servers-local.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDefaultConfigFilePath()
+	{
+		$filePath =  'config' . DIRECTORY_SEPARATOR . 'remote-servers.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
 	}
 
 	/**
 	 * @param int[] $ids
 	 * @return \RemoteServersForm
 	 */
-	public function setRealmsIds($ids) {
+	public function setRealmsIds($ids)
+	{
 		$this->realmsExcludeIds = $ids;
 		return $this;
 	}
@@ -49,7 +62,8 @@ class RemoteServersForm extends PhpFileForm
 	/**
 	 * @return int[]
 	 */
-	public function getRealmsIds() {
+	public function getRealmsIds()
+	{
 		return $this->realmsExcludeIds;
 	}
 }

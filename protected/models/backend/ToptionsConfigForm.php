@@ -32,14 +32,16 @@ class ToptionsConfigForm extends PhpFileForm
 	/**
 	 * @return string
 	 */
-	protected function getDefaultConfigFilePath() {
+	protected function getDefaultConfigFilePath()
+	{
 		return Yii::getPathOfAlias('application.config') . DIRECTORY_SEPARATOR . 'toptions.php';
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getDefaultTransferOptions() {
+	public function getDefaultTransferOptions()
+	{
 		$filePath = $this->getDefaultConfigFilePath();
 		return require $filePath;
 	}

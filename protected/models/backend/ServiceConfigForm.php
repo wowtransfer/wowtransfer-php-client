@@ -34,12 +34,14 @@ class ServiceConfigForm extends PhpFileForm {
 	 */
 	public  $secretKey; // TODO
 
-	public function __construct($scenario = '') {
+	public function __construct($scenario = '')
+	{
 		parent::__construct($scenario);
 		$this->loadDefaults();
 	}
 
-	public function rules() {
+	public function rules()
+	{
 		return [
 			['serviceUsername, apiBaseUrl, accessToken', 'required'],
 			['serviceUsername', 'match', 'pattern' => '/^[a-z0-9_]+$/', 'allowEmpty' => false],
@@ -52,7 +54,8 @@ class ServiceConfigForm extends PhpFileForm {
 		];
 	}
 
-	public function attributeLabels() {
+	public function attributeLabels()
+	{
 		return [
 			'serviceUsername' => 'Пользователь',
 			'accessToken' => 'Access token',
@@ -60,12 +63,14 @@ class ServiceConfigForm extends PhpFileForm {
 		];
 	}
 
-	public function loadDefaults() {
+	public function loadDefaults()
+	{
 		$filePath = $this->getDefaultConfigFilePath();
 		return parent::loadFromArray(require $filePath);
 	}
 
-	public function beforeValidate() {
+	public function beforeValidate()
+	{
 		$this->apiBaseUrl = YII_DEBUG ? $this->apiBaseUrl : 'http://wowtransfer.com/api/v1';
 		return parent::beforeValidate();
 	}
@@ -75,7 +80,8 @@ class ServiceConfigForm extends PhpFileForm {
 	 * @throws CHttpException
 	 * @todo Make abstract function
 	 */
-	public function load() {
+	public function load()
+	{
 		$filePath = $this->getConfigFilePath();
 		if (file_exists($filePath)) {
 			$params = require $filePath;
@@ -90,7 +96,8 @@ class ServiceConfigForm extends PhpFileForm {
 		return parent::loadFromArray($params);
 	}
 
-	public function save($validate = true) {
+	public function save($validate = true)
+	{
 		if ($validate && !$this->validate()) {
 			return false;
 		}
@@ -111,14 +118,18 @@ class ServiceConfigForm extends PhpFileForm {
 	/**
 	 * @return string
 	 */
-	protected function getConfigFilePath() {
-		return Yii::getPathOfAlias('application') . '/config/service-local.php';
+	protected function getConfigFilePath()
+	{
+		$filePath = 'config' . DIRECTORY_SEPARATOR . 'service-local.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
 	}
 
 	/**
 	 * @return string
 	 */
-	protected function getDefaultConfigFilePath() {
-		return Yii::getPathOfAlias('application') . '/config/service.php';
+	protected function getDefaultConfigFilePath()
+	{
+		$filePath = 'config' . DIRECTORY_SEPARATOR . 'service.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
 	}
 }

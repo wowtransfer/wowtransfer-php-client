@@ -81,7 +81,8 @@ class AppConfigForm extends PhpFileForm
 	 */
 	public $worldDb;
 
-	public function __construct($scenario = '') {
+	public function __construct($scenario = '')
+	{
 		parent::__construct($scenario);
 		$this->loadDefaults();
 	}
@@ -126,20 +127,24 @@ class AppConfigForm extends PhpFileForm
 	 */
 	protected function getConfigFilePath()
 	{
-		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . 'config/app-local.php';
+		$filePath = 'config' . DIRECTORY_SEPARATOR . 'app-local.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
 	}
 
 	/**
 	 * @return string
 	 */
-	protected function getDefaultConfigFilePath() {
-		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . 'config/app.php';
+	protected function getDefaultConfigFilePath()
+	{
+		$filePath = 'config' . DIRECTORY_SEPARATOR . 'app.php';
+		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
 	}
 
 	/**
 	 * @return boolean
 	 */
-	protected function beforeValidate() {
+	protected function beforeValidate()
+	{
 		settype($this->yiiDebug, 'boolean');
 		settype($this->onlyCheckedServers, 'boolean');
 		settype($this->yiiTraceLevel, 'int');
@@ -152,7 +157,8 @@ class AppConfigForm extends PhpFileForm
 	 * @param boolean $validate
 	 * @throws CHttpException
 	 */
-	public function save($validate = true) {
+	public function save($validate = true)
+	{
 		if ($validate && !$this->validate()) {
 			return false;
 		}
@@ -182,7 +188,8 @@ class AppConfigForm extends PhpFileForm
 	 * @throws CHttpException
 	 * @todo Make abstract function
 	 */
-	public function load() {
+	public function load()
+	{
 		$filePath = $this->getConfigFilePath();
 		if (file_exists($filePath)) {
 			$config = require $filePath;
@@ -205,7 +212,8 @@ class AppConfigForm extends PhpFileForm
 	/**
 	 * @return boolean
 	 */
-	public function loadDefaults() {
+	public function loadDefaults()
+	{
 		$filePath = $this->getDefaultConfigFilePath();
 		return $this->loadFromArray(require $filePath);
 	}
@@ -214,7 +222,8 @@ class AppConfigForm extends PhpFileForm
 	 * @param string $str
 	 * @return array
 	 */
-	protected function trimedStrToArray($str) {
+	protected function trimedStrToArray($str)
+	{
 		$result = [];
 		$arr = explode(',', $str);
 		if (is_array($arr)) {
@@ -231,7 +240,8 @@ class AppConfigForm extends PhpFileForm
 	/**
 	 * @return \AppConfigForm
 	 */
-	public function adminsFromUser() {
+	public function adminsFromUser()
+	{
 		$this->admins = $this->trimedStrToArray($this->adminsStr);
 		return $this;
 	}
@@ -239,7 +249,8 @@ class AppConfigForm extends PhpFileForm
 	/**
 	 * @return \AppConfigForm
 	 */
-	public function modersFromUser() {
+	public function modersFromUser()
+	{
 		$this->moders = $this->trimedStrToArray($this->modersStr);
 		return $this;
 	}

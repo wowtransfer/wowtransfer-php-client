@@ -78,17 +78,20 @@ class DbConfigForm extends PhpFileForm
 	/**
 	 * @return string
 	 */
-	protected function getDefaultConfigFilePath() {
+	protected function getDefaultConfigFilePath()
+	{
 		$filePath = 'config' . DIRECTORY_SEPARATOR . 'db.php';
 		return Yii::getPathOfAlias('application') . DIRECTORY_SEPARATOR . $filePath;
 	}
 
-	public function beforeValidate() {
+	public function beforeValidate()
+	{
 		$this->connectionString = 'mysql:host=' . $this->host . ';dbname=' . $this->charactersDb;
 		return parent::beforeValidate();
 	}
 
-	public function save($validate = true) {
+	public function save($validate = true)
+	{
 		if ($validate && !$this->validate()) {
 			return false;
 		}
@@ -111,7 +114,8 @@ class DbConfigForm extends PhpFileForm
 		return $result;
 	}
 
-	public function load() {
+	public function load()
+	{
 		$filePathDefault = $this->getDefaultConfigFilePath();
 		$config = require $filePathDefault;
 		$filePath = $this->getConfigFilePath();
@@ -138,7 +142,8 @@ class DbConfigForm extends PhpFileForm
 	/**
 	 * @param array
 	 */
-	private function getConnectionStringArr($connectionString) {
+	private function getConnectionStringArr($connectionString)
+	{
 		$paramsStr = $connectionString;
 		$pos = strpos($connectionString, ':');
 		if ($pos) {

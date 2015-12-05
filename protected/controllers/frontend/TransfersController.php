@@ -39,7 +39,8 @@ class TransfersController extends FrontendController
 		];
 	}
 
-	public function beforeAction($action) {
+	public function beforeAction($action)
+	{
 		try {
 			$query = "SELECT id FROM chd_transfer ct LIMIT 1";
 			$command = Yii::app()->db->createCommand($query);
