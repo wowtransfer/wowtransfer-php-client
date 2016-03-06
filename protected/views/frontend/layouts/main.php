@@ -65,7 +65,7 @@
 <div class="container">
 	<div class="col-md-12">
 		<footer id="footer">
-			Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>
+			Copyright &copy; 2014-2016 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>
 			All Rights Reserved.
 		</footer>
 	</div>

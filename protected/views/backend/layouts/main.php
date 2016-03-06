@@ -67,7 +67,7 @@
 			<?php endif ?>
 		</div>
 		<div>
-			Copyright &copy; 2014-2015 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>
+			Copyright &copy; 2014-2016 <a href="http://wowtransfer.com" title="wowtransfer.com">wowtransfer.com</a><br>
 			All Rights Reserved.
 		</div>
 	</div>
