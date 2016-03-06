@@ -67,6 +67,14 @@ $this->breadcrumbs = [
 <fieldset>
 	<legend><?= Yii::t('app', 'Database') ?></legend>
 
+	<div class="row">
+		<div class="col-sm-2">
+		<a href="<?= $this->createUrl('/configs/db') ?>">
+			<?= Yii::t('app', 'Characters database') ?>
+		</a>
+		</div>
+		<div class="col-sm-8"></div>
+	</div>
 	<?= $form->textFieldControlGroup($model, 'authDb') ?>
 	<?= $form->textFieldControlGroup($model, 'worldDb') ?>
 </fieldset>
