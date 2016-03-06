@@ -41,9 +41,11 @@
 			]); ?>
 
 			<datalist id="servers-list">
+			<?php if ($wowserversSites): ?>
 				<?php foreach ($wowserversSites as $server): ?>
 					<option value="<?= $server ?>">
 				<?php endforeach; ?>
+			<?php endif ?>
 			</datalist>
 
 		<?php endif ?>
