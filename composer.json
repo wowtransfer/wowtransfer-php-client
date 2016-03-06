@@ -1,0 +1,29 @@
+{
+    "name": "wowtransfer/chdphp",
+    "description": "WoW transfer client for characters creating",
+    "keywords": ["wow", "transfer", "create character", "lua dump", "lua to sql", "character transfer"],
+    "homepage": "http://wowtransfer.com/",
+    "type": "project",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/wowtransfer/chdphp/issues?state=open",
+        "forum": "http://forum.wowtransfer.com/",
+        "wiki": "http://wowtransfer.loc/docs/",
+        "source": "https://github.com/wowtransfer/chdphp"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}
