@@ -3,44 +3,44 @@
 }
 
 .wait16 {
-	background-image: url(/chdphp/images/wait16.gif);
+	background-image: url(../../images/wait16.gif);
 	width: 16px;
 	height: 16px;
 }
 
 .wait24-trans {
-	background-image: url(/chdphp/images/wait24trans.gif);
+	background-image: url(../../images/wait24trans.gif);
 	width: 16px;
 	height: 16px;
 }
 
 .wait24 {
-	background-image: url(/chdphp/images/wait24.gif);
+	background-image: url(../../images/wait24.gif);
 	width: 16px;
 	height: 16px;
 }
 
 .wait30-trans {
-	background-image: url(/chdphp/images/wait30trans.gif);
+	background-image: url(../../images/wait30trans.gif);
 	width: 16px;
 	height: 16px;
 }
 
 
 .wait30 {
-	background-image: url(/chdphp/images/wait30.gif);
+	background-image: url(../../images/wait30.gif);
 	width: 16px;
 	height: 16px;
 }
 
 .wait16-trans {
-	background-image: url(/chdphp/images/wait16trans.gif);
+	background-image: url(../../images/wait16trans.gif);
 	width: 16px;
 	height: 16px;
 }
 
 .tdata-icon {
-	background-image: url(/chdphp/images/tdata-icons.png);
+	background-image: url(../../images/tdata-icons.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	display: inline-block;

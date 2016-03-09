@@ -1,5 +1,5 @@
 .spr {
-    background-image: url(/chdphp/images/sprite-main.png);
+    background-image: url(../../images/sprite-main.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	display: inline-block;

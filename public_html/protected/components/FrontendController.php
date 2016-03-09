@@ -82,22 +82,23 @@ class FrontEndController extends BaseController
 
 		if (true) { // TODO: minify resource
 			// blueprint CSS framework
-			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css', 'screen, projection');
-			$cs->registerCssFile($baseUrl . '/css/dev/common/print.css', 'print');
+			$cssDir = '/css_dev';
+			$cs->registerCssFile($baseUrl . $cssDir . '/common/main.css', 'screen, projection');
+			$cs->registerCssFile($baseUrl . $cssDir . '/common/print.css', 'print');
 			/*
 			<!--[if lt IE 8]>
 			<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
 			<![endif]-->
 			*/
-			$cs->registerCssFile($baseUrl . '/css/dev/common/main.css');
-			$cs->registerCssFile($baseUrl . '/css/dev/common/form.css');
+			$cs->registerCssFile($baseUrl . $cssDir . '/common/main.css');
+			$cs->registerCssFile($baseUrl . $cssDir . '/common/form.css');
 
 			Yii::app()->bootstrap->register();
 
-			$cs->registerCssFile($baseUrl . '/css/dev/common/common.css');
-			$cs->registerCssFile($baseUrl . '/css/dev/common/icons.css');
-			$cs->registerCssFile($baseUrl . '/css/dev/common/sprite_main.css');
-			$cs->registerCssFile($baseUrl . '/css/dev/frontend/frontend.css');
+			$cs->registerCssFile($baseUrl . $cssDir . '/common/common.css');
+			$cs->registerCssFile($baseUrl . $cssDir . '/common/icons.css');
+			$cs->registerCssFile($baseUrl . $cssDir . '/common/sprite_main.css');
+			$cs->registerCssFile($baseUrl . $cssDir . '/frontend/frontend.css');
 
 			$cs->registerScriptFile($baseUrl . '/js/dev/frontend/main.js', CClientScript::POS_END);
 			$cs->registerScriptFile($baseUrl . '/js/dev/common/common.js', CClientScript::POS_END);
