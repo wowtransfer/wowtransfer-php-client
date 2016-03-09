@@ -41,6 +41,12 @@ download latest release (twbs/bootstrap) to `/protected/vendor/twbs/bootstrap` d
 * [Phing](https://www.phing.info/trac/wiki/Users/Installation),
 download the Phar archive (phing-latest.phar) to `/protected/vendor` directory
 
+
+## Installation
+
+1. Copy archive to /path/dir/
+2. Create symvolic link
+
 ## Aims
 
 * Simple application, KISS principle.

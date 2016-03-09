@@ -9,3 +9,4 @@
 - Remove dependence from the "chdphp" application name, uses in the css.
 - Move the dumps to service
 - Move the installer to application
+- Write installer on the yii
