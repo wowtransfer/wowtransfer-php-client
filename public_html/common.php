@@ -19,7 +19,7 @@ function checkInstalled() {
 function preInitApp() {
 	$appConfigsFilePath = __DIR__ . '/protected/config/app-local.php';
 
-	$yiiFilePath = __DIR__ . '/../../yii/yii.php';
+	$yiiFilePath = __DIR__ . '/protected/vendor/yiisoft/yii/framework/yii.php';
 	if (file_exists($appConfigsFilePath)) {
 		$appConfigs = require $appConfigsFilePath;
 		$debug = !empty($appConfigs['yiiDebug']);

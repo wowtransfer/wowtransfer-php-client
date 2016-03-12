@@ -33,11 +33,26 @@
 				<exclude name="cache/**"/>
 				<exclude name="runtime/**" />
 				<exclude name="config/*-local.php" />
-				<exclude name="vendor/*" />
-
-				<include name="extensions/yiistrap/**" />
+				<exclude name="vendor/**" />
+				<exclude name="extensions/**" />
 			</fileset>
 		</copy>
+
+		<echo msg="Copy vendor files..." />
+		<copy todir="${release.vendor.dir}">
+			<fileset dir="${source.vendor.dir}">
+				<include name="twbs/bootstrap/dist/**" />
+				<include name="yiisoft/yii/framework/**" />
+			</fileset>
+		</copy>
+
+		<echo msg="Copy extensions..." />
+		<copy todir="${release.ext.dir}">
+			<fileset dir="${source.ext.dir}">
+				<include name="yiistrap/**" />
+			</fileset>
+		</copy>
+
 		<copy overwrite="true" file="${source.dir}/favicon.ico" tofile="${release.dir}/favicon.ico" />
 		<copy overwrite="true" file="${base.dir}/LICENSE.txt" tofile="${release.dir}/LICENSE.txt" />
 		<copy overwrite="true" file="${base.dir}/README.md" tofile="${release.dir}/README.md" />
@@ -66,16 +81,6 @@
 				<include name="*.png" />
 				<include name="*.jpg" />
 			</fileset>
-		</copy>
-
-
-		<echo msg="Copy extensions..." />
-
-
-		<echo msg="Copy vendor dependensies..." />
-
-		<copy todir="${release.vendor.dir}/twbs/bootstrap/dist">
-			<fileset dir="${source.vendor.dir}/twbs/bootstrap/dist" />
 		</copy>
 
 
