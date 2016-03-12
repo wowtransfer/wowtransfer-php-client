@@ -64,7 +64,7 @@ class WebUser extends CWebUser
 			$lang = 'ru';
 		}
 		$cookie = new CHttpCookie('lang', $lang);
-		$cookie->path = '/chdphp';
+		$cookie->path = '/';
 		$cookie->expire = time() + 3600 * 30;
 		Yii::app()->request->cookies['lang'] = $cookie;
 

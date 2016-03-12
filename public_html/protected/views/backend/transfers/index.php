@@ -11,12 +11,12 @@ $this->breadcrumbs = [
 <div class="change-view-mode pull-right">
 	<?php if ($viewMode === 'list'): ?>
 		<span title="<?= Yii::t('app', 'List') ?>" class="selected">
-			<span class="glyphicon glyphicon-th"></span>
+			<span class="glyphicon glyphicon-th-large"></span>
 		</span>
 	<?php else: ?>
 		<a href="<?= $this->createUrl('changeview', ['mode' => 'list']) ?>"
 			title="<?= Yii::t('app', 'List') ?>">
-			 <span class="glyphicon glyphicon-th"></span></a>
+			 <span class="glyphicon glyphicon-th-large"></span></a>
 	<?php endif ?>
 
 	<?php if ($viewMode === 'table'): ?>

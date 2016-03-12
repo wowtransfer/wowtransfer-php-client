@@ -313,9 +313,9 @@ class TransfersController extends BackendController
 
 	public function actionChangeview($mode) {
 		$cookie = new CHttpCookie('chd_requests_mode', $mode);
-		$cookie->path = '/chdphp';
+		$cookie->path = '/';
 		$cookie->expire = time() + 3600 * 30;
 		Yii::app()->request->cookies['chd_requests_mode'] = $cookie;
-		$this->redirect('index');
+		$this->redirect(['index']);
 	}
 }
