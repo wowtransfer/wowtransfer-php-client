@@ -17,6 +17,7 @@
         "twbs/bootstrap": "3.3.6"
     },
     "require-dev": {
+        "phing/phing": "*"
     },
     "config": {
         "process-timeout": 1800,

@@ -1,3 +1,3 @@
-php ./protected/vendor/phing-latest.phar restory_install
+./public_html/protected/vendor/bin/phing restory_install
 
 read

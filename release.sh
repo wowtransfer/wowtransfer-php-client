@@ -1,3 +1,3 @@
-php ./protected/vendor/phing-latest.phar release
+./public_html/protected/vendor/bin/phing release
 
 read
