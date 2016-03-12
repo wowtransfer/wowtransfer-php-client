@@ -33,8 +33,9 @@
 				<exclude name="cache/**"/>
 				<exclude name="runtime/**" />
 				<exclude name="config/*-local.php" />
-				<exclude name="extensions/*" />
 				<exclude name="vendor/*" />
+
+				<include name="extensions/yiistrap/**" />
 			</fileset>
 		</copy>
 		<copy overwrite="true" file="${source.dir}/favicon.ico" tofile="${release.dir}/favicon.ico" />
@@ -72,9 +73,9 @@
 
 
 		<echo msg="Copy vendor dependensies..." />
-		<!--<copy overwrite="true" file="${source.vendor.dir}/phing-latest.phar" tofile="${release.vendor.dir}/phing-latest.phar" />-->
-		<copy todir="${release.vendor.dir}/twbs">
-			<fileset dir="${source.vendor.dir}/twbs" />
+
+		<copy todir="${release.vendor.dir}/twbs/bootstrap/dist">
+			<fileset dir="${source.vendor.dir}/twbs/bootstrap/dist" />
 		</copy>
 
 
