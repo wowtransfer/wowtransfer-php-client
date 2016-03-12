@@ -2,6 +2,7 @@
 <project name="chdphp" default="help" basedir=".">
 	<property name="project.name"  value="chdphp" />
 	<property name="version" value="v1.3" />
+	<property name="base.dir" value="." />
 	<property name="source.dir"  value="public_html" />
 	<property name="build.dir" value="./build" />
 	<property name="release.dir" value="${build.dir}/release" />
@@ -17,7 +18,7 @@
 
 		<echo msg="Create folders..." />
 		<mkdir dir="${release.dir}/assets" />
-		<mkdir dir="${release.dir}/css" />
+		<mkdir dir="${release.dir}/css_dev" />
 		<mkdir dir="${release.dir}/js" />
 		<mkdir dir="${release.dir}/images" />
 		<mkdir dir="${release.dir}/protected" />
@@ -37,9 +38,9 @@
 			</fileset>
 		</copy>
 		<copy overwrite="true" file="${source.dir}/favicon.ico" tofile="${release.dir}/favicon.ico" />
-		<copy overwrite="true" file="${source.dir}/LICENSE.txt" tofile="${release.dir}/LICENSE.txt" />
-		<copy overwrite="true" file="${source.dir}/README.md" tofile="${release.dir}/README.md" />
-		<copy overwrite="true" file="${source.dir}/TODO.md" tofile="${release.dir}/TODO.md" />
+		<copy overwrite="true" file="${base.dir}/LICENSE.txt" tofile="${release.dir}/LICENSE.txt" />
+		<copy overwrite="true" file="${base.dir}/README.md" tofile="${release.dir}/README.md" />
+		<copy overwrite="true" file="${base.dir}/TODO.md" tofile="${release.dir}/TODO.md" />
 		<copy overwrite="true" todir="${release.dir}">
 			<fileset dir="${source.dir}">
 				<include name="*.php" />
@@ -52,8 +53,8 @@
 		</copy>
 
 		<!-- CSS -->
-		<copy overwrite="true" todir="${release.dir}/css">
-			<fileset dir="${source.dir}/css" />
+		<copy overwrite="true" todir="${release.dir}/css_dev">
+			<fileset dir="${source.dir}/css_dev" />
 		</copy>
 
 		<!-- Resources -->
@@ -116,8 +117,7 @@
 	</target>
 
 	<target name="help">
-		<echo msg="chdphp help"/>
-
+		<echo msg="baseDir: ${base.dir}" />
 		<echo msg="  targets:" />
 		<echo msg="release" />
 	</target>
