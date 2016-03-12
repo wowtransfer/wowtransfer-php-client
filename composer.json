@@ -13,12 +13,15 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=5.5.0",
+        "twbs/bootstrap": "3.3.6"
     },
     "require-dev": {
     },
     "config": {
-        "process-timeout": 1800
+        "process-timeout": 1800,
+        "vendor-dir": "public_html/protected/vendor",
+        "bin-dir": "public_html/protected/vendor/bin"
     },
     "extra": {
         "asset-installer-paths": {

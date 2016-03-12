@@ -12,3 +12,5 @@ public_html/.install
 public_html/.installed
 
 *.ico
+
+composer.lock
