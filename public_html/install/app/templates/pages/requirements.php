@@ -51,7 +51,7 @@ foreach ($requirements as $name => $item) {
 }
 
 if (isset($_POST['submit']) && !$view->hasErrors()) {
-	header('Location: index.php?page=yii');
+	header('Location: index.php?page=core');
 	exit;
 }
 

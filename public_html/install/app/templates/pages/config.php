@@ -44,10 +44,6 @@ if (isset($_POST['submit'])) {
 		<b><?= $view->getFieldValue('core') ?></b>
 	</p>
 
-	<p class="text-center"><?= App::t('Framework path') ?>:
-		<b><?= $view->getFieldValue('yii_dir') ?></b>
-	</p>
-
 	<div class="actions-panel">
 		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
 		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>

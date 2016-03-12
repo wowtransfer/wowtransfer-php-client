@@ -3,14 +3,6 @@ use Installer\App;
 
 $fields = ['core'];
 
-if (isset($_POST['back'])) {
-	unset($_POST['back']);
-	unset($_POST['submit']);
-	$view->writeSubmitedFields();
-	header('Location: index.php?page=yii');
-	exit;
-}
-
 if (isset($_POST['submit'])) {
 	if (!$view->hasErrors()) {
 		unset($_POST['back']);
@@ -31,7 +23,6 @@ if (isset($_POST['submit'])) {
 	</select>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" type="submit" name="back"><?= App::t('Back') ?></button>
 		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
 
 		<?php $view->printHiddenFields($fields); ?>

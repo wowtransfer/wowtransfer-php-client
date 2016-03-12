@@ -149,9 +149,6 @@ class App
 			'requirements' => [
 				'title' => App::t('Check of the system requirement'),
 			],
-			'yii' => [
-				'title' => App::t('Framework path'),
-			],
 			'core' => [
 				'title' => App::t('Select of the WoW core'),
 			],
@@ -255,11 +252,6 @@ class App
 					$params['transferTable'] = true;
 					continue;
 				}
-				elseif ($key === "'yiiDir'") {
-					$configContent .= "\t'yiiDir'=>'{$this->view->getFieldValue('yii_dir')}',\n";
-					$params['yiiDir'] = true;
-					continue;
-				}
 			}
 
 			if (trim($line) === '];') {
@@ -268,9 +260,6 @@ class App
 				}
 				if (!isset($params['transferTable'])) {
 					$configContent .= "\t'transferTable'=>'{$this->view->getFieldValue('db_transfer_table')}',\n";
-				}
-				if (!isset($params['yiiDir'])) {
-					$configContent .= "\t'yiiDir'=>'{$this->view->getFieldValue('yii_dir')}',\n";
 				}
 			}
 
@@ -453,7 +442,7 @@ class App
 	 * @return type
 	 */
 	public function getRelativeUrl() {
-		return '/chdphp';
+		return '/';
 	}
 
 	/**
