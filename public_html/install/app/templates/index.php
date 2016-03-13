@@ -14,7 +14,6 @@
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-theme.min.css">
 
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
-		<script src="js/main.js"></script>
 	</head>
 	<body>
 		<div id="page">
@@ -27,5 +26,6 @@
 
 		<script src="vendor/jquery/jquery-2.1.4.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
 	</body>
 </html>

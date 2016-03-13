@@ -1,7 +1,7 @@
 <?php
 use Installer\App;
 
-$view->clearSubmitedFields();
+App::$app->getSettings()->clear();
 ?>
 
 <div class="form ">

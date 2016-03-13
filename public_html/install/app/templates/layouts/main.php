@@ -72,3 +72,7 @@ use Installer\App;
 		</a>
 	</div>
 <?php endif ?>
+
+<pre>
+    <?= var_dump(App::$app->getSettings()->getFields()) ?>
+</pre>

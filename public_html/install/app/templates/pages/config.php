@@ -4,13 +4,10 @@
 
 use Installer\App;
 
+$settings = App::$app->getSettings();
 $fields = ['submit', 'back'];
 
 if (isset($_POST['back'])) {
-	unset($_POST['back']);
-	unset($_POST['submit']);
-
-	$view->writeSubmitedFields();
 	header('Location: index.php?page=privileges');
 	exit;
 }
@@ -20,7 +17,7 @@ if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 
 	if (App::$app->writeAppConfig() && !$view->hasErrors()) {
-		header('Location: index.php?page=finish');
+		header('Location: index.php?page=confirm');
 		exit;
 	}
 }
@@ -37,11 +34,11 @@ if (isset($_POST['submit'])) {
 	<?php $view->errorSummary() ?>
 
 	<p class="text-center"><?= App::t('The table for the transfer requests') ?>:
-		<b><?= $view->getFieldValue('db_transfer_table') ?></b>
+		<b><?= $settings->getFieldValue('db_transfer_table') ?></b>
 	</p>
 
 	<p class="text-center"><?= App::t('Core of the WoW server') ?>:
-		<b><?= $view->getFieldValue('core') ?></b>
+		<b><?= $settings->getFieldValue('core') ?></b>
 	</p>
 
 	<div class="actions-panel">
@@ -53,8 +50,6 @@ if (isset($_POST['submit'])) {
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>
         </button>
-
-		<?php $view->printHiddenFields($fields) ?>
 	</div>
 
 </form>

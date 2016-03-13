@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
 	if (!$view->hasErrors()) {
 		unset($_POST['back']);
 		unset($_POST['submit']);
-		$view->writeSubmitedFields();
+		App::$app->getSettings()->save();
 		header('Location: index.php?page=db');
 		exit;
 	}
@@ -27,8 +27,6 @@ if (isset($_POST['submit'])) {
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>
         </button>
-
-		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

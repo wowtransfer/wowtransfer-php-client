@@ -3,6 +3,7 @@ namespace Installer;
 
 include_once __DIR__ . '/view.php';
 include_once __DIR__ . '/database.php';
+include_once __DIR__ . '/settings.php';
 
 use Installer;
 
@@ -28,8 +29,15 @@ class App
 	 */
 	protected $language = 'ru';
 
-	public function __construct()
+    /**
+     * @var \Installer\Settings
+     */
+    protected $settings;
+
+    public function __construct()
 	{
+        $this->init();
+
 		$this->view = new View();
 		$this->language = isset($_COOKIE['lang']) ? $_COOKIE['lang'] : 'ru';
 		// default source language is `EN`
@@ -37,8 +45,14 @@ class App
 			self::$messages = require __DIR__ . '/messages/' . $this->language . '/app.php';
 		}
 
-		self::$app = $this;
+		$this->settings = new \Installer\Settings();
 	}
+
+    private function init()
+    {
+        session_start();
+        self::$app = $this;
+    }
 
 	public function run()
 	{
@@ -64,7 +78,6 @@ class App
 				$pageTitle = $page['title'];
 				$stepCount = count($pages);
 
-				$this->view->readSubmitedFields();
 				$this->view->addVars([
 					'page'        => $page,
 					'pages'       => $pages,
@@ -167,6 +180,9 @@ class App
 			'config' => [
 				'title' => App::t('Configuration writing'),
 			],
+            'confirm' => [
+                'title' => App::t('Confirmation'),
+            ],
 			'finish' => [
 				'title' => App::t('Finish'),
 			],
@@ -193,7 +209,6 @@ class App
 	 * @return boolean
 	 */
 	protected function writeDbConfig() {
-		$result = false;
 		$dbFilePath = __DIR__ . '/../../protected/config/db-local.php';
 
 		$h = fopen($dbFilePath, 'w');
@@ -202,14 +217,15 @@ class App
 			return false;
 		}
 
+        $settings = $this->getSettings();
 		ob_start();
 		echo
 			"<?\n",
 			"return [\n",
-			"	'connectionString'=>'mysql:host=127.0.0.1;dbname={$this->view->getFieldValue('db_characters')}',\n",
+			"	'connectionString'=>'mysql:host=127.0.0.1;dbname={$settings->getFieldValue('db_characters')}',\n",
 			"	'emulatePrepare'=>true,\n",
-			"	'username'=>'{$this->view->getFieldValue('db_transfer_user')}',\n",
-			"	'password'=>'{$this->view->getFieldValue('db_transfer_password')}',\n",
+			"	'username'=>'{$settings->getFieldValue('db_transfer_user')}',\n",
+			"	'password'=>'{$settings->getFieldValue('db_transfer_password')}',\n",
 			"	'charset'=>'utf8',\n",
 			"	'enableParamLogging'=>true,\n",
 			"];\n";
@@ -233,6 +249,7 @@ class App
 			return false;
 		}
 
+        $settings = $this->getSettings();
 		$configContent = '';
 		$params = [];
 		foreach ($lines as $line) {
@@ -243,12 +260,12 @@ class App
 			if (isset($keyValue[1])) {
 				$key = trim($keyValue[0]);
 				if ($key === "'core'") {
-					$configContent .= "\t'core'=>'{$this->view->getFieldValue('core')}',\n";
+					$configContent .= "\t'core'=>'{$settings->getFieldValue('core')}',\n";
 					$params['core'] = true;
 					continue;
 				}
 				elseif ($key === "'transferTable'") {
-					$configContent .= "\t'transferTable'=>'{$this->view->getFieldValue('db_transfer_table')}',\n";
+					$configContent .= "\t'transferTable'=>'{$settings->getFieldValue('db_transfer_table')}',\n";
 					$params['transferTable'] = true;
 					continue;
 				}
@@ -256,10 +273,10 @@ class App
 
 			if (trim($line) === '];') {
 				if (!isset($params['core'])) {
-					$configContent .= "\t'core'=>'{$this->view->getFieldValue('core')}',\n";
+					$configContent .= "\t'core'=>'{$settings->getFieldValue('core')}',\n";
 				}
 				if (!isset($params['transferTable'])) {
-					$configContent .= "\t'transferTable'=>'{$this->view->getFieldValue('db_transfer_table')}',\n";
+					$configContent .= "\t'transferTable'=>'{$settings->getFieldValue('db_transfer_table')}',\n";
 				}
 			}
 
@@ -402,8 +419,9 @@ class App
 	public function loadDbPrivileges()
 	{
 		// TODO: make function (filePrefix)
+        $settings = $this->getSettings();
 
-		$core = $this->view->getFieldValue('core');
+		$core = $settings->getFieldValue('core');
 		if (empty($core)) {
 			$this->view->addError(App::t('Core of the WoW server not found'));
 			return false;
@@ -421,11 +439,11 @@ class App
 			return false;
 		}
 
-		$userName      = $this->view->getFieldValue('db_transfer_user');
-		$userHost      = $this->view->getFieldValue('db_transfer_user_host');
-		$transferTable = $this->view->getFieldValue('db_transfer_table');
-		$authDb        = $this->view->getFieldValue('db_auth');
-		$charactersDb  = $this->view->getFieldValue('db_characters');
+		$userName      = $settings->getFieldValue('db_transfer_user');
+		$userHost      = $settings->getFieldValue('db_transfer_user_host');
+		$transferTable = $settings->getFieldValue('db_transfer_table');
+		$authDb        = $settings->getFieldValue('db_auth');
+		$charactersDb  = $settings->getFieldValue('db_characters');
 
 		// TODO: checking...
 
@@ -462,4 +480,12 @@ class App
 	public function getLanguage() {
 		return $this->language;
 	}
+
+    /**
+     * @return \Installer\Settings
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
 }

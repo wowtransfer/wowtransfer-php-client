@@ -13,7 +13,6 @@ if (isset($_POST['back'])) {
 	unset($_POST['next']);
 	unset($_POST['back']);
 
-	$view->writeSubmitedFields();
 	header('Location: index.php?page=db');
 	exit;
 }
@@ -22,6 +21,7 @@ if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
 	unset($_POST['back']);
+    $_POST['db_transfer_user_create'] = 1;
 
 	// simple checking...
 	if (empty($dbTransferUser)) {
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 		$db = new DatabaseManager($view);
 		$db->createUser($dbTransferUser, $dbTransferPassword, $dbTransferUserHost);
 		if (!$view->hasErrors()) {
-			$view->writeSubmitedFields();
+			App::$app->getSettings()->save();
 			header('Location: index.php?page=struct');
 			exit;
 		}
@@ -45,12 +45,13 @@ if (isset($_POST['next'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
 	unset($_POST['back']);
+    $_POST['db_transfer_user_next'] = 1;
 
 	if (empty($dbTransferUser)) {
 		$view->addError(App::t('Put the user name'));
 	}
 	else {
-		$view->writeSubmitedFields();
+		App::$app->getSettings()->save();
 		header('Location: index.php?page=struct');
 		exit;
 	}
@@ -119,8 +120,6 @@ if (isset($_POST['next'])) {
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>
         </button>
-
-		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

@@ -3,13 +3,13 @@
 use Installer\App;
 use Installer\DatabaseManager;
 
+$settings = App::$app->getSettings();
 $fields = ['submit', 'back'];
 
 if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
-	$view->writeSubmitedFields();
 	header('Location: index.php?page=struct');
 	exit;
 }
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 
 	<p class="text-center">Пользователь:
 		<span style="font-weight: bold;">
-		<?= "'" . $view->getFieldValue('db_transfer_user') . "'@'" . $view->getFieldValue('db_transfer_user_host') . "'"; ?>
+		<?= "'" . $settings->getFieldValue('db_transfer_user') . "'@'" . $settings->getFieldValue('db_transfer_user_host') . "'"; ?>
 		</span>
 	</p>
 
@@ -52,8 +52,6 @@ if (isset($_POST['submit'])) {
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>
         </button>
-
-		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

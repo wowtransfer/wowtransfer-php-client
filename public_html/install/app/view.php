@@ -127,51 +127,7 @@ class View
 		
 	}
 
-	/**
-	 * @return string isInstalledField's value by $name
-	 */
-	public function getFieldValue($name)
-	{
-		return isset($this->_hiddenFields[$name]) ? $this->_hiddenFields[$name] : '';
-	}
-
-	/**
-	 * Call before render of context
-	 */
-	public function readSubmitedFields()
-	{
-		session_start();
-		foreach ($_SESSION as $name => $value) {
-			if (!isset($_POST[$name])) {
-				$_POST[$name] = $value;
-			}
-		}
-		session_write_close();
-
-		$this->_hiddenFields = $_POST;
-	}
-
-	/**
-	 * Call before redirect
-	 */
-	public function writeSubmitedFields()
-	{
-		session_start();
-		$_SESSION = isset($_POST) ? $_POST : [];
-		session_write_close();
-	}
-
-	/**
-	 * Call on first installer page
-	 */
-	public function clearSubmitedFields()
-	{
-		session_start();
-		session_unset();
-		session_write_close();
-	}
-
-	/**
+    /**
 	 * @param string $error
 	 */
 	public function addError($error)
@@ -269,19 +225,5 @@ class View
 	public function addHiddenField($name, $value)
 	{
 		$this->_hiddenFields[$name] = $value;
-	}
-
-	/**
-	 * @param array $excludeHiddenFields Like ['key' => 'value', ...]
-	 */
-	public function printHiddenFields($excludeHiddenFields = null)
-	{
-		if (!empty($excludeHiddenFields)) {
-			foreach ($this->_hiddenFields as $name => $value) {
-				if (!in_array($name, $excludeHiddenFields)) {
-					echo '<input type="hidden" name="' . $name . '" value="' . $value. '">';
-				}
-			}
-		}
 	}
 }

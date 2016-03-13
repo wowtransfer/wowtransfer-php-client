@@ -3,6 +3,8 @@
 	'Begin install' => 'Начать установку',
 	'Check of the system requirement' => 'Проверка системных тербований',
 	'Configuration writing' => 'Запись конфигурации',
+    'Confirmation' => 'Подтверждение',
+    'Confirm password' => 'Подтверждение пароля',
 	'Contact us' => 'Напишите нам',
 	'Comment' => 'Комментарий',
 	'Correct the next errors' => 'Необходимо исправить следующие ошибки',
@@ -29,6 +31,7 @@
 	'Github comunity' => 'Сообщество на github',
 	'If the errors was shown, please, visit our' => 'При возникновении проблем, пожалуйста, посетите наш',
 	'If the user alredy exists then put only name, the password will have skiped, press the "Next" button' => 'Если пользователь уже существует то введите только его имя, пароль не будет учитывается, нажмите кнопку "Далее"',
+    'Install' => 'Установить',
 	'Install application' => 'становка приложени',
 	'Or' => 'Или',
 	'Optional' => 'Опционально',
@@ -74,4 +77,5 @@
 	'User' => 'Пользователь',
 	'Warning' => 'Предупреждение',
 	'Warning! User of the insalling is not user of the application' => 'Важно! Пользователь, под которым происходит установка, не является пользоваетелем, под которым будет работать приложение',
+    'Wrong confirmed password' => 'Неверный подтвержденный пароль',
 ];

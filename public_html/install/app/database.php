@@ -23,10 +23,11 @@ class DatabaseManager
 	 */
 	private function _connect($database = '')
 	{
-		$host     = $this->view->getFieldValue('db_host');
-		$port     = $this->view->getFieldValue('db_port');
-		$user     = $this->view->getFieldValue('db_user');
-		$password = $this->view->getFieldValue('db_password');
+        $settings = App::$app->getSettings();
+		$host     = $settings->getFieldValue('db_host');
+		$port     = $settings->getFieldValue('db_port');
+		$user     = $settings->getFieldValue('db_user');
+		$password = $settings->getFieldValue('db_password');
 
 		if (empty($host)) {
 			$host = 'localhost';
@@ -50,6 +51,7 @@ class DatabaseManager
 	 */
 	public function checkConnection()
 	{
+        $settings = App::$app->getSettings();
 		try
 		{
 			$errorPrefix = 'Проверка подключения: ';
@@ -57,11 +59,11 @@ class DatabaseManager
 
 			// check auth database
 			$errorPrefix = 'Проверка базы данных с аккаунтами: ';
-			$pdo->query('USE `' . $this->view->getFieldValue('db_auth') . '`');
+			$pdo->query('USE `' . $settings->getFieldValue('db_auth') . '`');
 
 			// check characters database
 			$errorPrefix = 'Проверка базы данных с персонажами: ';
-			$pdo->query('USE `' . $this->view->getFieldValue('db_characters') . '`');
+			$pdo->query('USE `' . $settings->getFieldValue('db_characters') . '`');
 
 			unset($pdo);
 		}
@@ -122,8 +124,9 @@ class DatabaseManager
 	 */
 	public function createStructure()
 	{
-		$db = $this->view->getFieldValue('db_characters');
-		$dbTransferTableName = $this->view->getFieldValue('db_transfer_table');
+        $settings = App::$app->getSettings();
+		$db = $settings->getFieldValue('db_characters');
+		$dbTransferTableName = $settings->getFieldValue('db_transfer_table');
 
 		try
 		{
@@ -156,7 +159,8 @@ class DatabaseManager
 	 */
 	public function applyPrivileges()
 	{
-		$db = $this->view->getFieldValue('db_characters');
+        $settings = App::$app->getSettings();
+		$db = $settings->getFieldValue('db_characters');
 
 		try {
 			$pdo = $this->_connect($db);

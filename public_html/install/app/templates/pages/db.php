@@ -2,6 +2,7 @@
 use Installer\App;
 use Installer\DatabaseManager;
 
+$settings = App::$app->getSettings();
 $fields = ['db_type', 'db_host', 'db_port', 'db_user', 'db_password', 'db_auth', 'db_characters'];
 
 $defaultValues = [
@@ -18,12 +19,14 @@ $defaultValues = [
 		'characters' => 'characters',	
 	]*/
 ];
-$default = isset($defaultValues[$_POST['core']]) ? $defaultValues[$_POST['core']] : reset($defaultValues);
+$core = $settings->getFieldValue('core');
+$default = isset($defaultValues[$core]) ? $defaultValues[$core] : reset($defaultValues);
 
 $dbHost = isset($_POST['db_host']) ? trim($_POST['db_host']) : 'localhost';
 $dbPort = isset($_POST['db_port']) ? intval($_POST['db_port']) : 3306;
 $dbUser = isset($_POST['db_user']) ? trim($_POST['db_user']) : $default['user'];
-$dbPassword = isset($_POST['db_password']) ? trim($_POST['db_password']) : $default['password'];
+$dbPassword = isset($_POST['db_password']) ? $_POST['db_password'] : $default['password'];
+$dbPassword2 = isset($_POST['db_password2']) ? $_POST['db_password2'] : $default['password'];
 $dbAuth = isset($_POST['db_auth']) ? trim($_POST['db_auth']) : $default['auth'];
 $dbCharacters = isset($_POST['db_characters']) ? trim($_POST['db_characters']) : $default['characters'];
 
@@ -31,7 +34,6 @@ $dbCharacters = isset($_POST['db_characters']) ? trim($_POST['db_characters']) :
 if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
-	$view->writeSubmitedFields();
 	header('Location: index.php?page=core');
 	exit;
 }
@@ -40,6 +42,7 @@ if (isset($_POST['submit']))
 {
 	unset($_POST['back']);
 	unset($_POST['submit']);
+    App::$app->getSettings()->save();
 
 	// validate
 	if (empty($dbHost)) {
@@ -54,16 +57,22 @@ if (isset($_POST['submit']))
 	if (empty($dbCharacters)) {
 		$view->addError(App::t('Put the name of database with characters'));
 	}
+    if ($dbPassword != $dbPassword2) {
+        $view->addError(App::t('Wrong confirmed password'));
+    }
 
 	if (!$view->hasErrors()) {
 		$db = new DatabaseManager($view);
 		$db->checkConnection();
 	}
 	if (!$view->hasErrors()) {
-		$view->writeSubmitedFields();
 		header('Location: index.php?page=user');
 		exit;
 	}
+}
+
+if ($dbPassword != $default['password']) {
+    $dbPassword = '';
 }
 ?>
 
@@ -126,6 +135,9 @@ if (isset($_POST['submit']))
 	<label for="db_port"><?= App::t('Password') ?></label>
 	<input type="password" name="db_password" id="db_password" value="<?php echo $dbPassword; ?>" class="form-control">
 
+    <label for="db_port"><?= App::t('Confirm password') ?></label>
+    <input type="password" name="db_password2" id="db_password2" value="<?php echo $dbPassword2; ?>" class="form-control">
+
 
 	<label for="db_port"><?= App::t('Database with characters') ?></label>
 	<input type="text" name="db_characters" id="db_character" value="<?php echo $dbCharacters; ?>" class="form-control" list="db_character_list">
@@ -150,8 +162,6 @@ if (isset($_POST['submit']))
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>
         </button>
-
-		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>

@@ -10,7 +10,6 @@ if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
 
-	$view->writeSubmitedFields();
 	header('Location: index.php?page=user');
 	exit;
 }
@@ -31,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$db->createStructure();
 
 		if (!$view->hasErrors()) {
-			$view->writeSubmitedFields();
+			App::$app->getSettings()->save();
 			header('Location: index.php?page=privileges');
 			exit;
 		}
@@ -69,8 +68,6 @@ if (isset($_POST['submit'])) {
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>
         </button>
-
-		<?php $view->printHiddenFields($fields); ?>
 	</div>
 
 </form>
