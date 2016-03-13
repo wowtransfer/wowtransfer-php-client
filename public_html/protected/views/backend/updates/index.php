@@ -78,14 +78,14 @@ $this->breadcrumbs = [
 
 		<ol>
 			<li>
-				<a href="https://github.com/wowtransfer/chdphp/releases" target="_blank">
-					https://github.com/wowtransfer/chdphp/releases
+				<a href="https://github.com/wowtransfer/wowtransfer-php-client/releases" target="_blank">
+					https://github.com/wowtransfer/wowtransfer-php-client/releases
 				</a>
 				<span class="label label-success"><?= Yii::t('app', 'Safe') ?></span>
 			</li>
 			<li>
-				<a href="https://github.com/wowtransfer/chdphp/archive/master.zip">
-					https://github.com/wowtransfer/chdphp/archive/master.zip
+				<a href="https://github.com/wowtransfer/wowtransfer-php-client/archive/master.zip">
+					https://github.com/wowtransfer/wowtransfer-php-client/archive/master.zip
 				</a>
 				<span class="label label-danger"><?= Yii::t('app', 'Unsafe') ?></span>
 			</li>

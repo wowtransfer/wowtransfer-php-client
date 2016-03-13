@@ -38,7 +38,7 @@ use Installer\App;
 		<a href="https://github.com/wowtransfer" title="wowtransfer on github">
 			<?= App::t('Github comunity') ?></a>,
 		<span class="glyphicon glyphicon-github"></span>
-		<a href="https://github.com/wowtransfer/chdphp" title="wowtransfer.com application">chdphp project</a>.
+		<a href="https://github.com/wowtransfer/wowtransfer-php-client" title="wowtransfer.com application">wowtransfer-php-client</a>.
 
 	</div>
 </div>

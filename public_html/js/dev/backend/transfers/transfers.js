@@ -32,7 +32,7 @@ var app = app || {};
 			var requestData = {
 				comment: comment
 			};
-			$.post(app.getBaseUrl() + "/transfers/update/" + id, requestData, function(data) {
+			$.post(app.getBaseUrl() + "transfers/update/" + id, requestData, function(data) {
 				app.showMessage($("#t-success-changed").text());
 			});
 		});
@@ -50,7 +50,7 @@ var app = app || {};
 			var requestData = {
 				status: status
 			};
-			$.post(app.getBaseUrl() + "/transfers/update/" + id, requestData, function(data) {
+			$.post(app.getBaseUrl() + "transfers/update/" + id, requestData, function(data) {
 				var checkedStatuses = getFilterCheckedStatuses();
 				if (checkedStatuses.indexOf(status) < 0) {
 					$("#view_" + id).hide();
@@ -109,7 +109,7 @@ var app = app || {};
 				}
 			}
 			else {
-				$.post(app.getBaseUrl() + "/transfers/remotepassword/" + id, {}, function(data) {
+				$.post(app.getBaseUrl() + "transfers/remotepassword/" + id, {}, function(data) {
 					$pass.text(data);
 					$pass.data("password", data);
 					$btn.text("-");

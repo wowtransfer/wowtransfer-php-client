@@ -57,7 +57,7 @@
 		var where = $view.data("where");
 		var message = $("#t-configrm-request-delete").text() + " #" + id;
 		app.dialogs.confirm(message, function() {
-			$.post(app.getBaseUrl() + "/transfers/delete/" + id, {}, function (response) {
+			$.post(app.getBaseUrl() + "transfers/delete/" + id, {}, function (response) {
 				if (where === "card") {
 					window.location.href = response.returnUrl;
 				}

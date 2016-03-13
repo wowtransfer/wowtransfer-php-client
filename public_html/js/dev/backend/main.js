@@ -1,7 +1,7 @@
 app = {};
 
 app.getBaseUrl = function() {
-	return "/chdphp/admin.php";
+	return "admin.php?r=";
 };
 
 app.showMessage = function(message) {

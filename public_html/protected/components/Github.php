@@ -23,7 +23,7 @@ class Github
 
 	public function getLatestRelease() {
 		$owner = 'wowtransfer';
-		$repo = 'chdphp';
+		$repo = 'wowtransfer-php-client';
 		$url = $this->baseUrl . "/repos/$owner/$repo/releases/latest";
 		$ch = curl_init();
 		curl_setopt_array($ch, [
@@ -31,7 +31,7 @@ class Github
 			CURLOPT_RETURNTRANSFER   => 1,
 			CURLOPT_SSL_VERIFYHOST   => 0,
 			CURLOPT_SSL_VERIFYPEER   => 0,
-			CURLOPT_USERAGENT        => 'chdphp',
+			CURLOPT_USERAGENT        => 'wowtransfer-php-client',
 		]);
 		$response = curl_exec($ch);
 		curl_close($ch);

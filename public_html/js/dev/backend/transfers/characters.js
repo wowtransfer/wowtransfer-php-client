@@ -189,7 +189,7 @@ app.characters = (function($) {
 			charGuid = $transferRequest.data("char-guid");
 
 		$("#view-luadump").click(function() {
-			$.get(app.getBaseUrl() + "/transfers/luadump/" + transferId, {}, function (data) {
+			$.get(app.getBaseUrl() + "transfers/luadump/" + transferId, {}, function (data) {
 				$("#lua-dump-dialog-content").text(data);
 				$("#lua-dump-dialog").modal({keyboard: true});
 			});

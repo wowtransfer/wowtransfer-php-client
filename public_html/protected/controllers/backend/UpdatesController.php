@@ -29,6 +29,11 @@ class UpdatesController extends BackEndController
 	}
 	*/
 
+   protected function beforeAction($action)
+   {
+       throw new CHttpException(403, 'Forbidden temporary');
+   }
+
 	public function actionIndex()
 	{
 		$release = [];
@@ -54,7 +59,7 @@ class UpdatesController extends BackEndController
 
 	public function actionLatestRelease() {
 		$service = new WowtransferUI();
-		$app = $service->getApplication('chdphp');
+		$app = $service->getApplication('wowtransfer-php-client');
 		$result = [];
 		if ($app) {
 			$result['name'] = $app->getName();
@@ -114,7 +119,7 @@ class UpdatesController extends BackEndController
 	private function downloadLatestRelease() {
 		$service = new WowtransferUI();
 
-		$app = $service->getApplication('chdphp');
+		$app = $service->getApplication('wowtransfer-php-client');
 		if (!$app || !$app->getDownloadUrl()) {
 			throw new \Exception(Yii::t('app', 'Could not download the file'));
 		}
@@ -210,8 +215,8 @@ class UpdatesController extends BackEndController
 	 * @throws Exception
 	 */
 	protected function updatingExtractRelease() {
-		// from source code: chdphp.zip => dir => target files
-		// from release:updated_at chdphp-1.0.zip => chdphp => target files
+		// from source code: wowtransfer-php-client.zip => dir => target files
+		// from release:updated_at wowtransfer-php-client-1.0.zip => wowtransfer-php-client => target files
 
 		$archiveDestDir = self::getReleaseDir();
 		$this->clearDir($archiveDestDir);

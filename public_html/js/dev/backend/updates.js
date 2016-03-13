@@ -7,7 +7,7 @@ var app = app || {};
 
 	var $latestVersion = $("#latest-version");
 	if ($latestVersion.length) {
-		$.get(app.getBaseUrl() + "/updates/latestRelease", function(response) {
+		$.get(app.getBaseUrl() + "updates/latestRelease", function(response) {
 			$latestVersion.html(response.version);
 			$("#latest-date").html(response.updated_at);
 			if (response.download_url) {
