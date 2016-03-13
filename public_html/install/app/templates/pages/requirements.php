@@ -64,7 +64,10 @@ if (isset($_POST['submit']) && !$view->hasErrors()) {
 	<?php $view->printCheckTable (); ?>
 
 	<div class="actions-panel">
-		<button class="btn btn-primary" title="Next" type="submit" name="submit"><?= App::t('Next') ?></button>
+		<button class="btn btn-primary" title="Next" type="submit" name="submit">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <?= App::t('Next') ?>
+        </button>
 	</div>
 
 </form>

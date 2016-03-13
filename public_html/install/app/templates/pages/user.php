@@ -107,9 +107,18 @@ if (isset($_POST['next'])) {
 	</fieldset>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" title="Back" type="submit" name="back"><?= App::t('Back') ?></button>
-		<button class="btn btn-primary" title="Create" type="submit" name="submit"><?= App::t('Create') ?></button>
-		<button class="btn btn-primary" title="Next" type="submit" name="next"><?= App::t('Next') ?></button>
+		<button class="btn btn-default" title="Back" type="submit" name="back">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <?= App::t('Back') ?>
+        </button>
+		<button class="btn btn-success" title="Create" type="submit" name="submit">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <?= App::t('Create') ?>
+        </button>
+		<button class="btn btn-primary" title="Next" type="submit" name="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <?= App::t('Next') ?>
+        </button>
 
 		<?php $view->printHiddenFields($fields); ?>
 	</div>

@@ -12,6 +12,7 @@ $view->clearSubmitedFields();
 
 <div class="actions-panel">
 	<a class="btn btn-primary" href="index.php?page=requirements" title="Install">
+        <span class="glyphicon glyphicon-chevron-right"></span>
 		<?= App::t('Begin install') ?>
 	</a>
 </div>

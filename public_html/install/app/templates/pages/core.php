@@ -23,7 +23,10 @@ if (isset($_POST['submit'])) {
 	</select>
 
 	<div class="actions-panel">
-		<button class="btn btn-primary" type="submit" name="submit"><?= App::t('Next') ?></button>
+		<button class="btn btn-primary" type="submit" name="submit">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <?= App::t('Next') ?>
+        </button>
 
 		<?php $view->printHiddenFields($fields); ?>
 	</div>
