@@ -13,13 +13,8 @@ if (isset($_POST['back'])) {
 }
 
 if (isset($_POST['submit'])) {
-	unset($_POST['back']);
-	unset($_POST['submit']);
-
-	if (App::$app->writeAppConfig() && !$view->hasErrors()) {
-		header('Location: index.php?page=confirm');
-		exit;
-	}
+    header('Location: index.php?page=confirm');
+	exit;
 }
 
 ?>

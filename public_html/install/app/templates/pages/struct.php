@@ -7,9 +7,6 @@ $fields = array('back', 'submit', 'db_transfer_table');
 $dbTransferTableName = isset($_POST['db_transfer_table']) ? trim($_POST['db_transfer_table']) : 'chd_transfer';
 
 if (isset($_POST['back'])) {
-	unset($_POST['back']);
-	unset($_POST['submit']);
-
 	header('Location: index.php?page=user');
 	exit;
 }
@@ -24,17 +21,13 @@ if (isset($_POST['submit'])) {
 	elseif (!preg_match('/^[a-z_]+$/', $dbTransferTableName)) {
 		$view->addError(App::t('The table name can consist of') . ' [a-z, _]');
 	}
-	else {
-		$db = new DatabaseManager($view);
 
-		$db->createStructure();
+    if (!$view->hasErrors()) {
+        App::$app->getSettings()->save();
+        header('Location: index.php?page=privileges');
+        exit;
+    }
 
-		if (!$view->hasErrors()) {
-			App::$app->getSettings()->save();
-			header('Location: index.php?page=privileges');
-			exit;
-		}
-	}
 }
 
 ?>

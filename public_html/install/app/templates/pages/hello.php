@@ -4,7 +4,7 @@ use Installer\App;
 App::$app->getSettings()->clear();
 ?>
 
-<div class="form ">
+<div class="form">
 
 <div class="alert alert-info">
 	<?= App::t('Welcome to installer') ?>.

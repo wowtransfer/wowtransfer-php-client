@@ -143,6 +143,14 @@ class View
 		return !empty($this->_errors);
 	}
 
+    /**
+     * @return string[]
+     */
+    public function getErrors()
+    {
+        return $this->_errors;
+    }
+
 	/**
 	 * Display errors
 	 */

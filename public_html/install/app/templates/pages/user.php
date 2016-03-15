@@ -21,31 +21,27 @@ if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
 	unset($_POST['back']);
-    $_POST['db_transfer_user_create'] = 1;
+    $_POST['db_transfer_user_mode'] = 'create';
 
-	// simple checking...
 	if (empty($dbTransferUser)) {
 		$view->addError(App::t('Put the user name'));
 	}
 	elseif (empty($dbTransferPassword)) {
 		$view->addError(App::t('Put the password'));
 	}
-	else {
-		$db = new DatabaseManager($view);
-		$db->createUser($dbTransferUser, $dbTransferPassword, $dbTransferUserHost);
-		if (!$view->hasErrors()) {
-			App::$app->getSettings()->save();
-			header('Location: index.php?page=struct');
-			exit;
-		}
-	}
+
+    if (!$view->hasErrors()) {
+        App::$app->getSettings()->save();
+        header('Location: index.php?page=struct');
+        exit;
+    }
 }
 
 if (isset($_POST['next'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
 	unset($_POST['back']);
-    $_POST['db_transfer_user_next'] = 1;
+    $_POST['db_transfer_user_mode'] = 'next';
 
 	if (empty($dbTransferUser)) {
 		$view->addError(App::t('Put the user name'));

@@ -7,22 +7,13 @@ $settings = App::$app->getSettings();
 $fields = ['submit', 'back'];
 
 if (isset($_POST['back'])) {
-	unset($_POST['back']);
-	unset($_POST['submit']);
-
 	header('Location: index.php?page=struct');
 	exit;
 }
 
 if (isset($_POST['submit'])) {
-	unset($_POST['back']);
-	unset($_POST['submit']);
-
-	$db = new DatabaseManager($view);
-	if ($db->applyPrivileges() && !$view->hasErrors()) {
-		header('Location: index.php?page=config');
-		exit;
-	}
+	header('Location: index.php?page=config');
+	exit;
 }
 ?>
 

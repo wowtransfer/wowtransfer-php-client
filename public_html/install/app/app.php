@@ -5,6 +5,8 @@ include_once __DIR__ . '/view.php';
 include_once __DIR__ . '/database.php';
 include_once __DIR__ . '/settings.php';
 
+include_once __DIR__ . '/models/ConfirmForm.php';
+
 use Installer;
 
 class App
