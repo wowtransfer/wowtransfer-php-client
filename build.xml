@@ -11,7 +11,9 @@
 	<property name="source.vendor.dir" value="${source.dir}/protected/vendor" />
 	<property name="release.vendor.dir" value="${release.dir}/protected/vendor" />
 	<property name="release.zip.file" value="${build.dir}/${project.name}-${version}.zip" />
-	<property name="develop.dir" value="${source.dir}/develop" />
+	<property name="develop.dir" value="${base.dir}/develop" />
+
+    <property name="installDir" value="${source.dir}/install" />
 
 	<target name="release">
 		<mkdir dir="${release.dir}" />
@@ -86,7 +88,7 @@
 
 		<echo msg="Copy installer..." />
 		<copy overwrite="true" todir="${release.dir}/install">
-			<fileset dir="${source.dir}/install" />
+			<fileset dir="${installDir}" />
 		</copy>
 
 		<echo msg="Remove the .gitkeep, .gitignore, .gitattributes files" />
@@ -110,16 +112,27 @@
 	</target>
 
 	<target name="restory_install">
-		<copy todir="${source.dir}/install/images">
+        <mkdir dir="${installDir}" />
+        <mkdir dir="${installDir}/images" />
+
+		<copy todir="${installDir}/images">
 			<fileset dir="${develop.dir}/install/images">
 				<include name="*.png" />
 			</fileset>
 		</copy>
-		<copy todir="${source.dir}/install">
+		<copy todir="${installDir}">
 			<fileset dir="${develop.dir}/install">
 				<include name="favicon.ico" />
 			</fileset>
 		</copy>
+        <copy todir="${installDir}/vendor/jquery">
+            <fileset dir="${source.vendor.dir}/yiisoft/yii/framework/web/js/source">
+                <include name="jquery.min.js" />
+            </fileset>
+        </copy>
+        <copy todir="${installDir}/vendor/bootstrap">
+            <fileset dir="${source.vendor.dir}/twbs/bootstrap/dist" />
+        </copy>
 	</target>
 
 	<target name="help">
