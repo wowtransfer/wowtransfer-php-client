@@ -20,7 +20,12 @@ class ConfirmForm
     /**
      * @var string
      */
-    protected $nextAction;
+    protected $nextActionName;
+
+    /**
+     * @var string
+     */
+    protected $nextActionDescription;
 
     public function __construct($view)
     {
@@ -41,7 +46,6 @@ class ConfirmForm
             }
 
             $this->$actionMethod();
-            sleep(1); // TODO: debug
         } catch (\Exception $ex) {
             $this->view->addError($ex->getMessage());
         }
@@ -58,11 +62,12 @@ class ConfirmForm
             $result['errorMessage'] = reset($errors);
             $result['errorPageUrl'] = '?page=' . $this->action;
         }
-        else {
-            $result['success'] = true;
+        $result['nextActionName'] = $this->nextActionName;
+        $result['nextActionDescription'] = $this->nextActionDescription;
+        if ($this->nextActionName === 'finish') {
+            $result['finish'] = true;
+            $result['finishUrl'] = '?page=finish';
         }
-        $result['nextAction'] = $this->nextAction;
-        $result['finish'] = $this->nextAction === 'finish';
 
         echo json_encode($result);
         exit;
@@ -70,7 +75,8 @@ class ConfirmForm
 
     private function runInstallationAction()
     {
-        $this->nextAction = 'db';
+        $this->nextActionName = 'db';
+        $this->nextActionDescription = 'Настройка базы';
     }
 
     private function dbAction()
@@ -78,7 +84,8 @@ class ConfirmForm
         $db = new DatabaseManager($this->view);
         $db->checkConnection();
 
-        $this->nextAction = 'user';
+        $this->nextActionName = 'user';
+        $this->nextActionDescription = 'Настройка пользователя';
     }
 
     private function userAction()
@@ -93,7 +100,8 @@ class ConfirmForm
             $db->createUser($user, $password, $host);
         }
 
-        $this->nextAction = 'struct';
+        $this->nextActionName = 'struct';
+        $this->nextActionDescription = 'Создание структуры';
     }
 
     private function structAction()
@@ -101,7 +109,8 @@ class ConfirmForm
         $db = new DatabaseManager($this->view);
         $db->createStructure();
 
-        $this->nextAction = 'privileges';
+        $this->nextActionName = 'privileges';
+        $this->nextActionDescription = 'Настройка прав';
     }
 
     private function privilegesAction()
@@ -109,13 +118,15 @@ class ConfirmForm
         $db = new DatabaseManager($this->view);
         $db->applyPrivileges();
 
-        $this->nextAction = 'config';
+        $this->nextActionName = 'config';
+        $this->nextActionDescription = 'Настройка конфигурации';
     }
 
     private function configAction()
     {
         App::$app->writeAppConfig();
 
-        $this->nextAction = 'finish';
+        $this->nextActionName = 'finish';
+        $this->nextActionDescription = 'Конец';
     }
 }

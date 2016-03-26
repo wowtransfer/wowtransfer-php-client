@@ -1,7 +1,5 @@
 (function($) {
 
-    console.log($);
-
     $(function () {
         var $form = $("#confirm-form");
 
@@ -17,44 +15,60 @@
             $backBtn.attr("disabled", true);
             $nextBtn.attr("disabled", true);
 
-            console.log($form.find("button[name='back']"));
-            
-            try {
-                doAction("runInstallation");
+            var action = new ConfirmAction();
+            action.name = "runInstallation";
+            action.description = "Установка";
+            doAction(action);
+
+            /**
+             * @param {ConfirmAction} action
+             * @returns {undefined}
+             */
+            function doAction(action) {
+                var $list = $("#actions"),
+                    params = {actionName: action.name},
+                    $li = $("<li>");
+
+                $li.html("<img src='images/wait24.gif'>" + action.description);
+                $li.addClass("list-group-item");
+                $list.append($li);
+                $.post("", params, function (response) {
+                    $li.html(action.description);
+                    if (response.errorMessage) {
+                        $li.addClass("list-group-item-danger");
+                        onError(response);
+                        return false;
+                    }
+                    $li.addClass("list-group-item-success");
+                    onSuccess(response);
+                }, "json");
             }
-            catch (ex) {
-                
+
+            function onError(response) {
+                var $error = $("#error");
+                $error.find(".error-message").html(response.errorMessage);
+                $error.find(".error-page-url").attr("href", response.errorPageUrl);
+                $error.removeClass("hidden");
             }
-        }
-        
-        function doAction(action) {
-            var $list = $("#actions");
-            var li = "<li>" + action + "</li>";
-            $list.append(li);
-            var params = {action: action};
-            $.post("", params, function(response) {
+
+            function onSuccess(response) {
                 if (response.finish) {
+                    window.location.href = response.finishUrl;
                     return true;
                 }
-                if (response.errorMessage) {
-                    var text = "";
-                    text += response.errorMessage;
-                    text += "<br>";
-                    text += "<a href='" + response.errorPageUrl + "'>Page</a>";
-                    $("#error").html(text);
-                    
-                    return false;
-                }
-                doAction(response.nextAction);
-            }, "json");
-        }
+                var nextAction = new ConfirmAction();
+                nextAction.name = response.nextActionName;
+                nextAction.description = response.nextActionDescription;
 
-        function startInstallation() {
-            
-        }
+                doAction(nextAction);
 
-        function nextAction() {
-            
+                return true;
+            }
+
+            function ConfirmAction() {
+                this.name = '';
+                this.description = '';
+            };
         }
 
     });
