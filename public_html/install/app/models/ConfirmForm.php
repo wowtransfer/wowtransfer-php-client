@@ -60,13 +60,13 @@ class ConfirmForm
         if ($this->view->hasErrors()) {
             $errors = $this->view->getErrors();
             $result['errorMessage'] = reset($errors);
-            $result['errorPageUrl'] = '?page=' . $this->action;
+            $result['errorPageUrl'] = App::$app->createUrl(['page' => $this->action]);
         }
         $result['nextActionName'] = $this->nextActionName;
         $result['nextActionDescription'] = $this->nextActionDescription;
         if ($this->nextActionName === 'finish') {
             $result['finish'] = true;
-            $result['finishUrl'] = '?page=finish';
+            $result['finishUrl'] = App::$app->createUrl(['page' => 'finish']);
         }
 
         echo json_encode($result);

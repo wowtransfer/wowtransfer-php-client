@@ -34,7 +34,7 @@ $dbCharacters = isset($_POST['db_characters']) ? trim($_POST['db_characters']) :
 if (isset($_POST['back'])) {
 	unset($_POST['back']);
 	unset($_POST['submit']);
-	header('Location: index.php?page=core');
+	header('Location: ' . App::$app->createUrl(['page' => 'core']));
 	exit;
 }
 
@@ -66,7 +66,7 @@ if (isset($_POST['submit']))
 		$db->checkConnection();
 	}
 	if (!$view->hasErrors()) {
-		header('Location: index.php?page=user');
+		header('Location: ' . App::$app->createUrl(['page' => 'user']));
 		exit;
 	}
 }

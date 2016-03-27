@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['back']);
 		unset($_POST['submit']);
 		App::$app->getSettings()->save();
-		header('Location: index.php?page=db');
+		header('Location: ' . App::$app->createUrl(['page' => 'db']));
 		exit;
 	}
 }

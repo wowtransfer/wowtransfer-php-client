@@ -7,7 +7,7 @@ $fields = array('back', 'submit', 'db_transfer_table');
 $dbTransferTableName = isset($_POST['db_transfer_table']) ? trim($_POST['db_transfer_table']) : 'chd_transfer';
 
 if (isset($_POST['back'])) {
-	header('Location: index.php?page=user');
+	header('Location: ' .  App::$app->createUrl(['page' => 'user']));
 	exit;
 }
 
@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 
     if (!$view->hasErrors()) {
         App::$app->getSettings()->save();
-        header('Location: index.php?page=privileges');
+        header('Location: ' .  App::$app->createUrl(['page' => 'privileges']));
         exit;
     }
 

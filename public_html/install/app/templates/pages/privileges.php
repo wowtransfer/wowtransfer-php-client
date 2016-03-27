@@ -7,12 +7,12 @@ $settings = App::$app->getSettings();
 $fields = ['submit', 'back'];
 
 if (isset($_POST['back'])) {
-	header('Location: index.php?page=struct');
+	header('Location: ' . App::$app->createUrl(['page' => 'struct']));
 	exit;
 }
 
 if (isset($_POST['submit'])) {
-	header('Location: index.php?page=config');
+	header('Location: ' . App::$app->createUrl(['page' => 'config']));
 	exit;
 }
 ?>

@@ -13,7 +13,7 @@ if (isset($_POST['back'])) {
 	unset($_POST['next']);
 	unset($_POST['back']);
 
-	header('Location: index.php?page=db');
+	header('Location: ' . App::$app->createUrl(['page' => 'db']));
 	exit;
 }
 
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 
     if (!$view->hasErrors()) {
         App::$app->getSettings()->save();
-        header('Location: index.php?page=struct');
+        header('Location: ' . App::$app->createUrl(['page' => 'struct']));
         exit;
     }
 }
@@ -48,7 +48,7 @@ if (isset($_POST['next'])) {
 	}
 	else {
 		App::$app->getSettings()->save();
-		header('Location: index.php?page=struct');
+		header('Location: ' . App::$app->createUrl(['page' => 'struct']));
 		exit;
 	}
 }

@@ -465,7 +465,25 @@ class App
 		return '/';
 	}
 
-	/**
+    /**
+     * @param array $params
+     * @return string
+     */
+    public function createUrl($params)
+    {
+        $paramStr = '';
+
+        if (is_array($params) && count($params)) {
+            foreach ($params as $name => $value) {
+                $paramStr .= $name . '=' . $value . '&';
+            }
+            $paramStr = '?' . substr($paramStr, 0, -1);
+        }
+
+        return 'index.php' . $paramStr;
+    }
+
+    /**
 	 * @param string $message
 	 * @return string
 	 */

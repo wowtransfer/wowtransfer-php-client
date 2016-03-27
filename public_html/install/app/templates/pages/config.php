@@ -8,12 +8,12 @@ $settings = App::$app->getSettings();
 $fields = ['submit', 'back'];
 
 if (isset($_POST['back'])) {
-	header('Location: index.php?page=privileges');
+	header('Location: ' . App::$app->createUrl(['page' => 'privileges']));
 	exit;
 }
 
 if (isset($_POST['submit'])) {
-    header('Location: index.php?page=confirm');
+    header('Location: ' . App::$app->createUrl(['page' => 'confirm']));
 	exit;
 }
 

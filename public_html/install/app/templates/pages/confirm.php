@@ -3,7 +3,7 @@ use Installer\App;
 use Installer\Models\ConfirmForm;
 
 if (isset($_POST['back'])) {
-    header('Location: index.php?page=config');
+    header('Location: ' . App::$app->createUrl(['page' => 'config']));
 	exit;
 }
 

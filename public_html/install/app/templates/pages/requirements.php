@@ -51,7 +51,7 @@ foreach ($requirements as $name => $item) {
 }
 
 if (isset($_POST['submit']) && !$view->hasErrors()) {
-	header('Location: index.php?page=core');
+	header('Location: ' .  App::$app->createUrl(['page' => 'core']));
 	exit;
 }
 
