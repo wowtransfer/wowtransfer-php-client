@@ -1,8 +1,6 @@
 <?php
 use Installer\App;
 
-$fields = ['core'];
-
 if (isset($_POST['submit'])) {
 	if (!$view->hasErrors()) {
 		unset($_POST['back']);

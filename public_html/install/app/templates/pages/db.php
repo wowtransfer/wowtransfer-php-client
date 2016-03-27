@@ -31,16 +31,8 @@ $dbAuth = isset($_POST['db_auth']) ? trim($_POST['db_auth']) : $default['auth'];
 $dbCharacters = isset($_POST['db_characters']) ? trim($_POST['db_characters']) : $default['characters'];
 
 
-if (isset($_POST['back'])) {
-	unset($_POST['back']);
-	unset($_POST['submit']);
-	header('Location: ' . App::$app->createUrl(['page' => 'core']));
-	exit;
-}
-
 if (isset($_POST['submit']))
 {
-	unset($_POST['back']);
 	unset($_POST['submit']);
     App::$app->getSettings()->save();
 
@@ -154,10 +146,10 @@ if ($dbPassword != $default['password']) {
 
 
 	<div class="actions-panel">
-		<button class="btn btn-default" type="submit" name="back">
+        <a class="btn btn-default" href="<?= App::$app->createUrl(['page' => 'core']) ?>">
             <span class="glyphicon glyphicon-chevron-left"></span>
             <?= App::t('Back') ?>
-        </button>
+        </a>
 		<button class="btn btn-primary" type="submit" name="submit">
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>

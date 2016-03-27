@@ -2,17 +2,9 @@
 use Installer\App;
 use Installer\DatabaseManager;
 
-$fields = array('back', 'submit', 'db_transfer_table');
-
 $dbTransferTableName = isset($_POST['db_transfer_table']) ? trim($_POST['db_transfer_table']) : 'chd_transfer';
 
-if (isset($_POST['back'])) {
-	header('Location: ' .  App::$app->createUrl(['page' => 'user']));
-	exit;
-}
-
 if (isset($_POST['submit'])) {
-	unset($_POST['back']);
 	unset($_POST['submit']);
 
 	if (empty($dbTransferTableName)) {
@@ -53,10 +45,10 @@ if (isset($_POST['submit'])) {
 	<pre class="sql-code"><?= App::$app->loadDbStructure(); ?></pre>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" type="submit" name="back">
+		<a class="btn btn-default" href="<?= App::$app->createUrl(['page' => 'user']) ?>">
             <span class="glyphicon glyphicon-chevron-left"></span>
             <?= App::t('Back') ?>
-        </button>
+        </a>
 		<button class="btn btn-primary" type="submit" name="submit">
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>

@@ -6,21 +6,9 @@ $dbTransferUser = isset($_POST['db_transfer_user']) ? trim($_POST['db_transfer_u
 $dbTransferUserHost = isset($_POST['db_transfer_user_host']) ? trim($_POST['db_transfer_user_host']) : 'localhost';
 $dbTransferPassword = isset($_POST['db_transfer_password']) ? trim($_POST['db_transfer_password']) : 'wowtransfer';
 
-$fields = array('db_transfer_user', 'db_transfer_user_host', 'db_transfer_password', 'submit', 'back', 'next');
-
-if (isset($_POST['back'])) {
-	unset($_POST['submit']);
-	unset($_POST['next']);
-	unset($_POST['back']);
-
-	header('Location: ' . App::$app->createUrl(['page' => 'db']));
-	exit;
-}
-
 if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
-	unset($_POST['back']);
     $_POST['db_transfer_user_mode'] = 'create';
 
 	if (empty($dbTransferUser)) {
@@ -40,7 +28,6 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['next'])) {
 	unset($_POST['submit']);
 	unset($_POST['next']);
-	unset($_POST['back']);
     $_POST['db_transfer_user_mode'] = 'next';
 
 	if (empty($dbTransferUser)) {
@@ -104,10 +91,10 @@ if (isset($_POST['next'])) {
 	</fieldset>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" title="Back" type="submit" name="back">
+		<a class="btn btn-default" href="<?= App::$app->createUrl(['page' => 'db']) ?>">
             <span class="glyphicon glyphicon-chevron-left"></span>
             <?= App::t('Back') ?>
-        </button>
+        </a>
 		<button class="btn btn-success" title="Create" type="submit" name="submit">
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Create') ?>

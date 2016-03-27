@@ -5,17 +5,6 @@
 use Installer\App;
 
 $settings = App::$app->getSettings();
-$fields = ['submit', 'back'];
-
-if (isset($_POST['back'])) {
-	header('Location: ' . App::$app->createUrl(['page' => 'privileges']));
-	exit;
-}
-
-if (isset($_POST['submit'])) {
-    header('Location: ' . App::$app->createUrl(['page' => 'confirm']));
-	exit;
-}
 
 ?>
 
@@ -37,14 +26,14 @@ if (isset($_POST['submit'])) {
 	</p>
 
 	<div class="actions-panel">
-		<button class="btn btn-default" type="submit" name="back">
+        <a class="btn btn-default" href="<?= App::$app->createUrl(['page' => 'privileges']) ?>">
             <span class="glyphicon glyphicon-chevron-left"></span>
             <?= App::t('Back') ?>
-        </button>
-		<button class="btn btn-primary" type="submit" name="submit">
+        </a>
+		<a class="btn btn-primary" href="<?= App::$app->createUrl(['page' => 'confirm']) ?>">
             <span class="glyphicon glyphicon-chevron-right"></span>
             <?= App::t('Next') ?>
-        </button>
+        </a>
 	</div>
 
 </form>
