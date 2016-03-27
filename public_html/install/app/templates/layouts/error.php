@@ -4,8 +4,8 @@ use Installer\App;
 /* @var $content string */
 ?>
 
-<h1><?= App::t('Error') ?></h1>
+<main class="error-content">
+    <h1><?= App::t('Error') ?></h1>
 
-<div>
 	<?= $content ?>
-</div>
+</main>

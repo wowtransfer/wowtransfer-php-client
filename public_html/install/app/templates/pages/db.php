@@ -120,7 +120,7 @@ if ($dbPassword != $default['password']) {
 	</datalist>
 
 	<label for="db_port"><?= App::t('Port') ?></label>
-	<input type="text" name="db_port" id="db_port" value="<?php echo $dbPort; ?>" class="form-control">
+    <input type="number" min="0" name="db_port" id="db_port" value="<?php echo $dbPort; ?>" class="form-control">
 	<datalist id="db_port_list">
 		<option>3306</option>
 	</datalist>

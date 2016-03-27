@@ -1,90 +1,100 @@
 html,
 body
 {
-	margin: 0;
-	padding: 0;
-	height: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 #page
 {
-	margin: 5px auto 0;
-	padding: 5px;
-	width: 960px;
-	border: 1px solid black;
+    margin: 5px auto 0;
+    padding: 5px;
+    width: 960px;
+    border: 1px solid black;
 }
 
-#header
+header
 {
-	border-bottom: 1px solid black;
-	margin-bottom: 5px;
-	padding: 5px 10px;
+    border-bottom: 1px solid black;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+}
+header .progress {
+    margin: 0;
 }
 
-#content
+main
 {
-	margin-right: 210px;
-	padding: 10px;
+    margin-right: 210px;
+    padding: 10px;
 }
 
-#menu
-{
-	margin: 0 0 10px 0;
-	padding: 0;
-	float: right;
-	width: 200px;
+main h1 {
+    margin: 5px 5px 10px;
 }
 
-#menu ul
+nav ul
 {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0 0 10px 0;
+    float: right;
+    width: 200px;
+    list-style-type: none;
 }
 
-#menu li
+nav ul li
 {
-	padding: 5px;
+    padding: 5px;
 }
 
-#footer
+footer
 {
-	margin-top: 30px;
-	margin-bottom: 0;
-	text-align: center;
-	clear: both;
-	background: #f8f8f8;
-	color: #9D9D9D;
+    margin-top: 30px;
+    margin-bottom: 0;
+    text-align: center;
+    clear: both;
+    background: #f8f8f8;
+    color: #9D9D9D;
 }
 
 .active
 {
-	font-weight: bold;
-	color: fuchsia;
+    font-weight: bold;
+    color: fuchsia;
 }
 
 .disabled
 {
-	color: gray;
+    color: gray;
 }
 
 .actions-panel
 {
-	margin: 20px 10px 5px;
-	padding: 10px 0 0;
-	border-top: 2px solid black;
-	height: 50px;
+    margin: 20px 10px 5px;
+    padding: 10px 0 0;
+    border-top: 2px solid black;
+    height: 50px;
 }
 
 .sql-code
 {
-	margin-top: 5px;
-	overflow: auto;
-	white-space: pre;
-	word-break: normal;
-	word-wrap: normal;
+    margin-top: 5px;
+    overflow: auto;
+    white-space: pre;
+    word-break: normal;
+    word-wrap: normal;
+    height: 400px;
 }
 
 .lowercase {
-	text-transform: lowercase;
+    text-transform: lowercase;
+}
+
+.privileges-username {
+    font-weight: bold;
+}
+
+.error-content {
+    margin: 0;
 }

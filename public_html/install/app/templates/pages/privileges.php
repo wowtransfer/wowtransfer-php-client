@@ -27,12 +27,12 @@ if (isset($_POST['submit'])) {
 
 
 	<p class="text-center">Пользователь:
-		<span style="font-weight: bold;">
-		<?= "'" . $settings->getFieldValue('db_transfer_user') . "'@'" . $settings->getFieldValue('db_transfer_user_host') . "'"; ?>
+        <span class="privileges-username">
+            <?= "'" . $settings->getFieldValue('db_transfer_user') . "'@'" . $settings->getFieldValue('db_transfer_user_host') . "'"; ?>
 		</span>
 	</p>
 
-	<pre class="sql-code" style="height: 400px;"><?= App::$app->loadDbPrivileges (); ?></pre>
+	<pre class="sql-code"><?= App::$app->loadDbPrivileges (); ?></pre>
 
 	<div class="actions-panel">
 		<button class="btn btn-default" type="submit" name="back">

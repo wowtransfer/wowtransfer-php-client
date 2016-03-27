@@ -53,7 +53,9 @@
 
             function onSuccess(response) {
                 if (response.finish) {
-                    window.location.href = response.finishUrl;
+                    setTimeout(function() {
+                        window.location.href = response.finishUrl;
+                    }, 1000);
                     return true;
                 }
                 var nextAction = new ConfirmAction();

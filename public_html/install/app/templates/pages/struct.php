@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 		<option>chd_transfer</option>
 	</datalist>
 
-	<pre class="sql-code" style="height: 400px;"><?= App::$app->loadDbStructure(); ?></pre>
+	<pre class="sql-code"><?= App::$app->loadDbStructure(); ?></pre>
 
 	<div class="actions-panel">
 		<button class="btn btn-default" type="submit" name="back">
