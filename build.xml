@@ -2,7 +2,8 @@
 <project name="chdphp" default="help" basedir=".">
 	<property name="project.name"  value="chdphp" />
 	<property name="version" value="v1.3" />
-	<property name="source.dir"  value="." />
+	<property name="base.dir" value="." />
+	<property name="source.dir"  value="public_html" />
 	<property name="build.dir" value="./build" />
 	<property name="release.dir" value="${build.dir}/release" />
 	<property name="source.ext.dir" value="${source.dir}/protected/extensions" />
@@ -10,14 +11,16 @@
 	<property name="source.vendor.dir" value="${source.dir}/protected/vendor" />
 	<property name="release.vendor.dir" value="${release.dir}/protected/vendor" />
 	<property name="release.zip.file" value="${build.dir}/${project.name}-${version}.zip" />
-	<property name="develop.dir" value="${source.dir}/develop" />
+	<property name="develop.dir" value="${base.dir}/develop" />
+
+    <property name="installDir" value="${source.dir}/install" />
 
 	<target name="release">
 		<mkdir dir="${release.dir}" />
 
 		<echo msg="Create folders..." />
 		<mkdir dir="${release.dir}/assets" />
-		<mkdir dir="${release.dir}/css" />
+		<mkdir dir="${release.dir}/css_dev" />
 		<mkdir dir="${release.dir}/js" />
 		<mkdir dir="${release.dir}/images" />
 		<mkdir dir="${release.dir}/protected" />
@@ -32,14 +35,30 @@
 				<exclude name="cache/**"/>
 				<exclude name="runtime/**" />
 				<exclude name="config/*-local.php" />
-				<exclude name="extensions/*" />
-				<exclude name="vendor/*" />
+				<exclude name="vendor/**" />
+				<exclude name="extensions/**" />
 			</fileset>
 		</copy>
+
+		<echo msg="Copy vendor files..." />
+		<copy todir="${release.vendor.dir}">
+			<fileset dir="${source.vendor.dir}">
+				<include name="twbs/bootstrap/dist/**" />
+				<include name="yiisoft/yii/framework/**" />
+			</fileset>
+		</copy>
+
+		<echo msg="Copy extensions..." />
+		<copy todir="${release.ext.dir}">
+			<fileset dir="${source.ext.dir}">
+				<include name="yiistrap/**" />
+			</fileset>
+		</copy>
+
 		<copy overwrite="true" file="${source.dir}/favicon.ico" tofile="${release.dir}/favicon.ico" />
-		<copy overwrite="true" file="${source.dir}/LICENSE.txt" tofile="${release.dir}/LICENSE.txt" />
-		<copy overwrite="true" file="${source.dir}/README.md" tofile="${release.dir}/README.md" />
-		<copy overwrite="true" file="${source.dir}/TODO.md" tofile="${release.dir}/TODO.md" />
+		<copy overwrite="true" file="${base.dir}/LICENSE.txt" tofile="${release.dir}/LICENSE.txt" />
+		<copy overwrite="true" file="${base.dir}/README.md" tofile="${release.dir}/README.md" />
+		<copy overwrite="true" file="${base.dir}/TODO.md" tofile="${release.dir}/TODO.md" />
 		<copy overwrite="true" todir="${release.dir}">
 			<fileset dir="${source.dir}">
 				<include name="*.php" />
@@ -52,8 +71,8 @@
 		</copy>
 
 		<!-- CSS -->
-		<copy overwrite="true" todir="${release.dir}/css">
-			<fileset dir="${source.dir}/css" />
+		<copy overwrite="true" todir="${release.dir}/css_dev">
+			<fileset dir="${source.dir}/css_dev" />
 		</copy>
 
 		<!-- Resources -->
@@ -67,19 +86,9 @@
 		</copy>
 
 
-		<echo msg="Copy extensions..." />
-
-
-		<echo msg="Copy vendor dependensies..." />
-		<!--<copy overwrite="true" file="${source.vendor.dir}/phing-latest.phar" tofile="${release.vendor.dir}/phing-latest.phar" />-->
-		<copy todir="${release.vendor.dir}/twbs">
-			<fileset dir="${source.vendor.dir}/twbs" />
-		</copy>
-
-
 		<echo msg="Copy installer..." />
 		<copy overwrite="true" todir="${release.dir}/install">
-			<fileset dir="${source.dir}/install" />
+			<fileset dir="${installDir}" />
 		</copy>
 
 		<echo msg="Remove the .gitkeep, .gitignore, .gitattributes files" />
@@ -103,21 +112,31 @@
 	</target>
 
 	<target name="restory_install">
-		<copy todir="${source.dir}/install/images">
+        <mkdir dir="${installDir}" />
+        <mkdir dir="${installDir}/images" />
+
+		<copy todir="${installDir}/images">
 			<fileset dir="${develop.dir}/install/images">
 				<include name="*.png" />
 			</fileset>
 		</copy>
-		<copy todir="${source.dir}/install">
+		<copy todir="${installDir}">
 			<fileset dir="${develop.dir}/install">
 				<include name="favicon.ico" />
 			</fileset>
 		</copy>
+        <copy todir="${installDir}/vendor/jquery">
+            <fileset dir="${source.vendor.dir}/yiisoft/yii/framework/web/js/source">
+                <include name="jquery.min.js" />
+            </fileset>
+        </copy>
+        <copy todir="${installDir}/vendor/bootstrap">
+            <fileset dir="${source.vendor.dir}/twbs/bootstrap/dist" />
+        </copy>
 	</target>
 
 	<target name="help">
-		<echo msg="chdphp help"/>
-
+		<echo msg="baseDir: ${base.dir}" />
 		<echo msg="  targets:" />
 		<echo msg="release" />
 	</target>

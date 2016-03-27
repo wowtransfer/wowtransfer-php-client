@@ -1,0 +1,81 @@
+.wait {
+	display: inline-block;
+}
+
+.wait16 {
+	background-image: url(../../images/wait16.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait24-trans {
+	background-image: url(../../images/wait24trans.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait24 {
+	background-image: url(../../images/wait24.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait30-trans {
+	background-image: url(../../images/wait30trans.gif);
+	width: 16px;
+	height: 16px;
+}
+
+
+.wait30 {
+	background-image: url(../../images/wait30.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.wait16-trans {
+	background-image: url(../../images/wait16trans.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.tdata-icon {
+	background-image: url(../../images/tdata-icons.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 24px;
+	line-height: 24px;
+	vertical-align: text-bottom;
+	width: 24px;
+}
+
+.tdata-icon.icon-default      { background-position:      0     0; }
+.tdata-icon.icon-achievement  { background-position:  -26px     0; }
+.tdata-icon.icon-action       { background-position:  -52px     0; }
+.tdata-icon.icon-bag          { background-position:  -78px     0; }
+.tdata-icon.icon-bank         { background-position: -104px     0; }
+.tdata-icon.icon-bind         { background-position: -130px     0; }
+.tdata-icon.icon-common       { background-position: -156px     0; }
+.tdata-icon.icon-critter      { background-position: -182px     0; }
+.tdata-icon.icon-currency     { background-position: -208px     0; }
+.tdata-icon.icon-equipment    { background-position: -234px     0; }
+.tdata-icon.icon-friend       { background-position:      0 -26px; }
+.tdata-icon.icon-common       { background-position:  -26px -26px; }
+.tdata-icon.icon-glyph        { background-position:  -52px -26px; }
+.tdata-icon.icon-inventory    { background-position:  -78px -26px; }
+.tdata-icon.icon-mount        { background-position: -104px -26px; }
+.tdata-icon.icon-pet          { background-position: -130px -26px; }
+.tdata-icon.icon-pmacro       { background-position: -156px -26px; }
+/*.tdata-icon.icon-pvp       { background-position: -182px -26px; }*/
+.tdata-icon.icon-quest        { background-position: -208px -26px; }
+.tdata-icon.icon-questlog     { background-position: -234px -26px; }
+.tdata-icon.icon-pmacro       { background-position: -156px -26px; }
+.tdata-icon.icon-reputation   { background-position:      0 -52px; }
+.tdata-icon.icon-skill        { background-position:  -26px -52px; }
+.tdata-icon.icon-skillspell   { background-position:  -52px -52px; }
+.tdata-icon.icon-spell        { background-position:  -78px -52px; }
+.tdata-icon.icon-statistic    { background-position:      0     0; }
+.tdata-icon.icon-talent       { background-position:      0     0; }
+.tdata-icon.icon-taxi         { background-position: -156px     0; }
+.tdata-icon.icon-title        { background-position:      0     0; }

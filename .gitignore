@@ -1,13 +1,16 @@
-/assets/
 /build/
 /develop/
-/images/
-/protected/extensions/
-/protected/runtime/
-/protected/vendor/
 /nbproject
-.install
+
+public_html/assets/
+public_html/images/
+public_html/protected/extensions/
+public_html/protected/runtime/
+public_html/protected/vendor/
+
+public_html/.install
+public_html/.installed
 
 *.ico
 
-.installed
+composer.lock

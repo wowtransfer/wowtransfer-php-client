@@ -34,12 +34,16 @@ And third simple part is an installer!
 
 ### For developer
 
+use `composer install` or `composer update` commands.
+
 * [yiistrap](https://github.com/crisu83/yiistrap/releases),
 download extension to `/protected/extensions/yiistrap` directory
-* [Twitter bootstrap 3](https://github.com/twbs/bootstrap/releases)
-download latest release (twbs/bootstrap) to `/protected/vendor/twbs/bootstrap` directory
-* [Phing](https://www.phing.info/trac/wiki/Users/Installation),
-download the Phar archive (phing-latest.phar) to `/protected/vendor` directory
+
+
+## Installation
+
+1. Copy archive to /path/dir/
+2. Create symvolic link
 
 ## Aims
 
@@ -58,4 +62,5 @@ download the Phar archive (phing-latest.phar) to `/protected/vendor` directory
 
 ## Code style ##
 
-* Yes, we are use tabs!
+[PSR2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md "PSR2")
+compatible style.
