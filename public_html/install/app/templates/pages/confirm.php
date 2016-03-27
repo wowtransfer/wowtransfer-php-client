@@ -2,13 +2,7 @@
 use Installer\App;
 use Installer\Models\ConfirmForm;
 
-if (isset($_POST['back'])) {
-    header('Location: ' . App::$app->createUrl(['page' => 'config']));
-	exit;
-}
-
 $action = isset($_POST['actionName']) ? trim($_POST['actionName']) : '';
-
 $model = new ConfirmForm($this);
 $model->run($action);
 ?>
@@ -24,10 +18,10 @@ $model->run($action);
 
 <form action="" method="post" id="confirm-form">
 
-    <button class="btn btn-default" type="submit" name="back">
+    <a class="btn btn-default" href="<?= App::$app->createUrl(['page' => 'config']) ?>">
         <span class="glyphicon glyphicon-chevron-left"></span>
         <?= App::t('Back') ?>
-    </button>
+    </a>
 
 	<button class="btn btn-primary" type="submit" name="submit">
 		<?= App::t('Install') ?>
