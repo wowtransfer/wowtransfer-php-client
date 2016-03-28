@@ -1,4 +1,4 @@
-# chdphp #
+# Wowtransfer PHP client #
 
 Handle of characters transfer using wowtransfer.com service.
 
@@ -42,8 +42,41 @@ download extension to `/protected/extensions/yiistrap` directory
 
 ## Installation
 
-1. Copy archive to /path/dir/
-2. Create symvolic link
+This section has three ways
+
+### Subdomain
+
+1. Create the subdomain on the server.
+2. Copy and extract an archive to subdomain`s directory.
+3. Go to `/install` url.
+
+### Directory
+
+1. Create the directory in the document root.
+2. Copy and extract an archive to this directory.
+3. Go to `/directory/install` url.
+
+### Symvolic link
+
+1. Create the directory on the server.
+2. Create symvolic link to this directory in the document root.
+3. Go to `/directory/install` url.
+
+
+## Updating
+
+This section is not completed.
+
+1. Dowload the latest release from github.
+2. Extract an archive to the directory.
+3. Copy all files to server, overwrite all.
+5. Run configuration migration script
+6. Run database migration script
+
+TODO: do it via web interface.
+
+Warning! The master branch is not release. Download only releases.
+
 
 ## Aims
 
