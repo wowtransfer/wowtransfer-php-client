@@ -4,13 +4,13 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle = Yii::t('app', 'Autorization');
+$this->pageTitle = Yii::t('app', 'Authorization');
 $this->breadcrumbs = [
-	Yii::t('app', 'Autorization')
+	Yii::t('app', 'Authorization')
 ];
 ?>
 
-<h1 class="text-center"><?= Yii::t('app', 'Autorization') ?></h1>
+<h1 class="text-center"><?= Yii::t('app', 'Authorization') ?></h1>
 
 <?php if ($model->hasErrors()): ?>
 	<div class="flash-error">

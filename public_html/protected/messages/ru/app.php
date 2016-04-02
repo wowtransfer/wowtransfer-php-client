@@ -14,7 +14,7 @@ return [
 	'Application settings' => 'Настройка приложения',
 	'Apply' => 'Применить',
 	'Are you sure you want to delete this transfer #{id}?' => 'Вы уверены, что хотите удалить заявку #{id}?',
-	'Autorization' => 'Авторизация',
+	'Authorization' => 'Авторизация',
 	'Authorize for transfer request handle' => 'Авторизуйтесь для управления заявками',
 	'Authentication databse' => 'База данных с аккаунтами',
 	'Bag`s items' => 'Вещи в сумках',
