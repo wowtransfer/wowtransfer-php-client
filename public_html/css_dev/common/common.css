@@ -55,26 +55,11 @@
 	vertical-align: middle;
 }
 
-.toptions-btn {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+input.toptions-btn {
     padding: 0;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
     position: absolute;
     right: 5px;
-}
-
-.toptions-btn.set {
-    top: 5px;
-}
-
-.toptions-btn.unset {
-    top: 35px;
-}
-
-.toptions-btn.invert {
-    top: 65px
 }
 
 .nav-list > .nav-header

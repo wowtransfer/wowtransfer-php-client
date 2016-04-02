@@ -17,11 +17,8 @@ $options = explode(';', $model->options);
 <div class="well well-small toptions-block">
 
 <?php if (!$readonly): ?>
-	<div>
-		<a class="btn btn-default toptions-btn set" title="<?= Yii::t('app', 'Set all') ?>">+</a>
-		<a class="btn btn-default toptions-btn unset" title="<?= Yii::t('app', 'Unset all') ?>">-</a>
-		<a class="btn btn-default toptions-btn invert" title="<?= Yii::t('app', 'Invert') ?>">&pm;</a>
-	</div>
+
+    <input type="checkbox" class="toptions-btn" title="<?= Yii::t('app', 'Set/Unset') ?>">
 
 	<div id="transfer-options-container">
 <?php
