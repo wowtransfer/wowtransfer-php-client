@@ -6,7 +6,7 @@
 <html lang="<?= Yii::app()->language ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="<?= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/images/favicon-admin.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="<?= Yii::app()->request->hostInfo . Yii::app()->request->baseUrl; ?>/favicon-admin.ico" type="image/x-icon">
 
 	<?php $this->registerCssAndJs(); ?>
 
@@ -20,7 +20,7 @@
 	<?php $this->widget('bootstrap.widgets.TbNavbar', [
 		'brandLabel' => TbHtml::tag('img', [
 			'alt' => '',
-			'src' => Yii::app()->request->baseUrl . '/images/wowtransfer-icon-24.png',
+			'src' => Yii::app()->request->baseUrl . '/images/app24.png',
 		]),
 		'brandUrl' => $this->createUrl('/'),
 		'collapse' => false,

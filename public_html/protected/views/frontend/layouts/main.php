@@ -23,7 +23,7 @@
 <?php $this->widget('bootstrap.widgets.TbNavbar', [
 	'brandLabel' => TbHtml::tag('img', [
 		'alt' => '',
-		'src' => Yii::app()->request->baseUrl . '/images/wowtransfer-icon-24.png',
+		'src' => Yii::app()->request->baseUrl . '/images/app24.png',
 	]),
 	'brandUrl' => $this->createUrl('/'),
 	'collapse' => false,

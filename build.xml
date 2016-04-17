@@ -120,11 +120,7 @@
 				<include name="*.png" />
 			</fileset>
 		</copy>
-		<copy todir="${installDir}">
-			<fileset dir="${develop.dir}/install">
-				<include name="favicon.ico" />
-			</fileset>
-		</copy>
+		<copy todir="${installDir}" file="${develop.dir}/app/favicon.ico" />
         <copy todir="${installDir}/vendor/jquery">
             <fileset dir="${source.vendor.dir}/yiisoft/yii/framework/web/js/source">
                 <include name="jquery.min.js" />
