@@ -51,7 +51,8 @@
 		<?php endif ?>
 
 		<?= $form->textFieldControlGroup($model, 'realmlist', [
-			'class' => 'col-sm-4', 'readonly' => 1,
+			'class' => 'col-sm-4',
+            'help' => Yii::t('app', 'If this field are not reads from dump, then fill it')
 		]); ?>
 
 		<?php /*echo CHtml::dropDownList('wowserver-realm', null, [], [
@@ -60,7 +61,8 @@
 			'style' => 'width: 180px;',
 		]); */ ?>
 		<?= $form->textFieldControlGroup($model, 'realm', [
-			'class' => 'col-sm-4', 'readonly' => 1,
+			'class' => 'col-sm-4',
+            'help' => Yii::t('app', 'If this field are not reads from dump, then fill it')
 		]); ?>
 
 		<?= $form->textFieldControlGroup($model, 'account', [
@@ -73,7 +75,8 @@
 			'class' => 'col-sm-4'
 		]); ?>
 		<?= $form->textFieldControlGroup($model, 'username_old', [
-			'class' => 'col-sm-4', 'readonly' => 1,
+			'class' => 'col-sm-4',
+            'help' => Yii::t('app', 'If this field are not reads from dump, then fill it')
 		]); ?>
 		<?= $form->textAreaControlGroup($model, 'comment', [
 			'rows' => 4, 'class' => 'col-sm-12',

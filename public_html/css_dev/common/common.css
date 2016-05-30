@@ -55,13 +55,6 @@
 	vertical-align: middle;
 }
 
-input.toptions-btn {
-    padding: 0;
-    margin: 0 0 5px 0;
-    position: absolute;
-    right: 5px;
-}
-
 .nav-list > .nav-header
 {
 	background-color: #C9E0ED;

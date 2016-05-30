@@ -18,11 +18,10 @@ $options = explode(';', $model->options);
 
 <?php if (!$readonly): ?>
 
-    <input type="checkbox" class="toptions-btn" title="<?= Yii::t('app', 'Set/Unset') ?>">
-
 	<div id="transfer-options-container">
 <?php
 	$i = 0;
+    $checkedCount = 0;
 	foreach ($optionsGlobal as $name => $option) {
 		$id = "ChdTransfer_transferOptions_$i";
 ?>
@@ -30,8 +29,13 @@ $options = explode(';', $model->options);
 			<span class="tdata-icon icon-<?= $name; ?>"></span>
 		<?php if (isset($option['disabled'])): ?>
 			<?= CHtml::label($option['label'], $id, array('style' => 'margin-left: 18px; color: gray;')); ?>
+            <?php $checkedCount += 1 ?>
 		<?php else: ?>
-			<?= CHtml::checkBox("ChdTransfer[transferOptions][]", in_array($name, $options), array('id' => $id, 'value' => $name)) ?>
+<?php
+            $checked = in_array($name, $options);
+            $checkedCount += $checked;
+?>
+			<?= CHtml::checkBox("ChdTransfer[transferOptions][]", $checked, array('id' => $id, 'value' => $name)) ?>
 			<?= CHtml::label($option['label'], $id); ?>
 		<?php endif; ?>
 		</span>
@@ -40,10 +44,19 @@ $options = explode(';', $model->options);
 		++$i;
 	}
 ?>
+        <span class="toptions">
+            <span class="tdata-icon"></span>
+            <label>
+                <input type="checkbox" <?= $checkedCount === count($optionsGlobal) ? 'checked' : '' ?>
+                       class="toptions-btn" title="<?= Yii::t('app', 'Set/Unset') ?>">
+                <?= Yii::t('app', 'All') ?>
+            </label>
+        </span>
+
 	</div>
 <?php else: ?>
 	<div>
-	<?php foreach ($optionsGlobal as $name => $option): ?>
+    <?php foreach ($optionsGlobal as $name => $option): ?>
 		<span class="toptions">
 			<span class="tdata-icon icon-<?= $name; ?>"></span>
 			<?php if (isset($option['disabled'])): ?>
@@ -55,7 +68,7 @@ $options = explode(';', $model->options);
 		</span>
 	<?php endforeach; ?>
 	</div>
-<?php endif; //*/ ?>
+<?php endif ?>
 
 <div class="clearfix"></div>
 
