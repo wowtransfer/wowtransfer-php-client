@@ -97,9 +97,12 @@
 				else {
 					$formGroup.addClass("has-success");
 					$helpBlock.hide();
-					$("#ChdTransfer_realmlist").val(response.realmlist);
-					$("#ChdTransfer_realm").val(response.realm);
-					$("#ChdTransfer_username_old").val(response.username);
+                    var $realmlist = $("#ChdTransfer_realmlist");
+					$realmlist.val(response.realmlist).attr("readonly", 1);
+                    var $realm = $("#ChdTransfer_realm");
+					$realm.val(response.realm).attr("readonly", 1);
+                    var $username = $("#ChdTransfer_username_old");
+					$username.val(response.username).attr("readonly", 1);
 				}
 			}
 		});
