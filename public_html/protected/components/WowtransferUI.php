@@ -1,6 +1,6 @@
 <?php
 
-class WowtransferUI extends Wowtransfer
+class WowtransferUI extends \Wowtransfer\Service
 {
 	/**
 	 * @var array Name => Title
@@ -17,10 +17,15 @@ class WowtransferUI extends Wowtransfer
 	 */
 	protected $wowServersPair;
 
-	public function __construct() {
-		parent::__construct();
+    /**
+	 * @var string[]
+	 */
+	protected $wowserversSites;
 
-		$this->setAccessToken(Config::getInstance()->getAccessToken());
+	public function __construct() {
+        $accessToken = Config::getInstance()->getAccessToken();
+		parent::__construct($accessToken);
+
 		$this->setBaseUrl(Config::getInstance()->getApiBaseUrl());
 	}
 
@@ -66,8 +71,6 @@ class WowtransferUI extends Wowtransfer
 
 	/**
 	 * @return array
-	 *
-	 * incluing empty item [''] = ''
 	 */
 	public function getWowServersPair() {
 		if ($this->wowServersPair === null) {
@@ -90,16 +93,12 @@ class WowtransferUI extends Wowtransfer
 		return $this->wowServersPair;
 	}
 
-	/**
-	 * @var string[]
-	 */
-	protected $wowserversSites;
-
-	/**
+    /**
 	 * @return array
 	 */
 	public function getWowServersSites() {
 		if ($this->wowserversSites === null) {
+            $this->wowserversSites = [];
 			foreach (parent::getWowServers() as $server) {
 				$this->wowserversSites[] = $server->getSite();
 			}

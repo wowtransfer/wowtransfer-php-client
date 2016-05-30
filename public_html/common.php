@@ -17,6 +17,9 @@ function checkInstalled() {
  * @return null
  */
 function preInitApp() {
+    $autoloadFilePath = __DIR__ . '/protected/vendor/autoload.php';
+    require_once $autoloadFilePath;
+
 	$appConfigsFilePath = __DIR__ . '/protected/config/app-local.php';
 
 	$yiiFilePath = __DIR__ . '/protected/vendor/yiisoft/yii/framework/yii.php';
@@ -38,5 +41,5 @@ function preInitApp() {
 		defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', $traceLevel);
 	}
 
-	require_once($yiiFilePath);
+	require_once $yiiFilePath;
 }

@@ -15,7 +15,8 @@
     "require": {
         "php": ">=5.5.0",
         "yiisoft/yii": "1.1.17",
-        "twbs/bootstrap": "3.3.6"
+        "twbs/bootstrap": "3.3.6",
+        "wowtransfer/php-sdk": "master"
     },
     "require-dev": {
         "phing/phing": "*"
