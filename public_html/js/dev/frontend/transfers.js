@@ -80,7 +80,7 @@
 		var formData = new FormData();
 		formData.append("fileLua", file);
 
-		$.ajax('getCommonFields', {
+		$.ajax(app.getBaseUrl() + "transfers/getCommonFields", {
 			type: "POST",
 			cache: false,
 			data: formData,
