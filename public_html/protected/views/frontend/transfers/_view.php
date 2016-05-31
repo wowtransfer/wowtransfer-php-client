@@ -9,40 +9,24 @@
 	 data-where="<?= isset($where) ? $where : 'listing' ?>"
 	 >
 
-	<div class="toptions-view-actions">
-		<div class="toptions-view-top toptions-view-id">
-			<?= $data->getAttributeLabel('id') ?>
-			<span class="toptions-view-id-value"><?= $data->id ?></span>
-		</div>
+	<div class="row toptions-view-actions">
+        <div class="col-md-6">
+            <div class="toptions-view-top toptions-view-id">
+                <?= $data->getAttributeLabel('id') ?>
+                <span class="toptions-view-id-value"><?= $data->id ?></span>
+            </div>
 
-		<div class="toptions-view-top">
-			<b><?= $data->getAttributeLabel('status') ?></b>
-			<span class="tstatus tstatus-<?= $data->status ?>">
-				<?= ChdTransfer::getStatusTitle($data->status) ?>
-			</span>
-		</div>
-
-		<b><?= $data->getAttributeLabel('create_transfer_date') ?></b>
-		<?= $data->create_transfer_date ?>
-
-	</div>
-
-	<div>
-		<a href="#" class="btn btn-default btn-sm right-btn transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
-			<span class="glyphicon glyphicon-remove"></span>
-		</a>
-
-		<a href="<?= $this->createUrl('/transfers/update', ['id' => $data->id]); ?>"
-		   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'Change') ?>">
-			<span class="glyphicon glyphicon-pencil"></span>
-		</a>
-
-		<?php if ($this->action->id !== 'view'): ?>
-			<a href="<?= $this->createUrl('/transfers/view', ['id' => $data->id]); ?>"
-			   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'View') ?>">
-				<span class="glyphicon glyphicon-eye-open"></span>
-			</a>
-		<?php endif ?>
+            <div class="toptions-view-top">
+                <span class="tstatus tstatus-<?= $data->status ?>" title="<?= $data->getAttributeLabel('status') ?>">
+                    <?= ChdTransfer::getStatusTitle($data->status) ?>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <span title="<?= $data->getAttributeLabel('create_transfer_date') ?>">
+                <?= $data->create_transfer_date ?>
+            </span>
+        </div>
 	</div>
 
 	<div class="row" style="margin-bottom: 10px;">
@@ -84,5 +68,25 @@
 		'options' => TransferOptions::getOptionsPair()
 	]);	?>
 	</div>
+
+    <div>
+		<a href="#" class="btn btn-default btn-sm right-btn transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
+			<span class="glyphicon glyphicon-remove"></span>
+		</a>
+
+		<a href="<?= $this->createUrl('/transfers/update', ['id' => $data->id]); ?>"
+		   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'Change') ?>">
+			<span class="glyphicon glyphicon-pencil"></span>
+		</a>
+
+		<?php if ($this->action->id !== 'view'): ?>
+			<a href="<?= $this->createUrl('/transfers/view', ['id' => $data->id]); ?>"
+			   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'View') ?>">
+				<span class="glyphicon glyphicon-eye-open"></span>
+			</a>
+		<?php endif ?>
+	</div>
+
+    <div class="clearfix"></div>
 
 </div>
