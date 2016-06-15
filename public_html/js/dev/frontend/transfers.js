@@ -42,22 +42,22 @@
 	 */
 	function initTransfersListview() {
 		$("#transfer-list-view-block").on("click", ".transfer-delete", function() {
-			deleteTransfer(this);
+			deleteTransfer($(this));
 			return false;
 		});
 	}
 
 	/**
-	 * @param {Object} btn The button element
-	 * @returns {Boolean}
+	 * @param {Object}
 	 */
-	function deleteTransfer(btn) {
-		var $view = $(btn).closest(".view");
+	function deleteTransfer($btn) {
+		var $view = $btn.closest(".view");
 		var id = $view.data("id");
 		var where = $view.data("where");
 		var message = $("#t-configrm-request-delete").text() + " #" + id;
 		app.dialogs.confirm(message, function() {
-			$.post(app.getBaseUrl() + "transfers/delete/" + id, {}, function (response) {
+            var url = $btn.attr("href");
+			$.post(url, {}, function (response) {
 				if (where === "card") {
 					window.location.href = response.returnUrl;
 				}

@@ -70,17 +70,17 @@
 	</div>
 
     <div>
-		<a href="#" class="btn btn-default btn-sm right-btn transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
+        <a href="<?= $this->createUrl('transfers/delete', ['id' => $data->id]) ?>" class="btn btn-default btn-sm right-btn transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
 			<span class="glyphicon glyphicon-remove"></span>
 		</a>
 
-		<a href="<?= $this->createUrl('/transfers/update', ['id' => $data->id]); ?>"
+		<a href="<?= $this->createUrl('transfers/update', ['id' => $data->id]); ?>"
 		   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'Change') ?>">
 			<span class="glyphicon glyphicon-pencil"></span>
 		</a>
 
 		<?php if ($this->action->id !== 'view'): ?>
-			<a href="<?= $this->createUrl('/transfers/view', ['id' => $data->id]); ?>"
+			<a href="<?= $this->createUrl('transfers/view', ['id' => $data->id]); ?>"
 			   class="btn btn-default btn-sm right-btn" title="<?= Yii::t('app', 'View') ?>">
 				<span class="glyphicon glyphicon-eye-open"></span>
 			</a>
