@@ -118,12 +118,12 @@ class TransfersController extends FrontendController
 		try {
 			$fileLua = CUploadedFile::getInstanceByName('fileLua');
 			if (!$fileLua) {
-				throw new Exception('Файл не загружен');
+				throw new Exception(Yii::t('File not uploaded'));
 			}
 			$dumpContent = file_get_contents($fileLua->tempName);
 			$dump = $service->getDump($dumpContent, ['player', 'global']);
 			if (!$dump) {
-				throw new Exception('Не удалось прочитать lua дамп');
+				throw new Exception(Yii::t('Could not read dump'));
 			}
 			$result['realmlist'] = $dump['global']['realmlist'];
 			$result['realm'] = $dump['global']['realm'];

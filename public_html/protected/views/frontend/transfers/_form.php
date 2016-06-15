@@ -21,7 +21,9 @@
 	<?php if ($model->isNewRecord): ?>
 		<fieldset>
 			<legend><?= Yii::t('app', 'Select Lua dump') ?></legend>
-			<?= $form->fileFieldControlGroup($model, 'fileLua', ['help' => ' ']); ?>
+			<?= $form->fileFieldControlGroup($model, 'fileLua', [
+                'help' => ' ', 'data-url' => $this->createUrl('transfers/getCommonFields')]);
+            ?>
 		</fieldset>
 	<?php endif; ?>
 

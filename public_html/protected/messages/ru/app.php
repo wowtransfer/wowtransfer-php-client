@@ -55,6 +55,7 @@ return [
 	'Could not open the file {file}' => 'Не удалось открыть файл {file}',
 	'Could not copy the file' => 'Не удалось скопировать файл',
 	'Could not download the file' => 'Не удалось скачать файл',
+    'Could not read dump' => 'Не удалось прочитать дамп',
 	'Couldn`t delete the character' => 'Не удалось удалить персонажа',
 	'Count of errors' => 'Количество ошибок',
 	'Count of queries' => 'Количество запросов',
