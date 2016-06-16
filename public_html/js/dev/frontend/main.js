@@ -1,8 +1,16 @@
-var app = {};
+require([
+    'jquery',
+    'frontend/transfers'
+], function($) {
 
-/**
- * @returns {String}
- */
-app.getBaseUrl = function () {
-	return "index.php?r=";
-};
+    var app = {};
+
+    /**
+     * @returns {String}
+     */
+    app.getBaseUrl = function () {
+        return "index.php?r=";
+    };
+
+    return app;
+});

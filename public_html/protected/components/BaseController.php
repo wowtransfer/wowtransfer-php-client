@@ -73,4 +73,14 @@ class BaseController extends CController
 		$accessToken = Config::getInstance()->getAccessToken();
 		return  empty($username) || empty($accessToken);
 	}
+
+    public function registerCssAndJs()
+    {
+        $cs = Yii::app()->clientScript;
+        $cs->coreScriptPosition = CClientScript::POS_END;
+
+        $requareJsDir = Yii::getPathOfAlias('application.vendor.requirejs.requirejs');
+        $requareJsUrl = Yii::app()->assetManager->publish($requareJsDir . '/require.js');
+        $cs->registerScriptFile($requareJsUrl, CClientScript::POS_END);
+    }
 }

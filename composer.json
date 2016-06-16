@@ -16,7 +16,8 @@
         "php": ">=5.5.0",
         "yiisoft/yii": "1.1.17",
         "twbs/bootstrap": "3.3.6",
-        "wowtransfer/php-sdk": "master"
+        "wowtransfer/php-sdk": "master",
+        "requirejs/requirejs": "*"
     },
     "require-dev": {
         "phing/phing": "*"
@@ -24,12 +25,26 @@
     "config": {
         "process-timeout": 1800,
         "vendor-dir": "public_html/protected/vendor",
-        "bin-dir": "public_html/protected/vendor/bin"
+        "bin-dir": "public_html/protected/vendor/bin",
+        "secure-http": false
     },
     "extra": {
         "asset-installer-paths": {
             "npm-asset-library": "vendor/npm",
             "bower-asset-library": "vendor/bower"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "requirejs/requirejs",
+                "version": "2.2.0",
+                "dist": {
+                    "url": "http://requirejs.org/docs/release/2.2.0/minified/require.js",
+                    "type": "file"
+                }
+            }
+        }
+    ]
 }
