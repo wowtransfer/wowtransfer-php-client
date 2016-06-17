@@ -1,7 +1,8 @@
-var app = app || {};
+require([
+    'jquery'
+], function($) {
 
-app.dialogs = (function($) {
-	var dialogs = {};
+    var dialogs = {};
 
 	/**
 	 * @type Object
@@ -36,4 +37,4 @@ app.dialogs = (function($) {
 	init();
 
 	return dialogs;
-}(window.jQuery));
+});

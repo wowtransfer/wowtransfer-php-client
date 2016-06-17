@@ -1,5 +1,7 @@
 require([
     'jquery',
+    'common/common',
+    'common/dialogs',
     'frontend/transfers'
 ], function($) {
 
