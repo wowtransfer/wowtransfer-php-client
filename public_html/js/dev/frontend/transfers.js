@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'frontend/main'
+    'frontend/app'
 ], function($, app) {
     var transfers = {};
 
