@@ -165,6 +165,8 @@ class BackendController extends BaseController
      */
     public function registerCssAndJs()
     {
+        parent::registerCssAndJs();
+
         $cs = Yii::app()->clientScript;
         $baseUrl = Yii::app()->request->baseUrl;
 
@@ -182,13 +184,9 @@ class BackendController extends BaseController
             $cs->registerCssFile($baseUrl . $cssDir . '/common/sprite_main.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/backend/backend.css');
 
+            $cs->registerScriptFile($baseUrl . '/js/dev/common.js', CClientScript::POS_END);
             $cs->registerScriptFile($baseUrl . '/js/dev/backend/main.js', CClientScript::POS_END);
-            $cs->registerScriptFile($baseUrl . '/js/dev/common/common.js', CClientScript::POS_END);
-            $cs->registerScriptFile($baseUrl . '/js/dev/common/dialogs.js', CClientScript::POS_END);
-            $cs->registerScriptFile($baseUrl . '/js/dev/backend/updates.js', CClientScript::POS_END);
-            $cs->registerScriptFile($baseUrl . '/js/dev/backend/transfers/transfers.js', CClientScript::POS_END);
-            $cs->registerScriptFile($baseUrl . '/js/dev/backend/transfers/characters.js', CClientScript::POS_END);
-            $cs->registerScriptFile($baseUrl . '/js/dev/backend/transfers/luadumps.js', CClientScript::POS_END);
+
         } else {
             $cs->registerScriptFile($baseUrl . '/js/backend.min.js', CClientScript::POS_END);
         }

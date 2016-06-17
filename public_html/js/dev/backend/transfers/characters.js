@@ -1,11 +1,78 @@
-/**
- * 
- */
-var app = app || {};
-
-app.characters = (function($) {
+define([
+    'jquery',
+    'backend/app'
+], function($, app) {
 
 	var characters = {};
+
+	$(function() {
+
+		var $transferRequest = $("#transfer"),
+			transferId = $transferRequest.data("id"),
+			charGuid = $transferRequest.data("char-guid");
+
+		$("#view-luadump").click(function() {
+			$.get(app.getBaseUrl() + "transfers/luadump/" + transferId, {}, function (data) {
+				$("#lua-dump-dialog-content").text(data);
+				$("#lua-dump-dialog").modal({keyboard: true});
+			});
+		});
+
+		$("#btn-create-char").click(function() {
+			var $btn = $(this),
+				url = $btn.data("href"),
+				$form = $("#create-char-from");
+
+			$btn.button("loading");
+			onBeforeCreateCharClick();
+			$.post(url, $form.serialize(), function(data) {
+				onCreateCharClick(data);
+			}, "json").always(function() {
+				$btn.button("reset");
+			});
+
+			return false;
+		});
+
+		$("#btn-delete-char").click(function() {
+			var $btn = $(this);
+			app.dialogs.confirm($("#t-confirm-delete-character").text(), function() {
+				$("#create-char-wait").css("visibility", "visible");
+				characters.deleteCharacter($btn, function() {
+					$("#btn-create-char").show();
+					$("#run-queries-table").empty();
+					$("#create-char-sql").empty();
+					$("#create-char-wait").css("visibility", "hidden");
+				});
+			});
+			return false;
+		});
+
+		$("#view-uncrypted-luadump").click(function() {
+			onViewUncryptedLuaDumpClick(transferId);
+			return false;
+		});
+
+		$("#show-char-info").click(function() {
+			onShowCharacterDataClick(charGuid);
+			return false;
+		});
+
+		$("#clear-by-guid").click(function() {
+			onClearCharacterDataByGuidClick(charGuid);
+			return false;
+		});
+
+		$("#clear-by-guid-id").click(function() {
+			onClearCharacterDataByTransferIdClick($(this).attr("href"), transferId);
+			return false;
+		});
+
+		$("#btn-only-sql").click(function() {
+			onOnlySqlClick($(this), transferId);
+			return false;
+		});
+	});
 
 	/**
 	 * @param array messages
@@ -182,75 +249,5 @@ app.characters = (function($) {
 		});
 	};
 
-	$(function() {
-
-		var $transferRequest = $("#transfer"),
-			transferId = $transferRequest.data("id"),
-			charGuid = $transferRequest.data("char-guid");
-
-		$("#view-luadump").click(function() {
-			$.get(app.getBaseUrl() + "transfers/luadump/" + transferId, {}, function (data) {
-				$("#lua-dump-dialog-content").text(data);
-				$("#lua-dump-dialog").modal({keyboard: true});
-			});
-		});
-
-		$("#btn-create-char").click(function() {
-			var $btn = $(this),
-				url = $btn.data("href"),
-				$form = $("#create-char-from");
-
-			$btn.button("loading");
-			onBeforeCreateCharClick();
-			$.post(url, $form.serialize(), function(data) {
-				onCreateCharClick(data);
-			}, "json").always(function() {
-				$btn.button("reset");
-			});
-
-			return false;
-		});
-
-		$("#btn-delete-char").click(function() {
-			var $btn = $(this);
-			app.dialogs.confirm($("#t-confirm-delete-character").text(), function() {
-				$("#create-char-wait").css("visibility", "visible");
-				characters.deleteCharacter($btn, function() {
-					$("#btn-create-char").show();
-					$("#run-queries-table").empty();
-					$("#create-char-sql").empty();
-					$("#create-char-wait").css("visibility", "hidden");
-				});
-			});
-			return false;
-		});
-
-		$("#view-uncrypted-luadump").click(function() {
-			onViewUncryptedLuaDumpClick(transferId);
-			return false;
-		});
-
-		$("#show-char-info").click(function() {
-			onShowCharacterDataClick(charGuid);
-			return false;
-		});
-
-		$("#clear-by-guid").click(function() {
-			onClearCharacterDataByGuidClick(charGuid);
-			return false;
-		});
-
-		$("#clear-by-guid-id").click(function() {
-			onClearCharacterDataByTransferIdClick($(this).attr("href"), transferId);
-			return false;
-		});
-
-		$("#btn-only-sql").click(function() {
-			onOnlySqlClick($(this), transferId);
-			return false;
-		});
-	});
-
 	return characters;
-
-}(window.jQuery));
+});
