@@ -1,5 +1,5 @@
 requirejs.config({
-    baseUrl: '/js/dev'
+    baseUrl: '/js_dev'
 });
 
 define('jquery', function() {

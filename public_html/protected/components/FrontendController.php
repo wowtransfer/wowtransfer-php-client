@@ -105,8 +105,8 @@ class FrontEndController extends BaseController
             $cs->registerCssFile($baseUrl . $cssDir . '/common/sprite_main.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/frontend/frontend.css');
 
-            $cs->registerScriptFile($baseUrl . '/js/dev/common.js', CClientScript::POS_END);
-            $cs->registerScriptFile($baseUrl . '/js/dev/frontend/main.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseUrl . '/js_dev/common.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseUrl . '/js_dev/frontend/main.js', CClientScript::POS_END);
 
         } else {
             $cs->registerScriptFile($baseUrl . '/js/frontend.min.js', CClientScript::POS_END);
