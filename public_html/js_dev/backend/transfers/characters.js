@@ -1,7 +1,8 @@
 define([
     'jquery',
-    'backend/app'
-], function($, app) {
+    'backend/app',
+    'common/dialogs'
+], function($, app, dialogs) {
 
 	var characters = {};
 
@@ -36,7 +37,7 @@ define([
 
 		$("#btn-delete-char").click(function() {
 			var $btn = $(this);
-			app.dialogs.confirm($("#t-confirm-delete-character").text(), function() {
+			dialogs.confirm($("#t-confirm-delete-character").text(), function() {
 				$("#create-char-wait").css("visibility", "visible");
 				characters.deleteCharacter($btn, function() {
 					$("#btn-create-char").show();

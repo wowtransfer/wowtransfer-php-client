@@ -1,7 +1,8 @@
 define([
     'jquery',
-    'frontend/app'
-], function($, app) {
+    'frontend/app',
+    'common/dialogs'
+], function($, app, dialogs) {
     var transfers = {};
 
     $(function () {
@@ -55,7 +56,8 @@ define([
         var id = $view.data("id");
         var where = $view.data("where");
         var message = $("#t-configrm-request-delete").text() + " #" + id;
-        app.dialogs.confirm(message, function () {
+
+        dialogs.confirm(message, function () {
             var url = $btn.attr("href");
             $.post(url, {}, function (response) {
                 if (where === "card") {

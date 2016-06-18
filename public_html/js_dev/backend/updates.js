@@ -1,7 +1,8 @@
 define([
     'jquery',
-    'backend/app'
-], function($, app) {
+    'backend/app',
+    'common/dialogs'
+], function($, app, dialogs) {
 
     var $latestVersion = $("#latest-version");
     if ($latestVersion.length) {
@@ -42,7 +43,7 @@ define([
         var currentAction = "extract";
         $updateBtn.click(function () {
             var message = $("#t-updating-danger-message").text();
-            app.dialogs.confirm(message, function () {
+            dialogs.confirm(message, function () {
                 $("#updating-process-block").removeClass("hidden");
                 updatingAction();
             });

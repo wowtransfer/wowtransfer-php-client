@@ -1,7 +1,8 @@
 define([
     'jquery',
-    'backend/app'
-], function($, app) {
+    'backend/app',
+    'common/dialogs'
+], function($, app, dialogs) {
 
     var transfers = {};
 
@@ -46,7 +47,7 @@ define([
 
         $("#transfers-listview-block").on("click", "a.delete-char", function () {
             var $btn = $(this);
-            app.dialogs.confirm($("#t-confirm-delete-character").text(), function () {
+            dialogs.confirm($("#t-confirm-delete-character").text(), function () {
                 app.characters.deleteCharacter($btn);
             });
             return false;
