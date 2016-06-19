@@ -70,7 +70,8 @@
 	</div>
 
     <div>
-        <a href="<?= $this->createUrl('transfers/delete', ['id' => $data->id]) ?>" class="btn btn-default btn-sm right-btn transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
+        <a href="<?= $this->createUrl('transfers/delete', ['id' => $data->id]) ?>"
+           class="btn btn-default btn-sm right-btn transfer-delete" title="<?= Yii::t('app', 'Delete') ?>">
 			<span class="glyphicon glyphicon-remove"></span>
 		</a>
 

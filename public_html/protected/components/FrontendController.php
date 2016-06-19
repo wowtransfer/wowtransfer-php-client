@@ -91,7 +91,7 @@ class FrontEndController extends BaseController
         $cs = Yii::app()->clientScript;
         $baseUrl = Yii::app()->request->baseUrl;
 
-        if (true) { // TODO: minify resource
+        if (YII_DEBUG) {
             $cssDir = '/css_dev';
             $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css', 'screen, projection');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/print.css', 'print');

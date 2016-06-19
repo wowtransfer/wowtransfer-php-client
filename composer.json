@@ -17,7 +17,8 @@
         "yiisoft/yii": "1.1.17",
         "twbs/bootstrap": "3.3.6",
         "wowtransfer/php-sdk": "master",
-        "requirejs/requirejs": "*"
+        "requirejs/requirejs": "*",
+        "requirejs/r.js": "*"
     },
     "require-dev": {
         "phing/phing": "*"
@@ -42,6 +43,17 @@
                 "version": "2.2.0",
                 "dist": {
                     "url": "http://requirejs.org/docs/release/2.2.0/minified/require.js",
+                    "type": "file"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "requirejs/r.js",
+                "version": "2.2.0",
+                "dist": {
+                    "url": "http://requirejs.org/docs/release/2.2.0/r.js",
                     "type": "file"
                 }
             }

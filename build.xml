@@ -11,9 +11,18 @@
 	<property name="source.vendor.dir" value="${source.dir}/protected/vendor" />
 	<property name="release.vendor.dir" value="${release.dir}/protected/vendor" />
 	<property name="release.zip.file" value="${build.dir}/${project.name}-${version}.zip" />
+
 	<property name="develop.dir" value="${base.dir}/develop" />
 
     <property name="installDir" value="${source.dir}/install" />
+
+    <property name="sourceCssDir" value="${source.dir}/css_dev"></property>
+    <property name="targetCssDir" value="${source.dir}/css"></property>
+    <property name="releaseCssDir" value="${release.dir}/css"></property>
+
+    <property name="sourceJsDir" value="${source.dir}/js_dev"></property>
+    <property name="targetJsDir" value="${source.dir}/js"></property>
+    <property name="releaseJsDir" value="${release.dir}/js"></property>
 
 	<target name="release">
 		<mkdir dir="${release.dir}" />
@@ -136,5 +145,15 @@
 		<echo msg="  targets:" />
 		<echo msg="release" />
 	</target>
+
+    <target name="concat">
+        <mkdir dir="${releaseCssDir}" />
+        <mkdir die="${releaseJsDir}" />
+        
+    </target>
+
+    <target name="minify">
+        
+    </target>
 
 </project>
