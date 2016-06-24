@@ -93,16 +93,17 @@ class FrontEndController extends BaseController
 
         if (YII_DEBUG) {
             $cssDir = '/css_dev';
+
+            Yii::app()->bootstrap->register();
+
             $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css', 'screen, projection');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/print.css', 'print');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/form.css');
-
-            Yii::app()->bootstrap->register();
-
             $cs->registerCssFile($baseUrl . $cssDir . '/common/common.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/icons.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/sprite_main.css');
+
             $cs->registerCssFile($baseUrl . $cssDir . '/frontend/frontend.css');
 
             $cs->registerScriptFile($baseUrl . '/js_dev/common.js', CClientScript::POS_END);
