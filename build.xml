@@ -28,8 +28,10 @@
     <property name="releaseJsDir" value="${release.dir}/js" />
 
     <property name="lessCommand" value="lessc" />
+    <property name="nodejsCommand" value="node" />
+    <property name="rJsFile" value="${source.vendor.dir}/requirejs/r.js/r.js" />
 
-	<target name="release" depends="prepare">
+	<target name="release" depends="prepare, less2css">
 
         <mkdir dir="${release.dir}" />
 
@@ -54,6 +56,7 @@
 			</fileset>
 		</copy>
 
+
 		<echo msg="Copy vendor files..." />
 		<copy todir="${release.vendor.dir}">
 			<fileset dir="${source.vendor.dir}">
@@ -61,6 +64,7 @@
 				<include name="yiisoft/yii/framework/**" />
 			</fileset>
 		</copy>
+
 
 		<echo msg="Copy extensions..." />
 		<copy todir="${release.ext.dir}">
@@ -79,15 +83,20 @@
 			</fileset>
 		</copy>
 
+
 		<!-- JavaScript -->
-		<copy overwrite="true" todir="${release.dir}/js/dev">
-			<fileset dir="${source.dir}/js/dev" />
+		<copy overwrite="true" todir="${release.dir}/js_dev">
+			<fileset dir="${source.dir}/js_dev" />
 		</copy>
+        <!-- and minified -->
+
 
 		<!-- CSS -->
 		<copy overwrite="true" todir="${release.dir}/css_dev">
 			<fileset dir="${source.dir}/css_dev" />
 		</copy>
+        <!-- and minified -->
+
 
 		<!-- Resources -->
 		<copy overwrite="true" todir="${release.dir}/images">
@@ -177,6 +186,8 @@
                 </replaceregexp>
             </filterchain>
         </copy>
+
+        <!-- scripts... -->
     </target>
 
     <filelist dir="${buildCssDevDir}" id="buildCssDevFiles" files="
@@ -199,10 +210,11 @@
         </foreach>
     </target>
     <target name="less2css_target">
-        <exec command="${lessCommand} ${filePath} ${buildCssDevDir}/${fileName}.css" 
-              escape="false"
-              checkreturn="true"
-              passthru="true" />
+        <exec command="${lessCommand} ${filePath} ${buildCssDevDir}/${fileName}.css" />
+    </target>
+
+    <target name="minify_js" depends="prepare">
+        <exec command="${nodejsCommand} ${rJsFile} -o ./public_html/js/buildScripts.js" />
     </target>
 
 </project>
