@@ -110,6 +110,9 @@ class FrontEndController extends BaseController
             $cs->registerScriptFile($baseUrl . '/js_dev/frontend/main.js', CClientScript::POS_END);
 
         } else {
+            Yii::app()->bootstrap->register();
+            $cs->registerCssFile($baseUrl . '/css/frontend.css');
+
             $cs->registerScriptFile($baseUrl . '/js/frontend.min.js', CClientScript::POS_END);
         }
     }

@@ -16,18 +16,23 @@
 
     <property name="installDir" value="${source.dir}/install" />
 
-    <property name="sourceCssDir" value="${source.dir}/css_dev"></property>
-    <property name="targetCssDir" value="${source.dir}/css"></property>
-    <property name="releaseCssDir" value="${release.dir}/css"></property>
+    <property name="sourceCssDir" value="${source.dir}/css_dev" />
+    <property name="targetCssDir" value="${source.dir}/css" />
+    <property name="releaseCssDir" value="${release.dir}/css" />
+    <property name="buildCssDir" value="${build.dir}/css" />
+    <property name="buildCssDevDir" value="${build.dir}/css_dev" />
+    <property name="lessDir" value="${source.dir}/less" />
 
-    <property name="sourceJsDir" value="${source.dir}/js_dev"></property>
-    <property name="targetJsDir" value="${source.dir}/js"></property>
-    <property name="releaseJsDir" value="${release.dir}/js"></property>
+    <property name="sourceJsDir" value="${source.dir}/js_dev" />
+    <property name="targetJsDir" value="${source.dir}/js" />
+    <property name="releaseJsDir" value="${release.dir}/js" />
 
-	<target name="release">
-		<mkdir dir="${release.dir}" />
+    <property name="lessCommand" value="lessc" />
 
-		<echo msg="Create folders..." />
+	<target name="release" depends="prepare">
+
+        <mkdir dir="${release.dir}" />
+
 		<mkdir dir="${release.dir}/assets" />
 		<mkdir dir="${release.dir}/css_dev" />
 		<mkdir dir="${release.dir}/js" />
@@ -143,17 +148,61 @@
 	<target name="help">
 		<echo msg="baseDir: ${base.dir}" />
 		<echo msg="  targets:" />
-		<echo msg="release" />
+		<echo msg="release, concat" />
 	</target>
 
-    <target name="concat">
+    <target name="prepare">
+        <mkdir dir="${buildCssDir}" />
+        <mkdir dir="${buildCssDevDir}" />
+
         <mkdir dir="${releaseCssDir}" />
-        <mkdir die="${releaseJsDir}" />
-        
+        <mkdir dir="${releaseJsDir}" />
     </target>
 
-    <target name="minify">
-        
+    <target name="concat" depends="prepare, less2css">
+        <property name="cssFileName" value="frontend.css" />
+        <property name="cssFileNameMin" value="frontend.min.css" />
+        <property name="buildCssFilePath" value="${buildCssDir}/${cssFileName}" />
+
+        <delete file="${buildCssFilePath}" />
+        <append destfile="${buildCssFilePath}">
+            <filelist refid="buildCssDevFiles" />
+        </append>
+
+        <copy overwrite="true" file="${buildCssFilePath}" tofile="${targetCssDir}/${cssFileName}">
+            <!-- Replace "../../" to "../" -->
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="\.\.\/\.\.\/" replace="../" />
+                </replaceregexp>
+            </filterchain>
+        </copy>
+    </target>
+
+    <filelist dir="${buildCssDevDir}" id="buildCssDevFiles" files="
+        common/main.css,
+        common/form.css,
+        common/common.css,
+        common/icons.css,
+        common/sprite_main.css,
+
+        frontend/frontend.css
+    " />
+    <fileset dir="${lessDir}" id="lessFileSet">
+        <include name="**/*.less"/>
+    </fileset>
+
+    <target name="less2css">
+        <foreach param="fileName" absparam="filePath" target="less2css_target">
+            <mapper type="glob" from="*.less" to="*"/>
+            <fileset refid="lessFileSet" />
+        </foreach>
+    </target>
+    <target name="less2css_target">
+        <exec command="${lessCommand} ${filePath} ${buildCssDevDir}/${fileName}.css" 
+              escape="false"
+              checkreturn="true"
+              passthru="true" />
     </target>
 
 </project>

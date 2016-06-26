@@ -36,8 +36,11 @@ And third simple part is an installer!
 
 use `composer install` or `composer update` commands.
 
-* [yiistrap](https://github.com/crisu83/yiistrap/releases),
+[yiistrap](https://github.com/crisu83/yiistrap/releases),
 download extension to `/protected/extensions/yiistrap` directory
+
+Set up `less` in the IDE.
+
 
 
 ## Installation
