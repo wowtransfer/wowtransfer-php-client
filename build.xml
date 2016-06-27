@@ -22,12 +22,17 @@
     <property name="buildCssDir" value="${build.dir}/css" />
     <property name="buildCssDevDir" value="${build.dir}/css_dev" />
     <property name="lessDir" value="${source.dir}/less" />
+    <property name="cssFileName" value="frontend.css" />
+    <property name="cssFileNameMin" value="frontend.min.css" />
+    <property name="buildCssFilePath" value="${buildCssDir}/${cssFileName}" />
+    <property name="buildMinCssFilePath" value="${buildCssDir}/${cssFileNameMin}" />
 
     <property name="sourceJsDir" value="${source.dir}/js_dev" />
     <property name="targetJsDir" value="${source.dir}/js" />
     <property name="releaseJsDir" value="${release.dir}/js" />
 
     <property name="lessCommand" value="lessc" />
+
     <property name="nodejsCommand" value="node" />
     <property name="rJsFile" value="${source.vendor.dir}/requirejs/r.js/r.js" />
 
@@ -169,9 +174,6 @@
     </target>
 
     <target name="concat" depends="prepare, less2css">
-        <property name="cssFileName" value="frontend.css" />
-        <property name="cssFileNameMin" value="frontend.min.css" />
-        <property name="buildCssFilePath" value="${buildCssDir}/${cssFileName}" />
 
         <delete file="${buildCssFilePath}" />
         <append destfile="${buildCssFilePath}">
@@ -210,11 +212,25 @@
         </foreach>
     </target>
     <target name="less2css_target">
-        <exec command="${lessCommand} ${filePath} ${buildCssDevDir}/${fileName}.css" />
+        <exec command="${lessCommand} ${filePath} ${buildCssDevDir}/${fileName}.css"
+            passthru="true"
+            checkreturn="true"
+        />
     </target>
 
     <target name="minify_js" depends="prepare">
-        <exec command="${nodejsCommand} ${rJsFile} -o ./public_html/js/buildScripts.js" />
+        <exec command="${nodejsCommand} ${rJsFile} -o ${source.dir}/js_dev/buildScripts.js"
+            passthru="true"
+            checkreturn="true"
+        />
+    </target>
+
+    <target name="minify_css" depends="">
+        <exec command="${lessCommand} --clean-css ${buildCssFilePath} ${buildMinCssFilePath}"
+            passthru="true"
+            checkreturn="true"
+        />
+        <copy file="${buildMinCssFilePath}" todir="${targetCssDir}" />
     </target>
 
 </project>

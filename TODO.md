@@ -10,3 +10,5 @@
 - Move the dumps to service
 - Move the installer to application
 - Write installer on the yii
+
+- require less and less-plugin-clean-css to composer. Use their to minify.

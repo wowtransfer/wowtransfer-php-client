@@ -39,6 +39,11 @@ use `composer install` or `composer update` commands.
 [yiistrap](https://github.com/crisu83/yiistrap/releases),
 download extension to `/protected/extensions/yiistrap` directory
 
+```sh
+npm install less
+npm install -g less-plugin-clean-css
+```
+
 Set up `less` in the IDE.
 
 
