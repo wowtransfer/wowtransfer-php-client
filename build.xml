@@ -36,13 +36,15 @@
     <property name="nodejsCommand" value="node" />
     <property name="rJsFile" value="${source.vendor.dir}/requirejs/r.js/r.js" />
 
-	<target name="release" depends="prepare, less2css">
+	<target name="release" depends="prepare, less2css, minify_css">
 
         <mkdir dir="${release.dir}" />
 
 		<mkdir dir="${release.dir}/assets" />
+        <mkdir dir="${release.dir}/css" />
 		<mkdir dir="${release.dir}/css_dev" />
 		<mkdir dir="${release.dir}/js" />
+        <mkdir dir="${release.dir}/js_dev" />
 		<mkdir dir="${release.dir}/images" />
 		<mkdir dir="${release.dir}/protected" />
 		<mkdir dir="${release.dir}/protected/cache" />
@@ -91,16 +93,22 @@
 
 		<!-- JavaScript -->
 		<copy overwrite="true" todir="${release.dir}/js_dev">
-			<fileset dir="${source.dir}/js_dev" />
+			<fileset dir="${source.dir}/js_dev">
+                <include name="**/*.js" />
+                <exclude name="buildScripts.js" />
+            </fileset>
 		</copy>
-        <!-- and minified -->
+        <copy file="${targetJsDir}/frontend.min.js" todir="${releaseJsDir}" />
 
 
 		<!-- CSS -->
 		<copy overwrite="true" todir="${release.dir}/css_dev">
-			<fileset dir="${source.dir}/css_dev" />
+			<fileset dir="${source.dir}/css_dev">
+                <include name="**/*.css" />
+                <exclude name="**/*.css.map" />
+            </fileset>
 		</copy>
-        <!-- and minified -->
+        <copy file="${targetCssDir}/${cssFileNameMin}" todir="${releaseCssDir}" />
 
 
 		<!-- Resources -->
@@ -134,8 +142,8 @@
 			<fileset dir="${release.dir}" />
 		</zip>
 
-		<echo msg="Delete release directory..." />
-		<delete dir="${release.dir}" />
+		<echo msg="Delete release directory... skip" />
+		<!-- <delete dir="${release.dir}" /> -->
 
 	</target>
 
@@ -225,7 +233,7 @@
         />
     </target>
 
-    <target name="minify_css" depends="">
+    <target name="minify_css" depends="prepare">
         <exec command="${lessCommand} --clean-css ${buildCssFilePath} ${buildMinCssFilePath}"
             passthru="true"
             checkreturn="true"
