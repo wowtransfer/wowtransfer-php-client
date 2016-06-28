@@ -170,15 +170,13 @@ class BackendController extends BaseController
         $cs = Yii::app()->clientScript;
         $baseUrl = Yii::app()->request->baseUrl;
 
-        if (true) { // TODO: minify resource
+        if (YII_DEBUG) {
+            Yii::app()->bootstrap->register();
+
             $cssDir = '/css_dev';
             $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css', 'screen, projection');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/print.css', 'print');
-            $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/form.css');
-
-            Yii::app()->bootstrap->register();
-
             $cs->registerCssFile($baseUrl . $cssDir . '/common/common.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/icons.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/sprite_main.css');

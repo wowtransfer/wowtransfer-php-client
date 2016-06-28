@@ -16,16 +16,22 @@
 
     <property name="installDir" value="${source.dir}/install" />
 
+
     <property name="sourceCssDir" value="${source.dir}/css_dev" />
     <property name="targetCssDir" value="${source.dir}/css" />
     <property name="releaseCssDir" value="${release.dir}/css" />
     <property name="buildCssDir" value="${build.dir}/css" />
     <property name="buildCssDevDir" value="${build.dir}/css_dev" />
     <property name="lessDir" value="${source.dir}/less" />
-    <property name="cssFileName" value="frontend.css" />
-    <property name="cssFileNameMin" value="frontend.min.css" />
-    <property name="buildCssFilePath" value="${buildCssDir}/${cssFileName}" />
-    <property name="buildMinCssFilePath" value="${buildCssDir}/${cssFileNameMin}" />
+    <property name="cssFrontendFileName" value="frontend.css" />
+    <property name="cssFrontendFileNameMin" value="frontend.min.css" />
+    <property name="buildFrontendCssFilePath" value="${buildCssDir}/${cssFrontendFileName}" />
+    <property name="buildFrontendCssFilePathMin" value="${buildCssDir}/${cssFrontendFileNameMin}" />
+    <property name="cssBackendFileName" value="backend.css" />
+    <property name="cssBackendFileNameMin" value="backend.min.css" />
+    <property name="buildBackendCssFilePath" value="${buildCssDir}/${cssBackendFileName}" />
+    <property name="buildBackendCssFilePathMin" value="${buildCssDir}/${cssBackendFileNameMin}" />
+
 
     <property name="sourceJsDir" value="${source.dir}/js_dev" />
     <property name="targetJsDir" value="${source.dir}/js" />
@@ -108,7 +114,8 @@
                 <exclude name="**/*.css.map" />
             </fileset>
 		</copy>
-        <copy file="${targetCssDir}/${cssFileNameMin}" todir="${releaseCssDir}" />
+        <copy file="${targetCssDir}/${cssFrontendFileNameMin}" todir="${releaseCssDir}" />
+        <copy file="${targetCssDir}/${cssBackendFileNameMin}" todir="${releaseCssDir}" />
 
 
 		<!-- Resources -->
@@ -170,7 +177,7 @@
 	<target name="help">
 		<echo msg="baseDir: ${base.dir}" />
 		<echo msg="  targets:" />
-		<echo msg="release, concat" />
+		<echo msg="release, concat_css, minify_css" />
 	</target>
 
     <target name="prepare">
@@ -181,26 +188,36 @@
         <mkdir dir="${releaseJsDir}" />
     </target>
 
-    <target name="concat" depends="prepare, less2css">
+    <target name="concat_css" depends="prepare, less2css">
 
-        <delete file="${buildCssFilePath}" />
-        <append destfile="${buildCssFilePath}">
-            <filelist refid="buildCssDevFiles" />
+        <delete file="${buildFrontendCssFilePath}" />
+        <append destfile="${buildFrontendCssFilePath}">
+            <filelist refid="frontendCssFiles" />
         </append>
 
-        <copy overwrite="true" file="${buildCssFilePath}" tofile="${targetCssDir}/${cssFileName}">
-            <!-- Replace "../../" to "../" -->
-            <filterchain>
-                <replaceregexp>
-                    <regexp pattern="\.\.\/\.\.\/" replace="../" />
-                </replaceregexp>
-            </filterchain>
+        <delete file="${buildBackendCssFilePath}" />
+        <append destfile="${buildBackendCssFilePath}">
+            <filelist refid="backendCssFiles" />
+        </append>
+
+        <copy overwrite="true" file="${buildFrontendCssFilePath}" tofile="${targetCssDir}/${cssFrontendFileName}">
+            <filterchain refid="double2singleDots" />
+        </copy>
+        <copy overwrite="true" file="${buildBackendCssFilePath}" tofile="${targetCssDir}/${cssBackendFileName}">
+            <filterchain refid="double2singleDots" />
         </copy>
 
         <!-- scripts... -->
     </target>
 
-    <filelist dir="${buildCssDevDir}" id="buildCssDevFiles" files="
+    <!-- Replace "../../" to "../" -->
+    <filterchain id="double2singleDots">
+        <replaceregexp>
+            <regexp pattern="\.\.\/\.\.\/" replace="../" />
+        </replaceregexp>
+    </filterchain>
+
+    <filelist dir="${buildCssDevDir}" id="frontendCssFiles" files="
         common/main.css,
         common/form.css,
         common/common.css,
@@ -208,6 +225,15 @@
         common/sprite_main.css,
 
         frontend/frontend.css
+    " />
+    <filelist dir="${buildCssDevDir}" id="backendCssFiles" files="
+        common/main.css,
+        common/form.css,
+        common/common.css,
+        common/icons.css,
+        common/sprite_main.css,
+
+        backend/backend.css
     " />
     <fileset dir="${lessDir}" id="lessFileSet">
         <include name="**/*.less"/>
@@ -233,12 +259,18 @@
         />
     </target>
 
-    <target name="minify_css" depends="prepare">
-        <exec command="${lessCommand} --clean-css ${buildCssFilePath} ${buildMinCssFilePath}"
+    <target name="minify_css" depends="prepare, less2css, concat_css">
+        <exec command="${lessCommand} --clean-css ${buildFrontendCssFilePath} ${buildFrontendCssFilePathMin}"
             passthru="true"
             checkreturn="true"
         />
-        <copy file="${buildMinCssFilePath}" todir="${targetCssDir}" />
+        <copy file="${buildFrontendCssFilePathMin}" todir="${targetCssDir}" />
+        
+        <exec command="${lessCommand} --clean-css ${buildBackendCssFilePath} ${buildBackendCssFilePathMin}"
+            passthru="true"
+            checkreturn="true"
+        />
+        <copy file="${buildBackendCssFilePathMin}" todir="${targetCssDir}" />
     </target>
 
 </project>

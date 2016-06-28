@@ -98,7 +98,6 @@ class FrontEndController extends BaseController
 
             $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css', 'screen, projection');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/print.css', 'print');
-            $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/form.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/common.css');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/icons.css');
