@@ -170,10 +170,11 @@ class BackendController extends BaseController
         $cs = Yii::app()->clientScript;
         $baseUrl = Yii::app()->request->baseUrl;
 
-        if (YII_DEBUG) {
-            Yii::app()->bootstrap->register();
+        Yii::app()->bootstrap->register();
 
+        if (YII_DEBUG) {
             $cssDir = '/css_dev';
+
             $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css', 'screen, projection');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/print.css', 'print');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/form.css');
@@ -184,8 +185,9 @@ class BackendController extends BaseController
 
             $cs->registerScriptFile($baseUrl . '/js_dev/common.js', CClientScript::POS_END);
             $cs->registerScriptFile($baseUrl . '/js_dev/backend/main.js', CClientScript::POS_END);
-
         } else {
+            $cs->registerCssFile($baseUrl . '/css/backend.css');
+
             $cs->registerScriptFile($baseUrl . '/js/backend.min.js', CClientScript::POS_END);
         }
     }

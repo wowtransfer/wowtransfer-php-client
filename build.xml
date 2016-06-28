@@ -101,7 +101,8 @@
 		<copy overwrite="true" todir="${release.dir}/js_dev">
 			<fileset dir="${source.dir}/js_dev">
                 <include name="**/*.js" />
-                <exclude name="buildScripts.js" />
+                <exclude name="buildFrontendScripts.js" />
+                <exclude name="buildBackendScripts.js" />
             </fileset>
 		</copy>
         <copy file="${targetJsDir}/frontend.min.js" todir="${releaseJsDir}" />

@@ -91,10 +91,10 @@ class FrontEndController extends BaseController
         $cs = Yii::app()->clientScript;
         $baseUrl = Yii::app()->request->baseUrl;
 
+        Yii::app()->bootstrap->register();
+
         if (YII_DEBUG) {
             $cssDir = '/css_dev';
-
-            Yii::app()->bootstrap->register();
 
             $cs->registerCssFile($baseUrl . $cssDir . '/common/main.css', 'screen, projection');
             $cs->registerCssFile($baseUrl . $cssDir . '/common/print.css', 'print');
@@ -107,9 +107,7 @@ class FrontEndController extends BaseController
 
             $cs->registerScriptFile($baseUrl . '/js_dev/common.js', CClientScript::POS_END);
             $cs->registerScriptFile($baseUrl . '/js_dev/frontend/main.js', CClientScript::POS_END);
-
         } else {
-            Yii::app()->bootstrap->register();
             $cs->registerCssFile($baseUrl . '/css/frontend.css');
 
             $cs->registerScriptFile($baseUrl . '/js/frontend.min.js', CClientScript::POS_END);
