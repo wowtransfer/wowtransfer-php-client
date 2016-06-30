@@ -2,8 +2,8 @@
 return [
 	'authDb'               => '',
 	'worldDb'              => '',
-	'version'              => 'v1.3',
-	'date'                 => '2015-09-18',
+	'version'              => 'v1.4',
+	'date'                 => '2016-06-30',
 	'admins'               => ['admin'],
 	'onlyCheckedServers'   => false,
 	'core'                 => 'trinity_335a',

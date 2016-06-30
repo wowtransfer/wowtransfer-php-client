@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="chdphp" default="help" basedir=".">
 	<property name="project.name"  value="chdphp" />
-	<property name="version" value="v1.3" />
+	<property name="version" value="v1.4" />
 	<property name="base.dir" value="." />
 	<property name="source.dir"  value="public_html" />
 	<property name="build.dir" value="./build" />
