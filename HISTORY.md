@@ -1,3 +1,20 @@
+### 2016-06-30
+
+* Release 1.4 version
+* Optimize installer, remove debug
+* Change favicon
+* Add wowtransfer php sdk component
+* Add composer
+* Add less for styles
+* Add requirejs for scripts
+* Add concatination and minifing of the scripts and styles
+* Change frontend and backend interface
+* Add PSR-* code style
+* Remove stores procedures from the installer
+* Remove short php tags
+* Fix some errors
+* Add some translate messages
+
 ### 2015-09-08
 
 * Add multilanguage, en and ru.
