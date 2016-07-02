@@ -53,7 +53,9 @@ class BaseController extends CController
 	public function init()
 	{
 		$result = parent::init();
-		Yii::app()->language = Yii::app()->user->getLang();
+        $app = Yii::app();
+		$app->language = Yii::app()->user->getLang();
+        $app->name = Yii::t('app', 'Transfer of the WoW characters');
 
 		return $result;
 	}

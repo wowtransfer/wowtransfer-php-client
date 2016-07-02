@@ -208,6 +208,7 @@ return [
 	'Transfer requests' => 'Заявки на перенос',
 	'Transfer options' => 'Опции переноса',
 	'Transfer options was changed success.'=>'Опции переноса были успешно изменены.',
+    'Transfer of the WoW characters' => 'Перенос WoW персонажей',
 	'Try to delete the request failed, then a character has created.' => 'Невозможно удалить заявку, когда по ней был создан персонаж.',
 	'Type' => 'Тип',
 	'Uncrypted lua-dump' => 'Незашифрованный lua дамп',

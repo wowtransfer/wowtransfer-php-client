@@ -11,7 +11,6 @@ Yii::setPathOfAlias('vendor.twbs.bootstrap.dist', realpath(__DIR__ . '/../vendor
 return [
 	'basePath' => __DIR__ . DIRECTORY_SEPARATOR . '..',
 	'defaultController' => 'site',
-	'name' => 'Перенос персонажей WoW',
 	'timeZone' => 'Europe/Moscow',
 
 	'behaviors' => [
