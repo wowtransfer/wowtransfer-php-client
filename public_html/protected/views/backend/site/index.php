@@ -15,8 +15,8 @@
 				<?= Yii::t('app', 'Deleting') ?>,
 				<?= Yii::t('app', 'Updating') ?>.
 			</li>
-			<li><?= Yii::t('', 'Create the character') ?></li>
-			<li>Просмотр lua-дампов</li>
+			<li><?= Yii::t('app', 'Create the character') ?></li>
+			<li><?= Yii::t('app', 'View lua dumps') ?></li>
 		</ul>
 	</li>
 

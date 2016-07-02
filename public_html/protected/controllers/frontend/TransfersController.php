@@ -182,7 +182,7 @@ class TransfersController extends FrontendController
 	{
 		$model = $this->loadModel($id);
 		if ($model->status !== 'process') {
-			$model->addError('status', "Статус заявки не позволяет удалить ее");
+			$model->addError('status', Yii::t('app', 'Couldn`t delete the request due to status'));
 		}
 		else {
 			$model->delete();
