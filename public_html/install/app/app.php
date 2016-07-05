@@ -222,7 +222,7 @@ class App
         $settings = $this->getSettings();
 		ob_start();
 		echo
-			"<?\n",
+			"<?php\n",
 			"return [\n",
 			"	'connectionString'=>'mysql:host=127.0.0.1;dbname={$settings->getFieldValue('db_characters')}',\n",
 			"	'emulatePrepare'=>true,\n",
