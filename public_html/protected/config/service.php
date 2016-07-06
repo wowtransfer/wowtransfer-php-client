@@ -1,6 +1,6 @@
 <?php
 return [
-  'apiBaseUrl' => 'http://wowtransfer.com/api/v1',
+  'apiBaseUrl' => 'http://wowtransfer.com/api1.php',
   'serviceUsername' => '',
   'accessToken' => '',
 ];

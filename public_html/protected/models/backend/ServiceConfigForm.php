@@ -48,7 +48,7 @@ class ServiceConfigForm extends PhpFileForm {
 			['accessToken', 'match', 'pattern' => '/^[a-z0-9]+$/', 'allowEmpty' => false],
 			['accessToken', 'length', 'is' => 32],
 			['apiBaseUrl', 'length', 'max' => 255, 'allowEmpty' => false],
-			['apiBaseUrl', 'default', 'value' => 'http://wowtransfer.com/api/v1'],
+			['apiBaseUrl', 'default', 'value' => 'http://wowtransfer.com/api1.php'],
 			//['publicKey', 'length', 'is' => 16],
 			//['secretKey', 'length', 'is' => 32],
 		];
@@ -71,7 +71,7 @@ class ServiceConfigForm extends PhpFileForm {
 
 	public function beforeValidate()
 	{
-		$this->apiBaseUrl = YII_DEBUG ? $this->apiBaseUrl : 'http://wowtransfer.com/api/v1';
+		$this->apiBaseUrl = YII_DEBUG ? $this->apiBaseUrl : 'http://wowtransfer.com/api1.php';
 		return parent::beforeValidate();
 	}
 
