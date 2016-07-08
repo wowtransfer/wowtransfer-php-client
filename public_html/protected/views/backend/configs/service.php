@@ -49,9 +49,12 @@ $this->breadcrumbs = [
 			<?= Yii::t('app', 'Cancel') ?>
 		</a>
 		<a class="btn btn-default" href="?default=1"
-		   onclick="return confirm('Вы уверены?');"
+		   onclick="return confirm('<?= Yii::t('app', 'Are you sure?') ?>');"
 		   >
 			<?= Yii::t('app', 'Default') ?>
+		</a>
+        <a class="btn btn-default" href="<?= $this->createUrl('/configs/service', ['checkServiceConnection' => 1]) ?>" id="check-service-connection">
+			<?= Yii::t('app', 'Check connection') ?>
 		</a>
 	</div>
 </div>

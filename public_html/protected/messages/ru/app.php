@@ -14,6 +14,7 @@ return [
 	'Application' => 'Приложение',
 	'Application settings' => 'Настройка приложения',
 	'Apply' => 'Применить',
+    'Are you sure?' => 'Вы уверены?',
 	'Are you sure you want to delete this transfer #{id}?' => 'Вы уверены, что хотите удалить заявку #{id}?',
 	'Authorization' => 'Авторизация',
 	'Authorize for transfer request handle' => 'Авторизуйтесь для управления заявками',

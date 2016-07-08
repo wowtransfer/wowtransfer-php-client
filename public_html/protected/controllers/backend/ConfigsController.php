@@ -111,10 +111,20 @@ class ConfigsController extends BackendController
 				$this->redirect(['/configs/service']);
 			}
 		}
-		if ($request->getPost('ServiceConfigForm')) {
-			$model->attributes = $request->getPost('ServiceConfigForm');
-			$model->save();
-		}
+        if ($request->isPostRequest) {
+            $model->attributes = $request->getPost('ServiceConfigForm');
+            if ($request->getQuery('checkServiceConnection')) {
+                $service = new \WowtransferUI();
+                $service->setAccessToken($model->accessToken);
+                $service->setUsername($model->serviceUsername);
+                $result['api_version'] = $service->getApiVersion();
+                echo json_encode($result);
+                exit;
+            }
+            if ($request->getPost('ServiceConfigForm')) {
+                $model->save();
+            }
+        }
 		$model->load();
 
 		$this->render('service', [
