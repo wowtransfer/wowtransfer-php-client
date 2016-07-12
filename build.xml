@@ -38,7 +38,7 @@
     <property name="releaseJsDir" value="${release.dir}/js" />
 
     <property name="lessCommand" value="lessc" />
-
+    <property name="composerCommand" value="composer" />
     <property name="nodejsCommand" value="node" />
     <property name="rJsFile" value="${source.vendor.dir}/requirejs/r.js/r.js" />
 
@@ -73,8 +73,13 @@
 		<echo msg="Copy vendor files..." />
 		<copy todir="${release.vendor.dir}">
 			<fileset dir="${source.vendor.dir}">
+                <include name="bin/yiic*" />
 				<include name="twbs/bootstrap/dist/**" />
 				<include name="yiisoft/yii/framework/**" />
+                <include name="wowtransfer/php-sdk/src/**" />
+                <include name="requirejs/**" />
+                <include name="composer/**" />
+                <include name="autoload.php" />
 			</fileset>
 		</copy>
 
@@ -114,6 +119,8 @@
 			<fileset dir="${source.dir}/css_dev">
                 <include name="**/*.css" />
                 <exclude name="**/*.css.map" />
+                <exclude name="functions.css" />
+                <exclude name="variables.css" />
             </fileset>
 		</copy>
         <copy file="${targetCssDir}/${cssFrontendFileNameMin}" todir="${releaseCssDir}" />

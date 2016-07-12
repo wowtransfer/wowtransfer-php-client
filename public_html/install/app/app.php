@@ -296,6 +296,7 @@ class App
 		$this->writeDbConfig();
 		$this->writeServiceConfig();
 		$this->writeTransferOptionsConfig();
+        $this->writeRemoteServersConfig();
 
 		return $writedSize > 0;
 	}
@@ -327,6 +328,14 @@ class App
 
 		return $h != false;
 	}
+
+    private function writeRemoteServersConfig()
+    {
+        $filePath = __DIR__ . '/../../protected/config/remote-servers-local.php';
+        $h = fopen($filePath, 'w');
+		fwrite($h, "<?php return [];");
+		fclose($h);
+    }
 
 	/**
 	 * @param boolean

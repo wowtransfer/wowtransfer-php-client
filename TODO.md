@@ -1,5 +1,6 @@
 ## TODO ##
 
+- Then build release run `composer update --no-dev`, copy vendor files, reestablish dev files.
 - Defence from infinite login: give 5 attempts on 15 minutes
 - Icons: set, unset, invert.
 - Use only bootstrap, remove yii styles
