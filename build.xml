@@ -197,6 +197,9 @@
         <mkdir dir="${releaseJsDir}" />
     </target>
 
+    <target name="concat" depends="concat_css">
+    </target>
+
     <target name="concat_css" depends="prepare, less2css">
 
         <delete file="${buildFrontendCssFilePath}" />
@@ -260,6 +263,8 @@
             checkreturn="true"
         />
     </target>
+    
+    <target name="minify" depends="minify_css, minify_js" />
 
     <target name="minify_js" depends="prepare">
         <exec command="${nodejsCommand} ${rJsFile} -o ${sourceJsDir}/buildFrontendScripts.js"
@@ -273,13 +278,13 @@
     </target>
 
     <target name="minify_css" depends="prepare, less2css, concat_css">
-        <exec command="${lessCommand} --clean-css ${buildFrontendCssFilePath} ${buildFrontendCssFilePathMin}"
+        <exec command="${lessCommand} --clean-css ${targetCssDir}/${cssFrontendFileName} ${buildFrontendCssFilePathMin}"
             passthru="true"
             checkreturn="true"
         />
         <copy file="${buildFrontendCssFilePathMin}" todir="${targetCssDir}" />
         
-        <exec command="${lessCommand} --clean-css ${buildBackendCssFilePath} ${buildBackendCssFilePathMin}"
+        <exec command="${lessCommand} --clean-css ${targetCssDir}/${cssBackendFileName} ${buildBackendCssFilePathMin}"
             passthru="true"
             checkreturn="true"
         />
