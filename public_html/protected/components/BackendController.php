@@ -186,7 +186,7 @@ class BackendController extends BaseController
             $cs->registerScriptFile($baseUrl . '/js_dev/common.js', CClientScript::POS_END);
             $cs->registerScriptFile($baseUrl . '/js_dev/backend/main.js', CClientScript::POS_END);
         } else {
-            $cs->registerCssFile($baseUrl . '/css/backend.css');
+            $cs->registerCssFile($baseUrl . '/css/backend.min.css');
 
             $cs->registerScriptFile($baseUrl . '/js/backend.min.js', CClientScript::POS_END);
         }
