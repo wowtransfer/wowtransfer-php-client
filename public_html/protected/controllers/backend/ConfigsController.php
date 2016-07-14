@@ -102,7 +102,7 @@ class ConfigsController extends BackendController
 	}
 
 	public function actionService() {
-		$request = Yii::app()->request;
+ 		$request = Yii::app()->request;
 		$model = new ServiceConfigForm();
 
 		if ($request->getQuery('default')) {
@@ -114,10 +114,15 @@ class ConfigsController extends BackendController
         if ($request->isPostRequest) {
             $model->attributes = $request->getPost('ServiceConfigForm');
             if ($request->getQuery('checkServiceConnection')) {
-                $service = new \WowtransferUI();
-                $service->setAccessToken($model->accessToken);
-                $service->setUsername($model->serviceUsername);
-                $result['api_version'] = $service->getApiVersion();
+                
+                try {
+                    $service = new \WowtransferUI();
+                    $service->setAccessToken($model->accessToken);
+                    $service->setUsername($model->serviceUsername);
+                    $result['cores'] = $service->getCores();
+                } catch (\Exception $ex) {
+                    $result['errorMessage'] = $ex->getMessage();
+                }
                 echo json_encode($result);
                 exit;
             }

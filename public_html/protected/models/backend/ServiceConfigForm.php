@@ -57,7 +57,7 @@ class ServiceConfigForm extends PhpFileForm {
 	public function attributeLabels()
 	{
 		return [
-			'serviceUsername' => 'Пользователь',
+			'serviceUsername' => Yii::t('app', 'User'),
 			'accessToken' => 'Access token',
 			'apiBaseUrl' => 'API base URL',
 		];

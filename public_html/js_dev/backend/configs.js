@@ -4,14 +4,16 @@ define([
 ], function($, dialogs) {
 
     $("#check-service-connection").click(function() {
+        var $button = $(this);
         var $form = $("#config-service-form");
         var url = $(this).attr("href");
         $.post(url, $form.serialize(), function(response) {
-            console.log(response);
-            if (response && response.api_version) {
-                alert("Success. API version: " + response.api_version);
+            if (response && response.cores.length) {
+                alert("Success");
+                $button.addClass("btn-success");
             } else {
                 alert("Connection fail");
+                $button.addClass("btn-danger");
             }
         }, "json");
         return false;
