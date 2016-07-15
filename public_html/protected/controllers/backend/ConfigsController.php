@@ -119,7 +119,7 @@ class ConfigsController extends BackendController
                     $service = new \WowtransferUI();
                     $service->setAccessToken($model->accessToken);
                     $service->setUsername($model->serviceUsername);
-                    $result['cores'] = $service->getCores();
+                    $result['userInfo'] = $service->getUserInfo();
                 } catch (\Exception $ex) {
                     $result['errorMessage'] = $ex->getMessage();
                 }
