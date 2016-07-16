@@ -54,7 +54,7 @@
 
 		<?= $form->textFieldControlGroup($model, 'realmlist', [
 			'class' => 'col-sm-4',
-            'help' => Yii::t('app', 'If this field are not reads from dump, then fill it')
+            'help' => Yii::t('app', 'Upload lua dump. If this field are not reads from dump, then fill it')
 		]); ?>
 
 		<?php /*echo CHtml::dropDownList('wowserver-realm', null, [], [
@@ -64,7 +64,7 @@
 		]); */ ?>
 		<?= $form->textFieldControlGroup($model, 'realm', [
 			'class' => 'col-sm-4',
-            'help' => Yii::t('app', 'If this field are not reads from dump, then fill it')
+            'help' => Yii::t('app', 'Upload lua dump. If this field are not reads from dump, then fill it')
 		]); ?>
 
 		<?= $form->textFieldControlGroup($model, 'account', [
@@ -78,7 +78,7 @@
 		]); ?>
 		<?= $form->textFieldControlGroup($model, 'username_old', [
 			'class' => 'col-sm-4',
-            'help' => Yii::t('app', 'If this field are not reads from dump, then fill it')
+            'help' => Yii::t('app', 'Upload lua dump. If this field are not reads from dump, then fill it')
 		]); ?>
 		<?= $form->textAreaControlGroup($model, 'comment', [
 			'rows' => 4, 'class' => 'col-sm-12',
