@@ -19,4 +19,9 @@ define([
         return false;
     });
 
+    $("#AppConfigForm_yiiDebug").click(function() {
+        var $traceLevelGroup = $("#AppConfigForm_yiiTraceLevel").closest(".form-group");
+        $(this).is(":checked") ? $traceLevelGroup.removeClass("hidden") : $traceLevelGroup.addClass("hidden");
+    });
+
 });

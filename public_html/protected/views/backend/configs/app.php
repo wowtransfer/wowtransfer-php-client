@@ -60,6 +60,7 @@ $this->breadcrumbs = [
 		'help' => '<div class="alert alert-info">' .
 		Yii::t('app', '0 - disable. Works only on debug mode.') .
 		'</div>',
+        'groupOptions' => ['class' => $model->yiiDebug ? '' : 'hidden'],
 	]) ?>
 
 </fieldset>

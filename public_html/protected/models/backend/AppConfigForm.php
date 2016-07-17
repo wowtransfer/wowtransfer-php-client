@@ -118,7 +118,7 @@ class AppConfigForm extends PhpFileForm
 			'onlyCheckedServers'   => Yii::t('app', 'Only checked servers'),
 			'authDb'               => Yii::t('app', 'Authentication databse'),
 			'worldDb'              => Yii::t('app', 'World databse'),
-			'yiiTraceLevel'        => 'YII_TRACE_LEVEL',
+			'yiiTraceLevel'        => Yii::t('app', 'Trace level'),
 		];
 	}
 
