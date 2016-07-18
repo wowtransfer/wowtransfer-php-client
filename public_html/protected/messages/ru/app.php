@@ -107,6 +107,7 @@ return [
 	'Extract the release' => 'Распаковка архива',
 	'File not uploaded' => 'Файл не загружен',
 	'Fill the transfer options' => 'Заполните опции переноса',
+    'Forbidden temporary' => 'Доступ временно закрыт',
 	'From the service' => 'От сервиса',
 	'Glyphs' => 'Символы',
 	'If the option are disabled then she not sets in global settings' => 'Если опция недоступна значит она отключена в глобальных настройках',

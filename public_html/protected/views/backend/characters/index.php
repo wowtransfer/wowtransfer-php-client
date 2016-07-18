@@ -3,7 +3,7 @@
 /* @var $dataProvider CSqlDataProvider */
 
 $this->breadcrumbs = [
-	'Characters',
+	Yii::t('app', 'Characters'),
 ];
 ?>
 <h1><?= Yii::t('app', 'Characters') ?></h1>

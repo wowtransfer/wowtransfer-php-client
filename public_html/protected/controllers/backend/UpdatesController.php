@@ -31,7 +31,7 @@ class UpdatesController extends BackEndController
 
    protected function beforeAction($action)
    {
-       throw new CHttpException(403, 'Forbidden temporary');
+       throw new CHttpException(403, Yii::t('app', 'Forbidden temporary'));
    }
 
 	public function actionIndex()
